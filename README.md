@@ -1,0 +1,53 @@
+# The Abbey at World's End
+
+A 3D isometric survival settlement game. Shipwrecked settlers salvage supplies, restore a
+ruined abbey, expand zones of firelight, and survive nights filled with monsters and
+nightmares. The player directly controls the **Bellkeeper**, who forms a deep bond with each
+map's ancient abbey beast.
+
+> *Build by day. Survive by night. Bond with the beast.*
+
+## Dual-pipeline architecture
+
+| Pipeline | Tool | Role |
+|----------|------|------|
+| Runtime  | Unity (2022.3 LTS) | Game, simulation, tests, screenshots |
+| Assets   | Blender (headless Python) | Automated asset factory: `.blend` → `.glb` + previews + metadata |
+
+The LLM agent works through code, scripts, tests, metadata, and generated previews — not by
+clicking around manually. See [AGENTS.md](AGENTS.md) for the agent operating rules.
+
+## Repository layout
+
+```
+unity/      Unity project (runtime, systems, tests, editor tooling)
+blender/    Asset factory: specs, generator scripts, generated output
+tools/      Pipeline entry points (check_all.sh is the gate)
+docs/       Design docs, roadmap, vertical slice spec
+tests/      External Python validation tests (pytest)
+```
+
+## Quick start
+
+```sh
+# Full validation gate (degrades gracefully if Unity/Blender are unavailable)
+./tools/check_all.sh
+
+# Generate all Blender assets (requires blender on PATH, or `pip install bpy`)
+python3 tools/run_blender_asset_pipeline.py
+
+# Unity tests (requires Unity editor; runs in CI via GameCI otherwise)
+./tools/run_unity_tests.sh editmode
+```
+
+## Current status
+
+- **Milestone 0** — repo + automation loop: in progress
+- **Prototype 0.1** — playable night greybox: in progress
+- Roadmap through Phase 4 (second map, second beast): [docs/ROADMAP.md](docs/ROADMAP.md)
+- Vertical slice spec: [docs/VERTICAL_SLICE_SPEC.md](docs/VERTICAL_SLICE_SPEC.md)
+- Art direction: [ART_BIBLE.md](ART_BIBLE.md) · Game design: [GAME_DESIGN.md](GAME_DESIGN.md)
+
+## A task is not complete until `./tools/check_all.sh` passes
+
+or the failure is clearly documented. No exceptions.
