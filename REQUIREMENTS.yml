@@ -1,0 +1,342 @@
+# REQUIREMENTS.yml — orchestration work tracker (source of truth for who builds what)
+#
+# RESUME PROTOCOL: if an orchestrator session dies, a new session reads this file and
+# resumes. Rules:
+#   1. Any task with status in_progress and no merged_commit is presumed lost — reset it
+#      to todo (its worktree branch task/<id> may hold partial work; inspect before reuse).
+#   2. Tasks with status approved but merged: false must be merged next.
+#   3. Never start a task whose depends_on are not all status: merged|done.
+#   4. Update this file IMMEDIATELY on every transition and include it in the merge commit.
+#
+# Status flow: todo -> in_progress -> in_review -> (changes_requested -> in_progress)
+#              -> approved -> merged   (docs/config-only tasks may go straight to done)
+#
+# See docs/ORCHESTRATION.md for the full protocol.
+
+version: 1
+project: abbey-at-worlds-end
+integration_branch: claude/abbey-llm-pipeline-wel2xo # local "main"; promotion to origin/main is a human-gated PR
+branch_convention: task/<id>
+worktree_convention: one git worktree per active task, removed after merge
+
+agents:
+  orchestrator: top-level session; fires builders + reviewers, merges, updates this file
+  builder: subagent in its own worktree; commits to task/<id>; never touches this file
+  reviewer: subagent reviewing a task branch diff; verdict approve|changes_requested
+
+tasks:
+  # ---------------------------------------------------------------- Milestone 0
+  - id: M0-01
+    title: Repo scaffold and design docs
+    phase: milestone-0
+    deliverables: [README.md, AGENTS.md, ART_BIBLE.md, GAME_DESIGN.md, GAME.md, docs/ROADMAP.md, docs/VERTICAL_SLICE_SPEC.md, REQUIREMENTS.yml, docs/ORCHESTRATION.md, .gitignore]
+    depends_on: []
+    status: done
+    assigned_to: orchestrator
+    branch: null
+    reviewer: null
+    merged_commit: 8d7670e
+
+  - id: M0-02
+    title: Blender asset pipeline core
+    phase: milestone-0
+    description: >
+      Headless pipeline working under both `bpy` module and `blender` binary.
+      Closed material library (ART_BIBLE list), spec loader (JSON specs in
+      blender/asset_specs/), builder registry, center-bottom pivot + anchor empties +
+      budget helpers, GLB export, 4 isometric previews (day/night/winter/grayscale),
+      metadata JSON with dimensions/tris/materials/anchors/validation, validate step
+      enforcing all ART_BIBLE hard gates.
+    deliverables:
+      - blender/scripts/abbey_materials.py
+      - blender/scripts/asset_framework.py
+      - blender/scripts/generate_asset.py
+      - blender/scripts/export_glb.py
+      - blender/scripts/render_preview.py
+      - blender/scripts/validate_asset.py
+      - blender/scripts/build_asset_batch.py
+    acceptance:
+      - python3 tools/run_blender_asset_pipeline.py --asset campfire_t1 produces glb+previews+metadata with validation passed
+    depends_on: [M0-01]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: M0-03
+    title: 'First identity assets: campfire_t1 + shipwreck_crate'
+    phase: milestone-0
+    description: JSON specs + builders for campfire_t1 (stone ring, logs, flame placeholder, ember+smoke anchors, 1x1 tile) and shipwreck_crate_closed. Generated glb/previews/metadata committed.
+    deliverables:
+      - blender/asset_specs/props/campfire_t1.json
+      - blender/asset_specs/props/shipwreck_crate_closed.json
+      - blender/generated/glb/*.glb
+      - blender/generated/previews/*
+      - blender/generated/metadata/*.meta.json
+    depends_on: [M0-02]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: M0-04
+    title: External validation harness (pytest + check_all.sh)
+    phase: milestone-0
+    deliverables:
+      - tools/check_all.sh
+      - tools/run_blender_asset_pipeline.py
+      - tools/run_unity_tests.sh
+      - tests/asset_validation/test_generated_assets.py
+      - tests/design_validation/test_requirements_tracker.py
+    acceptance: ['./tools/check_all.sh exits 0 locally, skipping Unity steps gracefully when no editor is present']
+    depends_on: [M0-01]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: M0-05
+    title: CI workflows (Blender assets + GameCI Unity tests)
+    phase: milestone-0
+    deliverables: ['.github/workflows/assets.yml', '.github/workflows/unity.yml']
+    notes: Unity job requires UNITY_LICENSE/UNITY_EMAIL/UNITY_PASSWORD secrets; must skip cleanly when absent.
+    depends_on: [M0-04]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  # ---------------------------------------------------------------- Prototype 0.1
+  - id: P01-01
+    title: Unity project skeleton
+    phase: prototype-0.1
+    description: ProjectSettings (2022.3 LTS, built-in RP for greybox), Packages/manifest.json (test framework, glTFast, TMP), asmdefs Abbey.Runtime/Abbey.Editor/Abbey.Tests.EditMode/Abbey.Tests.PlayMode, folder layout per GAME.md.
+    depends_on: [M0-01]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-02
+    title: 'Core sim: GameClock, EventBus, config'
+    phase: prototype-0.1
+    description: GameClock with Day/Dusk/Night/Dawn phases and scaled time; static EventBus; PrototypeConfig ScriptableObject holding ALL tunables (no balance values in MonoBehaviours); GameEventLog (one event log, many consumers).
+    depends_on: [P01-01]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-03
+    title: 'Light territory: LightSource + DarknessEvaluator'
+    phase: prototype-0.1
+    description: LightSource (radius, strength, lit, fuel, sacred), DarknessEvaluator static registry classifying positions Safe/Edge/Dark, fuel consumption, EditMode tests for overlap/extinguished/dark.
+    depends_on: [P01-02]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-04
+    title: Locked isometric camera
+    phase: prototype-0.1
+    description: Orthographic, pitch 30 yaw 45, follow + bounds, zoom = ortho size only, no rotation.
+    depends_on: [P01-01]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-05
+    title: 'Bellkeeper: move, ring bell, carry flame, rescue, feed'
+    phase: prototype-0.1
+    description: Direct movement, RingBell (recall pulse via EventBus + hound call), CarryFlame (mobile LightSource with cost), Rescue (attach/guide villager to light), FeedBeast interaction, simple health/stamina.
+    depends_on: [P01-03, P01-04]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-06
+    title: Villager agent + dusk recall
+    phase: prototype-0.1
+    description: VillagerAgent state machine (spec section 6), day work loop between task site and storage, DuskRecallSystem (distance check, bravery/fear modifiers, bell speeds recall), panic in darkness, one villager placed too far at first dusk. EditMode+PlayMode tests.
+    depends_on: [P01-03]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-07
+    title: Black Hound bond prototype
+    phase: prototype-0.1
+    description: HoundController with values (trust/hunger/pain/fear/attachment) and states (chained/wary/fed/following); feed interaction raises trust; fed hound answers bell and attacks night monster; starved hound ignores bell. Data-driven thresholds in PrototypeConfig. Tests.
+    depends_on: [P01-03]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-08
+    title: Monster + night director 0.1
+    phase: prototype-0.1
+    description: MonsterController (spawns outside light at night, avoids Safe zones, targets isolated villagers, flees hound challenge), minimal NightmareDirector spawning one pale hound on first night.
+    depends_on: [P01-03]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-09
+    title: Debug overlay + scene bootstrapper + screenshots
+    phase: prototype-0.1
+    description: OnGUI debug overlay (time, light zones, villager states, hound state, director); editor menu Tools/Abbey/Build Prototype Scene generating the greybox map programmatically; ScreenshotCapture; glTF import validation menu + report.
+    depends_on: [P01-05, P01-06, P01-07, P01-08]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-10
+    title: 'PlayMode integration test: first night sequence'
+    phase: prototype-0.1
+    description: Programmatically built world (no scene dependency); simulate day->dusk->night->dawn; assert recall, monster light avoidance, fed-hound-helps and unfed-hound-ignores branches, survival report produced.
+    depends_on: [P01-09]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-11
+    title: Remaining 0.1 identity assets
+    phase: prototype-0.1
+    description: 'Specs+builders: shipwreck_hull, shipwreck_barrel, storage_pile_t1, shelter_t1, lantern_post_t1, abbey_wall_broken, bell_tower_ruined, hound_chain, black_hound_lowpoly, forest_tree_01, rock_cluster_01.'
+    depends_on: [M0-03]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: P01-12
+    title: 'Visual proof: day and night scene renders'
+    phase: prototype-0.1
+    description: 'Blender-composed scene from generated assets: (1) daytime camp beside ruined abbey, wreck in background; (2) same camera at night, firelight only, hound silhouette near tower. Unity in-engine screenshots follow in CI.'
+    depends_on: [P01-11]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  # ---------------------------------------------------------------- Phase 2 (blocked until 0.1 human gate)
+  - id: P2-01
+    title: Shipwreck salvage economy
+    phase: phase-2
+    depends_on: [P01-10, GATE-0.1]
+    status: todo
+  - id: P2-02
+    title: Villager jobs and visible logistics
+    phase: phase-2
+    depends_on: [P2-01]
+    status: todo
+  - id: P2-03
+    title: Building placement + construction sites
+    phase: phase-2
+    depends_on: [P2-01]
+    status: todo
+  - id: P2-04
+    title: Abbey restoration nodes (Gate, Bell Tower, Candle Shrine, Infirmary)
+    phase: phase-2
+    depends_on: [P2-03]
+    status: todo
+  - id: P2-05
+    title: Full hound bond system
+    phase: phase-2
+    depends_on: [P01-10, GATE-0.1]
+    status: todo
+  - id: P2-06
+    title: Nightmare director + pale hound / drowned sailor / lantern moth
+    phase: phase-2
+    depends_on: [P2-05]
+    status: todo
+  - id: P2-07
+    title: Morning consequence report (storybook tone)
+    phase: phase-2
+    depends_on: [P2-06]
+    status: todo
+  - id: P2-08
+    title: Win/loss + The First White Night scenario
+    phase: phase-2
+    depends_on: [P2-07]
+    status: todo
+  - id: P2-09
+    title: Phase 2 asset set (buildings + character placeholders)
+    phase: phase-2
+    depends_on: [P01-12]
+    status: todo
+  - id: P2-10
+    title: Phase 2 validation (gameplay tests + 4 canonical screenshots)
+    phase: phase-2
+    depends_on: [P2-08, P2-09]
+    status: todo
+
+  # ---------------------------------------------------------------- Phase 3 (epic; break down at phase start)
+  - id: P3-EPIC
+    title: Seasons, laws, moral pressures, hound evolution, consequence nightmares, abbey transformation, dilemmas
+    phase: phase-3
+    depends_on: [P2-10, GATE-P2]
+    status: todo
+    notes: Decompose per docs/ROADMAP.md Phase 3 brief when unblocked.
+
+  # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
+  - id: P4-EPIC
+    title: Map 2 (Abbey of Antlers), the Stag, Forest Debt, false bells, campaign carryover
+    phase: phase-4
+    depends_on: [P3-EPIC, GATE-P3]
+    status: todo
+    notes: Decompose per docs/ROADMAP.md Phase 4 brief when unblocked.
+
+gates:
+  - id: GATE-0.1
+    kind: human_review
+    question: Is it fun and tense to manage distance from light while directly controlling the Bellkeeper?
+    status: pending
+  - id: GATE-P2
+    kind: human_review
+    question: Does this already feel like the game?
+    status: pending
+  - id: GATE-P3
+    kind: human_review
+    question: Does the way you survive visibly change settlement, beast, abbey, nightmares?
+    status: pending
