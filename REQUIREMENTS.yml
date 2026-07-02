@@ -378,16 +378,15 @@ tasks:
       spec section 5 (campfire, storage, shelter, woodcutter hut, lantern post, guard
       post, candle shrine, infirmary corner). Footprint validation EditMode tests.
     depends_on: [P2-01]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-buildings
     branch: task/P2-03
     reviewer: reviewer-p2-buildings
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: 8a74955
     notes: >
-      Two test-only NREs: ConstructionSiteTests DeliverResource_ClampsToStockAndNeed and
-      DeliverResource_RefusesResourcesNotInTheCost place sites the affordability gate
-      rejects (null), then dereference. Runtime code clean per review.
+      One changes_requested round (two test-only NREs), fixed in 6dd9d9e, re-approved.
+      Builder-villager wiring to ConstructionSite deferred to P2-04.
   - id: P2-04
     title: Abbey restoration nodes (Gate, Bell Tower, Candle Shrine, Infirmary)
     phase: phase-2
