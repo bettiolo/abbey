@@ -48,6 +48,12 @@ mat_foliage     mat_dirt
 Implemented once in `blender/scripts/abbey_materials.py`. Assets reference materials by
 name only. Max 4 materials per asset.
 
+Materials may sample the shared tileable pixel-texture set (`tex_roof_tiles`,
+`tex_stone_blocks`, `tex_plaster_timber`, `tex_grass`, `tex_dirt_path`, `tex_paving`,
+`tex_cliff_soil` in `blender/kits/materials/textures/`, 'Closest' interpolation), whose
+palette ramps are defined in [docs/ART_REFERENCE_ABBEY.md](docs/ART_REFERENCE_ABBEY.md) —
+the quantified transcription of the user-provided pixel-art baseline renders.
+
 ## Asset budgets
 
 | Class | Max triangles | Max materials |
@@ -56,6 +62,7 @@ name only. Max 4 materials per asset.
 | Building | 2500 | 4 |
 | Character/beast placeholder | 1500 | 3 |
 | Terrain feature | 1200 | 3 |
+| Landmark (church, town hall) | 6000 | 4 |
 
 ## Per-asset deliverables
 

@@ -285,9 +285,21 @@ tasks:
       - .github/workflows/unity.yml
       - docs/RUNNING_ON_MAC.md
     depends_on: [P01-05, P01-06, P01-07, P01-08]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-unity6
+    branch: task/U6-01
+    reviewer: null
+    review: null
+    merged_commit: null
+
+  - id: A2-01
+    title: Abbey / town center / field kit from user reference art
+    phase: prototype-0.1
+    description: 'User directive 2026-07-02: use the four pixel-art diorama renders (transcribed in docs/ART_REFERENCE_ABBEY.md) as baseline to build the 3D models and extract textures. Deliver: procedural tileable pixel-texture generator + 7 textures in blender/kits/materials/textures/; material library retuned to reference ramps (library stays closed); new specs+builders: bell_tower_t2, abbey_church_t1, abbey_cloister_t1, town_hall_t1, field_plot_t1, well_t1, plus ground/prop set (dirt_road_segment, paving_patch, barrel/crate reuse, pennant_pole). All validated through the standard pipeline with previews.'
+    depends_on: [P01-11]
+    status: in_progress
+    assigned_to: builder-blender-reference
+    branch: task/A2-01
     reviewer: null
     review: null
     merged_commit: null
