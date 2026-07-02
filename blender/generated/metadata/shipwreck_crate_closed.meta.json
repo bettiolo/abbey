@@ -1,0 +1,136 @@
+{
+  "id": "shipwreck_crate_closed",
+  "generated_at": "2026-07-02T00:11:06.499896+00:00",
+  "spec": {
+    "id": "shipwreck_crate_closed",
+    "type": "prop",
+    "theme": "shipwreck",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 0.85
+    },
+    "style": {
+      "silhouette": "chunky closed cargo crate with thick dark corner frames and rope lashing",
+      "materials": [
+        "mat_warm_wood",
+        "mat_dark_wood",
+        "mat_canvas"
+      ]
+    },
+    "required_parts": [
+      "crate_body",
+      "corner_frames",
+      "rope_lashing"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 400,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "carry_handle",
+        "type": "grip"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.83,
+    "depth": 0.83,
+    "height": 0.695,
+    "min": [
+      -0.415,
+      -0.415,
+      0.0
+    ],
+    "max": [
+      0.415,
+      0.415,
+      0.695
+    ]
+  },
+  "triangle_count": 276,
+  "material_count": 3,
+  "materials": [
+    "mat_canvas",
+    "mat_dark_wood",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "carry_handle",
+      "type": "grip"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/shipwreck_crate_closed.glb",
+    "blend": "blender/generated/blend/shipwreck_crate_closed.blend",
+    "previews": {
+      "day": "blender/generated/previews/shipwreck_crate_closed_preview_day.png",
+      "night": "blender/generated/previews/shipwreck_crate_closed_preview_night.png",
+      "winter": "blender/generated/previews/shipwreck_crate_closed_preview_winter.png",
+      "grayscale": "blender/generated/previews/shipwreck_crate_closed_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/glb/shipwreck_crate_closed.glb (36964 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/blend/shipwreck_crate_closed.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.830x0.830x0.695 vs footprint 1.0x1.0x0.85"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "276/400 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_canvas', 'mat_dark_wood', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['carry_handle'] present=['carry_handle']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "shipwreck_crate_closed_collision present"
+      }
+    ]
+  }
+}
