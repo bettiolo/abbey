@@ -39,6 +39,15 @@ def _check(name: str, passed: bool, detail: str) -> dict:
     return {"name": name, "passed": bool(passed), "detail": detail}
 
 
+def _rel(path: Path | str) -> str:
+    """Repo-relative path for check details, so committed metadata is stable
+    across worktrees/machines (mirrors build_asset_batch._relpath)."""
+    try:
+        return str(Path(path).resolve().relative_to(fw.BLENDER_DIR.parent))
+    except ValueError:
+        return str(path)
+
+
 def validate_asset(
     root: bpy.types.Object,
     spec: dict,
@@ -54,12 +63,12 @@ def validate_asset(
         _check(
             "glb_exists",
             glb.is_file() and glb.stat().st_size > 0,
-            f"{glb} ({glb.stat().st_size if glb.is_file() else 0} bytes)",
+            f"{_rel(glb)} ({glb.stat().st_size if glb.is_file() else 0} bytes)",
         )
     )
 
     blend = Path(files["blend"])
-    checks.append(_check("blend_saved", blend.is_file(), str(blend)))
+    checks.append(_check("blend_saved", blend.is_file(), _rel(blend)))
 
     missing = [
         v
