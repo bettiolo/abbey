@@ -11,7 +11,7 @@ map's ancient abbey beast.
 
 | Pipeline | Tool | Role |
 |----------|------|------|
-| Runtime  | Unity (2022.3 LTS) | Game, simulation, tests, screenshots |
+| Runtime  | Unity (Unity 6 LTS, 6000.0.x) | Game, simulation, tests, screenshots |
 | Assets   | Blender (headless Python) | Automated asset factory: `.blend` → `.glb` + previews + metadata |
 
 The LLM agent works through code, scripts, tests, metadata, and generated previews — not by
@@ -32,7 +32,7 @@ tests/      External Python validation tests (pytest)
 Full guide: [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.md). Short version:
 
 1. Install **Unity Hub**, then the editor version pinned in
-   `unity/ProjectSettings/ProjectVersion.txt` (currently **Unity 2022.3 LTS**), including
+   `unity/ProjectSettings/ProjectVersion.txt` (currently **Unity 6 LTS, 6000.0.x**), including
    *Mac Build Support (Mono)* if you want a standalone app.
 2. Unity Hub → **Add project from disk** → select this repo's `unity/` folder, open it
    (first import takes a few minutes).
@@ -42,9 +42,8 @@ Full guide: [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.md). Short version:
    (unsigned local build: right-click → Open the first time).
 
 On macOS the game renders through Apple's **Metal** graphics API (Unity's default there).
-It does **not** use MetalFX upscaling — see the graphics notes in
-[docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.md) for why, and what a Unity 6 move would
-change.
+It does **not** use MetalFX upscaling (available on Unity 6, but this game doesn't need
+it) — see the graphics notes in [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.md) for why.
 
 ## Quick start
 

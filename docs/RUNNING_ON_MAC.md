@@ -6,7 +6,7 @@ it on a Mac:
 ## 1. In the editor (recommended during prototyping)
 
 1. Install **Unity Hub**, then the editor version pinned in
-   `unity/ProjectSettings/ProjectVersion.txt` (**2022.3 LTS**). Include *Mac Build Support
+   `unity/ProjectSettings/ProjectVersion.txt` (**Unity 6 LTS, 6000.0.x**). Include *Mac Build Support
    (Mono)* when installing if you also want standalone builds.
 2. Unity Hub → **Add project from disk** → select the `unity/` folder of this repo.
 3. Open the project. First import takes a few minutes (it also imports the generated
@@ -38,30 +38,20 @@ First run of an unsigned local build: right-click `Abbey.app` → **Open** (Gate
 **Graphics API.** On macOS Unity renders through **Metal** by default — no configuration
 needed, and this project doesn't override it. Both Apple Silicon and Intel Macs work.
 
-**MetalFX.** Not used. MetalFX is Apple's upscaling framework (render at lower resolution,
-upscale spatially/temporally), and Unity only exposes it from **Unity 6** onward (MetalFX
-Spatial upscaling in Player settings). On Unity 2022.3 it simply isn't available — and this
-game doesn't need it: a low-poly orthographic isometric diorama is nowhere near GPU-bound;
-any Mac from the last decade renders it at native resolution comfortably.
+**MetalFX / STP.** Not used, even though the project now runs on **Unity 6 LTS** where
+MetalFX Spatial upscaling and STP (Spatial-Temporal Post-processing) are *available*. This
+game doesn't need them: a low-poly orthographic isometric diorama is nowhere near
+GPU-bound; any Mac from the last decade renders it at native resolution comfortably. Both
+stay OFF unless a future (Milestone 1+) URP/post-processing pass finds a reason to enable
+them.
 
-**What moving to Unity 6 would take** (tracked as a possible Milestone 1+ decision, not
-planned for the prototype):
-
-1. Re-pin `unity/ProjectSettings/ProjectVersion.txt` to a Unity 6 LTS version (6000.x) and
-   let the editor upgrade `ProjectSettings/` on first open.
-2. Package bumps in `unity/Packages/manifest.json`: `com.unity.test-framework` → 1.4.x;
-   drop `com.unity.textmeshpro` (TMP merged into `com.unity.ugui` 2.x in Unity 6);
-   `com.unity.cloud.gltfast` 6.x already supports Unity 6.
-3. API sweep: Unity 6 deprecates `Object.FindObjectOfType`/`FindObjectsOfType` in favour of
-   `FindFirstObjectByType`/`FindObjectsByType` — our code must use the new forms (cheap,
-   mechanical; the test suite catches stragglers in CI).
-4. CI: bump `unityVersion` in `.github/workflows/unity.yml` (GameCI supports 6000.x).
-5. Payoff: when the URP/post-processing polish pass lands (Milestone 1), Unity 6 adds
-   MetalFX Spatial upscaling and STP (Spatial-Temporal Post-processing) as free options on
-   Mac, plus generally better Apple Silicon editor performance.
-
-The codebase deliberately avoids anything version-exotic (no scenes as truth, plain C#,
-data-driven config), so the migration cost is small whenever we choose to take it.
+**The Unity 6 move (done).** The project was migrated from 2022.3 LTS to Unity 6 LTS
+(6000.0.x, pinned in `ProjectVersion.txt`): `com.unity.test-framework` → 1.4.x,
+`com.unity.textmeshpro` dropped (TMP ships inside `com.unity.ugui` 2.x on Unity 6),
+`com.unity.cloud.gltfast` 6.x unchanged, and the code already uses the
+`FindFirstObjectByType`/`FindObjectsByType` era APIs (no deprecated call sites). CI
+(GameCI) runs the pinned 6000.0.x editor. The render pipeline is still the built-in RP —
+URP remains a Milestone 1 decision.
 
 ## Verifying a fresh checkout quickly
 
