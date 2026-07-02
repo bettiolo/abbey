@@ -405,10 +405,10 @@ tasks:
       kills monster, drags corpse away, refuses bell. All transitions event-logged.
       EditMode transition tests + PlayMode branch tests.
     depends_on: [P01-10, GATE-0.1]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-hound
     branch: task/P2-05
-    reviewer: null
+    reviewer: reviewer-p2-hound
     review: null
     merged_commit: null
   - id: P2-06
