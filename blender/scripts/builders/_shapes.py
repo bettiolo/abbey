@@ -57,14 +57,58 @@ def add_cone(
     radius: float,
     depth: float,
     vertices: int = 8,
+    radius_top: float = 0.0,
     location: tuple[float, float, float] = (0, 0, 0),
     rotation: tuple[float, float, float] = (0, 0, 0),
 ) -> bpy.types.Object:
     bpy.ops.mesh.primitive_cone_add(
         vertices=vertices,
         radius1=radius,
-        radius2=0.0,
+        radius2=radius_top,
         depth=depth,
+        location=location,
+        rotation=rotation,
+    )
+    return _finish(name, material)
+
+
+def add_icosphere(
+    name: str,
+    material: str,
+    radius: float,
+    subdivisions: int = 1,
+    location: tuple[float, float, float] = (0, 0, 0),
+    rotation: tuple[float, float, float] = (0, 0, 0),
+    scale: tuple[float, float, float] = (1, 1, 1),
+) -> bpy.types.Object:
+    """Chunky blob (80 tris at subdivisions=1) — canopies, sacks, boulders."""
+    bpy.ops.mesh.primitive_ico_sphere_add(
+        subdivisions=subdivisions,
+        radius=radius,
+        location=location,
+        rotation=rotation,
+    )
+    obj = _finish(name, material)
+    obj.scale = scale
+    return obj
+
+
+def add_torus(
+    name: str,
+    material: str,
+    major_radius: float,
+    minor_radius: float,
+    major_segments: int = 6,
+    minor_segments: int = 4,
+    location: tuple[float, float, float] = (0, 0, 0),
+    rotation: tuple[float, float, float] = (0, 0, 0),
+) -> bpy.types.Object:
+    """Low-poly ring (48 tris at 6x4) — chain links, hoops, mounting rings."""
+    bpy.ops.mesh.primitive_torus_add(
+        major_segments=major_segments,
+        minor_segments=minor_segments,
+        major_radius=major_radius,
+        minor_radius=minor_radius,
         location=location,
         rotation=rotation,
     )

@@ -1,0 +1,17 @@
+{
+  "id": "shipwreck_barrel",
+  "type": "prop",
+  "theme": "shipwreck",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.9 },
+  "style": {
+    "silhouette": "fat bulging cargo barrel with two heavy iron hoops and a dark lid",
+    "materials": ["mat_warm_wood", "mat_iron", "mat_dark_wood"]
+  },
+  "required_parts": ["barrel_body", "iron_hoops", "lid"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 400, "max_materials": 3 },
+  "anchors": [
+    { "name": "carry_handle", "type": "grip" }
+  ],
+  "pivot": "center_bottom"
+}
