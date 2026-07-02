@@ -378,10 +378,10 @@ tasks:
       spec section 5 (campfire, storage, shelter, woodcutter hut, lantern post, guard
       post, candle shrine, infirmary corner). Footprint validation EditMode tests.
     depends_on: [P2-01]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-buildings
     branch: task/P2-03
-    reviewer: null
+    reviewer: reviewer-p2-buildings
     review: null
     merged_commit: null
   - id: P2-04
