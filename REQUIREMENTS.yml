@@ -15,7 +15,7 @@
 
 version: 1
 project: abbey-at-worlds-end
-integration_branch: claude/abbey-llm-pipeline-wel2xo # user will rename this branch to 'main' in GitHub Settings (decision 2026-07-02); after rename set this field to 'main'
+integration_branch: main # renamed from claude/abbey-llm-pipeline-wel2xo by user, 2026-07-02
 branch_convention: task/<id>
 worktree_convention: one git worktree per active task, removed after merge
 
