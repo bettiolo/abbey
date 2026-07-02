@@ -33,6 +33,36 @@ supported (build target `StandaloneOSX`).
 
 First run of an unsigned local build: right-click `Abbey.app` → **Open** (Gatekeeper).
 
+## Graphics notes: Metal, MetalFX, and Unity 6
+
+**Graphics API.** On macOS Unity renders through **Metal** by default — no configuration
+needed, and this project doesn't override it. Both Apple Silicon and Intel Macs work.
+
+**MetalFX.** Not used. MetalFX is Apple's upscaling framework (render at lower resolution,
+upscale spatially/temporally), and Unity only exposes it from **Unity 6** onward (MetalFX
+Spatial upscaling in Player settings). On Unity 2022.3 it simply isn't available — and this
+game doesn't need it: a low-poly orthographic isometric diorama is nowhere near GPU-bound;
+any Mac from the last decade renders it at native resolution comfortably.
+
+**What moving to Unity 6 would take** (tracked as a possible Milestone 1+ decision, not
+planned for the prototype):
+
+1. Re-pin `unity/ProjectSettings/ProjectVersion.txt` to a Unity 6 LTS version (6000.x) and
+   let the editor upgrade `ProjectSettings/` on first open.
+2. Package bumps in `unity/Packages/manifest.json`: `com.unity.test-framework` → 1.4.x;
+   drop `com.unity.textmeshpro` (TMP merged into `com.unity.ugui` 2.x in Unity 6);
+   `com.unity.cloud.gltfast` 6.x already supports Unity 6.
+3. API sweep: Unity 6 deprecates `Object.FindObjectOfType`/`FindObjectsOfType` in favour of
+   `FindFirstObjectByType`/`FindObjectsByType` — our code must use the new forms (cheap,
+   mechanical; the test suite catches stragglers in CI).
+4. CI: bump `unityVersion` in `.github/workflows/unity.yml` (GameCI supports 6000.x).
+5. Payoff: when the URP/post-processing polish pass lands (Milestone 1), Unity 6 adds
+   MetalFX Spatial upscaling and STP (Spatial-Temporal Post-processing) as free options on
+   Mac, plus generally better Apple Silicon editor performance.
+
+The codebase deliberately avoids anything version-exotic (no scenes as truth, plain C#,
+data-driven config), so the migration cost is small whenever we choose to take it.
+
 ## Verifying a fresh checkout quickly
 
 ```sh
