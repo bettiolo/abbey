@@ -191,6 +191,63 @@ namespace Abbey.Core
         [Min(0.01f)] public float cameraMaxOrthoSize = 20f;
         [Min(0.01f)] public float cameraDefaultOrthoSize = 10f;
 
+        // ==================================================================
+        // NIGHTMARE BLOCK (P2-06) — appended fields only. Owned by the
+        // nightmare director task; other tasks append their own blocks below.
+        // ==================================================================
+
+        [Header("Nightmares — Phase 2 director (P2-06)")]
+        [Tooltip("Opt-in: run the scripted Phase 2 night (schedule below) instead of the 0.1 single-spawn night. Off keeps the legacy one-pale-hound first night.")]
+        public bool phase2NightsEnabled;
+
+        [Tooltip("Scripted night events, each 'fraction:kind'. Fraction is 0..1 time into the night; kinds: pale_hound, drowned_sailor, lantern_moth, whisper, shadow, panic. Unparseable entries are skipped and logged.")]
+        public string[] phase2NightSchedule =
+        {
+            "0.05:whisper",
+            "0.10:pale_hound",
+            "0.20:shadow",
+            "0.30:lantern_moth",
+            "0.40:whisper",
+            "0.45:pale_hound",
+            "0.55:drowned_sailor",
+            "0.65:panic",
+            "0.75:pale_hound",
+            "0.90:whisper",
+        };
+
+        [Tooltip("A villager death within this XZ distance of the wreck anchor counts as died-by-water (gates the drowned sailor).")]
+        [Min(0f)] public float waterDeathRadius = 8f;
+
+        [Tooltip("The drowned sailor rises within this distance of the wreck anchor.")]
+        [Min(0f)] public float drownedSailorSpawnRadius = 6f;
+
+        [Tooltip("Slow, dripping dread-line speed toward the nearest lit zone.")]
+        [Min(0f)] public float drownedSailorMoveSpeed = 1.2f;
+
+        [Tooltip("Extinguish-resistant: light intensity tolerated by the sailor (well above the pale hound's monsterLightTolerance). Safe zones and sacred light still repel it.")]
+        [Range(0f, 1f)] public float drownedSailorLightTolerance = 0.6f;
+
+        [Min(0f)] public float lanternMothMoveSpeed = 5f;
+
+        [Min(0f)] public float lanternMothFleeSpeed = 7f;
+
+        [Tooltip("The moth abandons its light while the Bellkeeper is inside this range.")]
+        [Min(0f)] public float lanternMothFleeRange = 5f;
+
+        [Tooltip("The moth must be this close to a light to drain its fuel.")]
+        [Min(0f)] public float lanternMothDrainRange = 1.5f;
+
+        [Tooltip("Fuel seconds drained per second while the moth clings to a light (fast: it creates a darkness gap).")]
+        [Min(0f)] public float lanternMothDrainPerSecond = 20f;
+
+        [Tooltip("Bell = weak-nightmare stun (spec section 5): how long a bell pulse stuns weak nightmares inside its radius.")]
+        [Min(0f)] public float bellNightmareStunSeconds = 5f;
+
+        [Tooltip("Whispers rise from a dark point on this inner ring fraction of monsterSpawnMinRadius (the unlit road, nearer than the spawn ring).")]
+        [Range(0f, 1f)] public float whisperRingFraction = 0.6f;
+
+        // ============================== end nightmare block ===============
+
         static PrototypeConfig _cached;
 
         /// <summary>
