@@ -243,6 +243,76 @@ namespace Abbey.Hero
             return true;
         }
 
+        /// <summary>
+        /// Unchains the hound when within interactRange. The outcome belongs to the
+        /// bond: a no-trust hound turns Angry and flees to Missing; decent trust
+        /// keeps it (Wary/Fed/Following). False out of range, already free, or dead.
+        /// </summary>
+        public bool FreeHound(HoundController hound)
+        {
+            EnsureInit();
+            if (hound == null || !IsAlive || !InReachOf(hound.transform))
+            {
+                return false;
+            }
+            if (!hound.FreeFromChain(transform.position))
+            {
+                return false;
+            }
+            GameEventLog.Append("hero_freed_hound", hound.name);
+            return true;
+        }
+
+        /// <summary>
+        /// The high-risk calming touch: approach the hound slowly. Deterministic —
+        /// a hound past its fear+pain bite threshold bites and injures the hero
+        /// (houndBiteDamage); otherwise attachment grows. False when unavailable.
+        /// </summary>
+        public bool ApproachHound(HoundController hound)
+        {
+            EnsureInit();
+            if (hound == null || !IsAlive || !InReachOf(hound.transform))
+            {
+                return false;
+            }
+            var result = hound.ApproachSlowly();
+            if (result == HoundApproachResult.Unavailable)
+            {
+                return false;
+            }
+            if (result == HoundApproachResult.Bitten)
+            {
+                GameEventLog.Append("hero_bitten_by_hound", $"{name} by {hound.name}");
+                TakeDamage(Config.houndBiteDamage);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// The explicit walk-away from the chained hound. Costs nothing now; the
+        /// hound remembers (resentment), and the log records the choice.
+        /// </summary>
+        public bool LeaveHoundChained(HoundController hound)
+        {
+            EnsureInit();
+            if (hound == null || !IsAlive || !InReachOf(hound.transform))
+            {
+                return false;
+            }
+            if (!hound.LeaveChained())
+            {
+                return false;
+            }
+            GameEventLog.Append("hero_left_hound_chained", hound.name);
+            return true;
+        }
+
+        bool InReachOf(Transform target)
+        {
+            return PlanarMotion.Distance(transform.position, target.position)
+                   <= Config.interactRange;
+        }
+
         public void TakeDamage(float amount)
         {
             EnsureInit();
