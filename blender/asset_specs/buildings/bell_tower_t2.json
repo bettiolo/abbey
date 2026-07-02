@@ -1,0 +1,19 @@
+{
+  "id": "bell_tower_t2",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 2.0, "depth": 2.0, "height": 6.0 },
+  "style": {
+    "silhouette": "the settlement's signature landmark: square cool-stone base with slit windows, jettied half-timber storey with diagonal bracing, open belfry with a gold bell under arches, steep pyramidal terracotta roof, pennant pole at the apex",
+    "materials": ["mat_ash", "mat_dark_wood", "mat_thatch", "mat_sacred_gold"]
+  },
+  "required_parts": ["stone_base", "slit_windows", "jettied_storey", "bracing", "belfry", "bell", "pyramid_roof", "flag_pole", "door"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "bell", "type": "bell" },
+    { "name": "flag", "type": "flag" },
+    { "name": "door", "type": "door" }
+  ],
+  "pivot": "center_bottom"
+}

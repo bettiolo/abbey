@@ -14,9 +14,11 @@ if _SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, _SCRIPTS_DIR)
 
 from builders import abbey_ruins  # noqa: E402,F401
+from builders import abbey_town  # noqa: E402,F401
 from builders import beasts  # noqa: E402,F401
 from builders import camp_buildings  # noqa: E402,F401
 from builders import campfire  # noqa: E402,F401
 from builders import shipwreck_crates  # noqa: E402,F401
 from builders import shipwreck_hull  # noqa: E402,F401
 from builders import terrain_features  # noqa: E402,F401
+from builders import town_props  # noqa: E402,F401

@@ -1,0 +1,18 @@
+{
+  "id": "field_plot_t1",
+  "type": "building",
+  "theme": "field",
+  "footprint": { "width": 2.0, "depth": 2.0, "height": 0.6 },
+  "style": {
+    "silhouette": "four raised soil rows with slightly irregular ends, planted with alternating tomato-red clusters, leafy greens and squat pumpkins",
+    "materials": ["mat_dirt", "mat_foliage", "mat_thatch", "mat_warm_wood"]
+  },
+  "required_parts": ["soil_rows", "tomato_clusters", "leaf_clusters", "pumpkins"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 4 },
+  "anchors": [
+    { "name": "work_slot_1", "type": "work" },
+    { "name": "work_slot_2", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

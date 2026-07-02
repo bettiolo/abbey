@@ -1,0 +1,18 @@
+{
+  "id": "well_t1",
+  "type": "prop",
+  "theme": "town",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 2.2 },
+  "style": {
+    "silhouette": "round stone well shaft under a timber A-frame with a small pitched terracotta roof, windlass and hanging bucket",
+    "materials": ["mat_old_stone", "mat_dark_wood", "mat_thatch"]
+  },
+  "required_parts": ["stone_shaft", "a_frame", "pitched_roof", "windlass", "bucket"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 600, "max_materials": 3 },
+  "anchors": [
+    { "name": "bucket", "type": "attach" },
+    { "name": "water", "type": "water" }
+  ],
+  "pivot": "center_bottom"
+}
