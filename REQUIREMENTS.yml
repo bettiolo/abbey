@@ -329,10 +329,10 @@ tasks:
       - blender/scripts/build_asset_batch.py
       - tools/check_all.sh
     depends_on: [M0-04]
-    status: in_progress
+    status: in_review
     assigned_to: builder-check-hygiene
     branch: task/M0-06
-    reviewer: null
+    reviewer: reviewer-check-hygiene
     review: null
     merged_commit: null
 
