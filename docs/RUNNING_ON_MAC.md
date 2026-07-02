@@ -6,7 +6,7 @@ it on a Mac:
 ## 1. In the editor (recommended during prototyping)
 
 1. Install **Unity Hub**, then the editor version pinned in
-   `unity/ProjectSettings/ProjectVersion.txt` (**Unity 6 LTS, 6000.0.x**). Include *Mac Build Support
+   `unity/ProjectSettings/ProjectVersion.txt` (**Unity 6.5, 6000.5.x**). Include *Mac Build Support
    (Mono)* when installing if you also want standalone builds.
 2. Unity Hub → **Add project from disk** → select the `unity/` folder of this repo.
 3. Open the project. First import takes a few minutes (it also imports the generated
@@ -49,7 +49,7 @@ First run of an unsigned local build: right-click `Abbey.app` → **Open** (Gate
 **Graphics API.** On macOS Unity renders through **Metal** by default — no configuration
 needed, and this project doesn't override it. Both Apple Silicon and Intel Macs work.
 
-**MetalFX / STP.** Not used, even though the project now runs on **Unity 6 LTS** where
+**MetalFX / STP.** Not used, even though the project now runs on **Unity 6.5** where
 MetalFX Spatial upscaling and STP (Spatial-Temporal Post-processing) are *available*. This
 game doesn't need them: a low-poly orthographic isometric diorama is nowhere near
 GPU-bound; any Mac from the last decade renders it at native resolution comfortably. Both
@@ -57,12 +57,14 @@ stay OFF unless a future (Milestone 1+) URP/post-processing pass finds a reason 
 them.
 
 **The Unity 6 move (done).** The project was migrated from 2022.3 LTS to Unity 6 LTS
-(6000.0.x, pinned in `ProjectVersion.txt`): `com.unity.test-framework` → 1.4.x,
-`com.unity.textmeshpro` dropped (TMP ships inside `com.unity.ugui` 2.x on Unity 6),
-`com.unity.cloud.gltfast` 6.x unchanged, and the code already uses the
-`FindFirstObjectByType`/`FindObjectsByType` era APIs (no deprecated call sites). CI
-(GameCI) runs the pinned 6000.0.x editor. The render pipeline is still the built-in RP —
-URP remains a Milestone 1 decision.
+(6000.0.x): `com.unity.test-framework` → 1.4.x, `com.unity.textmeshpro` dropped (TMP
+ships inside `com.unity.ugui` 2.x on Unity 6), `com.unity.cloud.gltfast` 6.x unchanged,
+and the code already uses the `FindFirstObjectByType`/`FindObjectsByType` era APIs (no
+deprecated call sites). The project has since been re-pinned to **Unity 6.5
+(6000.5.2f1)** — the Unity 6.5 update/tech stream, not the LTS — in
+`ProjectVersion.txt`; install that exact version via Unity Hub (or let Hub
+open-and-upgrade the project). CI (GameCI) runs the pinned 6000.5.x editor. The render
+pipeline is still the built-in RP — URP remains a Milestone 1 decision.
 
 ## Verifying a fresh checkout quickly
 

@@ -106,7 +106,7 @@ reference `nunit.framework.dll` via `overrideReferences`.
 ## How tests run in CI
 
 There is no Unity editor in the agent container. GameCI (`game-ci/unity-test-runner`,
-editor 6000.0.32f1 — Unity 6 LTS — per `ProjectSettings/ProjectVersion.txt`) runs both
+editor 6000.5.2f1 — Unity 6.5 — per `ProjectSettings/ProjectVersion.txt`) runs both
 suites:
 
 - **EditMode** — pure logic: darkness classification (overlap, extinguished, fuel

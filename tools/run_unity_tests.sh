@@ -13,7 +13,7 @@ set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT_PATH="$REPO_ROOT/unity"
-UNITY_VERSION="6000.0.32f1"
+UNITY_VERSION="6000.5.2f1"
 RESULTS_DIR="$REPO_ROOT/test-results"
 
 MODE="${1:-all}"
