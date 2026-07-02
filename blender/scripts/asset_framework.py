@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from pathlib import Path
 from typing import Callable, Iterable
 
@@ -29,13 +30,28 @@ from mathutils import Vector
 
 BLENDER_DIR = Path(__file__).resolve().parent.parent
 SPECS_DIR = BLENDER_DIR / "asset_specs"
-GENERATED_DIR = BLENDER_DIR / "generated"
-GLB_DIR = GENERATED_DIR / "glb"
-BLEND_DIR = GENERATED_DIR / "blend"
-PREVIEW_DIR = GENERATED_DIR / "previews"
-METADATA_DIR = GENERATED_DIR / "metadata"
 
 COLLISION_SUFFIX = "_collision"
+
+
+def set_generated_root(root: str | Path | None) -> Path:
+    """Redirect every pipeline output directory (glb/blend/previews/metadata).
+
+    ``None`` restores the default committed location, ``blender/generated/``.
+    Used by the verify mode of tools/run_blender_asset_pipeline.py to build
+    into a temp directory and compare against the committed artifacts instead
+    of overwriting them. Also honoured at import time via $ABBEY_GENERATED_ROOT.
+    """
+    global GENERATED_DIR, GLB_DIR, BLEND_DIR, PREVIEW_DIR, METADATA_DIR
+    GENERATED_DIR = Path(root).resolve() if root else BLENDER_DIR / "generated"
+    GLB_DIR = GENERATED_DIR / "glb"
+    BLEND_DIR = GENERATED_DIR / "blend"
+    PREVIEW_DIR = GENERATED_DIR / "previews"
+    METADATA_DIR = GENERATED_DIR / "metadata"
+    return GENERATED_DIR
+
+
+set_generated_root(os.environ.get("ABBEY_GENERATED_ROOT"))
 
 # ---------------------------------------------------------------------------
 # Spec loading

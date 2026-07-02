@@ -18,16 +18,39 @@ Usage:
   python3 tools/run_blender_asset_pipeline.py --asset campfire_t1 [--asset ...]
   python3 tools/run_blender_asset_pipeline.py --all
   python3 tools/run_blender_asset_pipeline.py --changed
+  python3 tools/run_blender_asset_pipeline.py --changed --verify
+
+Verify mode (--verify, used by tools/check_all.sh by default):
+  Builds the selected assets into a TEMP directory (via build_asset_batch.py
+  --output-root) and compares the results against the committed artifacts in
+  blender/generated/ WITHOUT touching the working tree. Volatile noise is
+  ignored:
+    - metadata:  compared as JSON with 'generated_at' dropped and the
+                 "(N bytes)" GLB size inside validation details masked
+                 (it co-varies with the GLB, which is compared separately)
+    - previews:  Cycles render noise makes pixel/byte comparison useless, so
+                 previews are compared by existence + PNG pixel dimensions only
+    - GLB:       byte-compare first; on mismatch (e.g. Blender version drift)
+                 fall back to a structural compare: both non-empty and sizes
+                 within GLB_SIZE_TOLERANCE, with geometry equality already
+                 covered by the metadata compare (dimensions/triangle_count)
+    - .blend:    gitignored build artifact, not compared
+  Substantive differences exit 1 with a per-asset report.
 """
 
 from __future__ import annotations
 
 import argparse
+import filecmp
 import importlib.util
+import json
 import os
+import re
 import shutil
+import struct
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 EXIT_SKIP = 3
@@ -36,6 +59,18 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 BATCH_SCRIPT = REPO_ROOT / "blender" / "scripts" / "build_asset_batch.py"
 SPEC_DIR = REPO_ROOT / "blender" / "asset_specs"
 BUILDER_DIR = REPO_ROOT / "blender" / "scripts"
+COMMITTED_GENERATED = REPO_ROOT / "blender" / "generated"
+
+PREVIEW_VARIANTS = ("day", "night", "winter", "grayscale")
+
+# GLB structural-compare tolerance (relative size drift) when byte-compare
+# fails, e.g. across Blender/exporter versions. Geometry is still pinned by the
+# metadata compare (dimensions, triangle_count, materials, anchors).
+GLB_SIZE_TOLERANCE = 0.25
+
+# "(12345 bytes)" inside validation check details — derived from the GLB size,
+# which is compared separately with its own tolerance.
+_BYTES_RE = re.compile(r"\(\d+ bytes\)")
 
 # Local "main". Promotion to origin/main is a human-gated PR (see REQUIREMENTS.yml).
 INTEGRATION_BRANCH = "claude/abbey-llm-pipeline-wel2xo"
@@ -116,6 +151,165 @@ def assets_from_changes(files: list[str]) -> tuple[list[str], bool]:
     return sorted(asset_ids), rebuild_all
 
 
+# ---------------------------------------------------------------------------
+# Verify mode: compare a temp build against the committed artifacts
+# ---------------------------------------------------------------------------
+
+
+def _png_dimensions(path: Path) -> tuple[int, int] | None:
+    """(width, height) from the PNG IHDR chunk, or None if not a valid PNG."""
+    try:
+        with open(path, "rb") as fh:
+            header = fh.read(24)
+    except OSError:
+        return None
+    if len(header) < 24 or header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
+        return None
+    width, height = struct.unpack(">II", header[16:24])
+    return width, height
+
+
+def _normalize_metadata(meta: dict) -> dict:
+    """Strip volatile fields: the generated_at timestamp and the GLB byte size
+    embedded in validation check details."""
+    out = json.loads(json.dumps(meta))  # deep copy
+    out.pop("generated_at", None)
+    for check in out.get("validation", {}).get("checks", []):
+        if isinstance(check.get("detail"), str):
+            check["detail"] = _BYTES_RE.sub("(<n> bytes)", check["detail"])
+    return out
+
+
+def _diff_json(old, new, path: str = "$") -> list[str]:
+    """Human-readable list of leaf differences between two JSON values."""
+    if type(old) is not type(new):
+        return [f"{path}: type {type(old).__name__} -> {type(new).__name__}"]
+    if isinstance(old, dict):
+        diffs = []
+        for key in sorted(set(old) | set(new)):
+            if key not in old:
+                diffs.append(f"{path}.{key}: added")
+            elif key not in new:
+                diffs.append(f"{path}.{key}: removed")
+            else:
+                diffs.extend(_diff_json(old[key], new[key], f"{path}.{key}"))
+        return diffs
+    if isinstance(old, list):
+        if len(old) != len(new):
+            return [f"{path}: list length {len(old)} -> {len(new)}"]
+        diffs = []
+        for i, (a, b) in enumerate(zip(old, new)):
+            diffs.extend(_diff_json(a, b, f"{path}[{i}]"))
+        return diffs
+    if old != new:
+        return [f"{path}: {old!r} -> {new!r}"]
+    return []
+
+
+def _verify_asset(asset_id: str, temp_root: Path) -> list[str]:
+    """Compare one temp-built asset against blender/generated/. Returns a list
+    of substantive problems (empty = clean)."""
+    problems: list[str] = []
+
+    # --- metadata: JSON equality minus volatile fields -----------------------
+    committed_meta_path = COMMITTED_GENERATED / "metadata" / f"{asset_id}.meta.json"
+    new_meta_path = temp_root / "metadata" / f"{asset_id}.meta.json"
+    if not committed_meta_path.is_file():
+        problems.append(
+            f"metadata: {committed_meta_path.relative_to(REPO_ROOT)} is not "
+            "committed — new asset? Regenerate intentionally with "
+            "tools/check_all.sh --write (or run the pipeline without --verify) "
+            "and commit the outputs."
+        )
+        return problems
+    old_meta = json.loads(committed_meta_path.read_text(encoding="utf-8"))
+    new_meta = json.loads(new_meta_path.read_text(encoding="utf-8"))
+    for diff in _diff_json(_normalize_metadata(old_meta), _normalize_metadata(new_meta)):
+        problems.append(f"metadata: {diff}")
+
+    # --- GLB: byte-compare, structural fallback ------------------------------
+    committed_glb = COMMITTED_GENERATED / "glb" / f"{asset_id}.glb"
+    new_glb = temp_root / "glb" / f"{asset_id}.glb"
+    if not committed_glb.is_file():
+        problems.append(f"glb: committed {committed_glb.relative_to(REPO_ROOT)} missing")
+    elif not new_glb.is_file():
+        problems.append("glb: pipeline produced no GLB")
+    elif not filecmp.cmp(committed_glb, new_glb, shallow=False):
+        old_size = committed_glb.stat().st_size
+        new_size = new_glb.stat().st_size
+        drift = abs(new_size - old_size) / max(old_size, 1)
+        if old_size == 0 or new_size == 0 or drift > GLB_SIZE_TOLERANCE:
+            problems.append(
+                f"glb: bytes differ AND size drift {drift:.1%} exceeds "
+                f"{GLB_SIZE_TOLERANCE:.0%} ({old_size} -> {new_size} bytes)"
+            )
+        else:
+            print(
+                f"    note: {asset_id}.glb bytes differ (likely exporter/Blender "
+                f"version drift); structural compare OK (size drift {drift:.1%}, "
+                "geometry pinned by metadata)"
+            )
+
+    # --- previews: existence + PNG dimensions (Cycles noise => no pixel diff) -
+    for variant in PREVIEW_VARIANTS:
+        name = f"{asset_id}_preview_{variant}.png"
+        committed_png = COMMITTED_GENERATED / "previews" / name
+        new_png = temp_root / "previews" / name
+        if not committed_png.is_file():
+            problems.append(f"preview {variant}: committed {name} missing")
+            continue
+        if not new_png.is_file():
+            problems.append(f"preview {variant}: pipeline did not render {name}")
+            continue
+        old_dim = _png_dimensions(committed_png)
+        new_dim = _png_dimensions(new_png)
+        if old_dim is None or new_dim is None:
+            problems.append(f"preview {variant}: {name} is not a valid PNG")
+        elif old_dim != new_dim:
+            problems.append(
+                f"preview {variant}: dimensions {old_dim[0]}x{old_dim[1]} -> "
+                f"{new_dim[0]}x{new_dim[1]}"
+            )
+
+    return problems
+
+
+def verify_against_committed(temp_root: Path) -> int:
+    """Compare every asset built under *temp_root* with blender/generated/."""
+    built = sorted(temp_root.glob("metadata/*.meta.json"))
+    if not built:
+        print("verify: pipeline produced no metadata — nothing to compare.",
+              file=sys.stderr)
+        return 1
+
+    failed = []
+    print(f"\n=== verify: comparing {len(built)} built asset(s) against "
+          f"{COMMITTED_GENERATED.relative_to(REPO_ROOT)} ===")
+    for meta_path in built:
+        asset_id = meta_path.name[: -len(".meta.json")]
+        problems = _verify_asset(asset_id, temp_root)
+        if problems:
+            failed.append(asset_id)
+            print(f"[DIFF] {asset_id}")
+            for problem in problems:
+                print(f"    - {problem}")
+        else:
+            print(f"[ok]   {asset_id}")
+
+    if failed:
+        print(
+            f"\nverify FAILED for {len(failed)}/{len(built)} asset(s): {failed}\n"
+            "Committed artifacts are stale (or the build changed). If the new "
+            "output is intended, regenerate with tools/check_all.sh --write and "
+            "commit blender/generated/.",
+            file=sys.stderr,
+        )
+        return 1
+    print(f"verify OK: all {len(built)} asset(s) match the committed artifacts "
+          "(ignoring generated_at + preview render noise).")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--asset", action="append", default=[], metavar="ID",
@@ -124,6 +318,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--changed", action="store_true",
                         help="build assets whose specs/builders changed vs the "
                              f"merge-base with {INTEGRATION_BRANCH}")
+    parser.add_argument("--verify", action="store_true",
+                        help="build into a temp directory and compare against "
+                             "the committed blender/generated/ instead of "
+                             "overwriting it (leaves the working tree clean)")
     args = parser.parse_args(argv)
 
     if not (args.asset or args.all or args.changed):
@@ -159,11 +357,25 @@ def main(argv: list[str] | None = None) -> int:
                     "'blender' binary on PATH / $BLENDER_PATH).")
 
     mode, prefix = runner
-    cmd = prefix + pipeline_args
-    print(f"Blender runner: {mode} mode")
-    print("Running:", " ".join(cmd))
-    result = subprocess.run(cmd, cwd=REPO_ROOT)
-    return result.returncode
+    temp_root: Path | None = None
+    if args.verify:
+        temp_root = Path(tempfile.mkdtemp(prefix="abbey_verify_"))
+        pipeline_args += ["--output-root", str(temp_root)]
+        print(f"Verify mode: building into {temp_root} (committed artifacts untouched)")
+
+    try:
+        cmd = prefix + pipeline_args
+        print(f"Blender runner: {mode} mode")
+        print("Running:", " ".join(cmd))
+        result = subprocess.run(cmd, cwd=REPO_ROOT)
+        if result.returncode != 0:
+            return result.returncode
+        if temp_root is not None:
+            return verify_against_committed(temp_root)
+        return 0
+    finally:
+        if temp_root is not None:
+            shutil.rmtree(temp_root, ignore_errors=True)
 
 
 if __name__ == "__main__":

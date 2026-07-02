@@ -5,8 +5,12 @@
 # table. Steps that cannot run here (no Blender output yet, no Unity editor)
 # report SKIP, not FAIL. Exit code is nonzero iff at least one step FAILed.
 #
-# Usage: tools/check_all.sh [--full]
-#   --full   run the Blender pipeline with --all instead of --changed
+# Usage: tools/check_all.sh [--full] [--write]
+#   --full   run the Blender pipeline over --all specs instead of --changed
+#   --write  regenerate blender/generated/ in place (intentional regeneration).
+#            By default the pipeline runs in VERIFY mode: it builds into a temp
+#            directory and compares against the committed artifacts, so a
+#            default run leaves the working tree untouched.
 #
 # Step exit-code convention: 0 = PASS, 3 = SKIP, anything else = FAIL.
 # pytest exit 5 ("no tests collected") also counts as SKIP.
@@ -16,10 +20,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 FULL=0
+WRITE=0
 for arg in "$@"; do
   case "$arg" in
     --full) FULL=1 ;;
-    -h|--help) sed -n '2,12p' "$0"; exit 0 ;;
+    --write) WRITE=1 ;;
+    -h|--help) sed -n '2,16p' "$0"; exit 0 ;;
     *) echo "Unknown argument: $arg" >&2; exit 2 ;;
   esac
 done
@@ -72,13 +78,14 @@ run_step "design validation (pytest)" pytest \
   "$PY" -m pytest tests/design_validation -q
 
 # (b) blender asset pipeline
-if [ "$FULL" -eq 1 ]; then
-  run_step "blender pipeline (--all)" cmd \
-    "$PY" tools/run_blender_asset_pipeline.py --all
-else
-  run_step "blender pipeline (--changed)" cmd \
-    "$PY" tools/run_blender_asset_pipeline.py --changed
-fi
+# Default: verify mode — build into a temp dir and compare against the
+# committed blender/generated/ so the gate never dirties the working tree.
+# --write regenerates in place (do that only for intentional regeneration).
+PIPELINE_ARGS=()
+if [ "$FULL" -eq 1 ]; then PIPELINE_ARGS+=(--all); else PIPELINE_ARGS+=(--changed); fi
+if [ "$WRITE" -eq 0 ]; then PIPELINE_ARGS+=(--verify); fi
+run_step "blender pipeline (${PIPELINE_ARGS[*]})" cmd \
+  "$PY" tools/run_blender_asset_pipeline.py "${PIPELINE_ARGS[@]}"
 
 # (c) generated asset validation
 run_step "asset validation (pytest)" pytest \

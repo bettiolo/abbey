@@ -41,9 +41,16 @@ def _check(name: str, passed: bool, detail: str) -> dict:
 
 def _rel(path: Path | str) -> str:
     """Repo-relative path for check details, so committed metadata is stable
-    across worktrees/machines (mirrors build_asset_batch._relpath)."""
+    across worktrees/machines (mirrors build_asset_batch._relpath). Paths under
+    an overridden output root (verify mode) are reported as their canonical
+    blender/generated/ location so metadata stays byte-comparable."""
+    p = Path(path).resolve()
     try:
-        return str(Path(path).resolve().relative_to(fw.BLENDER_DIR.parent))
+        return str(Path("blender") / "generated" / p.relative_to(fw.GENERATED_DIR))
+    except ValueError:
+        pass
+    try:
+        return str(p.relative_to(fw.BLENDER_DIR.parent))
     except ValueError:
         return str(path)
 
