@@ -1,0 +1,136 @@
+{
+  "id": "shipwreck_barrel",
+  "generated_at": "2026-07-02T15:09:55.144521+00:00",
+  "spec": {
+    "id": "shipwreck_barrel",
+    "type": "prop",
+    "theme": "shipwreck",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 0.9
+    },
+    "style": {
+      "silhouette": "fat bulging cargo barrel with two heavy iron hoops and a dark lid",
+      "materials": [
+        "mat_warm_wood",
+        "mat_iron",
+        "mat_dark_wood"
+      ]
+    },
+    "required_parts": [
+      "barrel_body",
+      "iron_hoops",
+      "lid"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 400,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "carry_handle",
+        "type": "grip"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.72812,
+    "depth": 0.74697,
+    "height": 0.89,
+    "min": [
+      -0.36406,
+      -0.37348,
+      0.0
+    ],
+    "max": [
+      0.36406,
+      0.37348,
+      0.89
+    ]
+  },
+  "triangle_count": 228,
+  "material_count": 3,
+  "materials": [
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "carry_handle",
+      "type": "grip"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/shipwreck_barrel.glb",
+    "blend": "blender/generated/blend/shipwreck_barrel.blend",
+    "previews": {
+      "day": "blender/generated/previews/shipwreck_barrel_preview_day.png",
+      "night": "blender/generated/previews/shipwreck_barrel_preview_night.png",
+      "winter": "blender/generated/previews/shipwreck_barrel_preview_winter.png",
+      "grayscale": "blender/generated/previews/shipwreck_barrel_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/shipwreck_barrel.glb (20508 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/shipwreck_barrel.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.728x0.747x0.890 vs footprint 1.0x1.0x0.9"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "228/400 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_dark_wood', 'mat_iron', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['carry_handle'] present=['carry_handle']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "shipwreck_barrel_collision present"
+      }
+    ]
+  }
+}

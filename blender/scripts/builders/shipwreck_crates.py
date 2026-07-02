@@ -1,11 +1,16 @@
-"""Builder family: shipwreck crates — the wreck is the settlement's first mine.
+"""Builder family: shipwreck salvage containers — the wreck is the settlement's
+first mine.
 
 shipwreck_crate_closed: chunky closed cargo crate. Warm plank body, thick dark
 corner frames (strong silhouette from the iso camera), pale rope lashing with a
 knot on top. Reads as "salvage me" at a distance and in grayscale.
 
+shipwreck_barrel: fat bulging cargo barrel — three stacked sections give the
+belly, two heavy iron hoops sit proud at the seams, dark lid + bung on top.
+
 Anchors: carry_handle (grip) — where the Bellkeeper/villagers grab it.
-Budget: 400 tris / 3 materials (mat_warm_wood, mat_dark_wood, mat_canvas).
+Budgets: crate 400 tris / 3 materials (mat_warm_wood, mat_dark_wood, mat_canvas);
+barrel 400 tris / 3 materials (mat_warm_wood, mat_iron, mat_dark_wood).
 """
 
 from __future__ import annotations
@@ -15,7 +20,7 @@ import math
 import bpy
 
 from asset_framework import add_anchor, register_builder
-from builders._shapes import add_box
+from builders._shapes import add_box, add_cylinder
 
 BODY_W = 0.72   # X
 BODY_D = 0.72   # Y
@@ -127,4 +132,57 @@ def build_crate_closed(spec: dict) -> list[bpy.types.Object]:
         add_anchor("carry_handle", (0.0, 0.0, BODY_H + FRAME_T), anchor_type="grip")
     )
 
+    return objects
+
+
+# ---------------------------------------------------------------------------
+# shipwreck_barrel
+# ---------------------------------------------------------------------------
+
+BARREL_SECTIONS = (
+    # (radius, height, z_center) — fat middle section gives the bulge
+    (0.26, 0.24, 0.12),
+    (0.30, 0.32, 0.40),
+    (0.26, 0.24, 0.68),
+)
+
+
+@register_builder("shipwreck_barrel")
+def build_shipwreck_barrel(spec: dict) -> list[bpy.types.Object]:
+    objects: list[bpy.types.Object] = []
+    yaw = math.radians(18.0)  # slight turn so the facets catch the light
+
+    # --- barrel_body: three stacked sections ---------------------------------
+    for i, (radius, height, z) in enumerate(BARREL_SECTIONS):
+        objects.append(
+            add_cylinder(
+                f"barrel_body_{i}", "mat_warm_wood",
+                radius=radius, depth=height, vertices=10,
+                location=(0.0, 0.0, z), rotation=(0.0, 0.0, yaw),
+            )
+        )
+
+    # --- iron_hoops: proud of the wood at the section seams ------------------
+    for i, z in enumerate((0.25, 0.55)):
+        objects.append(
+            add_cylinder(
+                f"iron_hoop_{i}", "mat_iron",
+                radius=0.295, depth=0.07, vertices=10,
+                location=(0.0, 0.0, z), rotation=(0.0, 0.0, yaw),
+            )
+        )
+
+    # --- lid + bung -----------------------------------------------------------
+    objects.append(
+        add_cylinder(
+            "lid", "mat_dark_wood",
+            radius=0.235, depth=0.05, vertices=10,
+            location=(0.0, 0.0, 0.82), rotation=(0.0, 0.0, yaw),
+        )
+    )
+    objects.append(
+        add_box("bung", "mat_dark_wood", size=(0.08, 0.08, 0.06), location=(0.12, 0.05, 0.86))
+    )
+
+    objects.append(add_anchor("carry_handle", (0.0, 0.0, 0.9), anchor_type="grip"))
     return objects

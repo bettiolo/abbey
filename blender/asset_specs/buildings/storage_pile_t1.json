@@ -1,0 +1,17 @@
+{
+  "id": "storage_pile_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 2.0, "depth": 2.0, "height": 1.7 },
+  "style": {
+    "silhouette": "low pallet stacked with chunky crates and fat grain sacks, rope lashing over the top crate",
+    "materials": ["mat_warm_wood", "mat_dark_wood", "mat_canvas"]
+  },
+  "required_parts": ["pallet", "crates", "sacks", "rope_lashing"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 4 },
+  "anchors": [
+    { "name": "deposit_point", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "shelter_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 2.0, "depth": 2.0, "height": 2.8 },
+  "style": {
+    "silhouette": "chunky one-room hut dominated by a big overhanging sloped thatch roof, glowing window, stout plank door, stubby smoke stack",
+    "materials": ["mat_warm_wood", "mat_thatch", "mat_dark_wood", "mat_warm_window"]
+  },
+  "required_parts": ["body", "sloped_roof", "door", "window", "smoke_stack"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "door", "type": "door" },
+    { "name": "smoke", "type": "particle" }
+  ],
+  "pivot": "center_bottom"
+}

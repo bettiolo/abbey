@@ -1,0 +1,18 @@
+{
+  "id": "lantern_post_t1",
+  "type": "prop",
+  "theme": "camp",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 2.8 },
+  "style": {
+    "silhouette": "tall dark post with a bracket arm and one fat hanging lantern of warm glowing glass in an iron cage",
+    "materials": ["mat_dark_wood", "mat_iron", "mat_warm_window"]
+  },
+  "required_parts": ["post", "bracket_arm", "lantern", "fuel_hook"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 600, "max_materials": 3 },
+  "anchors": [
+    { "name": "flame", "type": "light" },
+    { "name": "fuel_hook", "type": "hook" }
+  ],
+  "pivot": "center_bottom"
+}

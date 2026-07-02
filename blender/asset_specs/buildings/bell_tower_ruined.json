@@ -1,0 +1,19 @@
+{
+  "id": "bell_tower_ruined",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 3.0, "depth": 3.0, "height": 6.0 },
+  "style": {
+    "silhouette": "tall square stone tower with a jagged broken crown, one collapsed wall exposing the sacred gold bell hanging from a charred beam, rubble at the base",
+    "materials": ["mat_old_stone", "mat_dark_wood", "mat_sacred_gold"]
+  },
+  "required_parts": ["tower_walls", "corner_piers", "broken_crown", "belfry_beam", "bell", "doorway", "rubble"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "bell", "type": "bell" },
+    { "name": "hound_lair", "type": "lair" },
+    { "name": "door", "type": "door" }
+  ],
+  "pivot": "center_bottom"
+}

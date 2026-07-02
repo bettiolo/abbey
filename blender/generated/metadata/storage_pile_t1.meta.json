@@ -1,0 +1,137 @@
+{
+  "id": "storage_pile_t1",
+  "generated_at": "2026-07-02T15:10:17.958405+00:00",
+  "spec": {
+    "id": "storage_pile_t1",
+    "type": "building",
+    "theme": "camp",
+    "footprint": {
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 1.7
+    },
+    "style": {
+      "silhouette": "low pallet stacked with chunky crates and fat grain sacks, rope lashing over the top crate",
+      "materials": [
+        "mat_warm_wood",
+        "mat_dark_wood",
+        "mat_canvas"
+      ]
+    },
+    "required_parts": [
+      "pallet",
+      "crates",
+      "sacks",
+      "rope_lashing"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 800,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "deposit_point",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.8,
+    "depth": 1.8,
+    "height": 1.415,
+    "min": [
+      -0.9,
+      -0.9,
+      0.0
+    ],
+    "max": [
+      0.9,
+      0.9,
+      1.415
+    ]
+  },
+  "triangle_count": 300,
+  "material_count": 3,
+  "materials": [
+    "mat_canvas",
+    "mat_dark_wood",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "deposit_point",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/storage_pile_t1.glb",
+    "blend": "blender/generated/blend/storage_pile_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/storage_pile_t1_preview_day.png",
+      "night": "blender/generated/previews/storage_pile_t1_preview_night.png",
+      "winter": "blender/generated/previews/storage_pile_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/storage_pile_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/storage_pile_t1.glb (41580 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/storage_pile_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.800x1.800x1.415 vs footprint 2.0x2.0x1.7"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "300/800 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/4 materials: ['mat_canvas', 'mat_dark_wood', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['deposit_point'] present=['deposit_point']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "storage_pile_t1_collision present"
+      }
+    ]
+  }
+}

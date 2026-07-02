@@ -1,6 +1,6 @@
 {
   "id": "shipwreck_crate_closed",
-  "generated_at": "2026-07-02T00:11:06.499896+00:00",
+  "generated_at": "2026-07-02T15:10:04.232305+00:00",
   "spec": {
     "id": "shipwreck_crate_closed",
     "type": "prop",
@@ -84,12 +84,12 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/glb/shipwreck_crate_closed.glb (36964 bytes)"
+        "detail": "blender/generated/glb/shipwreck_crate_closed.glb (36964 bytes)"
       },
       {
         "name": "blend_saved",
         "passed": true,
-        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/blend/shipwreck_crate_closed.blend"
+        "detail": "blender/generated/blend/shipwreck_crate_closed.blend"
       },
       {
         "name": "previews_exist",

@@ -1,0 +1,124 @@
+{
+  "id": "forest_tree_01",
+  "generated_at": "2026-07-02T15:09:21.924008+00:00",
+  "spec": {
+    "id": "forest_tree_01",
+    "type": "terrain",
+    "theme": "wild",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 3.2
+    },
+    "style": {
+      "silhouette": "leaning dark trunk under a chunky stacked blob canopy \u2014 bold rounded silhouette readable at distance",
+      "materials": [
+        "mat_dark_wood",
+        "mat_foliage"
+      ]
+    },
+    "required_parts": [
+      "trunk",
+      "branch_stub",
+      "canopy_blobs"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 800,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.76756,
+    "depth": 0.69161,
+    "height": 2.8277,
+    "min": [
+      -0.38378,
+      -0.34581,
+      0.0
+    ],
+    "max": [
+      0.38378,
+      0.34581,
+      2.8277
+    ]
+  },
+  "triangle_count": 104,
+  "material_count": 2,
+  "materials": [
+    "mat_dark_wood",
+    "mat_foliage"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/forest_tree_01.glb",
+    "blend": "blender/generated/blend/forest_tree_01.blend",
+    "previews": {
+      "day": "blender/generated/previews/forest_tree_01_preview_day.png",
+      "night": "blender/generated/previews/forest_tree_01_preview_night.png",
+      "winter": "blender/generated/previews/forest_tree_01_preview_winter.png",
+      "grayscale": "blender/generated/previews/forest_tree_01_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/forest_tree_01.glb (15128 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/forest_tree_01.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.768x0.692x2.828 vs footprint 1.0x1.0x3.2"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "104/800 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/3 materials: ['mat_dark_wood', 'mat_foliage']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "forest_tree_01_collision present"
+      }
+    ]
+  }
+}

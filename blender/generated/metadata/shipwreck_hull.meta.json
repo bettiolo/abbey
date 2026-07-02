@@ -1,0 +1,163 @@
+{
+  "id": "shipwreck_hull",
+  "generated_at": "2026-07-02T15:10:10.172917+00:00",
+  "spec": {
+    "id": "shipwreck_hull",
+    "type": "terrain",
+    "theme": "shipwreck",
+    "footprint": {
+      "width": 6.0,
+      "depth": 3.0,
+      "height": 3.0
+    },
+    "style": {
+      "silhouette": "two broken hull halves torn apart amidships, jagged ribs at the tear, tilted mast stump with a torn hanging sail",
+      "materials": [
+        "mat_dark_wood",
+        "mat_canvas",
+        "mat_iron"
+      ]
+    },
+    "required_parts": [
+      "stern_half",
+      "bow_half",
+      "broken_ribs",
+      "mast_stump",
+      "torn_sail",
+      "debris"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "salvage_point_1",
+        "type": "salvage"
+      },
+      {
+        "name": "salvage_point_2",
+        "type": "salvage"
+      },
+      {
+        "name": "salvage_point_3",
+        "type": "salvage"
+      },
+      {
+        "name": "bell_fragment",
+        "type": "loot"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 5.86153,
+    "depth": 2.48141,
+    "height": 2.60507,
+    "min": [
+      -2.93076,
+      -1.24071,
+      0.0
+    ],
+    "max": [
+      2.93076,
+      1.24071,
+      2.60507
+    ]
+  },
+  "triangle_count": 520,
+  "material_count": 3,
+  "materials": [
+    "mat_canvas",
+    "mat_dark_wood",
+    "mat_iron"
+  ],
+  "anchors": [
+    {
+      "name": "salvage_point_3",
+      "type": "salvage"
+    },
+    {
+      "name": "salvage_point_2",
+      "type": "salvage"
+    },
+    {
+      "name": "salvage_point_1",
+      "type": "salvage"
+    },
+    {
+      "name": "bell_fragment",
+      "type": "loot"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/shipwreck_hull.glb",
+    "blend": "blender/generated/blend/shipwreck_hull.blend",
+    "previews": {
+      "day": "blender/generated/previews/shipwreck_hull_preview_day.png",
+      "night": "blender/generated/previews/shipwreck_hull_preview_night.png",
+      "winter": "blender/generated/previews/shipwreck_hull_preview_winter.png",
+      "grayscale": "blender/generated/previews/shipwreck_hull_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/shipwreck_hull.glb (63932 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/shipwreck_hull.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 5.862x2.481x2.605 vs footprint 6.0x3.0x3.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "520/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_canvas', 'mat_dark_wood', 'mat_iron']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['salvage_point_1', 'salvage_point_2', 'salvage_point_3', 'bell_fragment'] present=['bell_fragment', 'salvage_point_1', 'salvage_point_2', 'salvage_point_3']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "shipwreck_hull_collision present"
+      }
+    ]
+  }
+}

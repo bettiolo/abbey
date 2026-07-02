@@ -1,0 +1,15 @@
+{
+  "id": "abbey_wall_broken",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 2.0, "depth": 1.0, "height": 2.2 },
+  "style": {
+    "silhouette": "ruined old-stone wall segment with a jagged descending break line and rubble spilled at its foot",
+    "materials": ["mat_old_stone"]
+  },
+  "required_parts": ["base_course", "broken_courses", "rubble"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1200, "max_materials": 4 },
+  "anchors": [],
+  "pivot": "center_bottom"
+}

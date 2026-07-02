@@ -1,0 +1,121 @@
+{
+  "id": "rock_cluster_01",
+  "generated_at": "2026-07-02T15:13:10.200606+00:00",
+  "spec": {
+    "id": "rock_cluster_01",
+    "type": "terrain",
+    "theme": "wild",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 0.8
+    },
+    "style": {
+      "silhouette": "one dominant tilted boulder with smaller chunks huddled against it",
+      "materials": [
+        "mat_old_stone"
+      ]
+    },
+    "required_parts": [
+      "main_boulder",
+      "side_rocks"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 400,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.96181,
+    "depth": 0.84372,
+    "height": 0.75158,
+    "min": [
+      -0.48091,
+      -0.42186,
+      -0.0
+    ],
+    "max": [
+      0.48091,
+      0.42186,
+      0.75158
+    ]
+  },
+  "triangle_count": 80,
+  "material_count": 1,
+  "materials": [
+    "mat_old_stone"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/rock_cluster_01.glb",
+    "blend": "blender/generated/blend/rock_cluster_01.blend",
+    "previews": {
+      "day": "blender/generated/previews/rock_cluster_01_preview_day.png",
+      "night": "blender/generated/previews/rock_cluster_01_preview_night.png",
+      "winter": "blender/generated/previews/rock_cluster_01_preview_winter.png",
+      "grayscale": "blender/generated/previews/rock_cluster_01_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/rock_cluster_01.glb (13336 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/rock_cluster_01.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=-0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.962x0.844x0.752 vs footprint 1.0x1.0x0.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "80/400 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "1/3 materials: ['mat_old_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "rock_cluster_01_collision present"
+      }
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "id": "shelter_t1",
+  "generated_at": "2026-07-02T15:09:48.645431+00:00",
+  "spec": {
+    "id": "shelter_t1",
+    "type": "building",
+    "theme": "camp",
+    "footprint": {
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 2.8
+    },
+    "style": {
+      "silhouette": "chunky one-room hut dominated by a big overhanging sloped thatch roof, glowing window, stout plank door, stubby smoke stack",
+      "materials": [
+        "mat_warm_wood",
+        "mat_thatch",
+        "mat_dark_wood",
+        "mat_warm_window"
+      ]
+    },
+    "required_parts": [
+      "body",
+      "sloped_roof",
+      "door",
+      "window",
+      "smoke_stack"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "door",
+        "type": "door"
+      },
+      {
+        "name": "smoke",
+        "type": "particle"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 2.0,
+    "depth": 1.9538,
+    "height": 2.35,
+    "min": [
+      -1.0,
+      -0.9769,
+      0.0
+    ],
+    "max": [
+      1.0,
+      0.9769,
+      2.35
+    ]
+  },
+  "triangle_count": 192,
+  "material_count": 4,
+  "materials": [
+    "mat_dark_wood",
+    "mat_thatch",
+    "mat_warm_window",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "smoke",
+      "type": "particle"
+    },
+    {
+      "name": "door",
+      "type": "door"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/shelter_t1.glb",
+    "blend": "blender/generated/blend/shelter_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/shelter_t1_preview_day.png",
+      "night": "blender/generated/previews/shelter_t1_preview_night.png",
+      "winter": "blender/generated/previews/shelter_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/shelter_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/shelter_t1.glb (26760 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/shelter_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 2.000x1.954x2.350 vs footprint 2.0x2.0x2.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "192/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_dark_wood', 'mat_thatch', 'mat_warm_window', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['door', 'smoke'] present=['door', 'smoke']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "shelter_t1_collision present"
+      }
+    ]
+  }
+}

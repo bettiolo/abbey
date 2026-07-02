@@ -1,0 +1,20 @@
+{
+  "id": "shipwreck_hull",
+  "type": "terrain",
+  "theme": "shipwreck",
+  "footprint": { "width": 6.0, "depth": 3.0, "height": 3.0 },
+  "style": {
+    "silhouette": "two broken hull halves torn apart amidships, jagged ribs at the tear, tilted mast stump with a torn hanging sail",
+    "materials": ["mat_dark_wood", "mat_canvas", "mat_iron"]
+  },
+  "required_parts": ["stern_half", "bow_half", "broken_ribs", "mast_stump", "torn_sail", "debris"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 3 },
+  "anchors": [
+    { "name": "salvage_point_1", "type": "salvage" },
+    { "name": "salvage_point_2", "type": "salvage" },
+    { "name": "salvage_point_3", "type": "salvage" },
+    { "name": "bell_fragment", "type": "loot" }
+  ],
+  "pivot": "center_bottom"
+}
