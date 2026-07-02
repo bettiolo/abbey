@@ -302,12 +302,12 @@ tasks:
       - tools/build_macos.sh
       - docs/RUNNING_ON_MAC.md
     depends_on: [U6-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity65
     branch: task/U6-02
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: orchestrator # inline review (small mechanical diff; builder session died pre-commit, salvaged per resume protocol)
+    review: approved
+    merged_commit: 0f800d9
 
   - id: A2-01
     title: Abbey / town center / field kit from user reference art
