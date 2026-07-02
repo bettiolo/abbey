@@ -378,12 +378,16 @@ tasks:
       spec section 5 (campfire, storage, shelter, woodcutter hut, lantern post, guard
       post, candle shrine, infirmary corner). Footprint validation EditMode tests.
     depends_on: [P2-01]
-    status: in_review
+    status: in_progress
     assigned_to: builder-p2-buildings
     branch: task/P2-03
     reviewer: reviewer-p2-buildings
-    review: null
+    review: changes_requested
     merged_commit: null
+    notes: >
+      Two test-only NREs: ConstructionSiteTests DeliverResource_ClampsToStockAndNeed and
+      DeliverResource_RefusesResourcesNotInTheCost place sites the affordability gate
+      rejects (null), then dereference. Runtime code clean per review.
   - id: P2-04
     title: Abbey restoration nodes (Gate, Bell Tower, Candle Shrine, Infirmary)
     phase: phase-2
@@ -405,12 +409,16 @@ tasks:
       kills monster, drags corpse away, refuses bell. All transitions event-logged.
       EditMode transition tests + PlayMode branch tests.
     depends_on: [P01-10, GATE-0.1]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-hound
     branch: task/P2-05
     reviewer: reviewer-p2-hound
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: dbc8d2f
+    notes: >
+      Beast-bond gate flag: implicit chain-break on first bonded action is event-logged
+      but slightly dilutes the scripted save-hero chain-break beat; revisit when old
+      tests may be renegotiated. Bell-calm trust gain currently uncapped (tunable).
   - id: P2-06
     title: Nightmare director + pale hound / drowned sailor / lantern moth
     phase: phase-2
@@ -420,7 +428,12 @@ tasks:
       by water; lantern moth dims a light creating a darkness gap; director state on
       debug overlay; deterministic seeded spawns.
     depends_on: [P2-05]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-director
+    branch: task/P2-06
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-07
     title: Morning consequence report (storybook tone)
     phase: phase-2
@@ -451,10 +464,10 @@ tasks:
       pale_hound_lowpoly, drowned_sailor_lowpoly, lantern_moth_lowpoly.
       (bell tower repaired = existing bell_tower_t2.)
     depends_on: [P01-12]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-assets
     branch: task/P2-09
-    reviewer: null
+    reviewer: reviewer-p2-assets
     review: null
     merged_commit: null
   - id: P2-10
