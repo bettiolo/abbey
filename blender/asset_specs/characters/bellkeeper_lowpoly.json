@@ -1,0 +1,18 @@
+{
+  "id": "bellkeeper_lowpoly",
+  "type": "character",
+  "theme": "character",
+  "footprint": { "width": 1.1, "depth": 1.2, "height": 2.4 },
+  "style": {
+    "silhouette": "the hero: hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell — lantern and bell-arm must read in pure silhouette",
+    "materials": ["mat_dark_wood", "mat_sacred_gold", "mat_warm_window"]
+  },
+  "required_parts": ["robe_skirt", "chest", "hood", "lantern_staff", "lantern", "bell_arm", "hand_bell"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "flame", "type": "light" },
+    { "name": "bell", "type": "bell" }
+  ],
+  "pivot": "center_bottom"
+}

@@ -1,0 +1,148 @@
+{
+  "id": "bellkeeper_lowpoly",
+  "generated_at": "2026-07-02T19:16:40.095118+00:00",
+  "spec": {
+    "id": "bellkeeper_lowpoly",
+    "type": "character",
+    "theme": "character",
+    "footprint": {
+      "width": 1.1,
+      "depth": 1.2,
+      "height": 2.4
+    },
+    "style": {
+      "silhouette": "the hero: hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell \u2014 lantern and bell-arm must read in pure silhouette",
+      "materials": [
+        "mat_dark_wood",
+        "mat_sacred_gold",
+        "mat_warm_window"
+      ]
+    },
+    "required_parts": [
+      "robe_skirt",
+      "chest",
+      "hood",
+      "lantern_staff",
+      "lantern",
+      "bell_arm",
+      "hand_bell"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "flame",
+        "type": "light"
+      },
+      {
+        "name": "bell",
+        "type": "bell"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.03689,
+    "depth": 1.145,
+    "height": 2.29847,
+    "min": [
+      -0.51844,
+      -0.5725,
+      0.0
+    ],
+    "max": [
+      0.51844,
+      0.5725,
+      2.29847
+    ]
+  },
+  "triangle_count": 226,
+  "material_count": 3,
+  "materials": [
+    "mat_dark_wood",
+    "mat_sacred_gold",
+    "mat_warm_window"
+  ],
+  "anchors": [
+    {
+      "name": "flame",
+      "type": "light"
+    },
+    {
+      "name": "bell",
+      "type": "bell"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/bellkeeper_lowpoly.glb",
+    "blend": "blender/generated/blend/bellkeeper_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/bellkeeper_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/bellkeeper_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/bellkeeper_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/bellkeeper_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/bellkeeper_lowpoly.glb (30192 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/bellkeeper_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.037x1.145x2.298 vs footprint 1.1x1.2x2.4"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "226/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_dark_wood', 'mat_sacred_gold', 'mat_warm_window']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['flame', 'bell'] present=['bell', 'flame']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "bellkeeper_lowpoly_collision present"
+      }
+    ]
+  }
+}
