@@ -8,9 +8,12 @@ namespace Abbey.Buildings
     /// <summary>
     /// What a completed building *is* to the simulation. Completion attaches the
     /// matching runtime component: <see cref="Abbey.Light.LightSource"/> for
-    /// LightSource, <see cref="Abbey.Economy.StoragePile"/> for Storage. The other
-    /// kinds are identified by <see cref="Building.Kind"/> today; later tasks
-    /// (villager roles, abbey restoration) attach behaviour to them.
+    /// LightSource, <see cref="Abbey.Economy.StoragePile"/> for Storage, a sacred
+    /// LightSource for Shrine, an <see cref="InfirmaryZone"/> for Infirmary; Gate
+    /// and BellTower flip their <see cref="AbbeyState"/> flags (abbey restoration,
+    /// P2-04). Shelter, WorkHut and GuardPost are identified by
+    /// <see cref="Building.Kind"/> alone. New kinds append at the end (serialized
+    /// enum indices must stay stable).
     /// </summary>
     public enum FunctionKind
     {
@@ -20,7 +23,9 @@ namespace Abbey.Buildings
         WorkHut,
         GuardPost,
         Shrine,
-        Infirmary
+        Infirmary,
+        Gate,
+        BellTower
     }
 
     /// <summary>
@@ -231,6 +236,34 @@ namespace Abbey.Buildings
                     },
                     buildWorkSeconds = 12f,
                     function = FunctionKind.Infirmary,
+                },
+                // Abbey restoration nodes (GAME_DESIGN.md §8: gate = wood+stone,
+                // bell tower = wood+iron). Fixed pre-placed sites; see RestorationNode.
+                new BuildingType
+                {
+                    id = "abbey_gate_repair",
+                    displayName = "Abbey Gate Repair",
+                    footprint = new Vector2(4f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 8),
+                        new ResourceStack(ResourceType.Stone, 6),
+                    },
+                    buildWorkSeconds = 20f,
+                    function = FunctionKind.Gate,
+                },
+                new BuildingType
+                {
+                    id = "bell_tower_repair",
+                    displayName = "Bell Tower Repair",
+                    footprint = new Vector2(2f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 6),
+                        new ResourceStack(ResourceType.ScrapIron, 4),
+                    },
+                    buildWorkSeconds = 20f,
+                    function = FunctionKind.BellTower,
                 },
             };
         }

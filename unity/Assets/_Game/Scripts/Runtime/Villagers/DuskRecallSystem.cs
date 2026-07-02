@@ -84,6 +84,10 @@ namespace Abbey.Villagers
 
         static void OnBellRang(Vector3 position, float radius)
         {
+            // Abbey bell tower repair boosts every pulse's reach. The multiplier
+            // is applied here, where the pulse is consumed, so the Bellkeeper's
+            // RaiseBellRang call site stays untouched (P2-04).
+            radius *= Abbey.Buildings.AbbeyState.BellRangeMultiplier;
             _pulses.Add(new BellPulse(position, radius, Now));
 
             // A bell during Dusk/Night immediately recalls (or calms) covered villagers.
