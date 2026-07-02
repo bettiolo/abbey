@@ -437,10 +437,10 @@ tasks:
       by water; lantern moth dims a light creating a darkness gap; director state on
       debug overlay; deterministic seeded spawns.
     depends_on: [P2-05]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-director
     branch: task/P2-06
-    reviewer: null
+    reviewer: reviewer-p2-director
     review: null
     merged_commit: null
   - id: P2-07
