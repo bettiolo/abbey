@@ -304,6 +304,21 @@ tasks:
     review: approved
     merged_commit: 7ecbfaf
 
+  - id: M0-06
+    title: check_all.sh must not dirty the working tree
+    phase: milestone-0
+    description: 'Running tools/check_all.sh regenerates assets and rewrites metadata timestamps + Cycles-noise preview pixels, leaving ~100 modified files that are pure churn (observed 2026-07-02). Fix: build to a temp dir and compare against committed artifacts (fail on substantive diff, ignore generated_at/render noise), or add a --no-write verify mode to build_asset_batch.py used by the gate. Also drop generated_at from metadata or move it to a sidecar so reruns are byte-stable.'
+    deliverables:
+      - blender/scripts/build_asset_batch.py
+      - tools/check_all.sh
+    depends_on: [M0-04]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
   # ---------------------------------------------------------------- Phase 2 (blocked until 0.1 human gate)
   - id: P2-01
     title: Shipwreck salvage economy
