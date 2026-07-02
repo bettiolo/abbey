@@ -1,0 +1,61 @@
+name: Blender assets
+
+on:
+  push:
+    paths:
+      - "blender/**"
+      - "tools/**"
+      - "tests/**"
+      - ".github/workflows/assets.yml"
+  pull_request:
+    paths:
+      - "blender/**"
+      - "tools/**"
+      - "tests/**"
+      - ".github/workflows/assets.yml"
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    # The bpy wheel is ~300 MB; give the install + full asset build headroom.
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: tools/requirements-dev.txt
+
+      - name: Install dependencies (incl. bpy, ~300 MB wheel)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tools/requirements-dev.txt bpy
+
+      - name: Design validation (REQUIREMENTS.yml tracker)
+        run: python -m pytest tests/design_validation -q
+
+      - name: Build all assets (Blender headless via bpy module)
+        run: |
+          # Exit 3 means SKIP (pipeline entry not merged yet) — not a failure.
+          python tools/run_blender_asset_pipeline.py --all && rc=0 || rc=$?
+          if [ "$rc" -eq 3 ]; then
+            echo "::warning::Blender pipeline skipped (entry script missing)."
+            exit 0
+          fi
+          exit "$rc"
+
+      - name: Asset validation (generated GLB/previews/metadata vs specs)
+        run: python -m pytest tests/asset_validation -q -rs
+
+      - name: Upload preview renders
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-previews
+          path: blender/generated/previews/
+          if-no-files-found: ignore
+          retention-days: 14
