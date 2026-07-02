@@ -329,12 +329,12 @@ tasks:
       - blender/scripts/build_asset_batch.py
       - tools/check_all.sh
     depends_on: [M0-04]
-    status: in_review
+    status: merged
     assigned_to: builder-check-hygiene
     branch: task/M0-06
     reviewer: reviewer-check-hygiene
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: a048fb3
 
   # ---------------------------------------------------------------- Phase 2 (GATE-0.1 passed 2026-07-02)
   - id: P2-01
