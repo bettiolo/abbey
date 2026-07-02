@@ -1,0 +1,17 @@
+{
+  "id": "hound_chain",
+  "type": "prop",
+  "theme": "abbey",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.9 },
+  "style": {
+    "silhouette": "massive stone anchor block with an iron mounting ring and a heavy chain of fat links draping to the ground",
+    "materials": ["mat_old_stone", "mat_iron"]
+  },
+  "required_parts": ["anchor_block", "mount_ring", "chain_links"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 3 },
+  "anchors": [
+    { "name": "attach_point", "type": "attach" }
+  ],
+  "pivot": "center_bottom"
+}
