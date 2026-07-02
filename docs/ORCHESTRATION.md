@@ -36,7 +36,9 @@ the file in the merge commit, so the tracker and the code land atomically.
    `./tools/check_all.sh` after each merge; a red gate reverts the merge and sends the
    task back to `in_progress` with notes.
 3. Push the integration branch (`git push -u origin <integration_branch>`) after every
-   successful merge batch. Promotion to `origin/main` is a human-gated PR.
+   successful merge batch. The user renames this branch to `main` in GitHub Settings
+   (decision 2026-07-02) — after the rename, update `integration_branch` in
+   REQUIREMENTS.yml to `main` and push there; all work lands on `main` directly.
 4. Delete merged worktrees; keep `task/<id>` branches until the phase gate passes.
 
 ## Resume protocol (orchestrator session died)
