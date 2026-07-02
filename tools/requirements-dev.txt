@@ -1,0 +1,5 @@
+# Dev/CI dependencies for the validation harness (tests/ + tools/).
+# The 'bpy' module is installed separately in CI (it is a ~300 MB wheel and
+# only needed for the asset pipeline job) — see .github/workflows/assets.yml.
+pytest>=8
+pyyaml>=6
