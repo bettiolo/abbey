@@ -348,12 +348,12 @@ tasks:
       "EconomyConfig"), NOT in PrototypeConfig. New code under
       unity/Assets/_Game/Scripts/Runtime/Economy/. EditMode resource accounting tests.
     depends_on: [P01-10, GATE-0.1]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-economy
     branch: task/P2-01
     reviewer: reviewer-p2-economy
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: 3079f84
   - id: P2-02
     title: Villager jobs and visible logistics
     phase: phase-2
@@ -477,7 +477,7 @@ gates:
   - id: GATE-0.1
     kind: human_review
     question: Is it fun and tense to manage distance from light while directly controlling the Bellkeeper?
-    status: passed
+    status: approved
     verdict: >
       PASS (2026-07-02). Evidence: all P01 tasks merged; EditMode+PlayMode suites include
       FirstNightTests covering fed-hound-helps and starved-hound-ignores-bell branches;
