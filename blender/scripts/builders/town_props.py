@@ -6,7 +6,9 @@ Anchors: bucket (attach), water (water surface inside the shaft).
 
 pennant_pole: slender dark pole, gold cap finial, and the settlement's
 blue/yellow pennant (mat_wet_stone blue field + mat_sacred_gold tail — the
-map-identity accent from docs/ART_REFERENCE_ABBEY.md).
+map-identity accent from docs/ART_REFERENCE_ABBEY.md; sacred_gold stands in
+for the reference's flag_yellow cloth, see "Known closed-library compromises"
+there).
 
 paving_patch: 1x1 flagstone ground patch (tex_paving via mat_ash) with a few
 individually raised stones and dirt at the worn edges.

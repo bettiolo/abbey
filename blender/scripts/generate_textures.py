@@ -2,8 +2,17 @@
 
 Regenerates the shared 64x64 pixel-art texture set described in
 docs/ART_REFERENCE_ABBEY.md ("Texture extraction plan") from nothing but numpy —
-no external image inputs. Every texture uses EXACTLY the 4-step hex ramps from
-the reference doc and a fixed seed, so output is byte-for-byte deterministic.
+no external image inputs. Every texture uses EXACTLY the 4-step transcribed
+ALBEDO hex ramps from the reference doc and a fixed seed, so output is
+byte-for-byte deterministic.
+
+Palette authority (see the decision note under "Measured palette" in
+docs/ART_REFERENCE_ABBEY.md): the measured clusters sampled from
+docs/abbey-town-1.png are a LIT render — sun, AO and outline pass baked in —
+so they are the verification target for the rendered previews, NOT this
+generator's input. Using them as albedo would double-apply lighting under the
+game's own rig. This generator deliberately consumes the transcribed albedo
+ramps instead.
 
 Textures (written to blender/kits/materials/textures/, committed):
 
@@ -35,8 +44,10 @@ SIZE = 64
 TEXTURES_DIR = Path(__file__).resolve().parent.parent / "kits" / "materials" / "textures"
 
 # ---------------------------------------------------------------------------
-# Palette ramps — EXACT hex values from docs/ART_REFERENCE_ABBEY.md
-# (highlight / mid / shadow / deep)
+# Palette ramps — EXACT hex values from the "Transcribed palette (albedo
+# ramps)" table in docs/ART_REFERENCE_ABBEY.md (highlight / mid / shadow /
+# deep). Intentionally NOT the measured clusters — those include baked
+# lighting and are the preview verification target (see doc decision note).
 # ---------------------------------------------------------------------------
 
 RAMP_ROOF_TERRACOTTA = ("#d97b4a", "#b5532e", "#7e3520", "#5f2718")

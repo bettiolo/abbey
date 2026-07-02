@@ -7,8 +7,11 @@ Anchors: bell, flag (pennant attach), door.
 
 abbey_church_t1 (landmark): warm-stone gothic nave, steep terracotta roof,
 pointed stained-glass windows, stepped buttresses with pinnacles, west portal
-with archivolts + rose window, octagonal crossing spire (slate-blue) with a
-gold finial, stone cross finial on the west gable.
+with archivolts + rose window, octagonal crossing spire (mat_wet_stone — the
+stained-glass slot stands in for the reference's slate; the 4-material landmark
+budget is full, see "Known closed-library compromises" in
+docs/ART_REFERENCE_ABBEY.md) with a gold finial, stone cross finial on the
+west gable.
 Anchors: door, altar, spire_finial.
 
 abbey_cloister_t1: round-arched arcade colonnade wrapping a grassy garth with
@@ -260,7 +263,8 @@ def build_abbey_church(spec: dict) -> list[bpy.types.Object]:
                 location=(-1.89, 0.0, 1.62), rotation=(DEG(45.0), 0.0, 0.0))
     )
 
-    # --- crossing_spire: octagonal drum + slate-blue spire + gold finial ------------
+    # --- crossing_spire: octagonal drum + spire + gold finial -----------------------
+    # (spire = mat_wet_stone: 4-material budget compromise, doc'd in ART_REFERENCE)
     objects.append(add_cylinder("spire_drum", "mat_old_stone", radius=0.58, depth=0.5,
                                 vertices=8, location=(1.40, 0.0, 3.2)))
     objects.append(add_cone("spire", "mat_wet_stone", radius=0.52, depth=1.9, vertices=8,
@@ -531,7 +535,8 @@ def build_field_plot(spec: dict) -> list[bpy.types.Object]:
                     rotation=(0.0, 0.0, DEG(rng.uniform(-2.0, 2.0))))
         )
 
-    # --- crops: tomato (terracotta), leaf (grass), pumpkin (warm wood) clusters --------
+    # --- crops: tomato (mat_thatch = closest non-emissive red in the closed library,
+    # doc'd in ART_REFERENCE), leaf (grass), pumpkin (warm wood) clusters ---------------
     def tomato(tag: str, x: float, y: float) -> None:
         objects.append(add_icosphere(f"tomato_{tag}", "mat_thatch", radius=0.09,
                                      location=(x, y, 0.27),

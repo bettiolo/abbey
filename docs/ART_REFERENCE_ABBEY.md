@@ -1,10 +1,21 @@
 # Art reference: Abbey / Town Center / Field baseline
 
-Source: four user-provided pixel-art isometric diorama renders (2026-07-02) showing the
-same abbey complex from four rotations. They are the **visual baseline** for the abbey /
-town-center / field asset kit and for texture extraction. The originals live only in the
-session conversation; this document is the durable, quantified transcription that the
-asset pipeline builds from.
+Source: user-provided pixel-art isometric diorama renders, committed in this folder:
+
+- **`docs/abbey-town-1.png` — THE BASELINE** (user decision 2026-07-02). All palette
+  extraction and silhouette matching targets this file first.
+- `docs/abbey-town-2.png` … `abbey-town-4.png` — same complex, other rotations.
+- `docs/abbey-town-ruin-1.png` — **ruined state** of the same complex: the reference for
+  damaged/ruined asset variants (abbey_gate_ruined, bell_tower_ruined, broken walls) and
+  for the Broken-Abbey moral variant.
+
+Because the actual pixels are in-repo, palette claims must stay **traceable to the
+baseline image** (deterministic sampling/clustering of `abbey-town-1.png`, masking the
+baked checkerboard background: near-greyscale pixels with r≈g≈b > 170). The two palette
+tables below play different roles — see the decision note under the measured table:
+the transcribed ramps are the **albedo inputs** the texture generator uses; the measured
+clusters are the **lit-appearance target** that finished renders (previews) are verified
+against. Neither supersedes the other; they sit at different points of the pipeline.
 
 ## Overall read
 
@@ -19,7 +30,42 @@ from chimneys.
 This matches the game's Sanctuary-Abbey mood target (GAME_DESIGN §9, ART_BIBLE moral
 variants): bucolic, safe, inviting — the "day" pole of the day/night contrast.
 
-## Extracted palette (hex, pixel-art ramps: highlight / mid / shadow / deep)
+## Measured palette (sampled from `abbey-town-1.png`, checkerboard masked — lit-appearance target)
+
+Dominant clusters (12-bit quantization, ≥900 samples at stride 2):
+
+| Surface | Measured values |
+|---------|----------------|
+| roof_terracotta | `#874934 #763a26 #683726 #582617` |
+| grass | `#86a736 #769828` (olive — darker than first transcription) |
+| dirt_path / soil | `#c7a46a #775636 #563926 #452a19` |
+| stone_warm | `#b5aa95 #857767 #776759 #665748` |
+| stone_cool / slate | `#686666 #595655 #544c46 #4a4746` |
+| timber | `#664629 #483425 #382618 #271507` |
+| deep shadow / outlines | `#170802 #261b15` |
+
+**Decision (A2-01 review, 2026-07-02): the measured clusters are the verification
+target for LIT RENDERS, not the generator's albedo input.** The baseline is itself a
+fully lit, shaded render — the clusters above bake in the diorama's sun angle, ambient
+occlusion and dark outline pass. Feeding them back into the pipeline as albedo would
+double-apply lighting once the game's own rig lights the scene (terracotta roofs would
+render near-black at noon). Therefore:
+
+- `blender/scripts/generate_textures.py` builds the texture set from the **transcribed
+  ramps below as albedo** — hardcoded exact hex values, fixed seeds, no image inputs —
+  so the committed PNGs are byte-for-byte reproducible.
+- Traceability to the baseline is enforced **at the render end**: the committed `day`
+  previews of the kit are compared against `abbey-town-1.png` (silhouettes, material
+  reads, and lit colors approaching the measured clusters) at every review of this kit.
+- Expected albedo-vs-measured deltas are the lighting term, not palette drift: e.g.
+  roof highlight `#d97b4a` (albedo) vs `#874934` (measured lit+shadowed), dirt mid
+  `#b3925f` vs `#775636`. If a lit day preview drifts AWAY from the measured table,
+  retune the transcribed ramps — the measured table wins that argument.
+- The transcribed ramps also remain the only record for surfaces too small to cluster
+  reliably (bells, flags, stained glass) — verify those against local pixel
+  neighborhoods when possible.
+
+## Transcribed palette (albedo ramps, hex: highlight / mid / shadow / deep)
 
 | Ramp | Values | Used for |
 |------|--------|----------|
@@ -98,3 +144,21 @@ pixel-textures** (nearest-neighbor filtered, 64×64) rather than cropping the re
 
 The church and town hall are set-pieces; ART_BIBLE gains a **landmark** class
 (max 6000 tris, max 4 materials) for them. Everything else stays within existing classes.
+
+## Known closed-library compromises (accepted at A2-01 review; retune candidates)
+
+The 17-material library stays closed, so a few reference surfaces map onto the nearest
+existing material instead of getting a bespoke one:
+
+- **Church crossing spire** uses `mat_wet_stone` (stained-glass blue) instead of the
+  reference's slate. The church's 4-material landmark budget is spent on
+  `mat_old_stone` / `mat_thatch` / `mat_wet_stone` (windows, portal) / `mat_sacred_gold`
+  (finial); slate via `mat_iron` would be a fifth. Reads bluer than the reference —
+  first candidate to retune if the landmark budget ever grows.
+- **Pennant yellow tail** (`pennant_pole`, bell tower) uses `mat_sacred_gold`
+  (metallic 0.9, faint emission) for what the reference defines as `flag_yellow` cloth;
+  the library has no yellow cloth material.
+- **Field-plot tomatoes** use `mat_thatch` (terracotta + `tex_roof_tiles`) as the
+  closest non-emissive red; the tile courses are invisible at game camera distance.
+- **`tex_cliff_soil`** is generated and committed but not yet wired to any material —
+  reserved for the diorama grass-top/cliff-side ground tile asset (see "Ground kit").
