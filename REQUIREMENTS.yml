@@ -15,7 +15,7 @@
 
 version: 1
 project: abbey-at-worlds-end
-integration_branch: main # renamed from claude/abbey-llm-pipeline-wel2xo by user, 2026-07-02
+integration_branch: claude/phase-2-vertical-slice-swr09t # phase-2 session integration branch (2026-07-02); lands on main via PR after GATE-P2. main was the milestone-0/prototype-0.1 integration branch.
 branch_convention: task/<id>
 worktree_convention: one git worktree per active task, removed after merge
 
@@ -329,62 +329,131 @@ tasks:
       - blender/scripts/build_asset_batch.py
       - tools/check_all.sh
     depends_on: [M0-04]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-check-hygiene
+    branch: task/M0-06
     reviewer: null
     review: null
     merged_commit: null
 
-  # ---------------------------------------------------------------- Phase 2 (blocked until 0.1 human gate)
+  # ---------------------------------------------------------------- Phase 2 (GATE-0.1 passed 2026-07-02)
   - id: P2-01
     title: Shipwreck salvage economy
     phase: phase-2
+    description: >
+      Resource types (wood, food, oil, candles, stone, scrap_iron, medicine,
+      relic_fragments); central ResourceLedger with event-logged transactions;
+      SalvageSite nodes on the wreck that deplete visibly in stages; StoragePile
+      capacity; all tunables in EconomyConfig ScriptableObject (Resources path
+      "EconomyConfig"), NOT in PrototypeConfig. New code under
+      unity/Assets/_Game/Scripts/Runtime/Economy/. EditMode resource accounting tests.
     depends_on: [P01-10, GATE-0.1]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-economy
+    branch: task/P2-01
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-02
     title: Villager jobs and visible logistics
     phase: phase-2
+    description: >
+      Roles Salvager/Builder/Woodcutter/Tender/Guard (+ Injured handling); job
+      assignment system on top of VillagerAgent; visible hauling between salvage/work
+      sites and storage through the ResourceLedger; Tender refuels light sources;
+      Guard posts at night. Tests for job loops and hauling accounting.
     depends_on: [P2-01]
     status: todo
   - id: P2-03
     title: Building placement + construction sites
     phase: phase-2
+    description: >
+      BuildingCatalog (data-driven costs/footprints), placement validation,
+      ConstructionSite consuming ledger resources via Builder job, buildable set per
+      spec section 5 (campfire, storage, shelter, woodcutter hut, lantern post, guard
+      post, candle shrine, infirmary corner). Footprint validation EditMode tests.
     depends_on: [P2-01]
     status: todo
   - id: P2-04
     title: Abbey restoration nodes (Gate, Bell Tower, Candle Shrine, Infirmary)
     phase: phase-2
+    description: >
+      Fixed restoration sites on the abbey hill using the construction system;
+      repairing them changes function (gate blocks a night path, bell tower boosts
+      bell range, shrine adds sacred light, infirmary heals Injured).
     depends_on: [P2-03]
     status: todo
   - id: P2-05
     title: Full hound bond system
     phase: phase-2
+    description: >
+      Extend HoundController to the full state set (chained, wary, fed, following,
+      guarding, hunting, protective, angry, missing, wounded, trusting) driven by
+      trust/hunger/pain/fear/attachment thresholds in PrototypeConfig (hound section
+      only); first-encounter choices (feed / free / leave chained / approach slowly
+      with injury risk / calm with bell); chain-break rescue branch; starved hound
+      kills monster, drags corpse away, refuses bell. All transitions event-logged.
+      EditMode transition tests + PlayMode branch tests.
     depends_on: [P01-10, GATE-0.1]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-hound
+    branch: task/P2-05
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-06
     title: Nightmare director + pale hound / drowned sailor / lantern moth
     phase: phase-2
+    description: >
+      NightmareDirector escalation across the slice (2-3 pale hounds, shadow at forest
+      edge, whispers, panic events); drowned sailor spawns near wreck if someone died
+      by water; lantern moth dims a light creating a darkness gap; director state on
+      debug overlay; deterministic seeded spawns.
     depends_on: [P2-05]
     status: todo
   - id: P2-07
     title: Morning consequence report (storybook tone)
     phase: phase-2
+    description: >
+      Dawn report generated from GameEventLog: injuries, food used, fires lost, hound
+      trust/fear/resentment shifts, villager beliefs about the hero. Storybook prose
+      assembled from data-driven templates; shown on overlay + logged.
     depends_on: [P2-06]
     status: todo
   - id: P2-08
     title: Win/loss + The First White Night scenario
     phase: phase-2
+    description: >
+      GameSession win/loss evaluation (win: survive First White Night with >=6
+      villagers, Bellkeeper alive, abbey fire lit; loss: Bellkeeper dies / abbey fire
+      out / all villagers dead or fled); The First White Night as scripted climax
+      night; soft-failure spectrum recorded for the report.
     depends_on: [P2-07]
     status: todo
   - id: P2-09
     title: Phase 2 asset set (buildings + character placeholders)
     phase: phase-2
+    description: >
+      Specs + builders + generated glb/previews/metadata for the spec section 12 set
+      not yet built: shipwreck_crate_open, sailcloth, woodcutter_t1, guard_post_t1,
+      abbey_gate_ruined, abbey_gate_repaired, candle_shrine_t1, infirmary_corner_t1,
+      grave_marker, forest_tree_02, bellkeeper_lowpoly, villager_lowpoly,
+      pale_hound_lowpoly, drowned_sailor_lowpoly, lantern_moth_lowpoly.
+      (bell tower repaired = existing bell_tower_t2.)
     depends_on: [P01-12]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-assets
+    branch: task/P2-09
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-10
     title: Phase 2 validation (gameplay tests + 4 canonical screenshots)
     phase: phase-2
+    description: >
+      Full-slice PlayMode integration test (day->dusk->night->dawn to win AND to each
+      loss); scene bootstrapper updated for the Phase 2 map; 4 canonical proofs:
+      day_camp / dusk_recall / night_attack / morning_after.
     depends_on: [P2-08, P2-09]
     status: todo
 
@@ -408,7 +477,13 @@ gates:
   - id: GATE-0.1
     kind: human_review
     question: Is it fun and tense to manage distance from light while directly controlling the Bellkeeper?
-    status: pending
+    status: passed
+    verdict: >
+      PASS (2026-07-02). Evidence: all P01 tasks merged; EditMode+PlayMode suites include
+      FirstNightTests covering fed-hound-helps and starved-hound-ignores-bell branches;
+      scene_proof_day/scene_proof_night renders show the day-charm vs night-fear contrast
+      with light reading as territory. User directive of 2026-07-02 (goal: implement
+      Phase 2) authorized the orchestrator to issue the verdict and launch Phase 2.
   - id: GATE-P2
     kind: human_review
     question: Does this already feel like the game?
