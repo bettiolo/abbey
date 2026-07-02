@@ -1,4 +1,5 @@
-"""Builder family: town-center props and ground — well, pennant pole, paving.
+"""Builder family: town-center props and ground — well, pennant pole, paving,
+dirt road.
 
 well_t1: round stone shaft with a rim, timber A-frame carrying a windlass with
 a crank, hanging rope + bucket, small pitched terracotta roof.
@@ -13,7 +14,13 @@ there).
 paving_patch: 1x1 flagstone ground patch (tex_paving via mat_ash) with a few
 individually raised stones and dirt at the worn edges.
 
-Budgets: well 600/3, pennant 200/3, paving 300/3.
+dirt_road_segment: 1x1 dirt path ground patch (tex_dirt_path via mat_dirt)
+running edge to edge in Y so segments butt cleanly, with soft irregular
+edges over a grass fringe (tex_grass via mat_foliage) — dirt lobes bleed
+into the grass and grass lobes bite back into the path, per the ground-kit
+notes in docs/ART_REFERENCE_ABBEY.md.
+
+Budgets: well 600/3, pennant 200/3, paving 300/3, dirt road 300/3.
 """
 
 from __future__ import annotations
@@ -131,4 +138,45 @@ def build_paving_patch(spec: dict) -> list[bpy.types.Object]:
     )):
         objects.append(add_box(f"dirt_{i}", "mat_dirt", size=(w, d, 0.085),
                                location=(x, y, 0.0425)))
+    return objects
+
+
+@register_builder("dirt_road_segment")
+def build_dirt_road_segment(spec: dict) -> list[bpy.types.Object]:
+    objects: list[bpy.types.Object] = []
+
+    # --- grass_fringe: full-length grass strips flanking the path ------------------------
+    # inner edge tucked 0.01 under the (taller) dirt bed -> no coincident side faces
+    for i, sx in enumerate((1, -1)):
+        objects.append(add_box(f"grass_{i}", "mat_foliage", size=(0.25, 1.0, 0.05),
+                               location=(sx * 0.375, 0.0, 0.025)))
+
+    # --- dirt_bed: the path itself, edge to edge in Y so segments butt cleanly ----------
+    # sits proud of the grass (never coincident faces -> no z-fighting)
+    objects.append(add_box("dirt_bed", "mat_dirt", size=(0.52, 1.0, 0.07),
+                           location=(0.0, 0.0, 0.035)))
+
+    # --- edge_lobes: dirt bleeding into the grass — the soft irregular border -----------
+    # every lobe gets its own height between grass (0.05) and bed (0.07): overlapping
+    # lobe tops are never coplanar -> no z-fighting where lobes cross
+    for i, (sx, y, w, d, yaw, h) in enumerate((
+        (1, 0.36, 0.18, 0.24, 14.0, 0.060),
+        (1, -0.08, 0.15, 0.20, -10.0, 0.064),
+        (1, -0.38, 0.17, 0.18, 21.0, 0.056),
+        (-1, 0.24, 0.16, 0.22, -17.0, 0.062),
+        (-1, -0.20, 0.18, 0.19, 9.0, 0.058),
+        (-1, 0.40, 0.14, 0.16, -6.0, 0.066),
+    )):
+        objects.append(add_box(f"lobe_{i}", "mat_dirt", size=(w, d, h),
+                               location=(sx * 0.30, y, h / 2.0),
+                               rotation=(0.0, 0.0, DEG(yaw))))
+
+    # --- grass biting back into the path edge (tops clear of every dirt level) ----------
+    for i, (sx, y, w, d, yaw, h) in enumerate((
+        (1, 0.12, 0.13, 0.16, -12.0, 0.053),
+        (-1, -0.40, 0.14, 0.15, 8.0, 0.055),
+    )):
+        objects.append(add_box(f"grass_lobe_{i}", "mat_foliage", size=(w, d, h),
+                               location=(sx * 0.25, y, h / 2.0),
+                               rotation=(0.0, 0.0, DEG(yaw))))
     return objects
