@@ -129,6 +129,17 @@ namespace Abbey.Beast
             GameEventLog.Append("HoundState", $"{name} start Chained trust={Trust:F2} hunger={Hunger:F2}");
         }
 
+        /// <summary>Injects a config (tests) and resets the bond values and state to its start values.</summary>
+        public void Configure(PrototypeConfig config)
+        {
+            _config = config;
+            _initialized = false;
+            State = HoundState.Chained;
+            _bellTarget = null;
+            _engageTarget = null;
+            EnsureInit();
+        }
+
         /// <summary>
         /// Feed the hound: hunger down, trust up (rates from config), raises
         /// <see cref="EventBus.HoundFed"/> and advances the bond state when trust
@@ -149,8 +160,11 @@ namespace Abbey.Beast
             {
                 SetState(HoundState.Following);
             }
-            else if (Trust >= cfg.trustFedThreshold)
+            else if (State != HoundState.Following && Trust >= cfg.trustFedThreshold)
             {
+                // Never demote: a hound already Following (e.g. promoted by
+                // answering the bell) must not drop back to Fed because trust
+                // sits between the two thresholds.
                 SetState(HoundState.Fed);
             }
             else if (State == HoundState.Chained)

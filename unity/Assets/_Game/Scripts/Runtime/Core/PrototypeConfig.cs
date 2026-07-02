@@ -63,6 +63,8 @@ namespace Abbey.Core
         [Tooltip("Fear rate multiplier at bravery 1 (1 = bravery has no effect).")]
         [Range(0f, 1f)] public float braveFearMultiplier = 0.4f;
         [Range(0f, 1f)] public float villagerPanicFearThreshold = 0.6f;
+        [Tooltip("Panic breaks when fear falls below panicFearThreshold * this fraction.")]
+        [Range(0f, 1f)] public float villagerPanicBreakFearFraction = 0.5f;
         [Tooltip("Continuous seconds in Dark (at Dusk/Night) before a villager is Injured.")]
         [Min(0f)] public float villagerInjuredDarkSeconds = 12f;
         [Tooltip("Continuous seconds in Dark before an Injured villager goes Missing.")]

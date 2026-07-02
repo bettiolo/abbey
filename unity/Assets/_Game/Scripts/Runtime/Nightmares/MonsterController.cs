@@ -90,6 +90,18 @@ namespace Abbey.Nightmares
             _initialized = true;
         }
 
+        /// <summary>
+        /// Injects a config (director/tests) and resets health to its max value.
+        /// Required because OnEnable already ran EnsureInit with the default config
+        /// during AddComponent, before the caller could assign <see cref="Config"/>.
+        /// </summary>
+        public void Configure(PrototypeConfig config)
+        {
+            _config = config;
+            _initialized = false;
+            EnsureInit();
+        }
+
         public void TakeDamage(float amount)
         {
             EnsureInit();

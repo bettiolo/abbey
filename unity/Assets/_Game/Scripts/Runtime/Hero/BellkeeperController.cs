@@ -258,6 +258,14 @@ namespace Abbey.Hero
                 {
                     _carriedFlame.Extinguish(); // bypasses the toggle cooldown on death
                 }
+                if (_escorting != null)
+                {
+                    // Do not leave a villager tethered to a corpse: release it so
+                    // it walks toward the nearest light on its own.
+                    var villager = _escorting;
+                    _escorting = null;
+                    villager.ReleaseRescue();
+                }
             }
         }
 

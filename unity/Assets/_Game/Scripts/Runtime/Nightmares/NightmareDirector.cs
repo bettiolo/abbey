@@ -87,7 +87,9 @@ namespace Abbey.Nightmares
                 var go = new GameObject($"PaleHound_{_nightNumber}_{i}");
                 go.transform.position = point.Value;
                 var monster = go.AddComponent<MonsterController>();
-                monster.Config = cfg;
+                // Configure (not just Config =): OnEnable already initialized health
+                // from the default config during AddComponent.
+                monster.Configure(cfg);
                 monster.autoTick = monstersAutoTick;
                 _spawned.Add(monster);
                 EventBus.RaiseMonsterSpawned(go);

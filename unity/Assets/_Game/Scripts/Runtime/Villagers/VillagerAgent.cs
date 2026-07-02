@@ -491,10 +491,12 @@ namespace Abbey.Villagers
             transform.position += _panicDir * cfg.villagerPanicSpeed * dt;
 
             // Panic breaks when fear falls low enough (safe light drains it fastest).
-            if (Fear < cfg.villagerPanicFearThreshold * 0.5f)
+            if (Fear < cfg.villagerPanicFearThreshold * cfg.villagerPanicBreakFearFraction)
             {
                 if (CurrentZone == LightZone.Safe)
                 {
+                    _recallOrdered = false;
+                    _bellBoosted = false;
                     SetState(VillagerState.Idle);
                 }
                 else
