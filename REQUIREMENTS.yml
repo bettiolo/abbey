@@ -275,6 +275,23 @@ tasks:
     review: null
     merged_commit: null
 
+  - id: U6-01
+    title: Upgrade project to Unity 6 LTS (6000.x)
+    phase: prototype-0.1
+    description: 'User directive 2026-07-02: upgrade codebase to Unity 6 and merge. Re-pin ProjectVersion.txt to Unity 6 LTS; manifest bumps (test-framework 1.4.x, drop com.unity.textmeshpro in favour of ugui 2.x TMP, keep gltfast 6.x); API sweep FindObjectOfType->FindFirstObjectByType/FindObjectsByType and any other 6000.x deprecations across all C#; bump GameCI unityVersion; update docs/RUNNING_ON_MAC.md + unity README (MetalFX Spatial/STP now available when URP lands). Must run AFTER batch 2 merges (same files).'
+    deliverables:
+      - unity/ProjectSettings/ProjectVersion.txt
+      - unity/Packages/manifest.json
+      - .github/workflows/unity.yml
+      - docs/RUNNING_ON_MAC.md
+    depends_on: [P01-05, P01-06, P01-07, P01-08]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
   # ---------------------------------------------------------------- Phase 2 (blocked until 0.1 human gate)
   - id: P2-01
     title: Shipwreck salvage economy
