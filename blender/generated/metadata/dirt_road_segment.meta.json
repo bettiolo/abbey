@@ -1,0 +1,124 @@
+{
+  "id": "dirt_road_segment",
+  "generated_at": "2026-07-02T16:47:20.624271+00:00",
+  "spec": {
+    "id": "dirt_road_segment",
+    "type": "terrain",
+    "theme": "town",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 0.12
+    },
+    "style": {
+      "silhouette": "flat dirt path running edge to edge with soft irregular lobed borders bleeding into a grass fringe",
+      "materials": [
+        "mat_dirt",
+        "mat_foliage"
+      ]
+    },
+    "required_parts": [
+      "dirt_bed",
+      "edge_lobes",
+      "grass_fringe"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 300,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.0,
+    "depth": 1.0,
+    "height": 0.07,
+    "min": [
+      -0.5,
+      -0.5,
+      0.0
+    ],
+    "max": [
+      0.5,
+      0.5,
+      0.07
+    ]
+  },
+  "triangle_count": 132,
+  "material_count": 2,
+  "materials": [
+    "mat_dirt",
+    "mat_foliage"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/dirt_road_segment.glb",
+    "blend": "blender/generated/blend/dirt_road_segment.blend",
+    "previews": {
+      "day": "blender/generated/previews/dirt_road_segment_preview_day.png",
+      "night": "blender/generated/previews/dirt_road_segment_preview_night.png",
+      "winter": "blender/generated/previews/dirt_road_segment_preview_winter.png",
+      "grayscale": "blender/generated/previews/dirt_road_segment_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/dirt_road_segment.glb (20744 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/dirt_road_segment.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.000x1.000x0.070 vs footprint 1.0x1.0x0.12"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "132/300 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/3 materials: ['mat_dirt', 'mat_foliage']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "dirt_road_segment_collision present"
+      }
+    ]
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "id": "pennant_pole",
+  "generated_at": "2026-07-02T16:11:10.758959+00:00",
+  "spec": {
+    "id": "pennant_pole",
+    "type": "prop",
+    "theme": "town",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 2.8
+    },
+    "style": {
+      "silhouette": "slender dark pole flying the settlement's blue pennant with a yellow tail \u2014 the map-identity accent colors",
+      "materials": [
+        "mat_dark_wood",
+        "mat_wet_stone",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "pole",
+      "pennant_blue",
+      "pennant_yellow"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 200,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.98,
+    "depth": 0.2,
+    "height": 2.69,
+    "min": [
+      -0.49,
+      -0.1,
+      0.0
+    ],
+    "max": [
+      0.49,
+      0.1,
+      2.69
+    ]
+  },
+  "triangle_count": 56,
+  "material_count": 3,
+  "materials": [
+    "mat_dark_wood",
+    "mat_sacred_gold",
+    "mat_wet_stone"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/pennant_pole.glb",
+    "blend": "blender/generated/blend/pennant_pole.blend",
+    "previews": {
+      "day": "blender/generated/previews/pennant_pole_preview_day.png",
+      "night": "blender/generated/previews/pennant_pole_preview_night.png",
+      "winter": "blender/generated/previews/pennant_pole_preview_winter.png",
+      "grayscale": "blender/generated/previews/pennant_pole_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/pennant_pole.glb (10564 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/pennant_pole.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.980x0.200x2.690 vs footprint 1.0x1.0x2.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "56/200 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_dark_wood', 'mat_sacred_gold', 'mat_wet_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "pennant_pole_collision present"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "paving_patch",
+  "type": "terrain",
+  "theme": "town",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.12 },
+  "style": {
+    "silhouette": "flat flagstone plaza patch with a few individually raised stones and dirt showing at the worn edges",
+    "materials": ["mat_ash", "mat_dirt"]
+  },
+  "required_parts": ["flagstone_slab", "raised_stones", "dirt_fringe"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 300, "max_materials": 3 },
+  "anchors": [],
+  "pivot": "center_bottom"
+}

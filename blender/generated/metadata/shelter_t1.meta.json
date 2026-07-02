@@ -1,6 +1,6 @@
 {
   "id": "shelter_t1",
-  "generated_at": "2026-07-02T15:35:40.336746+00:00",
+  "generated_at": "2026-07-02T16:11:24.292685+00:00",
   "spec": {
     "id": "shelter_t1",
     "type": "building",
@@ -96,7 +96,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/shelter_t1.glb (26760 bytes)"
+        "detail": "blender/generated/glb/shelter_t1.glb (27780 bytes)"
       },
       {
         "name": "blend_saved",

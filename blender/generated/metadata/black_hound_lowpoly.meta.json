@@ -1,6 +1,6 @@
 {
   "id": "black_hound_lowpoly",
-  "generated_at": "2026-07-02T15:35:02.173358+00:00",
+  "generated_at": "2026-07-02T16:10:27.532047+00:00",
   "spec": {
     "id": "black_hound_lowpoly",
     "type": "beast",
@@ -105,7 +105,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/black_hound_lowpoly.glb (47616 bytes)"
+        "detail": "blender/generated/glb/black_hound_lowpoly.glb (47600 bytes)"
       },
       {
         "name": "blend_saved",

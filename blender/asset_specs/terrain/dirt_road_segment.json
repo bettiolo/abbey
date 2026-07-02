@@ -1,0 +1,15 @@
+{
+  "id": "dirt_road_segment",
+  "type": "terrain",
+  "theme": "town",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.12 },
+  "style": {
+    "silhouette": "flat dirt path running edge to edge with soft irregular lobed borders bleeding into a grass fringe",
+    "materials": ["mat_dirt", "mat_foliage"]
+  },
+  "required_parts": ["dirt_bed", "edge_lobes", "grass_fringe"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 300, "max_materials": 3 },
+  "anchors": [],
+  "pivot": "center_bottom"
+}

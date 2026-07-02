@@ -1,0 +1,124 @@
+{
+  "id": "paving_patch",
+  "generated_at": "2026-07-02T16:11:05.525451+00:00",
+  "spec": {
+    "id": "paving_patch",
+    "type": "terrain",
+    "theme": "town",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 0.12
+    },
+    "style": {
+      "silhouette": "flat flagstone plaza patch with a few individually raised stones and dirt showing at the worn edges",
+      "materials": [
+        "mat_ash",
+        "mat_dirt"
+      ]
+    },
+    "required_parts": [
+      "flagstone_slab",
+      "raised_stones",
+      "dirt_fringe"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 300,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.98,
+    "depth": 0.98,
+    "height": 0.1,
+    "min": [
+      -0.49,
+      -0.49,
+      0.0
+    ],
+    "max": [
+      0.49,
+      0.49,
+      0.1
+    ]
+  },
+  "triangle_count": 108,
+  "material_count": 2,
+  "materials": [
+    "mat_ash",
+    "mat_dirt"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/paving_patch.glb",
+    "blend": "blender/generated/blend/paving_patch.blend",
+    "previews": {
+      "day": "blender/generated/previews/paving_patch_preview_day.png",
+      "night": "blender/generated/previews/paving_patch_preview_night.png",
+      "winter": "blender/generated/previews/paving_patch_preview_winter.png",
+      "grayscale": "blender/generated/previews/paving_patch_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/paving_patch.glb (18056 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/paving_patch.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.980x0.980x0.100 vs footprint 1.0x1.0x0.12"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "108/300 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/3 materials: ['mat_ash', 'mat_dirt']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "paving_patch_collision present"
+      }
+    ]
+  }
+}

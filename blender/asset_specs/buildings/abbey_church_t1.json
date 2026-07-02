@@ -1,0 +1,19 @@
+{
+  "id": "abbey_church_t1",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 4.0, "depth": 2.0, "height": 6.0 },
+  "style": {
+    "silhouette": "landmark gothic nave in warm stone with a steep terracotta roof, pointed stained-glass windows, stepped buttresses, ornate west portal with archivolts, octagonal crossing spire with a gold finial, cross finials on the gable ends",
+    "materials": ["mat_old_stone", "mat_thatch", "mat_wet_stone", "mat_sacred_gold"]
+  },
+  "required_parts": ["nave", "gable_roof", "stained_windows", "buttresses", "west_portal", "crossing_spire", "cross_finials"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 6000, "max_materials": 4 },
+  "anchors": [
+    { "name": "door", "type": "door" },
+    { "name": "altar", "type": "work" },
+    { "name": "spire_finial", "type": "finial" }
+  ],
+  "pivot": "center_bottom"
+}

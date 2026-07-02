@@ -1,0 +1,18 @@
+{
+  "id": "abbey_cloister_t1",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 3.0, "depth": 2.0, "height": 2.2 },
+  "style": {
+    "silhouette": "low round-arched arcade colonnade wrapping a grassy garth courtyard with benches and a table, terracotta lean-to roof sloping inward",
+    "materials": ["mat_old_stone", "mat_thatch", "mat_foliage", "mat_warm_wood"]
+  },
+  "required_parts": ["arcade_walls", "columns", "arches", "lean_to_roof", "garth", "benches"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "garth_center", "type": "work" },
+    { "name": "gate", "type": "door" }
+  ],
+  "pivot": "center_bottom"
+}

@@ -262,6 +262,44 @@ def used_materials(root: bpy.types.Object) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# UV mapping
+# ---------------------------------------------------------------------------
+
+UV_TILE_SIZE = 1.0  # metres of surface covered by one 64x64 texture repeat
+
+
+def apply_box_uvs(root: bpy.types.Object, tile_size: float = UV_TILE_SIZE) -> None:
+    """World-space box (triplanar-per-face) projection on every visual mesh.
+
+    Each polygon is projected along the dominant axis of its normal at a
+    consistent texel density (one texture repeat per *tile_size* metres), which
+    is what the shared tileable pixel textures expect. Seams land on box edges
+    — fine for pixel-art. Collision proxies are skipped (no material).
+    """
+    bpy.context.view_layer.update()
+    for obj in mesh_objects(root):
+        mesh = obj.data
+        if not mesh.polygons:
+            continue
+        uv_layer = mesh.uv_layers.get("UVMap") or mesh.uv_layers.new(name="UVMap")
+        matrix = obj.matrix_world
+        normal_matrix = matrix.to_3x3().inverted_safe().transposed()
+        for poly in mesh.polygons:
+            normal = normal_matrix @ poly.normal
+            axis = max(range(3), key=lambda i: abs(normal[i]))
+            for loop_index in poly.loop_indices:
+                co = matrix @ mesh.vertices[mesh.loops[loop_index].vertex_index].co
+                if axis == 0:  # +-X faces: project YZ
+                    u, v = co.y, co.z
+                elif axis == 1:  # +-Y faces: project XZ
+                    u, v = co.x, co.z
+                else:  # +-Z faces: project XY
+                    u, v = co.x, co.y
+                uv_layer.data[loop_index].uv = (u / tile_size, v / tile_size)
+        mesh.update()
+
+
+# ---------------------------------------------------------------------------
 # Pivot + collision proxy
 # ---------------------------------------------------------------------------
 

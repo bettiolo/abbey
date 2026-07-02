@@ -1,0 +1,149 @@
+{
+  "id": "abbey_cloister_t1",
+  "generated_at": "2026-07-02T16:10:00.516662+00:00",
+  "spec": {
+    "id": "abbey_cloister_t1",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 3.0,
+      "depth": 2.0,
+      "height": 2.2
+    },
+    "style": {
+      "silhouette": "low round-arched arcade colonnade wrapping a grassy garth courtyard with benches and a table, terracotta lean-to roof sloping inward",
+      "materials": [
+        "mat_old_stone",
+        "mat_thatch",
+        "mat_foliage",
+        "mat_warm_wood"
+      ]
+    },
+    "required_parts": [
+      "arcade_walls",
+      "columns",
+      "arches",
+      "lean_to_roof",
+      "garth",
+      "benches"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "garth_center",
+        "type": "work"
+      },
+      {
+        "name": "gate",
+        "type": "door"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 2.99492,
+    "depth": 1.9946,
+    "height": 1.61112,
+    "min": [
+      -1.49746,
+      -0.9973,
+      0.0
+    ],
+    "max": [
+      1.49746,
+      0.9973,
+      1.61112
+    ]
+  },
+  "triangle_count": 660,
+  "material_count": 4,
+  "materials": [
+    "mat_foliage",
+    "mat_old_stone",
+    "mat_thatch",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "gate",
+      "type": "door"
+    },
+    {
+      "name": "garth_center",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/abbey_cloister_t1.glb",
+    "blend": "blender/generated/blend/abbey_cloister_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/abbey_cloister_t1_preview_day.png",
+      "night": "blender/generated/previews/abbey_cloister_t1_preview_night.png",
+      "winter": "blender/generated/previews/abbey_cloister_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/abbey_cloister_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/abbey_cloister_t1.glb (80308 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/abbey_cloister_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 2.995x1.995x1.611 vs footprint 3.0x2.0x2.2"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "660/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_foliage', 'mat_old_stone', 'mat_thatch', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['garth_center', 'gate'] present=['garth_center', 'gate']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "abbey_cloister_t1_collision present"
+      }
+    ]
+  }
+}

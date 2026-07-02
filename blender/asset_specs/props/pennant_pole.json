@@ -1,0 +1,15 @@
+{
+  "id": "pennant_pole",
+  "type": "prop",
+  "theme": "town",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 2.8 },
+  "style": {
+    "silhouette": "slender dark pole flying the settlement's blue pennant with a yellow tail — the map-identity accent colors",
+    "materials": ["mat_dark_wood", "mat_wet_stone", "mat_sacred_gold"]
+  },
+  "required_parts": ["pole", "pennant_blue", "pennant_yellow"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 200, "max_materials": 3 },
+  "anchors": [],
+  "pivot": "center_bottom"
+}

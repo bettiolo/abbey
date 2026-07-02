@@ -1,6 +1,6 @@
 {
   "id": "rock_cluster_01",
-  "generated_at": "2026-07-02T15:35:33.018637+00:00",
+  "generated_at": "2026-07-02T16:11:16.966959+00:00",
   "spec": {
     "id": "rock_cluster_01",
     "type": "terrain",
@@ -69,7 +69,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/rock_cluster_01.glb (13336 bytes)"
+        "detail": "blender/generated/glb/rock_cluster_01.glb (14468 bytes)"
       },
       {
         "name": "blend_saved",

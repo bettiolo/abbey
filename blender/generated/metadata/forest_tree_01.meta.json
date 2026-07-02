@@ -1,6 +1,6 @@
 {
   "id": "forest_tree_01",
-  "generated_at": "2026-07-02T15:35:14.669889+00:00",
+  "generated_at": "2026-07-02T16:10:46.765157+00:00",
   "spec": {
     "id": "forest_tree_01",
     "type": "terrain",
@@ -72,7 +72,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/forest_tree_01.glb (15128 bytes)"
+        "detail": "blender/generated/glb/forest_tree_01.glb (16080 bytes)"
       },
       {
         "name": "blend_saved",
