@@ -7,12 +7,19 @@ using UnityEngine;
 namespace Abbey.Nightmares
 {
     /// <summary>
-    /// A night monster (pale hound in 0.1). It hunts the nearest villager exposed in
-    /// Dark/Edge, will NOT enter Safe territory (any step into intolerable light is
-    /// refused and it recoils back toward the dark), flees while the Black Hound
-    /// presses it, and dies to hound attacks. The NightmareDirector spawns it at
-    /// Night and despawns it at Dawn. [ExecuteAlways] so the static registry works
-    /// in EditMode tests; Update only ticks in play mode with autoTick on.
+    /// Base night monster. The base behaviour IS the pale hound (kept concrete so
+    /// the 0.1 director/tests that AddComponent this class directly stay valid):
+    /// it hunts the nearest villager exposed in Dark/Edge, will NOT enter Safe
+    /// territory (any step into intolerable light is refused and it recoils back
+    /// toward the dark), flees while the Black Hound presses it, and dies to hound
+    /// attacks. Phase 2 species (<see cref="DrownedSailorController"/>,
+    /// <see cref="LanternMothController"/>) override <see cref="TickBehaviour"/>
+    /// and reuse the shared movement/light/attack helpers. Weak nightmares
+    /// (<see cref="IsStunnedByBell"/>) are stunned by a bell pulse inside its
+    /// radius — spec: bell = weak-nightmare stun. The NightmareDirector spawns
+    /// monsters at Night and despawns them at Dawn. [ExecuteAlways] so the static
+    /// registry works in EditMode tests; Update only ticks in play mode with
+    /// autoTick on.
     /// </summary>
     [ExecuteAlways]
     [DisallowMultipleComponent]
@@ -36,6 +43,7 @@ namespace Abbey.Nightmares
         bool _initialized;
         Transform _fleeFrom;
         float _attackCooldown;
+        float _stunTimer;
         bool _wasRecoiling;
 
         public float Health { get; private set; }
@@ -43,6 +51,15 @@ namespace Abbey.Nightmares
         public bool IsAlive => _initialized ? Health > 0f : true;
 
         public bool IsFleeing => _fleeFrom != null;
+
+        /// <summary>True while a bell pulse holds this (weak) nightmare frozen.</summary>
+        public bool IsStunned => _stunTimer > 0f;
+
+        /// <summary>Which nightmare species this is (base = the pale hound).</summary>
+        public virtual NightmareType Type => NightmareType.PaleHound;
+
+        /// <summary>Weak nightmares freeze when the bell rings over them.</summary>
+        protected virtual bool IsStunnedByBell => false;
 
         public PrototypeConfig Config
         {
@@ -57,18 +74,21 @@ namespace Abbey.Nightmares
             set { _config = value; }
         }
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             EnsureInit();
             if (!_active.Contains(this))
             {
                 _active.Add(this);
             }
+            EventBus.BellRang -= OnBellRang;
+            EventBus.BellRang += OnBellRang;
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             _active.Remove(this);
+            EventBus.BellRang -= OnBellRang;
         }
 
         void Update()
@@ -142,18 +162,25 @@ namespace Abbey.Nightmares
             var cfg = Config;
             _attackCooldown -= dt;
 
-            if (_fleeFrom != null)
+            if (_stunTimer > 0f)
             {
-                float threatDist = PlanarMotion.Distance(transform.position, _fleeFrom.position);
-                if (threatDist < cfg.monsterFleeDistance)
-                {
-                    Vector3 away = transform.position
-                                   + PlanarMotion.Direction(_fleeFrom.position, transform.position)
-                                   * cfg.monsterFleeSpeed * dt;
-                    TryMoveTo(away, cfg);
-                    return;
-                }
-                _fleeFrom = null;
+                _stunTimer -= dt;
+                return; // stunned nightmares neither move nor strike
+            }
+
+            TickBehaviour(cfg, dt);
+        }
+
+        /// <summary>
+        /// Species behaviour, one deterministic step. The base implementation is
+        /// the pale hound: break off from the Black Hound, then close on and
+        /// strike the most exposed villager without ever entering Safe light.
+        /// </summary>
+        protected virtual void TickBehaviour(PrototypeConfig cfg, float dt)
+        {
+            if (TickFleeFromThreat(cfg, cfg.monsterFleeSpeed, dt))
+            {
+                return;
             }
 
             var target = FindTargetVillager(cfg);
@@ -166,13 +193,7 @@ namespace Abbey.Nightmares
             float dist = PlanarMotion.Distance(transform.position, targetPos);
             if (dist <= cfg.monsterAttackRange)
             {
-                // Villagers standing in Safe light are untouchable.
-                if (DarknessEvaluator.Classify(targetPos) != LightZone.Safe && _attackCooldown <= 0f)
-                {
-                    _attackCooldown = cfg.monsterAttackCooldownSeconds;
-                    GameEventLog.Append("monster_attacked_villager", $"{name} -> {target.name}");
-                    target.OnMonsterAttack();
-                }
+                TryAttack(target, cfg);
                 return;
             }
 
@@ -182,10 +203,53 @@ namespace Abbey.Nightmares
         }
 
         /// <summary>
+        /// Shared flee handling: while the registered threat (the Black Hound) is
+        /// inside monsterFleeDistance, run directly away from it. Returns true when
+        /// a flee step consumed this tick.
+        /// </summary>
+        protected bool TickFleeFromThreat(PrototypeConfig cfg, float fleeSpeed, float dt)
+        {
+            if (_fleeFrom == null)
+            {
+                return false;
+            }
+            float threatDist = PlanarMotion.Distance(transform.position, _fleeFrom.position);
+            if (threatDist < cfg.monsterFleeDistance)
+            {
+                Vector3 away = transform.position
+                               + PlanarMotion.Direction(_fleeFrom.position, transform.position)
+                               * fleeSpeed * dt;
+                TryMoveTo(away, cfg);
+                return true;
+            }
+            _fleeFrom = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Strikes a villager already inside monsterAttackRange. Villagers standing
+        /// in Safe light are untouchable; the cooldown gates repeat strikes.
+        /// </summary>
+        protected void TryAttack(VillagerAgent target, PrototypeConfig cfg)
+        {
+            if (target == null)
+            {
+                return;
+            }
+            if (DarknessEvaluator.Classify(target.transform.position) != LightZone.Safe
+                && _attackCooldown <= 0f)
+            {
+                _attackCooldown = cfg.monsterAttackCooldownSeconds;
+                GameEventLog.Append("monster_attacked_villager", $"{name} -> {target.name}");
+                target.OnMonsterAttack();
+            }
+        }
+
+        /// <summary>
         /// Applies a candidate move only if the destination stays tolerably dark;
         /// otherwise recoils away from the offending light back toward the Edge.
         /// </summary>
-        void TryMoveTo(Vector3 candidate, PrototypeConfig cfg)
+        protected void TryMoveTo(Vector3 candidate, PrototypeConfig cfg)
         {
             if (!IsTooBright(candidate, cfg))
             {
@@ -214,13 +278,22 @@ namespace Abbey.Nightmares
             }
         }
 
-        bool IsTooBright(Vector3 position, PrototypeConfig cfg)
+        /// <summary>
+        /// Light a species refuses to stand in. Base (pale hound): any Safe zone,
+        /// or intensity beyond monsterLightTolerance. Species override this to be
+        /// braver (drowned sailor) or light-loving (lantern moth).
+        /// </summary>
+        protected virtual bool IsTooBright(Vector3 position, PrototypeConfig cfg)
         {
             return DarknessEvaluator.Classify(position) == LightZone.Safe
                    || DarknessEvaluator.LightIntensityAt(position) > cfg.monsterLightTolerance;
         }
 
-        VillagerAgent FindTargetVillager(PrototypeConfig cfg)
+        /// <summary>
+        /// The most exposed reachable villager: Dark beats Edge beats Safe
+        /// (stalked only), nearer beats farther inside a tier.
+        /// </summary>
+        protected VillagerAgent FindTargetVillager(PrototypeConfig cfg)
         {
             VillagerAgent best = null;
             int bestTier = int.MaxValue; // Dark = 0, Edge = 1, Safe (stalked only) = 2
@@ -251,6 +324,21 @@ namespace Abbey.Nightmares
                 }
             }
             return best;
+        }
+
+        void OnBellRang(Vector3 position, float radius)
+        {
+            if (!IsStunnedByBell || !IsAlive)
+            {
+                return;
+            }
+            if (PlanarMotion.Distance(transform.position, position) > radius)
+            {
+                return;
+            }
+            _stunTimer = Config.bellNightmareStunSeconds;
+            GameEventLog.Append("nightmare",
+                $"stun name={name} type={Type} seconds={_stunTimer:F1}");
         }
     }
 }
