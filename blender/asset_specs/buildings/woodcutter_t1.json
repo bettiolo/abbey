@@ -1,0 +1,18 @@
+{
+  "id": "woodcutter_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 3.0, "depth": 3.0, "height": 2.6 },
+  "style": {
+    "silhouette": "open-fronted timber lean-to: slanted thatch roof on chunky posts, the building IS its production props — big stacked log pile under the roof, chopping block with a wedged axe out front, split wood scattered",
+    "materials": ["mat_warm_wood", "mat_dark_wood", "mat_thatch", "mat_iron"]
+  },
+  "required_parts": ["back_wall", "posts", "slanted_roof", "log_pile", "chopping_block", "axe", "split_logs"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "work_slot", "type": "work" },
+    { "name": "deposit_point", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

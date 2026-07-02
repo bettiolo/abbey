@@ -1,0 +1,17 @@
+{
+  "id": "pale_hound_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 2.5, "depth": 1.0, "height": 2.1 },
+  "style": {
+    "silhouette": "the black hound's wrong, pallid cousin: bone-white and gaunt, stilted too-long legs, spine arched into a hump, head held unnaturally high on a stretched thin neck, dark sunken rib hollows, stiff straight tail, two ember pinprick eyes — everything the black hound sags, this thing stretches",
+    "materials": ["mat_bone", "mat_nightmare_black", "mat_ember"]
+  },
+  "required_parts": ["stilt_legs", "arched_body", "stretched_neck", "high_head", "rib_hollows", "stiff_tail", "ember_eyes"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "mouth", "type": "interaction" }
+  ],
+  "pivot": "center_bottom"
+}

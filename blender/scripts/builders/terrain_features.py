@@ -20,7 +20,7 @@ import random
 import bpy
 
 from asset_framework import register_builder
-from builders._shapes import add_cylinder, add_icosphere
+from builders._shapes import add_cone, add_cylinder, add_icosphere
 
 
 @register_builder("forest_tree_01")
@@ -55,6 +55,42 @@ def build_forest_tree(spec: dict) -> list[bpy.types.Object]:
     objects.append(
         add_icosphere("canopy_top", "mat_foliage", radius=0.23,
                       location=(-0.10, -0.06, 2.60), scale=(1.0, 0.9, 0.95))
+    )
+
+    return objects
+
+
+@register_builder("forest_tree_02")
+def build_forest_tree_02(spec: dict) -> list[bpy.types.Object]:
+    """Tall dark conifer — spearhead silhouette, distinct from tree_01's blobs."""
+    objects: list[bpy.types.Object] = []
+
+    # --- trunk: straight, slightly thicker at the base ---------------------------
+    objects.append(
+        add_cylinder(
+            "trunk", "mat_dark_wood",
+            radius=0.13, depth=1.1, vertices=7,
+            location=(0.0, 0.0, 0.55), rotation=(0.02, -0.03, 0.0),
+        )
+    )
+
+    # --- foliage_tiers: three stacked cones narrowing upward ---------------------
+    for i, (radius, depth, z) in enumerate(((0.68, 1.25, 1.45), (0.52, 1.15, 2.25), (0.36, 1.0, 3.0))):
+        objects.append(
+            add_cone(
+                f"foliage_tier_{i}", "mat_foliage",
+                radius=radius, depth=depth, vertices=8,
+                location=(0.015 * (i - 1), -0.01 * i, z),
+            )
+        )
+
+    # --- tip: thin dark spike past the last tier ----------------------------------
+    objects.append(
+        add_cone(
+            "tip", "mat_foliage",
+            radius=0.14, depth=0.55, vertices=6,
+            location=(0.0, -0.02, 3.6),
+        )
     )
 
     return objects

@@ -1,0 +1,136 @@
+{
+  "id": "sailcloth",
+  "generated_at": "2026-07-02T19:01:30.652581+00:00",
+  "spec": {
+    "id": "sailcloth",
+    "type": "prop",
+    "theme": "shipwreck",
+    "footprint": {
+      "width": 2.4,
+      "depth": 2.3,
+      "height": 1.5
+    },
+    "style": {
+      "silhouette": "torn ship sail draped over a snapped diagonal spar \u2014 one tall canvas triangle sagging into heavy ground folds, ragged trailing edge",
+      "materials": [
+        "mat_canvas",
+        "mat_dark_wood"
+      ]
+    },
+    "required_parts": [
+      "broken_spar",
+      "spar_stump",
+      "draped_canvas",
+      "ground_folds",
+      "torn_edge"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 800,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "salvage_point",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 2.36515,
+    "depth": 2.24784,
+    "height": 1.40257,
+    "min": [
+      -1.18258,
+      -1.12392,
+      -0.0
+    ],
+    "max": [
+      1.18258,
+      1.12392,
+      1.40257
+    ]
+  },
+  "triangle_count": 188,
+  "material_count": 2,
+  "materials": [
+    "mat_canvas",
+    "mat_dark_wood"
+  ],
+  "anchors": [
+    {
+      "name": "salvage_point",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/sailcloth.glb",
+    "blend": "blender/generated/blend/sailcloth.blend",
+    "previews": {
+      "day": "blender/generated/previews/sailcloth_preview_day.png",
+      "night": "blender/generated/previews/sailcloth_preview_night.png",
+      "winter": "blender/generated/previews/sailcloth_preview_winter.png",
+      "grayscale": "blender/generated/previews/sailcloth_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/sailcloth.glb (26380 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/sailcloth.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=-0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 2.365x2.248x1.403 vs footprint 2.4x2.3x1.5"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "188/800 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/3 materials: ['mat_canvas', 'mat_dark_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['salvage_point'] present=['salvage_point']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "sailcloth_collision present"
+      }
+    ]
+  }
+}

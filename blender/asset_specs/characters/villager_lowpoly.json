@@ -1,0 +1,17 @@
+{
+  "id": "villager_lowpoly",
+  "type": "character",
+  "theme": "character",
+  "footprint": { "width": 0.9, "depth": 0.8, "height": 1.75 },
+  "style": {
+    "silhouette": "ordinary survivor: pale-tunic worker with a slight forward stoop, bare head, dark trousers and boots, a heavy canvas bundle hugged under one arm — soft rounded outline, nothing heroic",
+    "materials": ["mat_canvas", "mat_bone", "mat_dark_wood"]
+  },
+  "required_parts": ["tunic", "head", "arms", "legs", "boots", "bundle"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "carry", "type": "attach" }
+  ],
+  "pivot": "center_bottom"
+}

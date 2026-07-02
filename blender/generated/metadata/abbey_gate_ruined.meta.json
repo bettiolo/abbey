@@ -1,0 +1,136 @@
+{
+  "id": "abbey_gate_ruined",
+  "generated_at": "2026-07-02T19:08:58.355977+00:00",
+  "spec": {
+    "id": "abbey_gate_ruined",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 4.1,
+      "depth": 1.4,
+      "height": 4.6
+    },
+    "style": {
+      "silhouette": "the abbey gatehouse broken: one pier still tall with a snapped arch stub, the other sheared low with jagged teeth, doorway empty, a fallen door slab and rubble across the threshold \u2014 same footprint and pivot as abbey_gate_repaired so the game swaps them in place",
+      "materials": [
+        "mat_old_stone",
+        "mat_dark_wood"
+      ]
+    },
+    "required_parts": [
+      "piers",
+      "arch_stubs",
+      "broken_crown",
+      "fallen_door",
+      "rubble"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "door",
+        "type": "door"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 4.1,
+    "depth": 1.4,
+    "height": 3.68964,
+    "min": [
+      -2.05,
+      -0.7,
+      0.0
+    ],
+    "max": [
+      2.05,
+      0.7,
+      3.68964
+    ]
+  },
+  "triangle_count": 240,
+  "material_count": 2,
+  "materials": [
+    "mat_dark_wood",
+    "mat_old_stone"
+  ],
+  "anchors": [
+    {
+      "name": "door",
+      "type": "door"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/abbey_gate_ruined.glb",
+    "blend": "blender/generated/blend/abbey_gate_ruined.blend",
+    "previews": {
+      "day": "blender/generated/previews/abbey_gate_ruined_preview_day.png",
+      "night": "blender/generated/previews/abbey_gate_ruined_preview_night.png",
+      "winter": "blender/generated/previews/abbey_gate_ruined_preview_winter.png",
+      "grayscale": "blender/generated/previews/abbey_gate_ruined_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/abbey_gate_ruined.glb (34940 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/abbey_gate_ruined.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 4.100x1.400x3.690 vs footprint 4.1x1.4x4.6"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "240/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/4 materials: ['mat_dark_wood', 'mat_old_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['door'] present=['door']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "abbey_gate_ruined_collision present"
+      }
+    ]
+  }
+}

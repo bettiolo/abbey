@@ -1,0 +1,18 @@
+{
+  "id": "candle_shrine_t1",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 1.3, "depth": 1.4, "height": 1.9 },
+  "style": {
+    "silhouette": "small wayside shrine: stepped stone plinth, back slab with a sheltered niche holding a gold icon, a huddled cluster of fat pale candles with warm flame tips in front",
+    "materials": ["mat_old_stone", "mat_bone", "mat_flame", "mat_sacred_gold"]
+  },
+  "required_parts": ["stepped_plinth", "back_slab", "niche", "gold_icon", "candle_cluster", "flames"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 4 },
+  "anchors": [
+    { "name": "flame", "type": "light" },
+    { "name": "pray_slot", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

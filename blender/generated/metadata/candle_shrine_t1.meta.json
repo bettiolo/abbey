@@ -1,0 +1,149 @@
+{
+  "id": "candle_shrine_t1",
+  "generated_at": "2026-07-02T19:12:53.070224+00:00",
+  "spec": {
+    "id": "candle_shrine_t1",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 1.3,
+      "depth": 1.4,
+      "height": 1.9
+    },
+    "style": {
+      "silhouette": "small wayside shrine: stepped stone plinth, back slab with a sheltered niche holding a gold icon, a huddled cluster of fat pale candles with warm flame tips in front",
+      "materials": [
+        "mat_old_stone",
+        "mat_bone",
+        "mat_flame",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "stepped_plinth",
+      "back_slab",
+      "niche",
+      "gold_icon",
+      "candle_cluster",
+      "flames"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 800,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "flame",
+        "type": "light"
+      },
+      {
+        "name": "pray_slot",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.25,
+    "depth": 1.345,
+    "height": 1.9,
+    "min": [
+      -0.625,
+      -0.6725,
+      0.0
+    ],
+    "max": [
+      0.625,
+      0.6725,
+      1.9
+    ]
+  },
+  "triangle_count": 292,
+  "material_count": 4,
+  "materials": [
+    "mat_bone",
+    "mat_flame",
+    "mat_old_stone",
+    "mat_sacred_gold"
+  ],
+  "anchors": [
+    {
+      "name": "pray_slot",
+      "type": "work"
+    },
+    {
+      "name": "flame",
+      "type": "light"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/candle_shrine_t1.glb",
+    "blend": "blender/generated/blend/candle_shrine_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/candle_shrine_t1_preview_day.png",
+      "night": "blender/generated/previews/candle_shrine_t1_preview_night.png",
+      "winter": "blender/generated/previews/candle_shrine_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/candle_shrine_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/candle_shrine_t1.glb (39512 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/candle_shrine_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.250x1.345x1.900 vs footprint 1.3x1.4x1.9"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "292/800 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_bone', 'mat_flame', 'mat_old_stone', 'mat_sacred_gold']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['flame', 'pray_slot'] present=['flame', 'pray_slot']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "candle_shrine_t1_collision present"
+      }
+    ]
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "id": "abbey_gate_repaired",
+  "generated_at": "2026-07-02T19:09:43.675540+00:00",
+  "spec": {
+    "id": "abbey_gate_repaired",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 4.1,
+      "depth": 1.4,
+      "height": 4.6
+    },
+    "style": {
+      "silhouette": "restored abbey gatehouse: two chunky warm-stone piers, pointed arch span with a stone gable cap and gold cross finial, heavy closed double doors with iron bands \u2014 same footprint and pivot as abbey_gate_ruined so the game swaps them in place",
+      "materials": [
+        "mat_old_stone",
+        "mat_dark_wood",
+        "mat_iron",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "piers",
+      "arch_span",
+      "gable_cap",
+      "cross_finial",
+      "double_doors",
+      "iron_bands"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "door",
+        "type": "door"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 4.1,
+    "depth": 1.4,
+    "height": 4.48,
+    "min": [
+      -2.05,
+      -0.7,
+      0.0
+    ],
+    "max": [
+      2.05,
+      0.7,
+      4.48
+    ]
+  },
+  "triangle_count": 252,
+  "material_count": 4,
+  "materials": [
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_old_stone",
+    "mat_sacred_gold"
+  ],
+  "anchors": [
+    {
+      "name": "door",
+      "type": "door"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/abbey_gate_repaired.glb",
+    "blend": "blender/generated/blend/abbey_gate_repaired.blend",
+    "previews": {
+      "day": "blender/generated/previews/abbey_gate_repaired_preview_day.png",
+      "night": "blender/generated/previews/abbey_gate_repaired_preview_night.png",
+      "winter": "blender/generated/previews/abbey_gate_repaired_preview_winter.png",
+      "grayscale": "blender/generated/previews/abbey_gate_repaired_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/abbey_gate_repaired.glb (34944 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/abbey_gate_repaired.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 4.100x1.400x4.480 vs footprint 4.1x1.4x4.6"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "252/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_dark_wood', 'mat_iron', 'mat_old_stone', 'mat_sacred_gold']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['door'] present=['door']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "abbey_gate_repaired_collision present"
+      }
+    ]
+  }
+}
