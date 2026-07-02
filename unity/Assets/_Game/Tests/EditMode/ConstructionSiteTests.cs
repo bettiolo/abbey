@@ -79,26 +79,31 @@ namespace Abbey.Tests.EditMode
             return false;
         }
 
-        /// <summary>Swaps in a one-entry catalog: wood x5 + oil x2, 4s of work.</summary>
-        ConstructionSite PlaceTestHut()
+        /// <summary>
+        /// Constructs a site directly (AddComponent + Initialize, bypassing the
+        /// placer and its affordability planning gate — placement is
+        /// BuildingPlacerTests' concern) for a test hut costing wood x5 + oil x2
+        /// with 4s of work. TearDown finds and destroys the GameObject.
+        /// </summary>
+        ConstructionSite CreateTestHutSite()
         {
-            _catalog.buildings = new List<BuildingType>
+            var type = new BuildingType
             {
-                new BuildingType
+                id = "hut",
+                displayName = "Test Hut",
+                footprint = new Vector2(2f, 2f),
+                cost = new List<ResourceStack>
                 {
-                    id = "hut",
-                    displayName = "Test Hut",
-                    footprint = new Vector2(2f, 2f),
-                    cost = new List<ResourceStack>
-                    {
-                        new ResourceStack(ResourceType.Wood, 5),
-                        new ResourceStack(ResourceType.Oil, 2),
-                    },
-                    buildWorkSeconds = 4f,
-                    function = FunctionKind.Shelter,
+                    new ResourceStack(ResourceType.Wood, 5),
+                    new ResourceStack(ResourceType.Oil, 2),
                 },
+                buildWorkSeconds = 4f,
+                function = FunctionKind.Shelter,
             };
-            return BuildingPlacer.PlaceConstructionSite("hut", Vector3.zero);
+            var go = new GameObject("ConstructionSite_hut");
+            var site = go.AddComponent<ConstructionSite>();
+            site.Initialize(type);
+            return site;
         }
 
         /// <summary>Funds, places, fully delivers and works a default-catalog entry.</summary>
@@ -147,7 +152,7 @@ namespace Abbey.Tests.EditMode
         {
             ResourceLedger.Add(ResourceType.Wood, 3, "test");
             ResourceLedger.Add(ResourceType.Oil, 10, "test");
-            var site = PlaceTestHut();
+            var site = CreateTestHutSite();
 
             Assert.AreEqual(3, site.DeliverResource(ResourceType.Wood, 10),
                 "acceptance is clamped by what the ledger actually holds");
@@ -180,7 +185,7 @@ namespace Abbey.Tests.EditMode
         public void DeliverResource_RefusesResourcesNotInTheCost()
         {
             ResourceLedger.Add(ResourceType.Food, 5, "test");
-            var site = PlaceTestHut();
+            var site = CreateTestHutSite();
 
             Assert.AreEqual(0, site.DeliverResource(ResourceType.Food, 5));
             Assert.AreEqual(5, ResourceLedger.Get(ResourceType.Food), "nothing was consumed");
@@ -191,7 +196,7 @@ namespace Abbey.Tests.EditMode
         {
             ResourceLedger.Add(ResourceType.Wood, 5, "test");
             ResourceLedger.Add(ResourceType.Oil, 2, "test");
-            var site = PlaceTestHut();
+            var site = CreateTestHutSite();
 
             Assert.AreEqual(0f, site.ApplyWork(2f),
                 "hammering a site with missing materials does nothing");
