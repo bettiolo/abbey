@@ -44,13 +44,30 @@ def _cli_args(argv: list[str]) -> argparse.Namespace:
     group.add_argument(
         "--all", action="store_true", help="build every spec under blender/asset_specs/"
     )
+    parser.add_argument(
+        "--output-root",
+        metavar="DIR",
+        default=None,
+        help="write glb/blend/previews/metadata under DIR instead of "
+        "blender/generated/ (used by the pipeline verify mode)",
+    )
     return parser.parse_args(argv)
 
 
 def _relpath(path: Path) -> str:
-    """Path relative to the repo root (parent of blender/) for portable metadata."""
+    """Repo-relative path for portable metadata.
+
+    Outputs are reported relative to the *canonical* location
+    (``blender/generated/...``) even when --output-root redirects the build to
+    a temp directory, so verify-mode metadata is byte-comparable to the
+    committed metadata."""
+    p = Path(path).resolve()
     try:
-        return str(Path(path).resolve().relative_to(fw.BLENDER_DIR.parent))
+        return str(Path("blender") / "generated" / p.relative_to(fw.GENERATED_DIR))
+    except ValueError:
+        pass
+    try:
+        return str(p.relative_to(fw.BLENDER_DIR.parent))
     except ValueError:
         return str(path)
 
@@ -99,6 +116,9 @@ def build_asset(asset_id: str) -> dict:
 
 def main(argv: list[str]) -> int:
     args = _cli_args(argv)
+    if args.output_root:
+        root = fw.set_generated_root(args.output_root)
+        print(f"Output root overridden: {root}")
     asset_ids = fw.list_spec_ids() if args.all else args.asset
     if not asset_ids:
         print("No asset specs found.", file=sys.stderr)
