@@ -18,3 +18,7 @@ unity/.vs/
 
 # OS
 .DS_Store
+
+# Claude harness state (agent worktrees live here during orchestration)
+.claude/worktrees/
+.claude/settings.local.json
