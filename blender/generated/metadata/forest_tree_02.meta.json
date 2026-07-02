@@ -1,0 +1,124 @@
+{
+  "id": "forest_tree_02",
+  "generated_at": "2026-07-02T19:12:39.867500+00:00",
+  "spec": {
+    "id": "forest_tree_02",
+    "type": "terrain",
+    "theme": "wild",
+    "footprint": {
+      "width": 1.4,
+      "depth": 1.4,
+      "height": 4.0
+    },
+    "style": {
+      "silhouette": "tall dark conifer: straight trunk under three stacked foliage tiers narrowing to a spike \u2014 a spearhead silhouette against the night, clearly distinct from forest_tree_01's round blobs",
+      "materials": [
+        "mat_dark_wood",
+        "mat_foliage"
+      ]
+    },
+    "required_parts": [
+      "trunk",
+      "foliage_tiers",
+      "tip"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 800,
+      "max_materials": 3
+    },
+    "anchors": [],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.36,
+    "depth": 1.36,
+    "height": 3.88079,
+    "min": [
+      -0.68,
+      -0.68,
+      0.0
+    ],
+    "max": [
+      0.68,
+      0.68,
+      3.88079
+    ]
+  },
+  "triangle_count": 76,
+  "material_count": 2,
+  "materials": [
+    "mat_dark_wood",
+    "mat_foliage"
+  ],
+  "anchors": [],
+  "files": {
+    "glb": "blender/generated/glb/forest_tree_02.glb",
+    "blend": "blender/generated/blend/forest_tree_02.blend",
+    "previews": {
+      "day": "blender/generated/previews/forest_tree_02_preview_day.png",
+      "night": "blender/generated/previews/forest_tree_02_preview_night.png",
+      "winter": "blender/generated/previews/forest_tree_02_preview_winter.png",
+      "grayscale": "blender/generated/previews/forest_tree_02_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/forest_tree_02.glb (12556 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/forest_tree_02.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.360x1.360x3.881 vs footprint 1.4x1.4x4.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "76/800 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "2/3 materials: ['mat_dark_wood', 'mat_foliage']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=[] present=[]"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "forest_tree_02_collision present"
+      }
+    ]
+  }
+}

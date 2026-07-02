@@ -1,0 +1,15 @@
+{
+  "id": "forest_tree_02",
+  "type": "terrain",
+  "theme": "wild",
+  "footprint": { "width": 1.4, "depth": 1.4, "height": 4.0 },
+  "style": {
+    "silhouette": "tall dark conifer: straight trunk under three stacked foliage tiers narrowing to a spike — a spearhead silhouette against the night, clearly distinct from forest_tree_01's round blobs",
+    "materials": ["mat_dark_wood", "mat_foliage"]
+  },
+  "required_parts": ["trunk", "foliage_tiers", "tip"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 3 },
+  "anchors": [],
+  "pivot": "center_bottom"
+}
