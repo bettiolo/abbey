@@ -437,12 +437,16 @@ tasks:
       by water; lantern moth dims a light creating a darkness gap; director state on
       debug overlay; deterministic seeded spawns.
     depends_on: [P2-05]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-director
     branch: task/P2-06
     reviewer: reviewer-p2-director
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: 30d2871
+    notes: >
+      Phase 2 schedule opt-in via phase2NightsEnabled (default false keeps 0.1 night).
+      Scene wiring pending in P2-10: NightmareDebugPanel, shipwreckAnchor. Water-death
+      sailor gating is session-scoped (consider per-night window in Phase 3).
   - id: P2-07
     title: Morning consequence report (storybook tone)
     phase: phase-2
