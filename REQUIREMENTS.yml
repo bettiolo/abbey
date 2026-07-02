@@ -400,10 +400,10 @@ tasks:
       Builder villager job to ConstructionSite (deferred from P2-02/P2-03) and the two
       tender follow-ups from the P2-02 review.
     depends_on: [P2-03]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-restoration
     branch: task/P2-04
-    reviewer: null
+    reviewer: reviewer-p2-restoration
     review: null
     merged_commit: null
   - id: P2-05
