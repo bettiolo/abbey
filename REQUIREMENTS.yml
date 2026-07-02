@@ -58,12 +58,12 @@ tasks:
     acceptance:
       - python3 tools/run_blender_asset_pipeline.py --asset campfire_t1 produces glb+previews+metadata with validation passed
     depends_on: [M0-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-blender-core
     branch: task/M0-02
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-blender
+    review: approved
+    merged_commit: c1a36e0
 
   - id: M0-03
     title: 'First identity assets: campfire_t1 + shipwreck_crate'
@@ -76,12 +76,12 @@ tasks:
       - blender/generated/previews/*
       - blender/generated/metadata/*.meta.json
     depends_on: [M0-02]
-    status: in_progress
+    status: merged
     assigned_to: builder-blender-core
     branch: task/M0-02
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-blender
+    review: approved
+    merged_commit: c1a36e0
 
   - id: M0-04
     title: External validation harness (pytest + check_all.sh)
@@ -94,12 +94,12 @@ tasks:
       - tests/design_validation/test_requirements_tracker.py
     acceptance: ['./tools/check_all.sh exits 0 locally, skipping Unity steps gracefully when no editor is present']
     depends_on: [M0-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-tools
     branch: task/M0-04
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-tools
+    review: approved
+    merged_commit: 37a7e4d
 
   - id: M0-05
     title: CI workflows (Blender assets + GameCI Unity tests)
@@ -107,12 +107,12 @@ tasks:
     deliverables: ['.github/workflows/assets.yml', '.github/workflows/unity.yml']
     notes: Unity job requires UNITY_LICENSE/UNITY_EMAIL/UNITY_PASSWORD secrets; must skip cleanly when absent.
     depends_on: [M0-04]
-    status: in_progress
+    status: merged
     assigned_to: builder-tools
     branch: task/M0-04
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-tools
+    review: approved
+    merged_commit: 37a7e4d
 
   # ---------------------------------------------------------------- Prototype 0.1
   - id: P01-01
@@ -120,48 +120,48 @@ tasks:
     phase: prototype-0.1
     description: ProjectSettings (2022.3 LTS, built-in RP for greybox), Packages/manifest.json (test framework, glTFast, TMP), asmdefs Abbey.Runtime/Abbey.Editor/Abbey.Tests.EditMode/Abbey.Tests.PlayMode, folder layout per GAME.md.
     depends_on: [M0-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-core
     branch: task/P01-01
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-unity
+    review: approved
+    merged_commit: d6566dc
 
   - id: P01-02
     title: 'Core sim: GameClock, EventBus, config'
     phase: prototype-0.1
     description: GameClock with Day/Dusk/Night/Dawn phases and scaled time; static EventBus; PrototypeConfig ScriptableObject holding ALL tunables (no balance values in MonoBehaviours); GameEventLog (one event log, many consumers).
     depends_on: [P01-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-core
     branch: task/P01-01
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-unity
+    review: approved
+    merged_commit: d6566dc
 
   - id: P01-03
     title: 'Light territory: LightSource + DarknessEvaluator'
     phase: prototype-0.1
     description: LightSource (radius, strength, lit, fuel, sacred), DarknessEvaluator static registry classifying positions Safe/Edge/Dark, fuel consumption, EditMode tests for overlap/extinguished/dark.
     depends_on: [P01-02]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-core
     branch: task/P01-01
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-unity
+    review: approved
+    merged_commit: d6566dc
 
   - id: P01-04
     title: Locked isometric camera
     phase: prototype-0.1
     description: Orthographic, pitch 30 yaw 45, follow + bounds, zoom = ortho size only, no rotation.
     depends_on: [P01-01]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-core
     branch: task/P01-01
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-unity
+    review: approved
+    merged_commit: d6566dc
 
   - id: P01-05
     title: 'Bellkeeper: move, ring bell, carry flame, rescue, feed'
