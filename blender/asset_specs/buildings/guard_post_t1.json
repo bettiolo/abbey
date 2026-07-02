@@ -1,0 +1,18 @@
+{
+  "id": "guard_post_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 2.5, "depth": 2.8, "height": 4.5 },
+  "style": {
+    "silhouette": "tall raised watch platform on four braced legs: railed deck, small pyramidal thatch cap, leaning ladder, one warm hanging lantern marking the light territory edge",
+    "materials": ["mat_dark_wood", "mat_warm_wood", "mat_thatch", "mat_warm_window"]
+  },
+  "required_parts": ["legs", "cross_braces", "deck", "railing", "roof_cap", "ladder", "lantern"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "watch_slot", "type": "work" },
+    { "name": "flame", "type": "light" }
+  ],
+  "pivot": "center_bottom"
+}
