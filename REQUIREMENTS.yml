@@ -285,12 +285,12 @@ tasks:
       - .github/workflows/unity.yml
       - docs/RUNNING_ON_MAC.md
     depends_on: [P01-05, P01-06, P01-07, P01-08]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity6
     branch: task/U6-01
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-unity6
+    review: approved
+    merged_commit: 7c3e6b4
 
   - id: A2-01
     title: Abbey / town center / field kit from user reference art
