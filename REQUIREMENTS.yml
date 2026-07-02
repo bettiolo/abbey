@@ -292,6 +292,23 @@ tasks:
     review: approved
     merged_commit: 7c3e6b4
 
+  - id: U6-02
+    title: Re-pin editor to Unity 6000.5.2f1
+    phase: prototype-0.1
+    description: 'User directive 2026-07-02: upgrade to editor version 6000.5.2f1 (Unity 6.5 stream, up from 6000.0.32f1 LTS). Re-pin ProjectVersion.txt; sweep every hardcoded 6000.0.32f1 / 6000.0.x reference (tools/build_macos.sh, tools/run_unity_tests.sh, tools/capture_unity_screenshot.py, .github/workflows/unity.yml unityVersion, README.md, docs/RUNNING_ON_MAC.md, GAME.md, unity/Assets/_Game/README.md); verify Packages/manifest.json package versions are valid on 6000.5 and check for newly deprecated APIs in our C#.'
+    deliverables:
+      - unity/ProjectSettings/ProjectVersion.txt
+      - .github/workflows/unity.yml
+      - tools/build_macos.sh
+      - docs/RUNNING_ON_MAC.md
+    depends_on: [U6-01]
+    status: in_progress
+    assigned_to: builder-unity65
+    branch: task/U6-02
+    reviewer: null
+    review: null
+    merged_commit: null
+
   - id: A2-01
     title: Abbey / town center / field kit from user reference art
     phase: prototype-0.1
