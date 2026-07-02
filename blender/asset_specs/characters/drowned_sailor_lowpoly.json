@@ -1,0 +1,17 @@
+{
+  "id": "drowned_sailor_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 1.3, "depth": 1.0, "height": 1.9 },
+  "style": {
+    "silhouette": "what came back from the wreck: hunched humanoid in a waterlogged glossy coat, head slumped onto the chest, arms hanging far too long with black void hands, kelp strands trailing from the shoulders and wrists — unnatural posture, shape at the edge of light",
+    "materials": ["mat_wet_stone", "mat_nightmare_black", "mat_foliage"]
+  },
+  "required_parts": ["hunched_torso", "slumped_head", "long_arms", "void_hands", "kelp_strands", "legs"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "grab", "type": "interaction" }
+  ],
+  "pivot": "center_bottom"
+}

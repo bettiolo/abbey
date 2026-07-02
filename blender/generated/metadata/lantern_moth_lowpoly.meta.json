@@ -1,0 +1,137 @@
+{
+  "id": "lantern_moth_lowpoly",
+  "generated_at": "2026-07-02T19:20:03.842048+00:00",
+  "spec": {
+    "id": "lantern_moth_lowpoly",
+    "type": "character",
+    "theme": "beast",
+    "footprint": {
+      "width": 1.2,
+      "depth": 0.8,
+      "height": 0.4
+    },
+    "style": {
+      "silhouette": "hand-sized night moth drawn to the lanterns: fat warm-glowing body segment, two big pale swept-back upper wings and two small lower wings held in a shallow V, thin antennae \u2014 must read as 'moth' even at a few pixels, wings first",
+      "materials": [
+        "mat_warm_window",
+        "mat_bone",
+        "mat_iron"
+      ]
+    },
+    "required_parts": [
+      "glow_body",
+      "upper_wings",
+      "lower_wings",
+      "antennae"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "glow",
+        "type": "light"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.17257,
+    "depth": 0.76923,
+    "height": 0.38819,
+    "min": [
+      -0.58629,
+      -0.38462,
+      0.0
+    ],
+    "max": [
+      0.58629,
+      0.38462,
+      0.38819
+    ]
+  },
+  "triangle_count": 132,
+  "material_count": 3,
+  "materials": [
+    "mat_bone",
+    "mat_iron",
+    "mat_warm_window"
+  ],
+  "anchors": [
+    {
+      "name": "glow",
+      "type": "light"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/lantern_moth_lowpoly.glb",
+    "blend": "blender/generated/blend/lantern_moth_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/lantern_moth_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/lantern_moth_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/lantern_moth_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/lantern_moth_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/lantern_moth_lowpoly.glb (20372 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/lantern_moth_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.173x0.769x0.388 vs footprint 1.2x0.8x0.4"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "132/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_bone', 'mat_iron', 'mat_warm_window']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['glow'] present=['glow']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "lantern_moth_lowpoly_collision present"
+      }
+    ]
+  }
+}

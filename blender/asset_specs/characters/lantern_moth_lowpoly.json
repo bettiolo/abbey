@@ -1,0 +1,17 @@
+{
+  "id": "lantern_moth_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 1.2, "depth": 0.8, "height": 0.4 },
+  "style": {
+    "silhouette": "hand-sized night moth drawn to the lanterns: fat warm-glowing body segment, two big pale swept-back upper wings and two small lower wings held in a shallow V, thin antennae — must read as 'moth' even at a few pixels, wings first",
+    "materials": ["mat_warm_window", "mat_bone", "mat_iron"]
+  },
+  "required_parts": ["glow_body", "upper_wings", "lower_wings", "antennae"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "glow", "type": "light" }
+  ],
+  "pivot": "center_bottom"
+}
