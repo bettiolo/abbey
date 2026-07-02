@@ -1,0 +1,17 @@
+{
+  "id": "shipwreck_crate_closed",
+  "type": "prop",
+  "theme": "shipwreck",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.85 },
+  "style": {
+    "silhouette": "chunky closed cargo crate with thick dark corner frames and rope lashing",
+    "materials": ["mat_warm_wood", "mat_dark_wood", "mat_canvas"]
+  },
+  "required_parts": ["crate_body", "corner_frames", "rope_lashing"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 400, "max_materials": 3 },
+  "anchors": [
+    { "name": "carry_handle", "type": "grip" }
+  ],
+  "pivot": "center_bottom"
+}

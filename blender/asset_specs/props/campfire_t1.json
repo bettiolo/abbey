@@ -1,0 +1,18 @@
+{
+  "id": "campfire_t1",
+  "type": "prop",
+  "theme": "camp",
+  "footprint": { "width": 1.0, "depth": 1.0, "height": 0.9 },
+  "style": {
+    "silhouette": "low chunky ring of stones with crossed logs and a bold teardrop flame",
+    "materials": ["mat_old_stone", "mat_dark_wood", "mat_flame"]
+  },
+  "required_parts": ["stone_ring", "logs", "flame_placeholder"],
+  "variants": ["day", "night", "winter", "damaged"],
+  "limits": { "max_triangles": 800, "max_materials": 3 },
+  "anchors": [
+    { "name": "ember_glow", "type": "light" },
+    { "name": "smoke", "type": "particle" }
+  ],
+  "pivot": "center_bottom"
+}
