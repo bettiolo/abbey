@@ -30,6 +30,7 @@ namespace Abbey.Core
         PrototypeConfig _config;
         float _timeInPhase;
         float _totalTime;
+        bool _isDuplicate;
 
         public DayPhase Phase { get; private set; } = DayPhase.Day;
 
@@ -68,17 +69,19 @@ namespace Abbey.Core
         {
             if (Instance != null && Instance != this)
             {
-                Debug.LogWarning("[GameClock] Duplicate instance destroyed.", this);
+                _isDuplicate = true;
+                Debug.LogWarning("[GameClock] Duplicate instance ignored.", this);
                 if (Application.isPlaying)
                 {
+                    // Deferred destroy is the only safe option here: Unity forbids
+                    // DestroyImmediate on an object while it is being activated
+                    // ("Cannot destroy GameObject inside Awake/OnEnable"). In edit
+                    // mode the duplicate is simply left inert instead of destroyed.
                     Destroy(gameObject);
-                }
-                else
-                {
-                    DestroyImmediate(gameObject);
                 }
                 return;
             }
+            _isDuplicate = false;
             Instance = this;
         }
 
@@ -92,7 +95,7 @@ namespace Abbey.Core
 
         void Update()
         {
-            if (!Application.isPlaying || !autoTick)
+            if (_isDuplicate || !Application.isPlaying || !autoTick)
             {
                 return;
             }
