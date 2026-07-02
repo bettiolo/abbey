@@ -363,7 +363,12 @@ tasks:
       sites and storage through the ResourceLedger; Tender refuels light sources;
       Guard posts at night. Tests for job loops and hauling accounting.
     depends_on: [P2-01]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-jobs
+    branch: task/P2-02
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-03
     title: Building placement + construction sites
     phase: phase-2
@@ -373,7 +378,12 @@ tasks:
       spec section 5 (campfire, storage, shelter, woodcutter hut, lantern post, guard
       post, candle shrine, infirmary corner). Footprint validation EditMode tests.
     depends_on: [P2-01]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-buildings
+    branch: task/P2-03
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-04
     title: Abbey restoration nodes (Gate, Bell Tower, Candle Shrine, Infirmary)
     phase: phase-2
