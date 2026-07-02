@@ -135,7 +135,9 @@ def build_shelter(spec: dict) -> list[bpy.types.Object]:
 
     # --- door (front, -Y) + window (side, +X) + tiny front window ------------------
     objects.append(
-        add_box("door", "mat_dark_wood", size=(0.52, 0.10, 0.88), location=(0.1, -0.72, 0.44))
+        # Named door_slab, not "door": that exact name is reserved for the anchor
+        # empty below (Blender would rename the empty to door.001 otherwise).
+        add_box("door_slab", "mat_dark_wood", size=(0.52, 0.10, 0.88), location=(0.1, -0.72, 0.44))
     )
     objects.append(
         add_box("door_lintel", "mat_dark_wood", size=(0.68, 0.12, 0.12), location=(0.1, -0.72, 0.94))
