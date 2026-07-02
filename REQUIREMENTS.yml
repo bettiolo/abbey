@@ -168,9 +168,9 @@ tasks:
     phase: prototype-0.1
     description: Direct movement, RingBell (recall pulse via EventBus + hound call), CarryFlame (mobile LightSource with cost), Rescue (attach/guide villager to light), FeedBeast interaction, simple health/stamina.
     depends_on: [P01-03, P01-04]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-unity-actors
+    branch: task/P01-05
     reviewer: null
     review: null
     merged_commit: null
@@ -180,9 +180,9 @@ tasks:
     phase: prototype-0.1
     description: VillagerAgent state machine (spec section 6), day work loop between task site and storage, DuskRecallSystem (distance check, bravery/fear modifiers, bell speeds recall), panic in darkness, one villager placed too far at first dusk. EditMode+PlayMode tests.
     depends_on: [P01-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-unity-actors
+    branch: task/P01-05
     reviewer: null
     review: null
     merged_commit: null
@@ -192,9 +192,9 @@ tasks:
     phase: prototype-0.1
     description: HoundController with values (trust/hunger/pain/fear/attachment) and states (chained/wary/fed/following); feed interaction raises trust; fed hound answers bell and attacks night monster; starved hound ignores bell. Data-driven thresholds in PrototypeConfig. Tests.
     depends_on: [P01-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-unity-actors
+    branch: task/P01-05
     reviewer: null
     review: null
     merged_commit: null
@@ -204,9 +204,9 @@ tasks:
     phase: prototype-0.1
     description: MonsterController (spawns outside light at night, avoids Safe zones, targets isolated villagers, flees hound challenge), minimal NightmareDirector spawning one pale hound on first night.
     depends_on: [P01-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-unity-actors
+    branch: task/P01-05
     reviewer: null
     review: null
     merged_commit: null
@@ -240,9 +240,9 @@ tasks:
     phase: prototype-0.1
     description: 'Specs+builders: shipwreck_hull, shipwreck_barrel, storage_pile_t1, shelter_t1, lantern_post_t1, abbey_wall_broken, bell_tower_ruined, hound_chain, black_hound_lowpoly, forest_tree_01, rock_cluster_01.'
     depends_on: [M0-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: builder-blender-assets
+    branch: task/P01-11
     reviewer: null
     review: null
     merged_commit: null
