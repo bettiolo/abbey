@@ -117,6 +117,48 @@ namespace Abbey.Core
         [Min(0f)] public float houndAttackDamage = 50f;
         [Min(0.01f)] public float houndAttackCooldownSeconds = 1f;
 
+        [Header("Black Hound bond (P2-05 full state set)")]
+        [Tooltip("Trust at/above this (plus attachment below) reads as Trusting, the top bond state.")]
+        [Range(0f, 1f)] public float trustTrustingThreshold = 0.9f;
+        [Range(0f, 1f)] public float trustingAttachmentThreshold = 0.4f;
+        [Tooltip("An unchained, sated hound with at least this much trust settles into Guarding inside Safe light.")]
+        [Range(0f, 1f)] public float guardTrustThreshold = 0.75f;
+        [Tooltip("Trust gained the moment the chain comes off (free chain: trust up, control risk up).")]
+        [Range(0f, 1f)] public float freeChainTrustGain = 0.05f;
+        [Tooltip("Post-gain trust below this when freed: the hound turns Angry and flees to Missing.")]
+        [Range(0f, 1f)] public float freeChainFollowThreshold = 0.35f;
+        [Tooltip("A freed no-bond hound runs this far from its release point, then is Missing.")]
+        [Min(0f)] public float houndFleeDistance = 25f;
+        [Tooltip("Approach-slowly bites (deterministically) when fear + pain reach this sum.")]
+        [Range(0f, 2f)] public float approachBiteThreshold = 1f;
+        [Range(0f, 1f)] public float approachTrustGain = 0.05f;
+        [Range(0f, 1f)] public float approachAttachmentGain = 0.08f;
+        [Range(0f, 1f)] public float approachFearRelief = 0.05f;
+        [Range(0f, 1f)] public float approachBiteTrustLoss = 0.1f;
+        [Range(0f, 1f)] public float approachBiteFearGain = 0.1f;
+        [Tooltip("Damage the bite deals to the approaching Bellkeeper.")]
+        [Min(0f)] public float houndBiteDamage = 15f;
+        [Tooltip("Fear removed from a still-chained hound when the bell rings within its radius.")]
+        [Range(0f, 1f)] public float bellCalmFearRelief = 0.15f;
+        [Range(0f, 1f)] public float bellCalmTrustGain = 0.05f;
+        [Tooltip("Resentment: trust lost when the Bellkeeper explicitly walks away from the chain.")]
+        [Range(0f, 1f)] public float leaveChainedTrustLoss = 0.05f;
+        [Tooltip("Pain AND fear at/above these turn the hound Angry.")]
+        [Range(0f, 1f)] public float houndAngryPainThreshold = 0.7f;
+        [Range(0f, 1f)] public float houndAngryFearThreshold = 0.6f;
+        [Tooltip("Pain alone at/above this reads as Wounded (no movement, no engagement).")]
+        [Range(0f, 1f)] public float houndWoundedPainThreshold = 0.75f;
+        [Range(0f, 1f)] public float houndHitFearGain = 0.1f;
+        [Min(0f)] public float houndPainRecoveryPerSecond = 0.005f;
+        [Tooltip("Minimum trust for the chained bonded hound to break its chain for the endangered hero.")]
+        [Range(0f, 1f)] public float chainBreakTrustThreshold = 0.5f;
+        [Tooltip("A live monster within this range of a hero standing in Dark triggers Protective.")]
+        [Min(0f)] public float houndProtectMonsterRange = 10f;
+        [Tooltip("How far a Hunting hound drags a fresh kill toward darkness before eating.")]
+        [Min(0f)] public float houndDragDistance = 8f;
+        [Tooltip("Hunger relieved when the Hunting hound eats its dragged kill alone.")]
+        [Range(0f, 1f)] public float houndEatHungerRelief = 0.35f;
+
         [Header("Monsters")]
         [Min(0f)] public float monsterMoveSpeed = 2.5f;
         [Min(0f)] public float monsterFleeSpeed = 4f;
