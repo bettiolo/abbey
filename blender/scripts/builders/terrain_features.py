@@ -5,7 +5,9 @@ canopy is three offset icosphere blobs — a bold rounded silhouette that stays
 readable when the forest edge goes black at night.
 
 rock_cluster_01: one dominant tilted boulder with smaller chunks huddled
-against it. Pure old_stone.
+against it. Pure old_stone. Squashed low-poly icospheres, not boxes — in
+grayscale, cube rocks read as crates and collide with storage_pile. At
+subdivisions=1 each icosphere is a 20-tri icosahedron: 4 rocks = 80 tris.
 
 Budgets: tree 800/3, rocks 400/3.
 """
@@ -18,7 +20,7 @@ import random
 import bpy
 
 from asset_framework import register_builder
-from builders._shapes import add_box, add_cylinder, add_icosphere
+from builders._shapes import add_cylinder, add_icosphere
 
 
 @register_builder("forest_tree_01")
@@ -63,28 +65,28 @@ def build_rock_cluster(spec: dict) -> list[bpy.types.Object]:
     rng = random.Random(31)
     objects: list[bpy.types.Object] = []
 
-    # --- main_boulder: dominant, tilted ------------------------------------------
+    # --- main_boulder: dominant, tilted, slightly buried ---------------------------
     objects.append(
-        add_box(
-            "main_boulder", "mat_old_stone",
-            size=(0.48, 0.42, 0.52), location=(-0.08, 0.05, 0.22),
+        add_icosphere(
+            "main_boulder", "mat_old_stone", radius=0.34,
+            location=(-0.08, 0.04, 0.26),
             rotation=(0.10, -0.14, math.radians(25.0)),
+            scale=(1.0, 0.88, 0.92),
         )
     )
 
-    # --- side_rocks: smaller chunks huddled against it -----------------------------
-    for i, (x, y, s) in enumerate((
-        (0.28, -0.18, 0.30),
-        (0.18, 0.26, 0.24),
-        (-0.30, -0.24, 0.20),
-        (-0.34, 0.24, 0.16),
+    # --- side_rocks: smaller squashed chunks huddled against the boulder ----------
+    for i, (x, y, r, squash) in enumerate((
+        (0.26, -0.16, 0.18, 0.72),
+        (0.16, 0.24, 0.15, 0.80),
+        (-0.26, -0.22, 0.13, 0.66),
     )):
         objects.append(
-            add_box(
-                f"side_rock_{i}", "mat_old_stone",
-                size=(s, s * 0.85, s * 0.75),
-                location=(x, y, s * 0.28),
-                rotation=(rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2), rng.uniform(0.0, math.tau)),
+            add_icosphere(
+                f"side_rock_{i}", "mat_old_stone", radius=r,
+                location=(x, y, r * squash * 0.72),
+                rotation=(rng.uniform(-0.3, 0.3), rng.uniform(-0.3, 0.3), rng.uniform(0.0, math.tau)),
+                scale=(1.0, rng.uniform(0.78, 0.95), squash),
             )
         )
 

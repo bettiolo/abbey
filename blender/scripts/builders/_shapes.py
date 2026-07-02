@@ -81,7 +81,7 @@ def add_icosphere(
     rotation: tuple[float, float, float] = (0, 0, 0),
     scale: tuple[float, float, float] = (1, 1, 1),
 ) -> bpy.types.Object:
-    """Chunky blob (80 tris at subdivisions=1) — canopies, sacks, boulders."""
+    """Chunky blob (20 tris at subdivisions=1, 80 at 2) — canopies, sacks, boulders."""
     bpy.ops.mesh.primitive_ico_sphere_add(
         subdivisions=subdivisions,
         radius=radius,
