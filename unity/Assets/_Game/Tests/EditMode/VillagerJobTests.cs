@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
@@ -35,8 +36,15 @@ namespace Abbey.Tests.EditMode
             ResourceLedger.Clear();
             SalvageSite.ClearRegistry();
             JobWorkPoint.ClearRegistry();
+            ConstructionSite.ClearRegistry();
+            Building.ClearRegistry();
+            RestorationNode.ClearRegistry();
+            BuildingPlacer.Clear();
+            AbbeyState.Clear();
             EconomyConfig.ClearCache();
             JobsConfig.ClearCache();
+            BuildingCatalog.ClearCache();
+            PrototypeConfig.ClearCache();
 
             _proto = ScriptableObject.CreateInstance<PrototypeConfig>();
             _proto.dayDurationSeconds = 10f;
@@ -102,16 +110,28 @@ namespace Abbey.Tests.EditMode
                 }
             }
             _spawned.Clear();
+            foreach (var building in Object.FindObjectsByType<Building>(
+                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                Object.DestroyImmediate(building.gameObject); // spawned by Construct
+            }
             Object.DestroyImmediate(_proto);
             Object.DestroyImmediate(_econ);
             Object.DestroyImmediate(_jobs);
             JobWorkPoint.ClearRegistry();
             SalvageSite.ClearRegistry();
+            ConstructionSite.ClearRegistry();
+            Building.ClearRegistry();
+            RestorationNode.ClearRegistry();
+            BuildingPlacer.Clear();
+            AbbeyState.Clear();
             ResourceLedger.Clear();
             DuskRecallSystem.Clear();
             DarknessEvaluator.Clear();
             EconomyConfig.ClearCache();
             JobsConfig.ClearCache();
+            BuildingCatalog.ClearCache();
+            PrototypeConfig.ClearCache();
             EventBus.ResetAll();
             GameEventLog.Clear();
         }
@@ -183,6 +203,30 @@ namespace Abbey.Tests.EditMode
             return point;
         }
 
+        /// <summary>
+        /// Programmatic construction site (bypasses the placer and its planning
+        /// gate — placement is BuildingPlacerTests' concern): wood-only cost with
+        /// injectable amounts so builder haul counts stay exact.
+        /// </summary>
+        ConstructionSite SpawnConstructionSite(Vector3 position, int woodCost, float workSeconds)
+        {
+            var type = new BuildingType
+            {
+                id = "test_hut",
+                displayName = "Test Hut",
+                footprint = new Vector2(2f, 2f),
+                cost = new List<ResourceStack> { new ResourceStack(ResourceType.Wood, woodCost) },
+                buildWorkSeconds = workSeconds,
+                function = FunctionKind.Shelter,
+            };
+            var go = new GameObject($"TestConstructionSite_{_spawned.Count}");
+            _spawned.Add(go);
+            go.transform.position = position;
+            var site = go.AddComponent<ConstructionSite>();
+            site.Initialize(type);
+            return site;
+        }
+
         static void Step(VillagerJobAgent agent, float dt = Dt)
         {
             agent.Villager.Tick(dt);
@@ -191,15 +235,21 @@ namespace Abbey.Tests.EditMode
 
         static bool LogContains(string type, string dataFragment)
         {
+            return LogCount(type, dataFragment) > 0;
+        }
+
+        static int LogCount(string type, string dataFragment)
+        {
+            int count = 0;
             var records = GameEventLog.Records;
             for (int i = 0; i < records.Count; i++)
             {
                 if (records[i].Type == type && records[i].Data.Contains(dataFragment))
                 {
-                    return true;
+                    count++;
                 }
             }
-            return false;
+            return count;
         }
 
         // ---- Tests --------------------------------------------------------
@@ -527,6 +577,222 @@ namespace Abbey.Tests.EditMode
             Assert.AreEqual(VillagerState.WalkingToTask, villager.State,
                 "the job resumes the next day");
             Assert.AreSame(site, agent.TargetSite);
+        }
+
+        [Test]
+        public void Builder_HaulsMaterialsPerTrip_AndWorksSiteToCompletion()
+        {
+            SpawnPile(Vector3.zero);
+            var site = SpawnConstructionSite(new Vector3(0f, 0f, 5f), woodCost: 6, workSeconds: 0.5f);
+            ResourceLedger.Add(ResourceType.Wood, 10, "test");
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Builder);
+
+            bool sawHaulProp = false;
+            int guard = 0;
+            while (Building.Active.Count == 0 && guard++ < 4000)
+            {
+                Step(agent);
+                sawHaulProp |= agent.CarriedPropInstance != null
+                               && agent.CarriedPropInstance.activeSelf;
+            }
+
+            Assert.AreEqual(1, Building.Active.Count, "the hut must stand");
+            Assert.IsTrue(site.IsComplete);
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
+                "exactly the 6-wood cost left the ledger — delivery pays once, "
+                + "the fetch leg reserves nothing");
+            Assert.IsTrue(LogContains("job", "delivered wood x4 -> test_hut"),
+                "first haul is a full carry");
+            Assert.IsTrue(LogContains("job", "delivered wood x2 -> test_hut"),
+                "second haul tops the site up");
+            Assert.IsTrue(LogContains("job", "built test_hut"));
+            Assert.IsTrue(LogContains("build", "test_hut complete"));
+            Assert.IsTrue(sawHaulProp, "the builder's haul must be visible");
+            Assert.IsNull(agent.BuildTarget, "the finished site is released");
+            Assert.IsFalse(agent.IsCarrying, "the builder never holds ledger goods");
+
+            for (int i = 0; i < 50; i++)
+            {
+                Step(agent);
+            }
+            Assert.AreEqual(VillagerState.Idle, agent.Villager.State,
+                "no sites left: the builder idles");
+        }
+
+        [Test]
+        public void Builder_WithNoLedgerStock_Waits_ThenServesWhenStockArrives()
+        {
+            SpawnPile(Vector3.zero);
+            var site = SpawnConstructionSite(new Vector3(0f, 0f, 5f), woodCost: 4, workSeconds: 0.2f);
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Builder);
+
+            for (int i = 0; i < 100; i++)
+            {
+                Step(agent);
+            }
+            Assert.IsNull(agent.BuildTarget,
+                "a site whose materials the ledger cannot supply is not served");
+            Assert.AreEqual(0, site.Delivered(ResourceType.Wood));
+
+            ResourceLedger.Add(ResourceType.Wood, 4, "test");
+            int guard = 0;
+            while (!site.IsComplete && guard++ < 2000)
+            {
+                Step(agent);
+            }
+            Assert.IsTrue(site.IsComplete, "stock arrived: the builder finishes the job");
+            Assert.AreEqual(0, ResourceLedger.Get(ResourceType.Wood));
+        }
+
+        [Test]
+        public void Builder_ServesAWorkOnlySite_WithoutAStorageTrip()
+        {
+            SpawnPile(Vector3.zero);
+            var site = SpawnConstructionSite(new Vector3(0f, 0f, 4f), woodCost: 2, workSeconds: 1f);
+            ResourceLedger.Add(ResourceType.Wood, 2, "test");
+            site.DeliverResource(ResourceType.Wood, 2); // materials already on site
+            Assert.IsTrue(site.NeedsWork);
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Builder);
+
+            int guard = 0;
+            while (!site.IsComplete && guard++ < 2000)
+            {
+                Step(agent);
+            }
+
+            Assert.IsTrue(site.IsComplete);
+            Assert.IsFalse(LogContains("job", "delivered"), "no haul was needed");
+            Assert.IsTrue(LogContains("job", "built test_hut"));
+        }
+
+        [Test]
+        public void Builder_RecalledMidHaul_DropsThePlan_AndNoWoodIsLostOrDoubleSpent()
+        {
+            SpawnLight(Vector3.zero, radius: 10f);
+            SpawnPile(Vector3.zero);
+            var site = SpawnConstructionSite(new Vector3(0f, 0f, 8f), woodCost: 4, workSeconds: 1f);
+            ResourceLedger.Add(ResourceType.Wood, 4, "test");
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Builder);
+            var villager = agent.Villager;
+
+            // Walk the fetch leg until the site-bound haul is visibly under way.
+            int guard = 0;
+            while (!(agent.BuildTarget != null
+                     && agent.CarriedPropInstance != null
+                     && agent.CarriedPropInstance.activeSelf)
+                   && guard++ < 500)
+            {
+                Step(agent);
+            }
+            Assert.IsNotNull(agent.BuildTarget, "sanity: mid-haul before the recall");
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
+                "the fetch leg must not touch the ledger");
+
+            villager.OrderReturnToLight(bellBoosted: true);
+            // Agent tick only: the villager is Safe, so its own tick would already
+            // resolve the recall — the interrupt must fire while it is in effect.
+            agent.Tick(Dt);
+
+            Assert.IsNull(agent.BuildTarget, "the recalled builder drops the plan");
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
+                "nothing was consumed, so nothing is lost and nothing needs refunding");
+            Assert.AreEqual(0, site.Delivered(ResourceType.Wood));
+            Assert.IsFalse(LogContains("job", "dropped"),
+                "no physical load existed to drop");
+            Assert.IsFalse(agent.CarriedPropInstance != null
+                           && agent.CarriedPropInstance.activeSelf,
+                "the haul visual clears with the plan");
+        }
+
+        [Test]
+        public void Tender_RecalledMidErrand_RefundsTheFetchedWood_Once()
+        {
+            SpawnLight(Vector3.zero, radius: 10f); // safe point for the recall
+            SpawnPile(new Vector3(1f, 0f, 0f));
+            var light = SpawnLight(new Vector3(0f, 0f, 8f), radius: 3f, fuel: 10f);
+            ResourceLedger.Add(ResourceType.Wood, 5, "test");
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Tender);
+            var villager = agent.Villager;
+
+            int guard = 0;
+            while (!agent.IsCarrying && guard++ < 1000)
+            {
+                Step(agent); // fetches at storage: ledger pays 1 wood, tender holds it
+            }
+            Assert.IsTrue(agent.IsCarrying, "sanity: mid-errand toward the light");
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood));
+
+            villager.OrderReturnToLight(bellBoosted: true); // recall interrupts ToLight
+            agent.Tick(Dt); // agent tick only: the interrupt must fire while in effect
+
+            Assert.IsFalse(agent.IsCarrying);
+            Assert.AreEqual(5, ResourceLedger.Get(ResourceType.Wood),
+                "the fetched wood goes back to the ledger, not into the void");
+            Assert.AreEqual(1, LogCount("resource", "wood +1 (tender errand aborted)"));
+            Assert.AreEqual(10f, light.fuelSeconds, 1e-3f, "the light was never fed");
+
+            for (int i = 0; i < 200; i++)
+            {
+                Step(agent); // reach the light, calm down — no second refund may appear
+            }
+            Assert.AreEqual(1, LogCount("resource", "wood +1 (tender errand aborted)"),
+                "the refund happens exactly once");
+        }
+
+        [Test]
+        public void Tender_SuccessfulRefuel_ThenRecall_ProducesNoRefund()
+        {
+            SpawnLight(Vector3.zero, radius: 20f); // everything is Safe
+            SpawnPile(new Vector3(1f, 0f, 0f));
+            SpawnLight(new Vector3(0f, 0f, 6f), radius: 3f, fuel: 10f);
+            ResourceLedger.Add(ResourceType.Wood, 5, "test");
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Tender);
+
+            int guard = 0;
+            while (!LogContains("job", "refueled") && guard++ < 2000)
+            {
+                Step(agent);
+            }
+            Assert.IsTrue(LogContains("job", "refueled"), "sanity: the errand completed");
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood));
+
+            agent.Villager.OrderReturnToLight(bellBoosted: true);
+            Step(agent);
+
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
+                "the delivered wood stays spent");
+            Assert.IsFalse(LogContains("resource", "tender errand aborted"),
+                "a completed refuel leaves nothing to refund");
+        }
+
+        [Test]
+        public void Tender_TargetDestroyedMidRefuel_RefundsInsteadOfVoidingTheWood()
+        {
+            SpawnPile(new Vector3(1f, 0f, 0f));
+            var light = SpawnLight(new Vector3(0f, 0f, 6f), radius: 3f, fuel: 10f);
+            Vector3 lightPos = light.transform.position;
+            ResourceLedger.Add(ResourceType.Wood, 5, "test");
+            var agent = SpawnWorker(Vector3.zero, VillagerJob.Tender);
+
+            // Walk the errand until the tender stands at the light, mid-refuel.
+            int guard = 0;
+            while (!(agent.IsCarrying
+                     && PlanarMotion.Distance(agent.transform.position, lightPos)
+                        <= _proto.arrivalRadius + 0.05f)
+                   && guard++ < 2000)
+            {
+                Step(agent);
+            }
+            Assert.IsTrue(agent.IsCarrying, "sanity: refueling with wood in hand");
+
+            Object.DestroyImmediate(light.gameObject); // a nightmare smashes the lantern
+            Step(agent);
+
+            Assert.IsFalse(agent.IsCarrying);
+            Assert.AreEqual(5, ResourceLedger.Get(ResourceType.Wood),
+                "the held wood is refunded through AbortTenderErrand, not zeroed away");
+            Assert.AreEqual(1, LogCount("resource", "wood +1 (tender errand aborted)"));
+            Assert.IsFalse(LogContains("job", "refueled"), "nothing was refueled");
         }
 
         [Test]

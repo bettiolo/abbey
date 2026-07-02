@@ -29,6 +29,10 @@ namespace Abbey.Villagers
         [Tooltip("Units of one resource a villager can physically carry per trip.")]
         [Min(1)] public int carryCapacity = 4;
 
+        [Header("Builder")]
+        [Tooltip("Construction-work seconds a builder applies per real second standing at a site.")]
+        [Min(0f)] public float builderWorkPerSecond = 1f;
+
         [Header("Woodcutter")]
         [Tooltip("Seconds of Working one felling cycle takes.")]
         [Min(0.01f)] public float woodcutterWorkDurationSeconds = 5f;
