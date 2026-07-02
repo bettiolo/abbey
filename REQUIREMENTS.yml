@@ -216,24 +216,24 @@ tasks:
     phase: prototype-0.1
     description: OnGUI debug overlay (time, light zones, villager states, hound state, director); editor menu Tools/Abbey/Build Prototype Scene generating the greybox map programmatically; ScreenshotCapture; glTF import validation menu + report.
     depends_on: [P01-05, P01-06, P01-07, P01-08]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-integration
     branch: task/P01-09
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-batch4
+    review: approved
+    merged_commit: a632c58
 
   - id: P01-10
     title: 'PlayMode integration test: first night sequence'
     phase: prototype-0.1
     description: Programmatically built world (no scene dependency); simulate day->dusk->night->dawn; assert recall, monster light avoidance, fed-hound-helps and unfed-hound-ignores branches, survival report produced.
     depends_on: [P01-09]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-integration
     branch: task/P01-09
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-batch4
+    review: approved
+    merged_commit: a632c58
 
   - id: P01-11
     title: Remaining 0.1 identity assets
@@ -252,12 +252,12 @@ tasks:
     phase: prototype-0.1
     description: 'Blender-composed scene from generated assets: (1) daytime camp beside ruined abbey, wreck in background; (2) same camera at night, firelight only, hound silhouette near tower. Unity in-engine screenshots follow in CI.'
     depends_on: [P01-11]
-    status: in_progress
+    status: merged
     assigned_to: builder-blender-visual
     branch: task/P01-12
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-batch4
+    review: approved
+    merged_commit: 6057d32
 
   - id: P01-13
     title: macOS run + standalone build support
@@ -268,12 +268,12 @@ tasks:
       - tools/build_macos.sh
       - docs/RUNNING_ON_MAC.md
     depends_on: [P01-09]
-    status: in_progress
+    status: merged
     assigned_to: builder-unity-integration
     branch: task/P01-09
-    reviewer: null
-    review: null
-    merged_commit: null
+    reviewer: reviewer-batch4
+    review: approved
+    merged_commit: a632c58
 
   - id: U6-01
     title: Upgrade project to Unity 6 LTS (6000.x)
