@@ -1,0 +1,1093 @@
+{
+  "id": "scene_proof",
+  "generated_at": "2026-07-02T17:16:58.912020+00:00",
+  "description": "Map 1 vignette (VERTICAL_SLICE_SPEC.md section 2) assembled from the committed GLBs; the two aesthetic-gate proof renders.",
+  "source_glbs": [
+    "abbey_wall_broken",
+    "bell_tower_ruined",
+    "black_hound_lowpoly",
+    "campfire_t1",
+    "dirt_road_segment",
+    "field_plot_t1",
+    "forest_tree_01",
+    "hound_chain",
+    "lantern_post_t1",
+    "paving_patch",
+    "pennant_pole",
+    "rock_cluster_01",
+    "shelter_t1",
+    "shipwreck_barrel",
+    "shipwreck_crate_closed",
+    "shipwreck_hull",
+    "storage_pile_t1",
+    "town_hall_t1",
+    "well_t1"
+  ],
+  "ground": {
+    "slab": {
+      "x": [
+        -9.5,
+        9.5
+      ],
+      "y": [
+        -9.5,
+        9.5
+      ],
+      "z": [
+        -1.8,
+        0.0
+      ]
+    },
+    "terrace_1": {
+      "x": [
+        3.0,
+        9.5
+      ],
+      "y": [
+        3.0,
+        9.5
+      ],
+      "z": [
+        0.0,
+        0.8
+      ]
+    },
+    "terrace_2": {
+      "x": [
+        4.6,
+        9.5
+      ],
+      "y": [
+        4.6,
+        9.5
+      ],
+      "z": [
+        0.8,
+        1.6
+      ]
+    },
+    "sand": {
+      "x": [
+        -9.5,
+        -1.8
+      ],
+      "y": [
+        -9.5,
+        -1.8
+      ],
+      "z": [
+        -0.01,
+        0.045
+      ]
+    },
+    "materials": {
+      "grass_top": "mat_foliage (tex_grass)",
+      "cliff_skirt": "scene_cliff_soil (tex_cliff_soil, scene-local material \u2014 first consumer of that texture)",
+      "beach": "mat_dirt (tex_dirt_path)"
+    }
+  },
+  "placements": [
+    {
+      "asset": "bell_tower_ruined",
+      "object": "bell_tower_ruined",
+      "position": [
+        7.6,
+        7.8,
+        1.6
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "abbey_wall_broken",
+      "object": "abbey_wall_broken",
+      "position": [
+        5.3,
+        9.0,
+        1.6
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "abbey_wall_broken",
+      "object": "abbey_wall_broken.001",
+      "position": [
+        9.0,
+        5.4,
+        1.6
+      ],
+      "rotation_z_deg": 90.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "abbey_wall_broken",
+      "object": "abbey_wall_broken.002",
+      "position": [
+        4.2,
+        3.9,
+        0.8
+      ],
+      "rotation_z_deg": 45.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "hound_chain",
+      "object": "hound_chain",
+      "position": [
+        6.4,
+        5.8,
+        1.6
+      ],
+      "rotation_z_deg": 25.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "black_hound_lowpoly",
+      "object": "black_hound_lowpoly",
+      "position": [
+        6.0,
+        5.5,
+        1.6
+      ],
+      "rotation_z_deg": -105.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "paving_patch",
+      "object": "paving_patch",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "paving_patch",
+      "object": "paving_patch.001",
+      "position": [
+        1.0,
+        0.0,
+        0.004
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "paving_patch",
+      "object": "paving_patch.002",
+      "position": [
+        0.0,
+        1.0,
+        0.008
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "paving_patch",
+      "object": "paving_patch.003",
+      "position": [
+        1.0,
+        1.0,
+        0.012
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "campfire_t1",
+      "object": "campfire_t1",
+      "position": [
+        0.5,
+        0.5,
+        0.112
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shelter_t1",
+      "object": "shelter_t1",
+      "position": [
+        -2.6,
+        2.3,
+        0.0
+      ],
+      "rotation_z_deg": 20.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shelter_t1",
+      "object": "shelter_t1.001",
+      "position": [
+        2.8,
+        3.0,
+        0.0
+      ],
+      "rotation_z_deg": -15.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "storage_pile_t1",
+      "object": "storage_pile_t1",
+      "position": [
+        2.6,
+        -0.6,
+        0.0
+      ],
+      "rotation_z_deg": 10.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_crate_closed",
+      "object": "shipwreck_crate_closed",
+      "position": [
+        3.3,
+        0.5,
+        0.0
+      ],
+      "rotation_z_deg": 30.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_barrel",
+      "object": "shipwreck_barrel",
+      "position": [
+        1.9,
+        -0.7,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "well_t1",
+      "object": "well_t1",
+      "position": [
+        -2.9,
+        -1.0,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "lantern_post_t1",
+      "object": "lantern_post_t1",
+      "position": [
+        1.7,
+        1.7,
+        0.0
+      ],
+      "rotation_z_deg": -45.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "lantern_post_t1",
+      "object": "lantern_post_t1.001",
+      "position": [
+        -3.2,
+        -3.0,
+        0.045
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "lantern_post_t1",
+      "object": "lantern_post_t1.002",
+      "position": [
+        4.2,
+        -2.2,
+        0.0
+      ],
+      "rotation_z_deg": 90.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "lantern_post_t1",
+      "object": "lantern_post_t1.003",
+      "position": [
+        4.4,
+        2.4,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "pennant_pole",
+      "object": "pennant_pole",
+      "position": [
+        -0.9,
+        1.4,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "town_hall_t1",
+      "object": "town_hall_t1",
+      "position": [
+        7.6,
+        -6.9,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "pennant_pole",
+      "object": "pennant_pole.001",
+      "position": [
+        5.9,
+        -5.7,
+        0.0
+      ],
+      "rotation_z_deg": -30.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "field_plot_t1",
+      "object": "field_plot_t1",
+      "position": [
+        2.2,
+        -6.0,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "field_plot_t1",
+      "object": "field_plot_t1.001",
+      "position": [
+        4.5,
+        -7.2,
+        0.0
+      ],
+      "rotation_z_deg": 90.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "field_plot_t1",
+      "object": "field_plot_t1.002",
+      "position": [
+        2.6,
+        -8.2,
+        0.0
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_barrel",
+      "object": "shipwreck_barrel.001",
+      "position": [
+        5.3,
+        -7.8,
+        0.0
+      ],
+      "rotation_z_deg": 20.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_crate_closed",
+      "object": "shipwreck_crate_closed.001",
+      "position": [
+        6.2,
+        -8.2,
+        0.0
+      ],
+      "rotation_z_deg": 65.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "rock_cluster_01",
+      "object": "rock_cluster_01",
+      "position": [
+        8.7,
+        -8.6,
+        0.0
+      ],
+      "rotation_z_deg": 200.0,
+      "scale": 0.9
+    },
+    {
+      "asset": "shipwreck_hull",
+      "object": "shipwreck_hull",
+      "position": [
+        -6.2,
+        -6.2,
+        0.045
+      ],
+      "rotation_z_deg": 40.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_crate_closed",
+      "object": "shipwreck_crate_closed.002",
+      "position": [
+        -4.0,
+        -4.9,
+        0.045
+      ],
+      "rotation_z_deg": 15.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_crate_closed",
+      "object": "shipwreck_crate_closed.003",
+      "position": [
+        -4.9,
+        -3.9,
+        0.045
+      ],
+      "rotation_z_deg": 40.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_crate_closed",
+      "object": "shipwreck_crate_closed.004",
+      "position": [
+        -3.4,
+        -6.0,
+        0.045
+      ],
+      "rotation_z_deg": 70.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_barrel",
+      "object": "shipwreck_barrel.002",
+      "position": [
+        -4.5,
+        -6.1,
+        0.045
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_barrel",
+      "object": "shipwreck_barrel.003",
+      "position": [
+        -2.7,
+        -4.2,
+        0.045
+      ],
+      "rotation_z_deg": 55.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "shipwreck_barrel",
+      "object": "shipwreck_barrel.004",
+      "position": [
+        -5.9,
+        -4.6,
+        0.045
+      ],
+      "rotation_z_deg": 110.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01",
+      "position": [
+        -8.4,
+        8.5,
+        0.0
+      ],
+      "rotation_z_deg": 10.0,
+      "scale": 1.5
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.001",
+      "position": [
+        -7.0,
+        8.9,
+        0.0
+      ],
+      "rotation_z_deg": 80.0,
+      "scale": 1.25
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.002",
+      "position": [
+        -9.0,
+        7.0,
+        0.0
+      ],
+      "rotation_z_deg": 150.0,
+      "scale": 1.4
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.003",
+      "position": [
+        -6.0,
+        7.7,
+        0.0
+      ],
+      "rotation_z_deg": 210.0,
+      "scale": 1.6
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.004",
+      "position": [
+        -7.7,
+        6.2,
+        0.0
+      ],
+      "rotation_z_deg": 300.0,
+      "scale": 1.2
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.005",
+      "position": [
+        -5.3,
+        8.9,
+        0.0
+      ],
+      "rotation_z_deg": 45.0,
+      "scale": 1.35
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.006",
+      "position": [
+        -8.9,
+        9.2,
+        0.0
+      ],
+      "rotation_z_deg": 120.0,
+      "scale": 1.7
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.007",
+      "position": [
+        -4.3,
+        6.4,
+        0.0
+      ],
+      "rotation_z_deg": 260.0,
+      "scale": 1.1
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.008",
+      "position": [
+        -6.7,
+        5.6,
+        0.0
+      ],
+      "rotation_z_deg": 330.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.009",
+      "position": [
+        -5.6,
+        7.0,
+        0.0
+      ],
+      "rotation_z_deg": 175.0,
+      "scale": 1.45
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.010",
+      "position": [
+        -8.3,
+        4.9,
+        0.0
+      ],
+      "rotation_z_deg": 60.0,
+      "scale": 1.15
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.011",
+      "position": [
+        -4.6,
+        8.2,
+        0.0
+      ],
+      "rotation_z_deg": 285.0,
+      "scale": 1.55
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.012",
+      "position": [
+        -2.9,
+        7.9,
+        0.0
+      ],
+      "rotation_z_deg": 135.0,
+      "scale": 1.2
+    },
+    {
+      "asset": "rock_cluster_01",
+      "object": "rock_cluster_01.001",
+      "position": [
+        -4.6,
+        4.6,
+        0.0
+      ],
+      "rotation_z_deg": 30.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "rock_cluster_01",
+      "object": "rock_cluster_01.002",
+      "position": [
+        -9.0,
+        4.2,
+        0.0
+      ],
+      "rotation_z_deg": 120.0,
+      "scale": 1.1
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.013",
+      "position": [
+        -1.5,
+        8.8,
+        0.0
+      ],
+      "rotation_z_deg": 95.0,
+      "scale": 1.3
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.014",
+      "position": [
+        0.6,
+        8.3,
+        0.0
+      ],
+      "rotation_z_deg": 240.0,
+      "scale": 1.5
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.015",
+      "position": [
+        2.0,
+        8.9,
+        0.0
+      ],
+      "rotation_z_deg": 15.0,
+      "scale": 1.2
+    },
+    {
+      "asset": "rock_cluster_01",
+      "object": "rock_cluster_01.003",
+      "position": [
+        0.4,
+        6.4,
+        0.0
+      ],
+      "rotation_z_deg": 75.0,
+      "scale": 0.95
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.016",
+      "position": [
+        8.9,
+        -0.8,
+        0.0
+      ],
+      "rotation_z_deg": 220.0,
+      "scale": 1.3
+    },
+    {
+      "asset": "forest_tree_01",
+      "object": "forest_tree_01.017",
+      "position": [
+        8.2,
+        -2.3,
+        0.0
+      ],
+      "rotation_z_deg": 20.0,
+      "scale": 1.15
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment",
+      "position": [
+        -4.0,
+        -4.0,
+        0.046
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.001",
+      "position": [
+        -3.0,
+        -3.0,
+        0.048
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.002",
+      "position": [
+        -2.0,
+        -2.0,
+        0.002
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.003",
+      "position": [
+        -1.1,
+        -1.1,
+        0.004
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.004",
+      "position": [
+        2.0,
+        1.3,
+        0.002
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.005",
+      "position": [
+        2.9,
+        2.1,
+        0.004
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.006",
+      "position": [
+        3.7,
+        2.8,
+        0.006
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.007",
+      "position": [
+        2.0,
+        -1.8,
+        0.006
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.008",
+      "position": [
+        2.9,
+        -2.6,
+        0.008
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.009",
+      "position": [
+        3.8,
+        -3.4,
+        0.01
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.010",
+      "position": [
+        4.7,
+        -4.2,
+        0.012
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.011",
+      "position": [
+        5.5,
+        -5.0,
+        0.014
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "dirt_road_segment",
+      "object": "dirt_road_segment.012",
+      "position": [
+        6.3,
+        -5.8,
+        0.016
+      ],
+      "rotation_z_deg": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "camera": {
+    "type": "ORTHO",
+    "pitch_deg": 30.0,
+    "yaw_deg": 45.0,
+    "ortho_scale": 28.2136,
+    "location": [
+      25.5734,
+      -25.5734,
+      22.2391
+    ],
+    "identical_for_both_shots": true
+  },
+  "render": {
+    "engine": "CYCLES (CPU)",
+    "samples": 64,
+    "resolution": [
+      1280,
+      960
+    ],
+    "resolution_percentage": 100,
+    "denoising": true
+  },
+  "lighting": {
+    "day": {
+      "world": {
+        "color": [
+          0.55,
+          0.7,
+          0.85
+        ],
+        "strength": 0.55
+      },
+      "sun": {
+        "color": [
+          1.0,
+          0.94,
+          0.82
+        ],
+        "energy": 4.0,
+        "rotation_deg": [
+          50.0,
+          -8.0,
+          65.0
+        ]
+      }
+    },
+    "night": {
+      "world": {
+        "color": [
+          0.01,
+          0.02,
+          0.055
+        ],
+        "strength": 0.11
+      },
+      "moon": {
+        "color": [
+          0.55,
+          0.65,
+          1.0
+        ],
+        "energy": 0.1,
+        "rotation_deg": [
+          55.0,
+          0.0,
+          160.0
+        ]
+      },
+      "points": [
+        {
+          "name": "fire_core",
+          "pos": [
+            0.5,
+            0.5,
+            0.75
+          ],
+          "color": [
+            1.0,
+            0.52,
+            0.2
+          ],
+          "energy": 280.0,
+          "radius": 0.25
+        },
+        {
+          "name": "tower_candle",
+          "pos": [
+            6.7,
+            6.2,
+            1.7
+          ],
+          "color": [
+            1.0,
+            0.6,
+            0.28
+          ],
+          "energy": 120.0,
+          "radius": 0.3
+        },
+        {
+          "name": "townhall_window",
+          "pos": [
+            7.6,
+            -8.1,
+            2.6
+          ],
+          "color": [
+            1.0,
+            0.65,
+            0.3
+          ],
+          "energy": 60.0,
+          "radius": 0.4
+        },
+        {
+          "name": "moon_spot_hound",
+          "pos": [
+            11.0,
+            1.0,
+            7.5
+          ],
+          "target": [
+            6.0,
+            5.5,
+            2.2
+          ],
+          "color": [
+            0.45,
+            0.55,
+            0.95
+          ],
+          "energy": 180.0,
+          "spot_size_deg": 32.0,
+          "blend": 0.6
+        },
+        {
+          "name": "flame_0",
+          "pos": [
+            1.8751,
+            1.5249,
+            1.89
+          ],
+          "color": [
+            1.0,
+            0.6,
+            0.25
+          ],
+          "energy": 70.0,
+          "radius": 0.1
+        },
+        {
+          "name": "flame_1",
+          "pos": [
+            -2.9523,
+            -3.0,
+            1.935
+          ],
+          "color": [
+            1.0,
+            0.6,
+            0.25
+          ],
+          "energy": 70.0,
+          "radius": 0.1
+        },
+        {
+          "name": "flame_2",
+          "pos": [
+            4.2,
+            -1.9523,
+            1.89
+          ],
+          "color": [
+            1.0,
+            0.6,
+            0.25
+          ],
+          "energy": 70.0,
+          "radius": 0.1
+        },
+        {
+          "name": "flame_3",
+          "pos": [
+            4.6477,
+            2.4,
+            1.89
+          ],
+          "color": [
+            1.0,
+            0.6,
+            0.25
+          ],
+          "energy": 70.0,
+          "radius": 0.1
+        },
+        {
+          "name": "ember_glow_0",
+          "pos": [
+            0.4717,
+            0.4954,
+            0.4276
+          ],
+          "color": [
+            1.0,
+            0.45,
+            0.15
+          ],
+          "energy": 60.0,
+          "radius": 0.15
+        }
+      ]
+    }
+  },
+  "aesthetic_gate": {
+    "scene_proof_day.png": "Gate question 1: does the day read bucolic and palette-faithful to docs/abbey-town-1.png (warm terracotta/plaster/grass diorama, safe and inviting)?",
+    "scene_proof_night.png": "Gate question 2: does darkness read as hostile territory \u2014 near-dark blue ambient, ONLY firelight pools (campfire, lanterns, warm windows, tower candle), pools clearly delimited, Black Hound silhouette readable near the ruined tower?"
+  },
+  "files": {
+    "day": "blender/generated/previews/scene_proof_day.png",
+    "night": "blender/generated/previews/scene_proof_night.png"
+  }
+}
