@@ -30,7 +30,7 @@ EXIT_SKIP = 3
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROJECT_PATH = REPO_ROOT / "unity"
-UNITY_VERSION = "6000.0.32f1"
+UNITY_VERSION = "6000.5.2f1"
 EXECUTE_METHOD = "Abbey.Editor.ScreenshotCapture.CaptureFromCLI"
 OUTPUT_DIR = PROJECT_PATH / "Screenshots"
 

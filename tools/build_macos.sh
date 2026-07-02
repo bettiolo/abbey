@@ -31,7 +31,7 @@ if [ ! -d "$PROJECT_PATH" ]; then
 fi
 
 VERSION_FILE="$PROJECT_PATH/ProjectSettings/ProjectVersion.txt"
-UNITY_VERSION="6000.0.32f1"
+UNITY_VERSION="6000.5.2f1"
 if [ -f "$VERSION_FILE" ]; then
   PINNED="$(awk '/^m_EditorVersion:/ {print $2}' "$VERSION_FILE")"
   if [ -n "$PINNED" ]; then

@@ -67,8 +67,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           projectPath: unity
-          # Unity 6 LTS; game-ci/unity-test-runner@v4 supports 6000.x editor images.
-          unityVersion: 6000.0.32f1
+          # Unity 6.5 stream; game-ci/unity-test-runner@v4 supports 6000.x editor images.
+          unityVersion: 6000.5.2f1
           testMode: ${{ matrix.testMode }}
           artifactsPath: test-results-${{ matrix.testMode }}
           checkName: Unity ${{ matrix.testMode }} results
