@@ -1,0 +1,145 @@
+{
+  "id": "lantern_post_t1",
+  "generated_at": "2026-07-02T15:09:34.590532+00:00",
+  "spec": {
+    "id": "lantern_post_t1",
+    "type": "prop",
+    "theme": "camp",
+    "footprint": {
+      "width": 1.0,
+      "depth": 1.0,
+      "height": 2.8
+    },
+    "style": {
+      "silhouette": "tall dark post with a bracket arm and one fat hanging lantern of warm glowing glass in an iron cage",
+      "materials": [
+        "mat_dark_wood",
+        "mat_iron",
+        "mat_warm_window"
+      ]
+    },
+    "required_parts": [
+      "post",
+      "bracket_arm",
+      "lantern",
+      "fuel_hook"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 600,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "flame",
+        "type": "light"
+      },
+      {
+        "name": "fuel_hook",
+        "type": "hook"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.73536,
+    "depth": 0.34,
+    "height": 2.26,
+    "min": [
+      -0.36768,
+      -0.17,
+      0.0
+    ],
+    "max": [
+      0.36768,
+      0.17,
+      2.26
+    ]
+  },
+  "triangle_count": 156,
+  "material_count": 3,
+  "materials": [
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_warm_window"
+  ],
+  "anchors": [
+    {
+      "name": "fuel_hook",
+      "type": "hook"
+    },
+    {
+      "name": "flame",
+      "type": "light"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/lantern_post_t1.glb",
+    "blend": "blender/generated/blend/lantern_post_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/lantern_post_t1_preview_day.png",
+      "night": "blender/generated/previews/lantern_post_t1_preview_night.png",
+      "winter": "blender/generated/previews/lantern_post_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/lantern_post_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/lantern_post_t1.glb (22164 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/lantern_post_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.735x0.340x2.260 vs footprint 1.0x1.0x2.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "156/600 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_dark_wood', 'mat_iron', 'mat_warm_window']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['flame', 'fuel_hook'] present=['flame', 'fuel_hook']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "lantern_post_t1_collision present"
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "id": "campfire_t1",
-  "generated_at": "2026-07-02T00:10:59.862414+00:00",
+  "generated_at": "2026-07-02T15:09:16.358266+00:00",
   "spec": {
     "id": "campfire_t1",
     "type": "prop",
@@ -93,12 +93,12 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/glb/campfire_t1.glb (31260 bytes)"
+        "detail": "blender/generated/glb/campfire_t1.glb (31260 bytes)"
       },
       {
         "name": "blend_saved",
         "passed": true,
-        "detail": "/home/user/Abbey/.claude/worktrees/wf_cc739f10-ddb-1/blender/generated/blend/campfire_t1.blend"
+        "detail": "blender/generated/blend/campfire_t1.blend"
       },
       {
         "name": "previews_exist",

@@ -1,0 +1,156 @@
+{
+  "id": "bell_tower_ruined",
+  "generated_at": "2026-07-02T15:09:03.296601+00:00",
+  "spec": {
+    "id": "bell_tower_ruined",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 3.0,
+      "depth": 3.0,
+      "height": 6.0
+    },
+    "style": {
+      "silhouette": "tall square stone tower with a jagged broken crown, one collapsed wall exposing the sacred gold bell hanging from a charred beam, rubble at the base",
+      "materials": [
+        "mat_old_stone",
+        "mat_dark_wood",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "tower_walls",
+      "corner_piers",
+      "broken_crown",
+      "belfry_beam",
+      "bell",
+      "doorway",
+      "rubble"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "bell",
+        "type": "bell"
+      },
+      {
+        "name": "hound_lair",
+        "type": "lair"
+      },
+      {
+        "name": "door",
+        "type": "door"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 3.00795,
+    "depth": 3.00877,
+    "height": 5.404,
+    "min": [
+      -1.50397,
+      -1.50439,
+      -0.0
+    ],
+    "max": [
+      1.50397,
+      1.50439,
+      5.404
+    ]
+  },
+  "triangle_count": 398,
+  "material_count": 3,
+  "materials": [
+    "mat_dark_wood",
+    "mat_old_stone",
+    "mat_sacred_gold"
+  ],
+  "anchors": [
+    {
+      "name": "hound_lair",
+      "type": "lair"
+    },
+    {
+      "name": "door",
+      "type": "door"
+    },
+    {
+      "name": "bell",
+      "type": "bell"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/bell_tower_ruined.glb",
+    "blend": "blender/generated/blend/bell_tower_ruined.blend",
+    "previews": {
+      "day": "blender/generated/previews/bell_tower_ruined_preview_day.png",
+      "night": "blender/generated/previews/bell_tower_ruined_preview_night.png",
+      "winter": "blender/generated/previews/bell_tower_ruined_preview_winter.png",
+      "grayscale": "blender/generated/previews/bell_tower_ruined_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/bell_tower_ruined.glb (52740 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/bell_tower_ruined.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=-0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 3.008x3.009x5.404 vs footprint 3.0x3.0x6.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "398/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/4 materials: ['mat_dark_wood', 'mat_old_stone', 'mat_sacred_gold']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['bell', 'hound_lair', 'door'] present=['bell', 'door', 'hound_lair']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "bell_tower_ruined_collision present"
+      }
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "id": "black_hound_lowpoly",
+  "generated_at": "2026-07-02T15:09:09.841039+00:00",
+  "spec": {
+    "id": "black_hound_lowpoly",
+    "type": "beast",
+    "theme": "beast",
+    "footprint": {
+      "width": 2.0,
+      "depth": 1.0,
+      "height": 1.8
+    },
+    "style": {
+      "silhouette": "huge wounded black hound, shoulder ~1.2m: heavy chest, gaunt haunches with exposed bone ribs, lowered head, iron collar, tail hanging low",
+      "materials": [
+        "mat_nightmare_black",
+        "mat_bone",
+        "mat_iron"
+      ]
+    },
+    "required_parts": [
+      "torso",
+      "chest",
+      "haunches",
+      "head",
+      "legs",
+      "exposed_ribs",
+      "iron_collar",
+      "tail"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "mouth",
+        "type": "interaction"
+      },
+      {
+        "name": "collar",
+        "type": "attach"
+      },
+      {
+        "name": "saddle_point",
+        "type": "mount"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.91974,
+    "depth": 0.63698,
+    "height": 1.69747,
+    "min": [
+      -0.95987,
+      -0.31849,
+      -0.0
+    ],
+    "max": [
+      0.95987,
+      0.31849,
+      1.69747
+    ]
+  },
+  "triangle_count": 346,
+  "material_count": 3,
+  "materials": [
+    "mat_bone",
+    "mat_iron",
+    "mat_nightmare_black"
+  ],
+  "anchors": [
+    {
+      "name": "saddle_point",
+      "type": "mount"
+    },
+    {
+      "name": "mouth",
+      "type": "interaction"
+    },
+    {
+      "name": "collar",
+      "type": "attach"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/black_hound_lowpoly.glb",
+    "blend": "blender/generated/blend/black_hound_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/black_hound_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/black_hound_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/black_hound_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/black_hound_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/black_hound_lowpoly.glb (47616 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/black_hound_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=-0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.920x0.637x1.697 vs footprint 2.0x1.0x1.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "346/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_bone', 'mat_iron', 'mat_nightmare_black']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['mouth', 'collar', 'saddle_point'] present=['collar', 'mouth', 'saddle_point']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "black_hound_lowpoly_collision present"
+      }
+    ]
+  }
+}
