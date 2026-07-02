@@ -83,7 +83,11 @@ namespace Abbey.Light
             GameEventLog.Append("LightExtinguished", $"{name} sacred={sacred}");
         }
 
-        /// <summary>Relights the source. Optionally adds fuel (ignored if infinite).</summary>
+        /// <summary>
+        /// Relights the source. Optionally adds fuel (ignored if infinite). A burned-out
+        /// source (finite fuel, zero remaining) refuses to relight until it is given
+        /// fuel — darkness must cost something to push back.
+        /// </summary>
         public void Ignite(float addedFuelSeconds = 0f)
         {
             if (!HasInfiniteFuel && addedFuelSeconds > 0f)
@@ -92,6 +96,11 @@ namespace Abbey.Light
             }
             if (isLit)
             {
+                return;
+            }
+            if (!HasInfiniteFuel && fuelSeconds <= 0f)
+            {
+                GameEventLog.Append("LightIgniteFailed", $"{name} no fuel");
                 return;
             }
             isLit = true;
