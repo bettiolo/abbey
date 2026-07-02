@@ -52,6 +52,9 @@ def generate_asset(asset_id: str) -> dict:
 
     bpy.context.view_layer.update()
     fw.apply_center_bottom_pivot(root)
+    # Consistent-density box UVs for the shared tileable pixel textures
+    # (materials with an Image Texture node sample the 'UVMap' layer).
+    fw.apply_box_uvs(root)
 
     if bpy.data.objects.get(f"{asset_id}{fw.COLLISION_SUFFIX}") is None:
         fw.add_collision_proxy(root, asset_id)
