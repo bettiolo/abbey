@@ -3,6 +3,7 @@
     "rootNamespace": "Abbey.Tests",
     "references": [
         "Abbey.Runtime",
+        "Abbey.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
