@@ -1,0 +1,17 @@
+{
+  "id": "abbey_gate_ruined",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 4.1, "depth": 1.4, "height": 4.6 },
+  "style": {
+    "silhouette": "the abbey gatehouse broken: one pier still tall with a snapped arch stub, the other sheared low with jagged teeth, doorway empty, a fallen door slab and rubble across the threshold — same footprint and pivot as abbey_gate_repaired so the game swaps them in place",
+    "materials": ["mat_old_stone", "mat_dark_wood"]
+  },
+  "required_parts": ["piers", "arch_stubs", "broken_crown", "fallen_door", "rubble"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "door", "type": "door" }
+  ],
+  "pivot": "center_bottom"
+}

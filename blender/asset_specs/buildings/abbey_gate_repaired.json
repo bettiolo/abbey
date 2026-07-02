@@ -1,0 +1,17 @@
+{
+  "id": "abbey_gate_repaired",
+  "type": "building",
+  "theme": "abbey",
+  "footprint": { "width": 4.1, "depth": 1.4, "height": 4.6 },
+  "style": {
+    "silhouette": "restored abbey gatehouse: two chunky warm-stone piers, pointed arch span with a stone gable cap and gold cross finial, heavy closed double doors with iron bands — same footprint and pivot as abbey_gate_ruined so the game swaps them in place",
+    "materials": ["mat_old_stone", "mat_dark_wood", "mat_iron", "mat_sacred_gold"]
+  },
+  "required_parts": ["piers", "arch_span", "gable_cap", "cross_finial", "double_doors", "iron_bands"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "door", "type": "door" }
+  ],
+  "pivot": "center_bottom"
+}

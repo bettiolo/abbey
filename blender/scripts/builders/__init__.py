@@ -13,6 +13,7 @@ _SCRIPTS_DIR = str(Path(__file__).resolve().parent.parent)
 if _SCRIPTS_DIR not in sys.path:
     sys.path.insert(0, _SCRIPTS_DIR)
 
+from builders import abbey_gate  # noqa: E402,F401
 from builders import abbey_ruins  # noqa: E402,F401
 from builders import abbey_town  # noqa: E402,F401
 from builders import beasts  # noqa: E402,F401
