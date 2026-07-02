@@ -32,7 +32,7 @@ warrior.
 
 ## 2. Dual-pipeline architecture
 
-1. **Unity** (2022.3 LTS) is the game/runtime/simulation/editor. Locked orthographic
+1. **Unity** (Unity 6 LTS, 6000.0.32f1) is the game/runtime/simulation/editor. Locked orthographic
    isometric camera (pitch 30°, yaw 45°), real 3D assets art-directed as a 2D diorama,
    shader-driven desaturation for night/fear/winter/nightmare.
 2. **Blender** (headless Python; `blender` binary or `bpy` module) is the automated asset
