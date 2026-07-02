@@ -1,6 +1,6 @@
 {
   "id": "abbey_wall_broken",
-  "generated_at": "2026-07-02T15:34:48.187304+00:00",
+  "generated_at": "2026-07-02T16:10:07.223978+00:00",
   "spec": {
     "id": "abbey_wall_broken",
     "type": "building",
@@ -70,7 +70,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/abbey_wall_broken.glb (30696 bytes)"
+        "detail": "blender/generated/glb/abbey_wall_broken.glb (31832 bytes)"
       },
       {
         "name": "blend_saved",

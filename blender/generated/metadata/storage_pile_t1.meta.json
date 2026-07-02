@@ -1,6 +1,6 @@
 {
   "id": "storage_pile_t1",
-  "generated_at": "2026-07-02T15:36:09.623917+00:00",
+  "generated_at": "2026-07-02T16:11:53.938710+00:00",
   "spec": {
     "id": "storage_pile_t1",
     "type": "building",
@@ -85,7 +85,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/storage_pile_t1.glb (41580 bytes)"
+        "detail": "blender/generated/glb/storage_pile_t1.glb (42828 bytes)"
       },
       {
         "name": "blend_saved",

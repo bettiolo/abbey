@@ -1,6 +1,6 @@
 {
   "id": "shipwreck_barrel",
-  "generated_at": "2026-07-02T15:35:46.698387+00:00",
+  "generated_at": "2026-07-02T16:11:31.002431+00:00",
   "spec": {
     "id": "shipwreck_barrel",
     "type": "prop",
@@ -84,7 +84,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/shipwreck_barrel.glb (20508 bytes)"
+        "detail": "blender/generated/glb/shipwreck_barrel.glb (20492 bytes)"
       },
       {
         "name": "blend_saved",

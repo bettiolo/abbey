@@ -1,0 +1,158 @@
+{
+  "id": "abbey_church_t1",
+  "generated_at": "2026-07-02T16:09:52.672583+00:00",
+  "spec": {
+    "id": "abbey_church_t1",
+    "type": "building",
+    "theme": "abbey",
+    "footprint": {
+      "width": 4.0,
+      "depth": 2.0,
+      "height": 6.0
+    },
+    "style": {
+      "silhouette": "landmark gothic nave in warm stone with a steep terracotta roof, pointed stained-glass windows, stepped buttresses, ornate west portal with archivolts, octagonal crossing spire with a gold finial, cross finials on the gable ends",
+      "materials": [
+        "mat_old_stone",
+        "mat_thatch",
+        "mat_wet_stone",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "nave",
+      "gable_roof",
+      "stained_windows",
+      "buttresses",
+      "west_portal",
+      "crossing_spire",
+      "cross_finials"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 6000,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "door",
+        "type": "door"
+      },
+      {
+        "name": "altar",
+        "type": "work"
+      },
+      {
+        "name": "spire_finial",
+        "type": "finial"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 3.99,
+    "depth": 1.87641,
+    "height": 5.69,
+    "min": [
+      -1.995,
+      -0.93821,
+      0.0
+    ],
+    "max": [
+      1.995,
+      0.93821,
+      5.69
+    ]
+  },
+  "triangle_count": 774,
+  "material_count": 4,
+  "materials": [
+    "mat_old_stone",
+    "mat_sacred_gold",
+    "mat_thatch",
+    "mat_wet_stone"
+  ],
+  "anchors": [
+    {
+      "name": "spire_finial",
+      "type": "finial"
+    },
+    {
+      "name": "door",
+      "type": "door"
+    },
+    {
+      "name": "altar",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/abbey_church_t1.glb",
+    "blend": "blender/generated/blend/abbey_church_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/abbey_church_t1_preview_day.png",
+      "night": "blender/generated/previews/abbey_church_t1_preview_night.png",
+      "winter": "blender/generated/previews/abbey_church_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/abbey_church_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/abbey_church_t1.glb (107004 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/abbey_church_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 3.990x1.876x5.690 vs footprint 4.0x2.0x6.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "774/6000 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_old_stone', 'mat_sacred_gold', 'mat_thatch', 'mat_wet_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['door', 'altar', 'spire_finial'] present=['altar', 'door', 'spire_finial']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "abbey_church_t1_collision present"
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "id": "bell_tower_ruined",
-  "generated_at": "2026-07-02T15:34:55.511660+00:00",
+  "generated_at": "2026-07-02T16:10:14.559626+00:00",
   "spec": {
     "id": "bell_tower_ruined",
     "type": "building",
@@ -104,7 +104,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/bell_tower_ruined.glb (52740 bytes)"
+        "detail": "blender/generated/glb/bell_tower_ruined.glb (53876 bytes)"
       },
       {
         "name": "blend_saved",

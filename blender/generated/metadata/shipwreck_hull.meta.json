@@ -1,6 +1,6 @@
 {
   "id": "shipwreck_hull",
-  "generated_at": "2026-07-02T15:36:01.687049+00:00",
+  "generated_at": "2026-07-02T16:11:45.935457+00:00",
   "spec": {
     "id": "shipwreck_hull",
     "type": "terrain",
@@ -111,7 +111,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/shipwreck_hull.glb (63932 bytes)"
+        "detail": "blender/generated/glb/shipwreck_hull.glb (65168 bytes)"
       },
       {
         "name": "blend_saved",

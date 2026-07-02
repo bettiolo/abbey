@@ -1,6 +1,6 @@
 {
   "id": "lantern_post_t1",
-  "generated_at": "2026-07-02T15:35:26.793233+00:00",
+  "generated_at": "2026-07-02T16:10:59.044401+00:00",
   "spec": {
     "id": "lantern_post_t1",
     "type": "prop",
@@ -93,7 +93,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/lantern_post_t1.glb (22164 bytes)"
+        "detail": "blender/generated/glb/lantern_post_t1.glb (22184 bytes)"
       },
       {
         "name": "blend_saved",
