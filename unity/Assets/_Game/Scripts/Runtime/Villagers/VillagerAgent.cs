@@ -68,6 +68,34 @@ namespace Abbey.Villagers
 
         public VillagerState State { get; private set; } = VillagerState.Idle;
 
+        // ---- Job-layer hooks (P2-02). All default to "no job layer": null handlers,
+        // no duration override, multiplier 1 — the original loop is untouched.
+
+        /// <summary>
+        /// Single job-layer handler invoked when the Working timer elapses (and no
+        /// recall interrupts). Return true to proceed into CarryingResource as
+        /// usual; return false when the handler took over (reassigned via
+        /// <see cref="AssignWork"/> or stopped via <see cref="CancelWork"/>). A
+        /// false return that leaves the state Working simply works another cycle.
+        /// </summary>
+        public System.Func<VillagerAgent, bool> WorkCycleHandler { get; set; }
+
+        /// <summary>
+        /// Single job-layer handler invoked on arrival at the storage point, after
+        /// the deposit log record. May retarget (AssignWork) or stop (CancelWork);
+        /// otherwise the loop walks back to the task site as before.
+        /// </summary>
+        public System.Action<VillagerAgent> DepositHandler { get; set; }
+
+        /// <summary>Per-assignment Working duration; &lt;= 0 uses config villagerWorkDurationSeconds.</summary>
+        public float WorkDurationOverride { get; set; } = -1f;
+
+        /// <summary>Job walk-speed multiplier applied to the work loop legs only.</summary>
+        public float WorkSpeedMultiplier { get; set; } = 1f;
+
+        /// <summary>True while the villager holds a day-loop assignment.</summary>
+        public bool HasWorkAssignment => _hasAssignment;
+
         /// <summary>Fear 0..1. Panic threshold and rates come from config.</summary>
         public float Fear { get; private set; }
 
@@ -138,6 +166,25 @@ namespace Abbey.Villagers
             _storagePoint = storagePoint;
             _hasAssignment = true;
             SetState(VillagerState.AssignedToWork);
+        }
+
+        /// <summary>
+        /// Drops the day-loop assignment and idles. Only exits work-loop states;
+        /// recall, panic, injury and rescue states are never touched.
+        /// </summary>
+        public void CancelWork()
+        {
+            _hasAssignment = false;
+            switch (State)
+            {
+                case VillagerState.AssignedToWork:
+                case VillagerState.WalkingToTask:
+                case VillagerState.Working:
+                case VillagerState.CarryingResource:
+                case VillagerState.ReturningToStorage:
+                    SetState(VillagerState.Idle);
+                    break;
+            }
         }
 
         /// <summary>
@@ -293,9 +340,9 @@ namespace Abbey.Villagers
                     break;
 
                 case VillagerState.WalkingToTask:
-                    if (StepTowards(_taskSite, cfg.villagerWalkSpeed, dt))
+                    if (StepTowards(_taskSite, cfg.villagerWalkSpeed * WorkSpeedMultiplier, dt))
                     {
-                        _workTimer = cfg.villagerWorkDurationSeconds;
+                        _workTimer = WorkDuration(cfg);
                         SetState(VillagerState.Working);
                     }
                     break;
@@ -310,8 +357,20 @@ namespace Abbey.Villagers
                         }
                         else
                         {
-                            _pickupTimer = cfg.villagerPickupDurationSeconds;
-                            SetState(VillagerState.CarryingResource);
+                            bool proceed = WorkCycleHandler == null || WorkCycleHandler(this);
+                            if (State != VillagerState.Working)
+                            {
+                                break; // handler reassigned or cancelled the loop
+                            }
+                            if (proceed)
+                            {
+                                _pickupTimer = cfg.villagerPickupDurationSeconds;
+                                SetState(VillagerState.CarryingResource);
+                            }
+                            else
+                            {
+                                _workTimer = WorkDuration(cfg); // nothing to carry: work on
+                            }
                         }
                     }
                     break;
@@ -325,10 +384,14 @@ namespace Abbey.Villagers
                     break;
 
                 case VillagerState.ReturningToStorage:
-                    if (StepTowards(_storagePoint, cfg.villagerWalkSpeed, dt))
+                    if (StepTowards(_storagePoint, cfg.villagerWalkSpeed * WorkSpeedMultiplier, dt))
                     {
                         GameEventLog.Append("villager_deposited_resource", name);
-                        SetState(VillagerState.WalkingToTask);
+                        DepositHandler?.Invoke(this);
+                        if (State == VillagerState.ReturningToStorage)
+                        {
+                            SetState(VillagerState.WalkingToTask);
+                        }
                     }
                     break;
 
@@ -510,6 +573,11 @@ namespace Abbey.Villagers
         {
             _recallOrdered = false;
             SetState(VillagerState.ReturningToLight);
+        }
+
+        float WorkDuration(PrototypeConfig cfg)
+        {
+            return WorkDurationOverride > 0f ? WorkDurationOverride : cfg.villagerWorkDurationSeconds;
         }
 
         /// <summary>Steps toward a target, returns true when arrived.</summary>
