@@ -259,6 +259,22 @@ tasks:
     review: null
     merged_commit: null
 
+  - id: P01-13
+    title: macOS run + standalone build support
+    phase: prototype-0.1
+    description: 'User requirement: the game must run on macOS. Deliver: Abbey.Editor.Builds.BuildMacOS batchmode build method (StandaloneOSX, output unity/Build/macOS/Abbey.app), tools/build_macos.sh wrapper (UNITY_PATH autodetect for /Applications/Unity/Hub/Editor), docs/RUNNING_ON_MAC.md kept accurate with real prototype controls. Editor play flow must work: open unity/, Tools/Abbey/Build Prototype Scene, Play.'
+    deliverables:
+      - unity/Assets/_Game/Scripts/Editor/Builds.cs
+      - tools/build_macos.sh
+      - docs/RUNNING_ON_MAC.md
+    depends_on: [P01-09]
+    status: todo
+    assigned_to: null
+    branch: null
+    reviewer: null
+    review: null
+    merged_commit: null
+
   # ---------------------------------------------------------------- Phase 2 (blocked until 0.1 human gate)
   - id: P2-01
     title: Shipwreck salvage economy
