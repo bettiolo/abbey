@@ -1,0 +1,17 @@
+{
+  "id": "sailcloth",
+  "type": "prop",
+  "theme": "shipwreck",
+  "footprint": { "width": 2.4, "depth": 2.3, "height": 1.5 },
+  "style": {
+    "silhouette": "torn ship sail draped over a snapped diagonal spar — one tall canvas triangle sagging into heavy ground folds, ragged trailing edge",
+    "materials": ["mat_canvas", "mat_dark_wood"]
+  },
+  "required_parts": ["broken_spar", "spar_stump", "draped_canvas", "ground_folds", "torn_edge"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 800, "max_materials": 3 },
+  "anchors": [
+    { "name": "salvage_point", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}
