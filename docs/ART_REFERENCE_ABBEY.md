@@ -1,10 +1,18 @@
 # Art reference: Abbey / Town Center / Field baseline
 
-Source: four user-provided pixel-art isometric diorama renders (2026-07-02) showing the
-same abbey complex from four rotations. They are the **visual baseline** for the abbey /
-town-center / field asset kit and for texture extraction. The originals live only in the
-session conversation; this document is the durable, quantified transcription that the
-asset pipeline builds from.
+Source: user-provided pixel-art isometric diorama renders, committed in this folder:
+
+- **`docs/abbey-town-1.png` — THE BASELINE** (user decision 2026-07-02). All palette
+  extraction and silhouette matching targets this file first.
+- `docs/abbey-town-2.png` … `abbey-town-4.png` — same complex, other rotations.
+- `docs/abbey-town-ruin-1.png` — **ruined state** of the same complex: the reference for
+  damaged/ruined asset variants (abbey_gate_ruined, bell_tower_ruined, broken walls) and
+  for the Broken-Abbey moral variant.
+
+Because the actual pixels are in-repo, palette work must be **derived from the baseline
+image programmatically** (deterministic sampling/clustering of `abbey-town-1.png`, masking
+the baked checkerboard background: near-greyscale pixels with r≈g≈b > 170). The hand
+ramps below are the calibration record; measured values win over transcribed ones.
 
 ## Overall read
 
@@ -19,7 +27,26 @@ from chimneys.
 This matches the game's Sanctuary-Abbey mood target (GAME_DESIGN §9, ART_BIBLE moral
 variants): bucolic, safe, inviting — the "day" pole of the day/night contrast.
 
-## Extracted palette (hex, pixel-art ramps: highlight / mid / shadow / deep)
+## Measured palette (sampled from `abbey-town-1.png`, checkerboard masked — AUTHORITATIVE)
+
+Dominant clusters (12-bit quantization, ≥900 samples at stride 2):
+
+| Surface | Measured values |
+|---------|----------------|
+| roof_terracotta | `#874934 #763a26 #683726 #582617` |
+| grass | `#86a736 #769828` (olive — darker than first transcription) |
+| dirt_path / soil | `#c7a46a #775636 #563926 #452a19` |
+| stone_warm | `#b5aa95 #857767 #776759 #665748` |
+| stone_cool / slate | `#686666 #595655 #544c46 #4a4746` |
+| timber | `#664629 #483425 #382618 #271507` |
+| deep shadow / outlines | `#170802 #261b15` |
+
+The generator must re-derive these at build time from the PNG itself (fixed seed, fixed
+sampling) so the textures stay traceable to the baseline. The transcribed ramps below are
+kept for surfaces too small to cluster reliably (bells, flags, stained glass) — verify
+them against local pixel neighborhoods when possible.
+
+## Transcribed palette (hex, pixel-art ramps: highlight / mid / shadow / deep)
 
 | Ramp | Values | Used for |
 |------|--------|----------|
