@@ -348,10 +348,10 @@ tasks:
       "EconomyConfig"), NOT in PrototypeConfig. New code under
       unity/Assets/_Game/Scripts/Runtime/Economy/. EditMode resource accounting tests.
     depends_on: [P01-10, GATE-0.1]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-economy
     branch: task/P2-01
-    reviewer: null
+    reviewer: reviewer-p2-economy
     review: null
     merged_commit: null
   - id: P2-02
