@@ -1,0 +1,41 @@
+{
+  "regenerated_at_utc": "2026-07-03T10:29:18Z",
+  "textures": [
+    {
+      "id": "tex_roof_tiles",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_roof_tiles_nb2_v2.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: terracotta abbey roof tile albedo, repeating rounded staggered courses, orange clay, dark pixel gaps, worn light ridge caps like the reference roofs.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    },
+    {
+      "id": "tex_plaster_timber",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_plaster_timber_nb2_v1.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: warm cream plaster infill albedo for half timber walls, subtle restrained mottling only, no beams, no stones.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    },
+    {
+      "id": "tex_grass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_grass_nb2_v2.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: pastoral abbey lawn albedo, flat olive green ground texture, tiny pixel clumps and small meadow speckles like the reference grass.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    },
+    {
+      "id": "tex_dirt_path",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_dirt_path_nb2_v2.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: packed tan village dirt path albedo, soft ruts, little pebbles, worn foot traffic streaks, no grass border.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    },
+    {
+      "id": "tex_paving",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_paving_nb2_v2.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: warm gray courtyard flagstone albedo, irregular square and rectangular paving stones, visible but not too heavy dark joints, chipped corners.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    },
+    {
+      "id": "tex_stained_glass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_stained_glass_nb2_v1.jpg",
+      "prompt": "The attached image is owned by the user and is the exact visual style reference. Match docs/abbey-town-1.png directly.\n\nCreate one seamless square tileable pixel-art material texture for: flat gothic stained glass pane texture sheet, blue teal red and warm gold panes, dark lead outlines, church window vocabulary, no wall frame.\n\nStyle target from the reference: warm saturated storybook pixel-art isometric abbey diorama, readable chunky outlines, limited ramps, crisp nearest-neighbor pixels. Albedo texture only; no baked scene lighting.\n\nThe entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender.\n\nHard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image."
+    }
+  ]
+}

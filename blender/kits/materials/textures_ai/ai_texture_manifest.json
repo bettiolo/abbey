@@ -1,0 +1,61 @@
+{
+  "generated_at_utc": "2026-07-02T18:01:28Z",
+  "model": "models/gemini-3.1-flash-image",
+  "source_reference": "docs/abbey-town-1.png",
+  "textures": [
+    {
+      "id": "tex_roof_tiles",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_roof_tiles.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: orange terracotta roof tiles, staggered courses, individual hand-pixelled clay tiles, ridge-worn highlights, dark gaps between tile rows.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_stone_blocks",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_stone_blocks.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: warm gray medieval stone blocks, irregular coursed masonry, dark mortar lines, chunky pixel-art block outlines.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_plaster_timber",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_plaster_timber.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: warm cream plaster infill for half-timber buildings, subtle mottling and wear, no timber beams baked in.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_grass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_grass.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: bright pastoral grass from the diorama top surface, clustered blades and tiny meadow speckles.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_dirt_path",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_dirt_path.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: packed tan dirt path with soft medieval village ruts, pebbles, worn foot traffic streaks.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_paving",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_paving.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: courtyard flagstone paving, irregular square and rectangular stones, dark joints, lightly chipped corners.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_cliff_soil",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_cliff_soil.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: exposed diorama base cliff soil, horizontal brown earth strata, compacted dirt side texture.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_wood_planks",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_wood_planks.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: barrel and crate wood planks, warm brown timber grain, dark plank seams, medieval village prop style.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    },
+    {
+      "id": "tex_stained_glass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_stained_glass.jpg",
+      "prompt": "The attached image is owned by the user and is the visual reference for their game.\n\nCreate one seamless square tileable albedo texture for: small gothic stained glass window texture sheet, blue teal red and warm gold panes, dark lead outlines.\n\nStyle requirements:\n- match the attached abbey-town pixel-art diorama style, palette, saturation, and hand-painted outline discipline\n- output only the requested surface as a flat material texture, not a rendered object or scene\n- seamless repeat on all four edges\n- orthographic/flat texture view with no perspective\n- no checkerboard background, no labels, no watermark, no UI, no border\n- no baked cast shadows or scene lighting; keep any shading as local pixel-art material detail only\n- crisp pixel-art read suitable for nearest-neighbor sampling in Blender and Unity\n- prefer PNG output and avoid compression artifacts\n- square 1:1 image\n\nReturn only the image."
+    }
+  ]
+}

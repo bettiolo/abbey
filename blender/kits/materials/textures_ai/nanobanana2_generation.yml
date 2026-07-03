@@ -1,0 +1,35 @@
+version: 1
+provider: google-nano-banana-2
+api:
+  auth_env: GEMINI_API_KEY
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent
+  model: models/gemini-3.1-flash-image
+  generationConfig:
+    responseModalities: [IMAGE, TEXT]
+    imageConfig:
+      aspectRatio: "1:1"
+      imageSize: 1K
+source_art_direction:
+  baseline_reference: docs/abbey-town-1.png
+  written_reference: docs/ART_REFERENCE_ABBEY.md
+  required_comparison_target: docs/abbey-town-1.png
+prompt_frame: |-
+  The attached image is owned by the user and is the exact visual style reference.
+
+  Art direction: warm saturated storybook pixel-art isometric abbey diorama. Match docs/ART_REFERENCE_ABBEY.md: visible roof tile courses, chunky stone block outlines, dark leaded stained glass, grass as speckled 4-tone ground, dirt as packed tan path, paving as irregular flagstones. Albedo texture only; no baked scene lighting.
+
+  Create variant {variant} of a seamless square tileable pixel-art material texture for: {subject}.
+
+  The entire image must be the flat material pattern edge-to-edge. It must be usable as an Image Texture in Blender with nearest-neighbor sampling.
+
+  Hard constraints: no text, no letters, no numbers, no prompt sheet, no labels, no watermark, no UI, no border, no checkerboard, no white page, no isolated object, no person, no portrait, no scene, no perspective camera, no terrain patch. Return only the texture image.
+retained_outputs:
+  tex_roof_tiles: blender/kits/materials/textures_ai/tex_roof_tiles_nb2_v2.jpg
+  tex_plaster_timber: blender/kits/materials/textures_ai/tex_plaster_timber_nb2_v1.jpg
+  tex_grass: blender/kits/materials/textures_ai/tex_grass_nb2_v2.jpg
+  tex_dirt_path: blender/kits/materials/textures_ai/tex_dirt_path_nb2_v2.jpg
+  tex_paving: blender/kits/materials/textures_ai/tex_paving_nb2_v2.jpg
+  tex_stained_glass: blender/kits/materials/textures_ai/tex_stained_glass_nb2_v1.jpg
+promotion_policy:
+  status: review_candidates_only
+  rule: Do not copy into blender/kits/materials/textures or wire into abbey_materials.py until human review confirms the candidate beats the deterministic baseline.

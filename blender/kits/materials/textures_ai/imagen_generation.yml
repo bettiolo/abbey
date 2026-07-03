@@ -1,0 +1,85 @@
+version: 1
+provider: google-imagen
+api:
+  auth_env: GEMINI_API_KEY
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict
+  model: models/imagen-4.0-generate-001
+  parameters:
+    sampleCount: 1
+    aspectRatio: "1:1"
+    sampleImageSize: 1K
+  unsupported_parameters:
+    negativePrompt: Public Gemini Imagen predict endpoint returned HTTP 400; keep negative constraints in prompt text instead.
+output:
+  directory: blender/kits/materials/textures_ai
+  filename_pattern: "{texture_id}_imagen.png"
+  manifest: blender/kits/materials/textures_ai/imagen_texture_manifest.json
+  validation_report: blender/kits/materials/textures_ai/imagen_validation_report.md
+source_art_direction:
+  baseline_reference: docs/abbey-town-1.png
+  written_reference: docs/ART_REFERENCE_ABBEY.md
+  mood: warm saturated storybook pixel-art isometric abbey diorama, Sanctuary-Abbey day pole
+palette_anchors:
+  roof_terracotta: ["#d97b4a", "#b5532e", "#7e3520", "#5f2718"]
+  stone_warm: ["#c2b49a", "#a89a80", "#7d715c", "#5c5344"]
+  plaster: ["#efe3c4", "#e8d9b8", "#d9c8a4", "#b8a988"]
+  timber: ["#8a5f3a", "#6b4a2f", "#543a24", "#3d2a1a"]
+  grass: ["#7fb43c", "#5f9430", "#47762a", "#35601f"]
+  dirt_path: ["#cfae7e", "#b3925f", "#8f7148", "#6e5738"]
+  cliff_soil: ["#6f4a33", "#573828", "#3f2719", "#2e1c12"]
+  paving: ["#b0aba0", "#918c80", "#6e6a5e", "#4f4c44"]
+  stained_glass: ["#4a6fb0", "#3f8f8a", "#a5453f", "#e8c063"]
+prompt_template: |-
+  Seamless square tileable pixel-art material texture: {subject}.
+
+  Fill the entire image edge-to-edge with the material pattern. Make it look like a flat albedo texture from a warm, saturated, storybook medieval abbey diorama game. Use chunky hand-painted pixel outlines, limited color ramps, nearest-neighbor crispness, and small material details. Keep the mood cozy and pastoral, matching a restored abbey/town center in daylight.
+
+  Required: flat material only, seamless on all four edges, square PNG, no perspective, no single object, no scene, no terrain patch, no cast shadow, no directional lighting, no photorealism.
+
+  Absolutely no text, no letters, no numbers, no code, no captions, no labels, no watermark, no UI, no border, no checkerboard, no empty white background.
+textures:
+  tex_roof_tiles:
+    subject: orange terracotta roof tiles, staggered courses, individual hand-pixelled clay tiles, ridge-worn highlights, dark gaps between tile rows
+    expected_read: individual terracotta courses with dark row gaps and light cap highlights
+  tex_stone_blocks:
+    subject: warm gray medieval abbey stone blocks, irregular coursed masonry, dark mortar lines, chunky pixel-art block outlines
+    expected_read: block masonry, irregular courses, visible mortar, no smooth concrete
+  tex_plaster_timber:
+    subject: warm cream plaster infill for half-timber buildings, subtle mottling and wear, no timber beams baked in
+    expected_read: pale plaster field only; dark timber bracing remains geometry
+  tex_grass:
+    subject: bright pastoral grass from the top of a cozy abbey diorama base, clustered blades and tiny meadow speckles
+    expected_read: green ground-top texture with clustered blades, not a landscape scene
+  tex_dirt_path:
+    subject: packed tan dirt village path with soft medieval foot ruts, pebbles, worn traffic streaks
+    expected_read: tan packed path, light/dark ruts, small pebbles
+  tex_paving:
+    subject: courtyard flagstone paving, irregular square and rectangular stones, dark joints, lightly chipped corners
+    expected_read: chunky flagstones with dark joints, readable as plaza paving
+  tex_cliff_soil:
+    subject: exposed square diorama base cliff soil, horizontal brown earth strata, compacted dirt side texture
+    expected_read: horizontal earth strata for diorama side faces
+  tex_wood_planks:
+    subject: barrel and crate wood planks, warm brown timber grain, dark plank seams, medieval village prop style
+    expected_read: plank seams and warm timber grain, not bark or furniture
+  tex_stained_glass:
+    subject: small gothic stained glass window texture sheet, blue teal red and warm gold panes, dark lead outlines
+    expected_read: leaded gothic glass panes; can be reviewed before any material-library promotion
+validation_gates:
+  automatic:
+    - png_or_supported_image_file
+    - square_image
+    - minimum_size_512_px
+    - edge_seam_delta_low_enough_for_tile_candidate
+    - palette_distance_near_expected_ramp
+    - moderate_color_count_after_downsample_for_pixel_art_read
+  human_review:
+    - flat material only, not a scene or rendered object
+    - matches abbey-town-1.png storybook pixel-art discipline
+    - no checkerboard, labels, watermarks, UI, or frame
+    - no baked cast shadows that would double-apply lighting in Blender/Unity
+    - beats or usefully complements deterministic blender/kits/materials/textures/*.png
+promotion_policy:
+  status: review_candidates_only
+  rule: Do not copy into blender/kits/materials/textures or wire into abbey_materials.py until reviewed.
+  reason: ART_REFERENCE_ABBEY.md keeps the material library closed and uses deterministic PNGs as the committed baseline.
