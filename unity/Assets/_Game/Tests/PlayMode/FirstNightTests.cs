@@ -178,7 +178,7 @@ namespace Abbey.Tests.PlayMode
             yield return null;
 
             _hero.SetMoveTarget(Vector3.zero); // back to the campfire
-            for (int i = 0; i < 200 && _hero.HasMoveTarget; i++)
+            for (int i = 0; i < 260 && (_hero.HasMoveTarget || _farWorker.CurrentZone != LightZone.Safe); i++)
             {
                 StepWorld(Dt);
                 if (i % 50 == 49)
@@ -187,6 +187,8 @@ namespace Abbey.Tests.PlayMode
                 }
             }
             Assert.IsFalse(_hero.HasMoveTarget, "the hero made it back to camp within dusk");
+            Assert.AreEqual(LightZone.Safe, _farWorker.CurrentZone,
+                "the escorted villager reached Safe light before release");
             Assert.IsTrue(_hero.ReleaseRescued(), "released inside Safe light completes the rescue");
             Assert.AreEqual(1, rescued.Count);
             Assert.AreSame(_farWorker.gameObject, rescued[0]);

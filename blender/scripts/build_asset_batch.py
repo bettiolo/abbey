@@ -55,6 +55,31 @@ def _relpath(path: Path) -> str:
         return str(path)
 
 
+def _without_generated_at(metadata: dict) -> dict:
+    comparable = dict(metadata)
+    comparable.pop("generated_at", None)
+    return comparable
+
+
+def _write_metadata_if_changed(meta_path: Path, metadata: dict) -> None:
+    if meta_path.exists():
+        try:
+            existing = json.loads(meta_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            existing = None
+        if (
+            isinstance(existing, dict)
+            and _without_generated_at(existing) == _without_generated_at(metadata)
+            and "generated_at" in existing
+        ):
+            metadata["generated_at"] = existing["generated_at"]
+
+    text = json.dumps(metadata, indent=2) + "\n"
+    if meta_path.exists() and meta_path.read_text(encoding="utf-8") == text:
+        return
+    meta_path.write_text(text, encoding="utf-8")
+
+
 def build_asset(asset_id: str) -> dict:
     """Full pipeline for one asset. Returns the metadata dict (also written)."""
     print(f"\n=== building {asset_id} ===")
@@ -85,9 +110,7 @@ def build_asset(asset_id: str) -> dict:
 
     fw.METADATA_DIR.mkdir(parents=True, exist_ok=True)
     meta_path = fw.METADATA_DIR / f"{asset_id}.meta.json"
-    with open(meta_path, "w", encoding="utf-8") as fh:
-        json.dump(metadata, fh, indent=2)
-        fh.write("\n")
+    _write_metadata_if_changed(meta_path, metadata)
 
     status = "PASSED" if validation["passed"] else "FAILED"
     print(f"[{status}] {asset_id} -> {meta_path}")

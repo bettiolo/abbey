@@ -19,6 +19,11 @@ unity/.vs/
 # OS
 .DS_Store
 
+# Local environment/secrets
+.envrc
+*.alf
+test-results/
+
 # Claude harness state (agent worktrees live here during orchestration)
 .claude/worktrees/
 .claude/settings.local.json
