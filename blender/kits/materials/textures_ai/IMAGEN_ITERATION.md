@@ -28,6 +28,7 @@ This folder contains AI texture candidates for review only. The committed Blende
 - Reference used for comparison: `docs/abbey-town-1.png`
 - Retained candidates: `tex_roof_tiles_nb2_v2.jpg`, `tex_plaster_timber_nb2_v1.jpg`, `tex_grass_nb2_v2.jpg`, `tex_dirt_path_nb2_v2.jpg`, `tex_paving_nb2_v2.jpg`, `tex_stained_glass_nb2_v1.jpg`
 - Deleted rejected variants: listed in `nanobanana2_texture_manifest.json` and `nanobanana2_comparison.md`.
+- File repair note: the retained Nano Banana 2 files were regenerated directly from the API after a binary move corrupted the earlier JPEG files. The current `.jpg` files validate as 1024x1024 JFIF JPEGs with macOS `sips`.
 
 ## Iteration Rules
 

@@ -2,6 +2,7 @@
   "generated_at_utc": "2026-07-02T19:07:12Z",
   "model": "models/gemini-3.1-flash-image",
   "provider": "google-nano-banana-2",
+  "regenerated_at_utc": "2026-07-02T19:20:00Z",
   "source_art_direction": "docs/ART_REFERENCE_ABBEY.md",
   "source_reference": "docs/abbey-town-1.png",
   "retained_textures": [
@@ -33,9 +34,9 @@
       "id": "tex_dirt_path",
       "mime_type": "image/jpeg",
       "path": "blender/kits/materials/textures_ai/tex_dirt_path_nb2_v2.jpg",
-      "status": "candidate",
+      "status": "review",
       "variant": 2,
-      "reference_comparison": "Tan packed path with soft ruts and pebbles; closer to abbey-town-1 paths than the radial/X-shaped variant 1."
+      "reference_comparison": "Valid JPEG and useful tan path palette, but the regenerated file has a visible radial/X rut pattern; compare carefully before promotion."
     },
     {
       "id": "tex_paving",
@@ -43,7 +44,7 @@
       "path": "blender/kits/materials/textures_ai/tex_paving_nb2_v2.jpg",
       "status": "review",
       "variant": 2,
-      "reference_comparison": "Irregular warm-gray flagstones are directionally close, but joints are darker/heavier than abbey-town-1 plaza stones."
+      "reference_comparison": "Valid JPEG and clear flagstone read, but the regenerated file is more colorful and has heavier joints than abbey-town-1 plaza stones."
     },
     {
       "id": "tex_stained_glass",
