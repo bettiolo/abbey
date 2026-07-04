@@ -117,3 +117,10 @@ anchors present, grayscale readability stub.
 Seasons · full law system · farming · multiple beasts · multiple maps · final UI ·
 advanced animation · complex combat · procedural maps · full campaign narrative.
 This section exists to prevent scope creep. Additions require editing this file first.
+
+> Direction note (2026-07-04): the *game* has since promoted combat to a co-pillar
+> (Thronefall-meets-horror; see GAME_DESIGN.md §§17–20). This **slice** deliberately stays
+> the intimate-first proof — the escalating warrior economy, sanity/asylum, ground scars,
+> and the spring-ship win are **post-slice (Phase 3+)** and remain excluded here. One cheap
+> Phase 2.5 taste worth prototyping after the gate: a dawn ground-scar decal pass driven by
+> the hound's existing kill/drag log records, to sell "the day remembers the night" early.

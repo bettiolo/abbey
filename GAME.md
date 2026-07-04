@@ -18,17 +18,22 @@ A 3D isometric survival settlement game. Your ship wrecks on a beautiful green c
 Survivors climb inland to a ruined abbey on a hill. By day the world is bucolic: salvage
 the wreck, build a camp, restore the abbey, expand zones of firelight. At dusk, panic. At
 night, horror: monsters test the edge of the light, and the darkness is territory, not
-decoration. The player directly controls the **Bellkeeper** — rescuer, signaler, guardian —
-and earns a bond with each map's ancient abbey beast. On Map 1 that beast is the **Black
+decoration. The player directly controls the **Bellkeeper** — rescuer, signaler, guardian, and
+front-line fighter — and earns a bond with each map's ancient abbey beast. On Map 1 that beast is the **Black
 Hound of the Bell Tower**: chained, wounded, starving, furious — and the only reason worse
 things haven't come.
 
-**The fantasy**: sunny shipwreck settlement by day, panic at dusk, horror at night, and a
-real emotional bond with the abbey beast.
+**The fantasy**: sunny shipwreck settlement by day, panic at dusk, horror at night, a real
+emotional bond with the abbey beast — and a settlement you defend, upgrade, and ultimately
+**escape by sea** when spring returns.
 
-Five pillars: light is territory · dusk is drama · the beast is the moral memory of the
-settlement · the monsters are what we have made possible · the Bellkeeper is not a generic
-warrior.
+Pillars (rev. 2026-07-04): light is territory · dusk is drama · the beast is the moral memory
+of the settlement · the monsters are what we have made possible · the Bellkeeper is a
+directly-controlled hero (rescuer, signaler, guardian, *and* fighter) · **defense is a
+co-pillar** — buildable/upgradable warriors + settler window-archers + the beast hold a night
+that escalates with the seasons, while the dark taxes sanity so it never becomes a power
+fantasy · the day remembers the night in scars on the ground. Detail: GAME_DESIGN.md §§1,
+17–20.
 
 ## 2. Dual-pipeline architecture
 
@@ -78,6 +83,15 @@ Hunger), hound evolution (Guardian / War / Starved / Sacred / Broken), behaviour
 nightmares (Hunger Wights, Dead Workers, Grave Crawlers, Chain Hounds, Faceless Saints),
 abbey moral transformation (Sanctuary / Fortress / Famine / Cult / Broken), renewable
 economy, three scripted dilemmas, endings that reflect actual choices.
+
+Combat & survival axis (direction 2026-07-04): buildable/upgradable **warriors** + settler
+**window-archers** (fatigue cost) + the sanity-immune beast; a **sanity → asylum** system
+where health resets each morning but insanity carries — an insane unit misses the next
+night and is released only by day (insanity is the price of an under-fuelled night);
+**ground scars** that write the night into the day via an event-log decal pass; and the
+season win — **survive winter, then build the spring ship** and sail for better coasts
+(three-part manifest: settlers · provisions · hull/rigging; who-sails dilemma). Nights
+**escalate** toward set-piece stands; the White Nights are the climaxes.
 
 ### Phase 4 — Second map, second beast (replayability proof)
 **Map 2: The Abbey of Antlers** with **the Stag Beneath the Abbey** — restraint, debt, and

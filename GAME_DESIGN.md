@@ -16,8 +16,20 @@ This document is the durable design reference. Phase sequencing lives in
 2. **Dusk is drama.** The recall moment creates stories without scripted narrative.
 3. **The beast is the moral memory of the settlement.** Never "level 2 dog".
 4. **The monsters are what we have made possible.** Nightmares reflect player behaviour.
-5. **The Bellkeeper is a rescuer, signaler, guardian, and beast-bond character** — not a
-   generic warrior.
+5. **The Bellkeeper is a directly-controlled hero** — rescuer, signaler, guardian, beast-
+   bond character, *and* front-line fighter. You drive the Bellkeeper directly (Thronefall-
+   style); every other defender acts autonomously.
+6. **Defense is a co-pillar; the night is a rising cost.** The settlement fields a real,
+   buildable, upgradable defense — warriors, settler archers, the beast. Nights escalate
+   from intimate dread in summer to set-piece defensive stands in autumn and winter — but
+   the dark always taxes sanity, so combat is never a clean power fantasy.
+7. **The day remembers the night.** Night movement and battle scar the ground; day labour
+   wears paths into it. The day is bucolic to *be* in, yet the earth carries what happened.
+
+> Pillar note (direction set 2026-07-04): combat was promoted from a thin support role to a
+> co-pillar — *Thronefall-meets-horror-settlement*. The horror identity is preserved by the
+> sanity cost of the dark (pillar 6), the beast's singular centrality (pillar 3), and
+> intimate early nights that escalate only as the seasons turn. Detail in §§17–20.
 
 ## 2. Light territory
 
@@ -134,8 +146,11 @@ Charcoal Kiln, Stag Garden, Forest Watchpost, Abbey Cloister Repair.
 ## 9. Nightmares
 
 The director decides nights from: darkness near camp, villagers outside light, hound
-trust/hunger, unburied dead, accumulated fear, bell tower state. Never just a tower-defence
-wave — intimate and scary first.
+trust/hunger, unburied dead, accumulated fear, bell tower state. Nights **escalate**:
+intimate and scary first (summer), rising to set-piece defensive stands at the seasonal
+climaxes (autumn/winter, the White Nights). Even the big nights stay tense rather than
+triumphant, because the dark taxes sanity (§18) and every night includes at least one
+problem only a dark-capable unit — warrior or beast — can solve (§17, anti-turtle rule).
 
 Phase 2 enemies: **Pale Hound** (avoids strong light, attacks isolated villagers, retreats
 from the hound, tests lantern edges), **Drowned Sailor** (slow, frightening, follows sound,
@@ -211,3 +226,93 @@ light_weakness, fear_effect, counterplay, visual_theme.
 Moral pressures, hound evolution, nightmare selection, abbey appearance, and the morning
 report are all downstream of the same recorded player actions. This is what makes
 "the monsters are what we have made possible" testable rather than scripted.
+
+---
+
+## 17. Combat and night defense (co-pillar)
+
+Direct control + autonomous defenders (the Thronefall model): the player drives the
+**Bellkeeper** directly; **warriors**, **settler archers**, and the **beast** fight on their
+own. Two tiers hold the night:
+
+- **Settlers** shelter in their homes and provide **ranged support (arrows, slings) from lit
+  windows**. A house only defends while it is **lit** (window light — this ties defense to
+  the oil/wood economy), so house placement becomes a fields-of-fire decision over the
+  approaches. Settlers who fight too much at night wake **fatigued and less productive** the
+  next day.
+- **Warriors and the beast** are the only units that operate **in the dark**. Warriors are
+  produced and **upgraded** from buildable structures (barracks / watch line) — a real
+  progression axis across the season. They pay the sanity cost of the dark (§18); the beast
+  does not.
+
+**Escalation, not a flat wave:** summer nights are intimate; autumn and winter nights grow
+into set-piece defensive stands; the **White Nights** are the climaxes.
+
+**Anti-turtle rule (design invariant):** every night must contain at least one problem that
+ranged-from-safety cannot solve — a lantern moth opening a dark gap that must be physically
+relit, a monster hugging cover out of arc, a stranded settler to rescue, a wounded beast to
+reach. This keeps *brave-into-the-dark* a live choice, not a mistake.
+
+## 18. Sanity, the dark, and the asylum
+
+The dark is hostile territory to minds as well as bodies. Human units accumulate **dread** in
+Edge/Dark zones (extending the existing villager Fear value); past a threshold they slip
+toward **insanity** — erratic, unreliable, eventually incapacitated.
+
+**Insanity is usually the price of an under-fuelled night, not bravado.** If you don't
+stockpile enough oil/wood, a light dies; the territory it held goes dark; whoever is caught
+out there — a campfire lost far from the abbey with a long walk home, or fighters sent past
+the light — takes the sanity hit. It couples directly to the economy: fail to provision the
+lights and the dark takes minds.
+
+**The key asymmetry — the day forgives the body but not the mind.** Every morning all units
+recover **health** for free (the bucolic day). **Sanity does not.** An insane unit must spend
+**cooldown time in the Asylum** (a sanity-infirmary evolving the Phase 2 Infirmary Corner);
+recovery spans a full cycle, so the unit **misses the next night's defense**, and can only be
+**released during the day**. This is what gives darkness lasting weight while the day stays
+gentle — health is a nightly reset, sanity is a debt that carries.
+
+Two distinct night costs keep the two tiers honest:
+
+- **Warriors / beast pushed into the dark → sanity** (multi-day: asylum, miss the next
+  night). The **beast is immune** — it is a beast, and one more reason it stays singular
+  (pillar 3), never a replaceable soldier.
+- **Settlers defending from lit homes → fatigue** (next-day productivity only, clears with
+  rest), since they fight from the safety of window-light.
+
+## 19. The ground remembers — scars and paths
+
+Both halves of the cycle **write to the ground**, and it is read by daylight:
+
+- **Night:** movement and battle **scar the earth** — scorch where flame was carried,
+  trampled ground on the beast's patrol line, drag-trails and dark stains at kill sites,
+  spent-arrow scatter beneath the defended windows.
+- **Day:** repeated work routes wear **desire paths** into the grass (the Settlers-style
+  territory feel).
+
+Architecturally this is *one more consumer of the shared event log* (§16): a dawn decal pass
+reads the night's records and stamps the terrain — no new source of truth. Scars **decay**
+over a few days on a budget; only severe events (a death site, a great burn) leave
+semi-permanent stains. **Winter snow** covers the marks each morning — a clean white silence
+the White Night then violates (fresh blood on new snow reads far louder than on summer
+grass). Emotional target: *relaxing to be in by day, yet you feel last night in the dirt.*
+
+## 20. Winter and the spring ship (the season win)
+
+The seasonal arc has a destination. The macro-goal is not merely to *survive* winter but to
+reach spring with the means to **leave**: build a new vessel on the abbey shore and sail for
+better coasts when the trade winds resume. This mirrors the opening — you *begin* stripping a
+wrecked ship and *win* by launching a new one.
+
+The win is a **three-part manifest**, which makes the economy a *spend-to-survive vs.
+save-to-escape* tension all season (every log burned for warmth is a log not in the hull):
+
+1. **Settlers** — enough surviving colonists to be worth sailing, and to crew the ship.
+2. **Provisions** — food/water banked for the voyage, beyond what winter itself consumes.
+3. **Hull & rigging** — shipbuilding materials: wood, **canvas (sailcloth)**, rope, iron.
+
+Because every settler is also a future colonist, losses hurt twice (a worker now, a berth in
+spring) — which is what makes the defensive co-pillar (§17) matter and feeds the moral
+pressures (§11). If the ship can only be provisioned for *N* and more survived, the
+**who-sails / who-stays** dilemma writes itself, and carries the campaign into Phase 4
+(arriving at a new coast).

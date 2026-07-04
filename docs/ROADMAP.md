@@ -76,8 +76,24 @@ Question: *Does the way you survive change the settlement, beast, abbey, and nig
 8. Dilemmas: Missing Salvager, Food Thief, Hound Bites a Child.
 9. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
 10. End summary reflecting actual choices.
+
+Combat & survival co-pillar (direction 2026-07-04 — decompose with the rest at phase start):
+11. Two-tier night defense: settlers shelter and shoot from **lit** homes (fatigue cost),
+    warriors + beast operate in the dark; buildable **warrior structures with an upgrade
+    tree**; direct-control Bellkeeper fights alongside autonomous defenders. Nights
+    **escalate** to set-piece stands; anti-turtle rule (every night has one dark-only
+    problem).
+12. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
+    dark; **health resets each morning, sanity does not** — an insane unit spends asylum
+    cooldown, **misses the next night**, and is released only by day; the beast is immune.
+13. **Ground scars + desire paths**: a dawn decal consumer of the event log; decay/budget;
+    winter snow covers them nightly.
+14. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
+    provisions · hull/rigging incl. sailcloth) → launch and sail; who-sails/who-stays
+    dilemma. Carries the campaign into Phase 4 (arriving at a new coast).
 Tests: law effects, pressure updates, hound evolution, nightmare triggers, seasonal
-transitions, win/loss, summary accuracy.
+transitions, win/loss, summary accuracy, plus: warrior upgrades, sanity/asylum miss-a-night
+accounting, ground-scar decay, spring-ship manifest win, night-escalation curve.
 
 Excluded: multiple maps, multiple beasts, procedural generation, full campaign,
 multiplayer, art polish.
