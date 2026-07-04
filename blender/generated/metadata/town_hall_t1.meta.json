@@ -1,17 +1,17 @@
 {
   "id": "town_hall_t1",
-  "generated_at": "2026-07-02T16:12:01.093281+00:00",
+  "generated_at": "2026-07-02T18:57:57.911798+00:00",
   "spec": {
     "id": "town_hall_t1",
     "type": "building",
     "theme": "town",
     "footprint": {
-      "width": 3.0,
-      "depth": 2.0,
+      "width": 4.15,
+      "depth": 2.15,
       "height": 5.5
     },
     "style": {
-      "silhouette": "landmark guildhall: stone ground floor with an arched door, two jettied half-timber storeys with dark diagonal bracing, steep multi-gable terracotta roof with dormers, massive external stone chimney, market awning with crates at the front",
+      "silhouette": "landmark guildhall: stone ground floor with an arched door, asymmetrical side wing, two jettied half-timber storeys with dark diagonal bracing, steep multi-gable terracotta roof with dormers and tile bands, massive external stone chimney, market awning with crates at the front",
       "materials": [
         "mat_old_stone",
         "mat_canvas",
@@ -22,10 +22,12 @@
     "required_parts": [
       "stone_ground_floor",
       "arched_door",
+      "side_wing",
       "jettied_storeys",
       "diagonal_bracing",
       "multi_gable_roof",
       "dormers",
+      "roof_tile_bands",
       "stone_chimney",
       "market_awning"
     ],
@@ -55,21 +57,21 @@
     "pivot": "center_bottom"
   },
   "dimensions": {
-    "width": 3.03,
-    "depth": 2.00616,
+    "width": 4.055,
+    "depth": 2.06926,
     "height": 4.96,
     "min": [
-      -1.515,
-      -1.00308,
+      -2.0275,
+      -1.03463,
       0.0
     ],
     "max": [
-      1.515,
-      1.00308,
+      2.0275,
+      1.03463,
       4.96
     ]
   },
-  "triangle_count": 1092,
+  "triangle_count": 1344,
   "material_count": 4,
   "materials": [
     "mat_canvas",
@@ -107,7 +109,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/town_hall_t1.glb (143952 bytes)"
+        "detail": "blender/generated/glb/town_hall_t1.glb (176644 bytes)"
       },
       {
         "name": "blend_saved",
@@ -127,12 +129,12 @@
       {
         "name": "footprint_fits",
         "passed": true,
-        "detail": "asset 3.030x2.006x4.960 vs footprint 3.0x2.0x5.5"
+        "detail": "asset 4.055x2.069x4.960 vs footprint 4.15x2.15x5.5"
       },
       {
         "name": "triangle_budget",
         "passed": true,
-        "detail": "1092/6000 triangles"
+        "detail": "1344/6000 triangles"
       },
       {
         "name": "material_budget",

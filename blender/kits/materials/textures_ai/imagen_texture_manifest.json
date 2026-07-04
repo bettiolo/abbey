@@ -1,0 +1,45 @@
+{
+  "filename_suffix": "_imagen",
+  "generated_at_utc": "2026-07-02T18:49:14Z",
+  "model": "models/imagen-4.0-generate-001",
+  "provider": "google-imagen",
+  "source_art_direction": "docs/ART_REFERENCE_ABBEY.md plus user-provided abbey-town image in chat prompt",
+  "source_reference": "docs/abbey-town-1.png",
+  "retained_textures": [
+    {
+      "id": "tex_wood_planks",
+      "mime_type": "image/png",
+      "path": "blender/kits/materials/textures_ai/tex_wood_planks_imagen.png",
+      "status": "candidate",
+      "review_note": "Flat edge-to-edge pixel-art plank texture with no text artifacts found."
+    },
+    {
+      "id": "tex_stone_blocks",
+      "mime_type": "image/png",
+      "path": "blender/kits/materials/textures_ai/tex_stone_blocks_imagen_v2_2.png",
+      "status": "review",
+      "review_note": "Clean flat masonry retry; needs comparison against deterministic baseline and abbey-town-1 stone palette."
+    },
+    {
+      "id": "tex_cliff_soil",
+      "mime_type": "image/png",
+      "path": "blender/kits/materials/textures_ai/tex_cliff_soil_imagen.png",
+      "status": "review",
+      "review_note": "Good side-cutaway read but includes grass/top terrain and has seam risk."
+    }
+  ],
+  "rejected_files_deleted": [
+    "tex_dirt_path_imagen.png",
+    "tex_grass_imagen.png",
+    "tex_grass_imagen_v2_1.png",
+    "tex_grass_imagen_v2_2.png",
+    "tex_paving_imagen.png",
+    "tex_plaster_timber_imagen.png",
+    "tex_plaster_timber_imagen_v2_1.png",
+    "tex_plaster_timber_imagen_v2_2.png",
+    "tex_roof_tiles_imagen.png",
+    "tex_stained_glass_imagen.png",
+    "tex_stone_blocks_imagen.png",
+    "tex_stone_blocks_imagen_v2_1.png"
+  ]
+}

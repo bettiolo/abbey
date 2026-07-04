@@ -16,6 +16,14 @@ PROJECT_PATH="$REPO_ROOT/unity"
 UNITY_VERSION="6000.5.2f1"
 RESULTS_DIR="$REPO_ROOT/test-results"
 
+VERSION_FILE="$PROJECT_PATH/ProjectSettings/ProjectVersion.txt"
+if [ -f "$VERSION_FILE" ]; then
+  PINNED="$(awk '/^m_EditorVersion:/ {print $2}' "$VERSION_FILE")"
+  if [ -n "$PINNED" ]; then
+    UNITY_VERSION="$PINNED"
+  fi
+fi
+
 MODE="${1:-all}"
 case "$MODE" in
   editmode|playmode|all) ;;
@@ -33,6 +41,7 @@ find_unity() {
   fi
   local candidates=(
     "$HOME/Unity/Hub/Editor/$UNITY_VERSION/Editor/Unity"
+    "$HOME/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity"
     "/opt/unity/editors/$UNITY_VERSION/Editor/Unity"
     "/opt/unity/Editor/Unity"
     "/usr/bin/unity-editor"

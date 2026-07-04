@@ -1,0 +1,66 @@
+{
+  "generated_at_utc": "2026-07-02T19:07:12Z",
+  "model": "models/gemini-3.1-flash-image",
+  "provider": "google-nano-banana-2",
+  "regenerated_at_utc": "2026-07-02T19:20:00Z",
+  "source_art_direction": "docs/ART_REFERENCE_ABBEY.md",
+  "source_reference": "docs/abbey-town-1.png",
+  "retained_textures": [
+    {
+      "id": "tex_roof_tiles",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_roof_tiles_nb2_v2.jpg",
+      "status": "candidate",
+      "variant": 2,
+      "reference_comparison": "Best roof retry. Matches abbey-town-1 terracotta color family, rounded tile courses, dark course gaps, and lighter ridge rows."
+    },
+    {
+      "id": "tex_plaster_timber",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_plaster_timber_nb2_v1.jpg",
+      "status": "candidate",
+      "variant": 1,
+      "reference_comparison": "Warm pale plaster with understated mottling, close to the half-timber infill in abbey-town-1."
+    },
+    {
+      "id": "tex_grass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_grass_nb2_v2.jpg",
+      "status": "candidate",
+      "variant": 2,
+      "reference_comparison": "Clean pixel-art grass tile; quieter olive greens and small speckles are closer to abbey-town-1 than variant 1."
+    },
+    {
+      "id": "tex_dirt_path",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_dirt_path_nb2_v2.jpg",
+      "status": "review",
+      "variant": 2,
+      "reference_comparison": "Valid JPEG and useful tan path palette, but the regenerated file has a visible radial/X rut pattern; compare carefully before promotion."
+    },
+    {
+      "id": "tex_paving",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_paving_nb2_v2.jpg",
+      "status": "review",
+      "variant": 2,
+      "reference_comparison": "Valid JPEG and clear flagstone read, but the regenerated file is more colorful and has heavier joints than abbey-town-1 plaza stones."
+    },
+    {
+      "id": "tex_stained_glass",
+      "mime_type": "image/jpeg",
+      "path": "blender/kits/materials/textures_ai/tex_stained_glass_nb2_v1.jpg",
+      "status": "candidate",
+      "variant": 1,
+      "reference_comparison": "Closest stained-glass retry: gothic tracery, blue/teal/red/gold panes, dark lead outlines. Variant 2 read more like wallpaper."
+    }
+  ],
+  "rejected_variants_deleted": [
+    "tex_roof_tiles_nb2_v1.png",
+    "tex_plaster_timber_nb2_v2.png",
+    "tex_grass_nb2_v1.png",
+    "tex_dirt_path_nb2_v1.png",
+    "tex_paving_nb2_v1.png",
+    "tex_stained_glass_nb2_v2.png"
+  ]
+}

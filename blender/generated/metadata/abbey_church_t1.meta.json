@@ -1,17 +1,17 @@
 {
   "id": "abbey_church_t1",
-  "generated_at": "2026-07-02T16:09:52.672583+00:00",
+  "generated_at": "2026-07-02T19:06:55.156988+00:00",
   "spec": {
     "id": "abbey_church_t1",
     "type": "building",
     "theme": "abbey",
     "footprint": {
-      "width": 4.0,
-      "depth": 2.0,
+      "width": 4.8,
+      "depth": 2.2,
       "height": 6.0
     },
     "style": {
-      "silhouette": "landmark gothic nave in warm stone with a steep terracotta roof, pointed stained-glass windows, stepped buttresses, ornate west portal with archivolts, octagonal crossing spire with a gold finial, cross finials on the gable ends",
+      "silhouette": "landmark gothic nave in warm stone with a transept, apse, steep terracotta roofs with visible course bands, pointed stained-glass windows with stone tracery and red accents, stepped buttresses, ornate west portal with archivolts and flanking spires, slimmer octagonal crossing spire with a gold finial, cross finials on the gable ends",
       "materials": [
         "mat_old_stone",
         "mat_thatch",
@@ -21,10 +21,15 @@
     },
     "required_parts": [
       "nave",
+      "transept",
+      "apse",
       "gable_roof",
+      "roof_course_bands",
       "stained_windows",
+      "window_tracery",
       "buttresses",
       "west_portal",
+      "flanking_spires",
       "crossing_spire",
       "cross_finials"
     ],
@@ -54,21 +59,21 @@
     "pivot": "center_bottom"
   },
   "dimensions": {
-    "width": 3.99,
-    "depth": 1.87641,
-    "height": 5.69,
+    "width": 4.75,
+    "depth": 2.12,
+    "height": 5.71,
     "min": [
-      -1.995,
-      -0.93821,
+      -2.375,
+      -1.06,
       0.0
     ],
     "max": [
-      1.995,
-      0.93821,
-      5.69
+      2.375,
+      1.06,
+      5.71
     ]
   },
-  "triangle_count": 774,
+  "triangle_count": 1408,
   "material_count": 4,
   "materials": [
     "mat_old_stone",
@@ -106,7 +111,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/abbey_church_t1.glb (107004 bytes)"
+        "detail": "blender/generated/glb/abbey_church_t1.glb (187972 bytes)"
       },
       {
         "name": "blend_saved",
@@ -126,12 +131,12 @@
       {
         "name": "footprint_fits",
         "passed": true,
-        "detail": "asset 3.990x1.876x5.690 vs footprint 4.0x2.0x6.0"
+        "detail": "asset 4.750x2.120x5.710 vs footprint 4.8x2.2x6.0"
       },
       {
         "name": "triangle_budget",
         "passed": true,
-        "detail": "774/6000 triangles"
+        "detail": "1408/6000 triangles"
       },
       {
         "name": "material_budget",

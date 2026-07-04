@@ -14,8 +14,11 @@ bible.
 
 from __future__ import annotations
 
+import filecmp
 import math
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 _SCRIPTS_DIR = str(Path(__file__).resolve().parent)
@@ -30,6 +33,9 @@ import asset_framework as fw
 PREVIEW_VARIANTS = ("day", "night", "winter", "grayscale")
 RESOLUTION = 512
 SAMPLES = 16
+RENDER_SEED = 1729
+VISUAL_DIFF_MEAN_THRESHOLD = 0.0025
+VISUAL_DIFF_P99_THRESHOLD = 0.025
 
 CAMERA_PITCH_DEG = 30.0  # below horizontal
 CAMERA_YAW_DEG = 45.0
@@ -48,6 +54,7 @@ def pick_render_engine() -> str:
 
 def _configure_renderer(scene: bpy.types.Scene) -> None:
     engine = pick_render_engine()
+    scene.frame_set(1)
     scene.render.engine = engine
     scene.render.resolution_x = RESOLUTION
     scene.render.resolution_y = RESOLUTION
@@ -56,8 +63,51 @@ def _configure_renderer(scene: bpy.types.Scene) -> None:
     if engine == "CYCLES":
         scene.cycles.device = "CPU"
         scene.cycles.samples = SAMPLES
+        scene.cycles.seed = RENDER_SEED
+        if hasattr(scene.cycles, "use_animated_seed"):
+            scene.cycles.use_animated_seed = False
         scene.cycles.use_denoising = True
         scene.cycles.max_bounces = 4
+
+
+def _temp_png_path(final_path: Path) -> Path:
+    fd, temp_path = tempfile.mkstemp(
+        prefix=f".{final_path.stem}.", suffix=".tmp.png", dir=final_path.parent
+    )
+    os.close(fd)
+    return Path(temp_path)
+
+
+def _replace_if_changed(temp_path: Path, final_path: Path) -> None:
+    if final_path.exists() and filecmp.cmp(temp_path, final_path, shallow=False):
+        temp_path.unlink()
+        return
+    if final_path.exists() and _pngs_visually_equivalent(temp_path, final_path):
+        temp_path.unlink()
+        return
+    temp_path.replace(final_path)
+
+
+def _pngs_visually_equivalent(path_a: Path, path_b: Path) -> bool:
+    import numpy as np
+
+    img_a = bpy.data.images.load(str(path_a))
+    img_b = bpy.data.images.load(str(path_b))
+    try:
+        if tuple(img_a.size) != tuple(img_b.size):
+            return False
+        px_a = np.empty(img_a.size[0] * img_a.size[1] * 4, dtype=np.float32)
+        px_b = np.empty(img_b.size[0] * img_b.size[1] * 4, dtype=np.float32)
+        img_a.pixels.foreach_get(px_a)
+        img_b.pixels.foreach_get(px_b)
+        diff = np.abs(px_a.reshape(-1, 4)[:, :3] - px_b.reshape(-1, 4)[:, :3])
+        return (
+            float(diff.mean()) <= VISUAL_DIFF_MEAN_THRESHOLD
+            and float(np.quantile(diff, 0.99)) <= VISUAL_DIFF_P99_THRESHOLD
+        )
+    finally:
+        bpy.data.images.remove(img_a)
+        bpy.data.images.remove(img_b)
 
 
 def _setup_iso_camera(scene: bpy.types.Scene, root: bpy.types.Object) -> None:
@@ -163,6 +213,7 @@ def _convert_to_grayscale(src: Path, dst: Path) -> None:
     """Pixel post-process: Rec.709 luminance of the day render."""
     import numpy as np
 
+    temp = _temp_png_path(dst)
     img = bpy.data.images.load(str(src))
     try:
         n = img.size[0] * img.size[1]
@@ -172,11 +223,15 @@ def _convert_to_grayscale(src: Path, dst: Path) -> None:
         lum = px[:, 0] * 0.2126 + px[:, 1] * 0.7152 + px[:, 2] * 0.0722
         px[:, 0] = px[:, 1] = px[:, 2] = lum
         img.pixels.foreach_set(px.reshape(-1))
-        img.filepath_raw = str(dst)
+        img.filepath_raw = str(temp)
         img.file_format = "PNG"
         img.save()
+    except Exception:
+        temp.unlink(missing_ok=True)
+        raise
     finally:
         bpy.data.images.remove(img)
+    _replace_if_changed(temp, dst)
 
 
 def render_previews(root: bpy.types.Object, asset_id: str) -> dict:
@@ -191,8 +246,15 @@ def render_previews(root: bpy.types.Object, asset_id: str) -> dict:
         _setup_iso_camera(scene, root)
         _apply_lighting(variant, root)
         out = fw.PREVIEW_DIR / f"{asset_id}_preview_{variant}.png"
-        scene.render.filepath = str(out)
-        bpy.ops.render.render(write_still=True)
+        temp = _temp_png_path(out)
+        scene.render.filepath = str(temp)
+        try:
+            bpy.ops.render.render(write_still=True)
+        except Exception:
+            temp.unlink(missing_ok=True)
+            raise
+        else:
+            _replace_if_changed(temp, out)
         paths[variant] = out
 
     gray = fw.PREVIEW_DIR / f"{asset_id}_preview_grayscale.png"

@@ -35,16 +35,29 @@ EXECUTE_METHOD = "Abbey.Editor.ScreenshotCapture.CaptureFromCLI"
 OUTPUT_DIR = PROJECT_PATH / "Screenshots"
 
 
+def unity_version() -> str:
+    version_file = PROJECT_PATH / "ProjectSettings" / "ProjectVersion.txt"
+    if version_file.is_file():
+        for line in version_file.read_text(encoding="utf-8").splitlines():
+            if line.startswith("m_EditorVersion:"):
+                version = line.split(":", 1)[1].strip()
+                if version:
+                    return version
+    return UNITY_VERSION
+
+
 def find_unity() -> str | None:
     env = os.environ.get("UNITY_PATH")
     if env and os.access(env, os.X_OK):
         return env
+    version = unity_version()
     candidates = [
-        Path.home() / f"Unity/Hub/Editor/{UNITY_VERSION}/Editor/Unity",
-        Path(f"/opt/unity/editors/{UNITY_VERSION}/Editor/Unity"),
+        Path.home() / f"Unity/Hub/Editor/{version}/Editor/Unity",
+        Path.home() / f"Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/MacOS/Unity",
+        Path(f"/opt/unity/editors/{version}/Editor/Unity"),
         Path("/opt/unity/Editor/Unity"),
         Path("/usr/bin/unity-editor"),
-        Path(f"/Applications/Unity/Hub/Editor/{UNITY_VERSION}/Unity.app/Contents/MacOS/Unity"),
+        Path(f"/Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/MacOS/Unity"),
     ]
     for c in candidates:
         if c.is_file() and os.access(c, os.X_OK):

@@ -1,0 +1,252 @@
+{
+  "id": "abbey_town_diorama_t1",
+  "generated_at": "2026-07-02T19:07:22.753996+00:00",
+  "spec": {
+    "id": "abbey_town_diorama_t1",
+    "type": "scene_proof",
+    "theme": "abbey_town_reference",
+    "reference": "docs/abbey-town-1.png",
+    "footprint": {
+      "width": 13.0,
+      "depth": 13.0,
+      "height": 9.0
+    },
+    "style": {
+      "silhouette": "single square isometric grass diorama matching abbey-town-1: gothic church and cloister on the left, larger half-timber town hall and attached bell tower on the right, central paved plaza, tan dirt paths, vegetable plot, well, barrels, crates, smoke, and blue/yellow pennant accents",
+      "materials": [
+        "mat_foliage",
+        "mat_dirt",
+        "mat_ash",
+        "mat_old_stone",
+        "mat_thatch",
+        "mat_canvas",
+        "mat_dark_wood",
+        "mat_warm_wood",
+        "mat_wet_stone",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "grass_slab",
+      "cliff_sides",
+      "abbey_church_left",
+      "cloister_attached",
+      "town_hall_right",
+      "attached_bell_tower",
+      "paved_plaza",
+      "dirt_paths",
+      "field_plot",
+      "well",
+      "market_props",
+      "pennant"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 24000,
+      "max_materials": 10
+    },
+    "anchors": [
+      {
+        "name": "church_door",
+        "type": "door"
+      },
+      {
+        "name": "town_hall_door",
+        "type": "door"
+      },
+      {
+        "name": "bell",
+        "type": "bell"
+      },
+      {
+        "name": "plaza_center",
+        "type": "work"
+      },
+      {
+        "name": "well",
+        "type": "water"
+      },
+      {
+        "name": "field_work",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 12.5838,
+    "depth": 12.52,
+    "height": 9.045,
+    "min": [
+      -6.2919,
+      -6.26,
+      0.0
+    ],
+    "max": [
+      6.2919,
+      6.26,
+      9.045
+    ]
+  },
+  "triangle_count": 5808,
+  "material_count": 10,
+  "materials": [
+    "mat_ash",
+    "mat_canvas",
+    "mat_dark_wood",
+    "mat_dirt",
+    "mat_foliage",
+    "mat_old_stone",
+    "mat_sacred_gold",
+    "mat_thatch",
+    "mat_warm_wood",
+    "mat_wet_stone"
+  ],
+  "anchors": [
+    {
+      "name": "well",
+      "type": "water"
+    },
+    {
+      "name": "town_stall_1",
+      "type": "work"
+    },
+    {
+      "name": "town_smoke",
+      "type": "particle"
+    },
+    {
+      "name": "town_hall_door",
+      "type": "door"
+    },
+    {
+      "name": "town_door",
+      "type": "door"
+    },
+    {
+      "name": "tower_flag",
+      "type": "flag"
+    },
+    {
+      "name": "tower_door",
+      "type": "door"
+    },
+    {
+      "name": "tower_bell",
+      "type": "bell"
+    },
+    {
+      "name": "plaza_center",
+      "type": "work"
+    },
+    {
+      "name": "field_work_slot_2",
+      "type": "work"
+    },
+    {
+      "name": "field_work_slot_1",
+      "type": "work"
+    },
+    {
+      "name": "field_work",
+      "type": "work"
+    },
+    {
+      "name": "cloister_gate",
+      "type": "door"
+    },
+    {
+      "name": "cloister_garth_center",
+      "type": "work"
+    },
+    {
+      "name": "church_spire_finial",
+      "type": "finial"
+    },
+    {
+      "name": "church_door.001",
+      "type": "door"
+    },
+    {
+      "name": "church_door",
+      "type": "door"
+    },
+    {
+      "name": "church_altar",
+      "type": "work"
+    },
+    {
+      "name": "bell",
+      "type": "bell"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/abbey_town_diorama_t1.glb",
+    "blend": "blender/generated/blend/abbey_town_diorama_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/abbey_town_diorama_t1_preview_day.png",
+      "night": "blender/generated/previews/abbey_town_diorama_t1_preview_night.png",
+      "winter": "blender/generated/previews/abbey_town_diorama_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/abbey_town_diorama_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/abbey_town_diorama_t1.glb (743060 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/abbey_town_diorama_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 12.584x12.520x9.045 vs footprint 13.0x13.0x9.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "5808/24000 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "10/10 materials: ['mat_ash', 'mat_canvas', 'mat_dark_wood', 'mat_dirt', 'mat_foliage', 'mat_old_stone', 'mat_sacred_gold', 'mat_thatch', 'mat_warm_wood', 'mat_wet_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['church_door', 'town_hall_door', 'bell', 'plaza_center', 'well', 'field_work'] present=['bell', 'church_altar', 'church_door', 'church_door.001', 'church_spire_finial', 'cloister_garth_center', 'cloister_gate', 'field_work', 'field_work_slot_1', 'field_work_slot_2', 'plaza_center', 'tower_bell', 'tower_door', 'tower_flag', 'town_door', 'town_hall_door', 'town_smoke', 'town_stall_1', 'well']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "abbey_town_diorama_t1_collision present"
+      }
+    ]
+  }
+}

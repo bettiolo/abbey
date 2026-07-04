@@ -1,0 +1,193 @@
+{
+    "generatedAt": "2026-07-02T19:08:36.6223860Z",
+    "totalAssets": 23,
+    "passed": 23,
+    "failed": 0,
+    "message": "",
+    "results": [
+        {
+            "id": "abbey_church_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
+        },
+        {
+            "id": "abbey_cloister_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "abbey_town_diorama_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 19,
+            "missingAnchors": [],
+            "message": "ok (19 anchor(s) present)"
+        },
+        {
+            "id": "abbey_wall_broken",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "bell_tower_ruined",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
+        },
+        {
+            "id": "bell_tower_t2",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
+        },
+        {
+            "id": "black_hound_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
+        },
+        {
+            "id": "campfire_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "dirt_road_segment",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "field_plot_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "forest_tree_01",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "hound_chain",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "lantern_post_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "paving_patch",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "pennant_pole",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "rock_cluster_01",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "shelter_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "shipwreck_barrel",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "shipwreck_crate_closed",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "shipwreck_hull",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 4,
+            "missingAnchors": [],
+            "message": "ok (4 anchor(s) present)"
+        },
+        {
+            "id": "storage_pile_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "town_hall_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
+        },
+        {
+            "id": "well_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        }
+    ]
+}
