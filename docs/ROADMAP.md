@@ -5,7 +5,7 @@ is the verbatim scope contract for the LLM agent.
 
 ---
 
-## Milestone 0 — Repo and automation ✅ (this phase)
+## Milestone 0 - Repo and automation ✅ (this phase)
 
 Goal: make the agent loop functional.
 - Unity project opens; Blender script runs headlessly; one asset exported as GLB;
@@ -13,7 +13,7 @@ Goal: make the agent loop functional.
   CI or local script runs full validation.
 - **Exit criterion**: `./tools/check_all.sh` runs without manual editor work.
 
-## Prototype 0.1 — Playable Night (current build target)
+## Prototype 0.1 - Playable Night (current build target)
 
 Question answered: *Is it fun and tense to manage distance from light while directly
 controlling the Bellkeeper?*
@@ -33,18 +33,18 @@ controlling the Bellkeeper?*
 Blender proof assets: campfire, shipwreck crate (then hull, storage pile, shelter, lantern
 post, ruined abbey wall, bell tower ruin, hound chain, hound placeholder).
 
-Visual proof: two screenshots — day camp beside ruined abbey with wreck behind; same scene
+Visual proof: two screenshots - day camp beside ruined abbey with wreck behind; same scene
 at night, firelight only, hound silhouette near the tower.
 
-## Phase 2 — The First White Night (20–30 min vertical slice)
+## Phase 2 - The First White Night (20–30 min vertical slice)
 
 Question: *Does this feel like a living settlement game with emotional stakes?*
 
 1. Shipwreck salvage economy (wreck depletes visibly).
 2. Villager jobs: Salvager, Builder, Woodcutter, Tender, Guard (+ Injured).
-3. Resources: wood, food, oil, candles, stone, scrap iron, medicine, relic fragments.
+3. Resources: wood, food, oil, candles, stone, scrap iron, relic fragments.
 4. Buildings: campfire, shelter, storage pile, woodcutter hut, lantern post, guard post,
-   abbey gate repair, bell tower repair, candle shrine, infirmary corner.
+   abbey gate repair, bell tower repair, candle shrine, asylum corner.
 5. Hound bond: trust/hunger/pain/fear/attachment; behaviours chained→angry.
 6. Nightmare director: pale hound, drowned sailor, lantern moth.
 7. Morning consequence report (storybook tone).
@@ -54,11 +54,17 @@ Question: *Does this feel like a living settlement game with emotional stakes?*
 9. Debug overlay for resources, villager states, hound, light safety, director state.
 10. Tests: resource accounting, dusk recall, light safety, hound transitions, night
     completion, win/loss. Visual gate: day_camp / dusk_recall / night_attack /
-    morning_after screenshots — *does this already feel like the game?*
+    morning_after screenshots: *does this already feel like the game?*
+
+Direction addendum (2026-07-04): future Phase 2 cleanup should bend the existing build
+system toward **seed slots**. Buildings hug existing buildings and light, completed buildings
+open nearby child slots, and roads emerge from villager traffic instead of player road
+placement. The current `infirmary_corner_t1` implementation is legacy naming; the intended
+direction is **Asylum Corner**, with sanity recovery replacing medicine/infirmary healing.
 
 Excluded: farming, seasons, laws, multiple beasts, multiple maps, final UI.
 
-## Phase 3 — Seasons, laws, and moral consequence (60–90 min)
+## Phase 3 - Seasons, laws, and moral consequence (60–90 min)
 
 Question: *Does the way you survive change the settlement, beast, abbey, and nightmares?*
 
@@ -77,37 +83,49 @@ Question: *Does the way you survive change the settlement, beast, abbey, and nig
 9. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
 10. End summary reflecting actual choices.
 
-Combat & survival co-pillar (direction 2026-07-04 — decompose with the rest at phase start):
-11. Two-tier night defense: settlers shelter and shoot from **lit** homes (fatigue cost),
-    warriors + beast operate in the dark; buildable **warrior structures with an upgrade
-    tree**; direct-control Bellkeeper fights alongside autonomous defenders. Combat resolves
-    on a **light-band gradient** (Safe: monsters debuffed / Edge: even / Dark: friendlies
-    debuffed + sanity drain; the beast is exempt everywhere). Nights **escalate** to set-piece
-    stands. Anti-turtle: houses are **destructible** — if the outer
-    line breaks, monsters raze a home and kill the settlers inside (losing that light node and
-    colonists) — plus every night has one problem only a dark-capable unit can solve.
-12. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
-    dark; **health resets each morning, sanity does not** — an insane unit spends asylum
+Combat & survival co-pillar (direction 2026-07-04, decompose with the rest at phase start):
+11. Clustered settlement growth: authored **seed slots** grow into child slots beside
+    existing buildings, paths, and lit ground. A compact village compounds safety through
+    overlapping windows, lanterns, and abbey light. Overextension creates light debt.
+12. Emergent roads: villagers wear **desire paths** through work and recall. The player does
+    not build roads directly. Important paths grant movement speed, but they also demand
+    lantern coverage and burn more fuel at night.
+13. Two-tier night defense: settlers shelter in homes and sleep if danger stays away. If
+    monsters reach the door, interior lights flare and settlers shoot from **lit** windows
+    at a sanity cost. Warriors + beast operate in the dark; buildable **warrior structures
+    with an upgrade tree**; direct-control Bellkeeper fights alongside autonomous defenders.
+    Combat resolves on a **light-band gradient** (Safe: monsters debuffed / Edge: even /
+    Dark: friendlies debuffed + sanity drain; the beast is exempt everywhere). Nights
+    **escalate** to set-piece stands. Anti-turtle: houses are **destructible**. If the outer
+    line breaks, monsters raze a home and kill the settlers inside, losing that light node
+    and colonists. Every night also has one problem only a dark-capable unit can solve.
+14. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
+    dark; **health resets each morning, sanity does not**. An insane unit spends asylum
     cooldown, **misses the next night**, and is released only by day; the beast is immune.
-13. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
+    If no asylum exists, insane settlers recover slowly at home, but they disturb the
+    household at night, spreading dread through screaming, crying, sleeplessness, and
+    nightmares. Lower sanity reduces daytime work efficiency; above the insanity threshold,
+    villagers stop working until recovered.
+15. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
     across the day (meadow regrows before dusk; winter snow covers them instead). Day
-    desire-paths **persist** as infrastructure — units move faster along them (a
-    defensive-mobility layer).
-14. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
+    desire paths persist as infrastructure and fuel pressure.
+16. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
     provisions · hull/rigging incl. sailcloth) → launch and sail; who-sails/who-stays
     dilemma. Carries the campaign into Phase 4 (arriving at a new coast).
 Tests: law effects, pressure updates, hound evolution, nightmare triggers, seasonal
-transitions, win/loss, summary accuracy, plus: warrior upgrades, sanity/asylum miss-a-night
-accounting, ground-scar decay, spring-ship manifest win, night-escalation curve.
+transitions, win/loss, summary accuracy, plus: build-slot expansion, desire-path traffic,
+lantern fuel debt, lit-window defense wakeups, woken-house sanity loss, sanity-to-work
+efficiency, home recovery dread spill, asylum miss-a-night accounting, warrior upgrades,
+ground-scar decay, spring-ship manifest win, night-escalation curve.
 
 Excluded: multiple maps, multiple beasts, procedural generation, full campaign,
 multiplayer, art polish.
 
-## Phase 4 — Second map, second beast (replayability proof)
+## Phase 4 - Second map, second beast (replayability proof)
 
 Question: *Can the game generate a new moral survival story with a new beast?*
 
-- **Map 2: The Abbey of Antlers** — dense, beautiful, confusing forest (sacred grove,
+- **Map 2: The Abbey of Antlers** - dense, beautiful, confusing forest (sacred grove,
   orchard, deep forest, stream, charcoal camp, deer paths, stone circle, hidden graves,
   corrupted logging camp).
 - **The Stag Beneath the Abbey**: trust/patience/wound/wildness/covenant; indirect bond;
@@ -122,7 +140,7 @@ Question: *Can the game generate a new moral survival story with a new beast?*
 - Map 2 must be winnable both exploitatively and by covenant, and losable by village
   death, Bellkeeper death, or broken covenant.
 
-## Beyond (parked — do not build)
+## Beyond (parked - do not build)
 
 Maps 3–5 (Drowned Mare, White Bear, Moth Queen), full campaign narrative, procedural maps,
 multiplayer, final art/animation polish.

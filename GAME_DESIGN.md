@@ -1,4 +1,4 @@
-# Game Design — The Abbey at World's End
+# Game Design - The Abbey at World's End
 
 A 3D isometric survival settlement game. Bucolic day / terrifying night. Shipwrecked
 settlers restore a ruined abbey and expand zones of firelight. The player directly controls
@@ -16,18 +16,21 @@ This document is the durable design reference. Phase sequencing lives in
 2. **Dusk is drama.** The recall moment creates stories without scripted narrative.
 3. **The beast is the moral memory of the settlement.** Never "level 2 dog".
 4. **The monsters are what we have made possible.** Nightmares reflect player behaviour.
-5. **The Bellkeeper is a directly-controlled hero** — rescuer, signaler, guardian, beast-
+5. **The Bellkeeper is a directly-controlled hero** - rescuer, signaler, guardian, beast-
    bond character, *and* front-line fighter. You drive the Bellkeeper directly (Thronefall-
    style); every other defender acts autonomously.
 6. **Defense is a co-pillar; the night is a rising cost.** The settlement fields a real,
-   buildable, upgradable defense — warriors, settler archers, the beast. Nights escalate
-   from intimate dread in summer to set-piece defensive stands in autumn and winter — but
+   buildable, upgradable defense - warriors, settler archers, the beast. Nights escalate
+   from intimate dread in summer to set-piece defensive stands in autumn and winter - but
    the dark always taxes sanity, so combat is never a clean power fantasy.
 7. **The day remembers the night.** Night movement and battle scar the ground; day labour
    wears paths into it. The day is bucolic to *be* in, yet the earth carries what happened.
+8. **The village grows by hugging the light.** New build slots sprout near existing
+   buildings, windows, paths, and lit ground. Expansion compounds safety when clustered well,
+   but every outward step creates more road to light and more fuel debt to pay.
 
 > Pillar note (direction set 2026-07-04): combat was promoted from a thin support role to a
-> co-pillar — *Thronefall-meets-horror-settlement*. The horror identity is preserved by the
+> co-pillar - *Thronefall-meets-horror-settlement*. The horror identity is preserved by the
 > sanity cost of the dark (pillar 6), the beast's singular centrality (pillar 3), and
 > intimate early nights that escalate only as the seasons turn. Detail in §§17–20.
 
@@ -45,8 +48,22 @@ This document is the durable design reference. Phase sequencing lives in
 Positions classify as **Safe / Edge / Dark**. Fires consume fuel. Weak light flickers.
 Monsters avoid strong light and test edges.
 
+**Settlement growth rule.** Buildings are not scattered freely across the map. Each map
+starts with a few seed slots near the campfire, abbey, wreck, or other landmarks. Completing
+a building can reveal child slots beside it, so the settlement grows as a tight cluster of
+houses and workplaces hugging one another. A slot is valid because it is close to life: near
+existing buildings, connected by travelled paths, and inside manageable light. This keeps the
+Thronefall clarity of authored choices while adding the Settlers feeling of a village filling
+in around work.
+
+**Light debt.** Every new slot is both opportunity and liability. A compact cluster lets
+window light, lanterns, shrines, and abbey fire reinforce each other. A long outward branch
+may unlock salvage or defense, but it lengthens the path network and creates more lanterns to
+fuel. The player should feel expansion as a promise made to the dark: if you grow there, you
+must keep it lit.
+
 **The three bands are a combat gradient** (Phase 3 combat, §17) laid over that same
-classification — light is not just where you *can* stand, it is **home-field advantage**:
+classification - light is not just where you *can* stand, it is **home-field advantage**:
 
 | Band | Friendly units | Monsters | Net |
 |------|----------------|----------|-----|
@@ -56,7 +73,7 @@ classification — light is not just where you *can* stand, it is **home-field a
 
 Your ground weakens monsters; their ground weakens you; the twilight is a fair fight. This
 is the mechanical reason monsters avoid strong light and test the edges. The **beast is never
-affected** — it fights at full strength in every band, which makes it your natural striker
+affected** - it fights at full strength in every band, which makes it your natural striker
 for the dark and one more reason it stays singular (§3).
 
 ## 3. Dusk recall
@@ -64,7 +81,13 @@ for the dark and one more reason it stays singular (§3).
 At dusk: villagers check distance to light; far workers abandon tasks; children run home
 first; guards move to posts; fearful villagers panic earlier; brave villagers risk finishing
 tasks. The bell reduces panic and improves recall speed. At least one villager should be too
-far out on the first dusk — the first rescue moment.
+far out on the first dusk - the first rescue moment.
+
+The dusk read should be visible and ritualized. The Bellkeeper rings the bell; workers pick
+up tools, leave half-finished jobs, walk the worn paths home, and enter houses. Windows light
+one by one as families settle inside. This is the daily handoff from Settlers-style bustle to
+horror: the player sees exactly who made it home, which road stayed dark, and which building
+is now a fragile pool of life.
 
 ## 4. The Bellkeeper
 
@@ -83,7 +106,7 @@ far out on the first dusk — the first rescue moment.
 Each beast belongs to its abbey. The Bellkeeper does not collect beasts; they understand
 each covenant. Map 1 results grant one carried trait (see §12).
 
-### Map 1 — The Black Hound of the Bell Tower (loyalty, protection)
+### Map 1 - The Black Hound of the Bell Tower (loyalty, protection)
 
 Values: `trust, hunger, pain, fear, attachment_to_hero`.
 States: `chained, wary, fed, following, guarding, hunting, protective, angry, missing,
@@ -103,13 +126,13 @@ Bond reads through behaviour, never a visible obedience meter:
   may protect the hero but ignore everyone else.
 
 Evolution paths (Phase 3): **Guardian, War Hound, Starved Hound, Sacred Hound, Broken
-Hound** — each with distinct behaviour and visual identity.
+Hound** - each with distinct behaviour and visual identity.
 
-### Map 2 — The Stag Beneath the Abbey (restraint, debt, cost of expansion)
+### Map 2 - The Stag Beneath the Abbey (restraint, debt, cost of expansion)
 
 Values: `trust, patience, wound, wildness, covenant`. The Stag is indirect: follow it,
 respect territory, interpret appearances, leave offerings, avoid taboos. It does not obey
-the Bellkeeper — it *permits* the Bellkeeper. Central pressure: **Forest Debt** (rises with
+the Bellkeeper - it *permits* the Bellkeeper. Central pressure: **Forest Debt** (rises with
 old-growth cutting, overhunting, grove intrusion, night burning, forced forest labour;
 falls with replanting, shrines, deer protection, tree burials, restraint). Broken covenant
 turns it into the **Horned Accuser**.
@@ -124,34 +147,49 @@ CarryingResource, ReturningToStorage, ReturningToLight, Panicking, Injured, Rest
 Missing, Dead`.
 
 Roles (Phase 2): Salvager, Builder, Woodcutter, Tender, Guard, Injured. Villagers
-physically carry things — the Settlers feeling.
+physically carry things - the Settlers feeling.
 
 ## 7. Economy
 
-Phase 2 resources: `wood, food, oil, candles, stone, scrap_iron, medicine, relic_fragment`.
+Phase 2 resources: `wood, food, oil, candles, stone, scrap_iron, relic_fragment`.
 
-First loop: shipwreck crates → wood/food/oil/medicine · forest edge → wood · campfire
+First loop: shipwreck crates → wood/food/oil/candles · forest edge → wood · campfire
 consumes wood → safety · lantern post consumes oil → edge light · shelter → night
-protection · abbey gate repair → sacred safe zone. *The village exists because the wreck
-gave a temporary head start.*
+protection and window light · abbey gate repair → sacred safe zone. *The village exists
+because the wreck gave a temporary head start.*
+
+Do not grow this into a heavy production-chain city builder. The economy exists to make
+settlement shape, light coverage, sanity debt, and the morning report matter. Goods should be
+visible in the world: salvage is hauled, construction piles grow, lantern routes consume oil,
+and households turn stockpiles into safety at night.
 
 Phase 3 renewables: grain, meat, wool, tools, herbs, coal (+ faith, fear as pressures).
-Map 2: old_wood, green_wood, apples, venison, herbs, resin, sacred_seeds, charcoal —
+Map 2: old_wood, green_wood, apples, venison, herbs, resin, sacred_seeds, charcoal -
 renewable but over-usable; extractive vs restorative buildings make the settlement layout
 a moral map. Never Factorio complexity: the economy always feeds the question *"can we keep
 the light alive through winter?"*
 
 ## 8. Buildings
 
-Phase 2 (complete list): Campfire, Storage Pile, Shelter, Woodcutter Hut, Lantern Post,
-Guard Post, Abbey Gate Repair, Bell Tower Repair, Candle Shrine, Infirmary Corner.
+Phase 2 direction set: Campfire, Storage Pile, Shelter, Woodcutter Hut, Lantern Post,
+Guard Post, Abbey Gate Repair, Bell Tower Repair, Candle Shrine, Asylum Corner.
 
 Abbey restoration nodes (Phase 2): Gate (wood+stone → larger safe area, monsters hesitate),
 Bell Tower (wood+iron → longer bell reach, clearer hound response, faster recall), Candle
-Shrine (candles+relic → fear↓, nightmares weakened, recovery↑), Infirmary Corner
-(medicine+wood → heal villagers and hound).
+Shrine (candles+relic → fear↓, nightmares weakened, recovery↑), Asylum Corner
+(wood+candles+relic → recover insanity over time, releases only by day).
 
-Phase 3 abbey: Kitchen Hall, Infirmary, Crypt, Watch Wall, Scriptorium, Kennel Yard,
+The old Phase 2 implementation may still contain `infirmary_corner_t1` as a legacy name.
+Future design direction treats that slot as the **Asylum**, not a medicine/infirmary system.
+Health can recover generously at morning. Sanity is the persistent wound.
+
+**Build slots and upgrades.** Build sites are authored slots, not free placement. Each slot
+has allowed building ids, adjacency rules, light requirements, path anchors, and upgrade
+branches. Completing or upgrading a building can open nearby child slots. The strategic depth
+comes from choosing how a compact settlement compounds: wider window defense, lower fuel
+burn, stronger recall, safer path segments, or more production.
+
+Phase 3 abbey: Kitchen Hall, Asylum, Crypt, Watch Wall, Scriptorium, Kennel Yard,
 Winter Hearth (+ moral visual variants, see ART_BIBLE).
 
 Map 2: Forester Hut, Herbalist Hut, Orchard Plot, Hunter Blind, Grove Shrine, Root Bridge,
@@ -160,11 +198,11 @@ Charcoal Kiln, Stag Garden, Forest Watchpost, Abbey Cloister Repair.
 ## 9. Nightmares
 
 The director decides nights from: darkness near camp, villagers outside light, hound
-trust/hunger, unburied dead, accumulated fear, bell tower state. Nights **escalate**:
-intimate and scary first (summer), rising to set-piece defensive stands at the seasonal
-climaxes (autumn/winter, the White Nights). Even the big nights stay tense rather than
-triumphant, because the dark taxes sanity (§18) and every night includes at least one
-problem only a dark-capable unit — warrior or beast — can solve (§17, anti-turtle rule).
+trust/hunger, unburied dead, accumulated fear, bell tower state, exposed roads, and
+under-lit growth branches. Nights **escalate**: intimate and scary first (summer), rising to
+set-piece defensive stands at the seasonal climaxes (autumn/winter, the White Nights). Even
+the big nights stay tense rather than triumphant, because the dark taxes sanity (§18) and
+every night includes at least one problem that cannot be solved by staying inside lit homes.
 
 Phase 2 enemies: **Pale Hound** (avoids strong light, attacks isolated villagers, retreats
 from the hound, tests lantern edges), **Drowned Sailor** (slow, frightening, follows sound,
@@ -176,7 +214,7 @@ Phase 3 consequence enemies: Hunger Wights (food cruelty), Dead Workers (forced 
 labour), Grave Crawlers (neglected bodies), Chain Hounds (hound abuse), Faceless Saints
 (extreme faith).
 
-Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates the abbey bell — the
+Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates the abbey bell - the
 **True Bell vs False Bell** mechanic), Antler Wraith, Hollow Deer, Charcoal Dead. Paths
 shift, fog hides lanterns, villagers walk toward false lights.
 
@@ -193,7 +231,7 @@ Each law shifts moral pressures and can unlock consequence nightmares.
 
 ## 11. Morality model (Phase 3)
 
-No good/evil meter. Five pressures: **Mercy, Fear, Faith, Reason, Hunger** — shifted by
+No good/evil meter. Five pressures: **Mercy, Fear, Faith, Reason, Hunger** - shifted by
 actions (feed injured first → Mercy↑; forced night work → Fear↑; corpse bait → Hunger↑…).
 Pressures drive villager behaviour, hound personality, abbey appearance, available laws,
 nightmare types, and ending text.
@@ -208,14 +246,20 @@ Authority** · Starved/Broken → **Hard Lessons**.
 
 Phase 3: The Missing Salvager · The Food Thief · The Hound Bites a Child.
 Map 2: The Old Tree · The Starving Deer · The Lost Woodcutters · The Charcoal Camp.
-Dilemmas are data-driven state transitions on the shared event log — not cutscene logic.
+Dilemmas are data-driven state transitions on the shared event log - not cutscene logic.
 
 ## 14. Morning consequence report
 
-Dawn report is storybook-toned, not spreadsheet-only: survivors, injured, missing, food,
-fuel, extinguished lights, hound state, village mood, abbey status — plus one or two
-generated memory lines (*"The hound slept outside the abbey gate. No one dared approach it,
-but the children left scraps nearby."*). This is how the game creates emotional memory.
+Dawn report is storybook-toned, not spreadsheet-only: survivors, injured, missing, insane,
+sleep-starved households, food, fuel, extinguished lights, exposed roads, hound state,
+village mood, abbey status, and one or two generated memory lines (*"The hound slept outside
+the abbey gate. No one dared approach it, but the children left scraps nearby."*). This is
+how the game creates emotional memory.
+
+The morning report is also the replay hook. It should leave the player with one clear
+question for the next day: which road needs light, which slot is too exposed, who is in the
+asylum, what did the hound remember, and what did last night prove about the settlement's
+shape?
 
 ## 15. Data model (canonical spec shapes)
 
@@ -224,6 +268,20 @@ Design data lives in text specs mirrored into ScriptableObjects.
 **Building**: id, display_name, footprint (w×d), build_cost, construction_time,
 workers_required, light_radius, night_safety_modifier, produces, consumes, prefab, icon,
 upgrade_paths.
+
+**Build slot**: id, map_id, position, parent_slot_id, allowed_building_ids,
+light_requirement, path_anchor, child_slot_ids, unlock_condition, exposed_night_weight.
+
+**Household defense**: building_id, resident_capacity, window_light_radius,
+night_wake_threshold, ranged_support_profile, sanity_loss_per_wake,
+sanity_loss_per_attack, nightmare_spill_radius, destruction_consequence.
+
+**Sanity**: villager_id, current, work_efficiency_curve, stop_work_threshold,
+insanity_threshold, home_recovery_per_day, asylum_recovery_per_day,
+nightmare_spill_per_night.
+
+**Desire path**: id, points, traffic_score, width, movement_bonus, lantern_need,
+fuel_debt_weight, visible_state.
 
 **Beast**: id, display_name, map_id, temperament, hunger_rate, trust_thresholds,
 fear_thresholds, preferred_rewards, hated_actions, night_abilities, day_abilities,
@@ -249,77 +307,98 @@ Direct control + autonomous defenders (the Thronefall model): the player drives 
 **Bellkeeper** directly; **warriors**, **settler archers**, and the **beast** fight on their
 own. Two tiers hold the night:
 
-- **Settlers** shelter in their homes and provide **ranged support (arrows, slings) from lit
-  windows**. A house only defends while it is **lit** (window light — this ties defense to
-  the oil/wood economy), so house placement becomes a fields-of-fire decision over the
-  approaches. Settlers who fight too much at night wake **fatigued and less productive** the
-  next day.
-- **Warriors and the beast** are the only units that operate **in the dark** — where they
+- **Settlers** shelter in their homes. If the night stays away from their door, they sleep
+  and recover. If danger reaches the house, interior lights flare, silhouettes appear in the
+  windows, and they provide **ranged support (arrows, slings) from lit windows**. A house only
+  defends while it is **lit** (window light ties defense to the oil/wood economy), so house
+  placement becomes a fields-of-fire decision over the approaches. Waking to fight costs
+  sanity: the household survives the attack, but the people inside lose sleep, hear the
+  scratching at the door, and work worse the next day.
+- **Warriors and the beast** are the only units that operate **in the dark** - where they
   fight **debuffed** (the combat-band gradient, §2) and, for humans, drain sanity (§18).
-  Warriors are produced and **upgraded** from buildable structures (barracks / watch line) —
+  Warriors are produced and **upgraded** from buildable structures (barracks / watch line) -
   a real progression axis across the season. The **beast is exempt from both band and
   sanity**: full strength in every zone, your one true striker for the dark.
 
 **Escalation, not a flat wave:** summer nights are intimate; autumn and winter nights grow
 into set-piece defensive stands; the **White Nights** are the climaxes.
 
-**Anti-turtle — safety is conditional (design invariant).** Ranged-from-home is only safe
+**Anti-turtle - safety is conditional (design invariant).** Ranged-from-home is only safe
 while the outer line holds. If the warriors and the beast are **overwhelmed**, monsters reach
-the houses and **destroy them, killing the settlers inside** — which collapses that light node
+the houses and **destroy them, killing the settlers inside** - which collapses that light node
 (the territory shrinks) and costs colonists (the spring-ship manifest, §20). Hiding everyone
 indoors and shooting is therefore not a winning line; you must hold ground outside. On top of
-that, every night carries at least one problem ranged fire cannot answer — a lantern moth
+that, every night carries at least one problem ranged fire cannot answer - a lantern moth
 opening a dark gap that must be physically relit, a monster hugging cover out of arc, a
-stranded settler to rescue, a wounded beast to reach — keeping *brave-into-the-dark* a live
+stranded settler to rescue, a wounded beast to reach - keeping *brave-into-the-dark* a live
 choice, not a mistake.
 
 ## 18. Sanity, the dark, and the asylum
 
 The dark is hostile territory to minds as well as bodies. Human units accumulate **dread** in
 Edge/Dark zones (extending the existing villager Fear value); past a threshold they slip
-toward **insanity** — erratic, unreliable, eventually incapacitated.
+toward **insanity** - erratic, unreliable, eventually incapacitated.
+
+Homes are not free safety. A quiet home is recovery: settlers sleep, fear cools, and sanity
+stabilizes. A woken home is defense: lights flare, silhouettes appear, and settlers fight
+from windows, but everyone inside takes a sanity hit for being awake with monsters at the
+door. Repeated night wakeups make the same family worse at daytime work even if nobody is
+physically hurt.
 
 **Insanity is usually the price of an under-fuelled night, not bravado.** If you don't
 stockpile enough oil/wood, a light dies; the territory it held goes dark; whoever is caught
-out there — a campfire lost far from the abbey with a long walk home, or fighters sent past
-the light — takes the sanity hit. It couples directly to the economy: fail to provision the
+out there - a campfire lost far from the abbey with a long walk home, or fighters sent past
+the light - takes the sanity hit. It couples directly to the economy: fail to provision the
 lights and the dark takes minds.
 
-**The key asymmetry — the day forgives the body but not the mind.** Every morning all units
+**The key asymmetry - the day forgives the body but not the mind.** Every morning all units
 recover **health** for free (the bucolic day). **Sanity does not.** An insane unit must spend
-**cooldown time in the Asylum** (a sanity-infirmary evolving the Phase 2 Infirmary Corner);
-recovery spans a full cycle, so the unit **misses the next night's defense**, and can only be
-**released during the day**. This is what gives darkness lasting weight while the day stays
-gentle — health is a nightly reset, sanity is a debt that carries.
+**cooldown time in the Asylum**. The Asylum is the recovery building for insanity, not a
+medical infirmary. Recovery spans a full cycle, so the unit **misses the next night's
+defense**, and can only be **released during the day**. This is what gives darkness lasting
+weight while the day stays gentle - health is a nightly reset, sanity is a debt that carries.
 
-Two distinct night costs keep the two tiers honest:
+Sanity affects labour directly. As sanity drops, villagers walk slower, work less steadily,
+panic earlier at dusk, and are more likely to abandon tasks. Above the insanity threshold,
+they stop working and can no longer be assigned normal jobs until recovered.
 
-- **Warriors / beast pushed into the dark → sanity** (multi-day: asylum, miss the next
-  night). The **beast is immune** — it is a beast, and one more reason it stays singular
-  (pillar 3), never a replaceable soldier.
-- **Settlers defending from lit homes → fatigue** (next-day productivity only, clears with
-  rest), since they fight from the safety of window-light.
+If the Asylum exists, insane villagers are removed from the work roster and recover there,
+missing work and the next night's defense. If the Asylum does not exist, they recover slowly
+at home, but the household pays for it: screaming, crying, sleeplessness, and nightmares
+spill dread into other residents. This can turn one broken settler into a household-level
+problem, which gives the Asylum a social purpose beyond faster recovery.
 
-## 19. The ground remembers — scars and paths
+Two distinct mental costs keep the two human defense tiers honest:
 
-Both halves of the cycle **write to the ground**, but they write differently — night-writing
+- **Warriors pushed into the dark → sanity** (multi-day: asylum, miss the next night). The
+  **beast is immune** - it is a beast, and one more reason it stays singular (pillar 3),
+  never a replaceable soldier.
+- **Settlers defending from lit homes → sanity loss** (next-day productivity loss, with
+  longer-term risk if wakeups repeat). They fight from window-light, but they still spend the
+  night afraid and awake.
+
+## 19. The ground remembers - scars and paths
+
+Both halves of the cycle **write to the ground**, but they write differently - night-writing
 is destructive and **ephemeral**, day-writing is constructive and **durable**:
 
-- **Night scars** — scorch where flame was carried, trampled ground on the beast's patrol
+- **Night scars** - scorch where flame was carried, trampled ground on the beast's patrol
   line, drag-trails and dark stains at kill sites, spent-arrow scatter beneath the defended
   windows. Scars **stay through the morning** (you read the whole shape of last night by
-  daylight), then **fade across the day** — grass and flower-meadow **regrow before the next
+  daylight), then **fade across the day** - grass and flower-meadow **regrow before the next
   night**, so dusk always finds a fresh, bucolic world for the new terror to violate. (In
-  winter there is no regrowth: overnight **snow** covers the marks instead — a clean white
+  winter there is no regrowth: overnight **snow** covers the marks instead - a clean white
   silence, and fresh blood on new snow reads far louder than on summer grass.)
-- **Day paths** — repeated work routes wear **desire paths** into the ground. Unlike scars,
-  paths **persist**, and they are **infrastructure**: units move **faster along them**, so
-  warriors redeploy quickly between threatened lit zones at night (a Settlers-2 road/flag
-  network turned into a defensive-mobility layer). Laying good paths by day is preparing your
-  battle lines for the night.
+- **Day paths** - repeated work routes wear **desire paths** into the ground. The player
+  does not place roads directly. Villagers create them by hauling, building, guarding, and
+  returning home. Unlike scars, paths **persist**, and they are **infrastructure**: units move
+  **faster along them**, so warriors redeploy quickly between threatened lit zones at night.
+  A useful path also becomes a liability: if the settlement depends on it after dusk, it needs
+  lantern coverage, and that burns fuel. Good daytime work prepares the battle lines for the
+  night, but wide daytime growth also creates more darkness to maintain.
 
 Architecturally the scar pass is *one more consumer of the shared event log* (§16): a dawn
-decal pass reads the night's records, stamps the terrain, then fades it over the day — no new
+decal pass reads the night's records, stamps the terrain, then fades it over the day - no new
 source of truth. Emotional target: *relaxing to be in by day, yet you feel last night in the
 dirt.*
 
@@ -327,18 +406,18 @@ dirt.*
 
 The seasonal arc has a destination. The macro-goal is not merely to *survive* winter but to
 reach spring with the means to **leave**: build a new vessel on the abbey shore and sail for
-better coasts when the trade winds resume. This mirrors the opening — you *begin* stripping a
+better coasts when the trade winds resume. This mirrors the opening - you *begin* stripping a
 wrecked ship and *win* by launching a new one.
 
 The win is a **three-part manifest**, which makes the economy a *spend-to-survive vs.
 save-to-escape* tension all season (every log burned for warmth is a log not in the hull):
 
-1. **Settlers** — enough surviving colonists to be worth sailing, and to crew the ship.
-2. **Provisions** — food/water banked for the voyage, beyond what winter itself consumes.
-3. **Hull & rigging** — shipbuilding materials: wood, **canvas (sailcloth)**, rope, iron.
+1. **Settlers** - enough surviving colonists to be worth sailing, and to crew the ship.
+2. **Provisions** - food/water banked for the voyage, beyond what winter itself consumes.
+3. **Hull & rigging** - shipbuilding materials: wood, **canvas (sailcloth)**, rope, iron.
 
 Because every settler is also a future colonist, losses hurt twice (a worker now, a berth in
-spring) — which is what makes the defensive co-pillar (§17) matter and feeds the moral
+spring) - which is what makes the defensive co-pillar (§17) matter and feeds the moral
 pressures (§11). If the ship can only be provisioned for *N* and more survived, the
 **who-sails / who-stays** dilemma writes itself, and carries the campaign into Phase 4
 (arriving at a new coast).
