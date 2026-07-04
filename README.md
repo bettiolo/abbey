@@ -27,6 +27,9 @@ docs/       Design docs, roadmap, vertical slice spec
 tests/      External Python validation tests (pytest, run through uv)
 ```
 
+Prototype third-party assets live under `unity/Assets/ThirdParty/`; the sourcing policy is
+documented in [docs/THIRD_PARTY_ASSET_STRATEGY.md](docs/THIRD_PARTY_ASSET_STRATEGY.md).
+
 ## Running the game on your Mac
 
 Full guide: [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.md). Short version:

@@ -37,15 +37,17 @@ namespace Abbey.EditorTools
     /// depend on the scene file (PlayMode tests build their own world), so this only
     /// assembles and cross-references components.
     ///
-    /// Where a generated Blender GLB is already imported under
-    /// Assets/Generated/BlenderAssets it is instantiated; otherwise the builder
-    /// degrades to primitives — the menu item never fails hard on missing art, and
-    /// gameplay never blocks on it.
+    /// Where a third-party prototype replacement exists under Assets/ThirdParty, it
+    /// is preferred. Otherwise, where a generated Blender GLB is already imported
+    /// under Assets/Generated/BlenderAssets it is instantiated; otherwise the
+    /// builder degrades to primitives. The menu item never fails hard on missing art,
+    /// and gameplay never blocks on it.
     /// </summary>
     public static class PrototypeSceneBuilder
     {
         public const string ScenePath = "Assets/_Game/Scenes/Prototype01.unity";
         public const string GeneratedAssetFolder = "Assets/Generated/BlenderAssets";
+        public const string ThirdPartyAssetFolder = "Assets/ThirdParty";
 
         // Landmark positions (map layout, not balance — the map is authored here).
         static readonly Vector3 CampCenter = Vector3.zero;
@@ -425,20 +427,27 @@ namespace Abbey.EditorTools
         }
 
         // ------------------------------------------------------------------
-        // Generated-asset helper
+        // Prototype-art helper
         // ------------------------------------------------------------------
 
         /// <summary>
-        /// Instantiates the imported GLB for <paramref name="assetId"/> when it
-        /// exists, otherwise a primitive stand-in. GLB pivots are center-bottom
-        /// (ART_BIBLE.md) so they sit directly on <paramref name="groundPos"/>;
-        /// primitives are lifted by <paramref name="primitiveYOffset"/> because
-        /// Unity primitives pivot at their center. Never throws.
+        /// Instantiates staged third-party art or the imported GLB for
+        /// <paramref name="assetId"/> when either exists, otherwise a primitive
+        /// stand-in. Generated GLB pivots are center-bottom (ART_BIBLE.md) so they
+        /// sit directly on <paramref name="groundPos"/>; primitives are lifted by
+        /// <paramref name="primitiveYOffset"/> because Unity primitives pivot at
+        /// their center. Never throws.
         /// </summary>
         static GameObject InstantiateGenerated(
             string assetId, Vector3 groundPos, string name,
             PrimitiveType fallback, Vector3 fallbackScale, float primitiveYOffset)
         {
+            var thirdParty = InstantiateThirdPartyReplacement(assetId, groundPos, name);
+            if (thirdParty != null)
+            {
+                return thirdParty;
+            }
+
             try
             {
                 string assetPath = $"{GeneratedAssetFolder}/{assetId}.glb";
@@ -465,6 +474,90 @@ namespace Abbey.EditorTools
             go.transform.position = groundPos + new Vector3(0f, primitiveYOffset, 0f);
             go.transform.localScale = fallbackScale;
             return go;
+        }
+
+        static GameObject InstantiateThirdPartyReplacement(
+            string assetId, Vector3 groundPos, string name)
+        {
+            string assetPath = ThirdPartyReplacementPathFor(assetId);
+            if (string.IsNullOrEmpty(assetPath))
+            {
+                return null;
+            }
+
+            try
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"[Abbey] Third-party replacement for " +
+                                     $"'{assetId}' was not found at {assetPath}; " +
+                                     "trying generated art.");
+                    return null;
+                }
+
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                if (instance == null)
+                {
+                    return null;
+                }
+
+                instance.name = name;
+                instance.transform.position = groundPos;
+                instance.transform.localScale = ThirdPartyReplacementScaleFor(assetId);
+                return instance;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[Abbey] Could not instantiate third-party " +
+                                 $"replacement for '{assetId}' ({e.Message}); " +
+                                 "trying generated art.");
+                return null;
+            }
+        }
+
+        static string ThirdPartyReplacementPathFor(string assetId)
+        {
+            switch (assetId)
+            {
+                case "campfire_t1":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/campfire_stones.fbx";
+                case "storage_pile_t1":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/log_stackLarge.fbx";
+                case "shipwreck_hull":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/canoe.fbx";
+                case "shipwreck_crate_closed":
+                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Prop_Crate.fbx";
+                case "shipwreck_barrel":
+                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Prop_Wagon.fbx";
+                case "abbey_wall_broken":
+                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Wall_UnevenBrick_Straight.fbx";
+                case "forest_tree_01":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_pineDefaultA.fbx";
+                case "rock_cluster_01":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/rock_largeA.fbx";
+                case "villager_lowpoly":
+                    return $"{ThirdPartyAssetFolder}/Quaternius/UniversalBaseCharacters/BaseCharacters/Unity/Superhero_Male_FullBody.fbx";
+                default:
+                    return null;
+            }
+        }
+
+        static Vector3 ThirdPartyReplacementScaleFor(string assetId)
+        {
+            switch (assetId)
+            {
+                case "shipwreck_hull":
+                    return new Vector3(4f, 4f, 4f);
+                case "abbey_wall_broken":
+                    return new Vector3(2f, 2f, 2f);
+                case "forest_tree_01":
+                    return new Vector3(2f, 2f, 2f);
+                case "rock_cluster_01":
+                    return new Vector3(2f, 2f, 2f);
+                default:
+                    return Vector3.one;
+            }
         }
     }
 }
