@@ -3,7 +3,7 @@
 
 Resolution order:
   1. The pip-installed ``bpy`` module ("module mode"): the batch entry point
-     ``blender/scripts/build_asset_batch.py`` is executed as a plain python3
+     ``blender/scripts/build_asset_batch.py`` is executed as a plain Python
      subprocess and imports bpy itself.
   2. A ``blender`` binary on PATH (or $BLENDER_PATH): executed as
      ``blender -b -P blender/scripts/build_asset_batch.py -- <args>``.
@@ -15,10 +15,10 @@ Exit codes:
   *  any other code is propagated verbatim from the pipeline subprocess
 
 Usage:
-  python3 tools/run_blender_asset_pipeline.py --asset campfire_t1 [--asset ...]
-  python3 tools/run_blender_asset_pipeline.py --all
-  python3 tools/run_blender_asset_pipeline.py --changed
-  python3 tools/run_blender_asset_pipeline.py --changed --verify
+  uv run --with-requirements tools/requirements-dev.txt python tools/run_blender_asset_pipeline.py --asset campfire_t1
+  uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/run_blender_asset_pipeline.py --all
+  uv run --with-requirements tools/requirements-dev.txt python tools/run_blender_asset_pipeline.py --changed
+  uv run --with-requirements tools/requirements-dev.txt python tools/run_blender_asset_pipeline.py --changed --verify
 
 Verify mode (--verify, used by tools/check_all.sh by default):
   Builds the selected assets into a TEMP directory (via build_asset_batch.py

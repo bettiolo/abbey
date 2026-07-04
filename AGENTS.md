@@ -18,7 +18,10 @@ Never create assets ad hoc. Every asset starts as a spec file in `blender/asset_
 
 - Make small changes.
 - Run tests after gameplay changes (`./tools/run_unity_tests.sh` or CI).
-- Generate previews after asset changes (`python3 tools/run_blender_asset_pipeline.py`).
+- Run Python tooling through `uv` so pytest and PyYAML do not rely on global packages.
+- Generate previews after asset changes
+  (`uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/run_blender_asset_pipeline.py --all`
+  or use a local `blender` binary).
 - Never hand-edit generated files (`blender/generated/`, `unity/Assets/Generated/`) unless
   explicitly told.
 - Keep design constants in data files or ScriptableObjects — never hard-code balance values
@@ -49,6 +52,9 @@ documented** in the commit message / report.
 
 ## Environment notes
 
+- `./tools/check_all.sh` auto-detects `uv` and uses `tools/requirements-dev.txt` for the
+  Python validation environment. If `UV_CACHE_DIR` is unset, the script writes uv's cache
+  to `.uv-cache/`, which is ignored.
 - Blender may be available as the `blender` binary or as the `bpy` PyPI module; all pipeline
   scripts must work with either (see `tools/run_blender_asset_pipeline.py`).
 - The Unity editor is NOT available in the agent container, so C# cannot be compiled or

@@ -73,9 +73,14 @@ pipeline is still the built-in RP — URP remains a Milestone 1 decision.
 ## Verifying a fresh checkout quickly
 
 ```sh
+brew install uv            # if uv is not already installed
 ./tools/check_all.sh        # asset + design validation locally (Unity steps SKIP)
 ./tools/run_unity_tests.sh editmode   # runs Unity tests — ONLY if an editor is installed
 ```
+
+Python validation runs through `uv`, using `tools/requirements-dev.txt`; it should not
+depend on a globally installed `pytest`. The gate stores uv's cache in `.uv-cache/` unless
+you set `UV_CACHE_DIR`.
 
 > ⚠️ **CI does not compile or run the Unity code.** GameCI's Unity test job is skipped unless
 > the `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD` repository secrets are set (they are

@@ -27,21 +27,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
-          cache-dependency-path: tools/requirements-dev.txt
 
-      - name: Install dependencies (incl. bpy, ~300 MB wheel)
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r tools/requirements-dev.txt bpy
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
       - name: Design validation (REQUIREMENTS.yml tracker)
-        run: python -m pytest tests/design_validation -q
+        run: uv run --with-requirements tools/requirements-dev.txt python -m pytest tests/design_validation -q
 
       - name: Build all assets (Blender headless via bpy module)
         run: |
           # Exit 3 means SKIP (pipeline entry not merged yet) — not a failure.
-          python tools/run_blender_asset_pipeline.py --all && rc=0 || rc=$?
+          uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/run_blender_asset_pipeline.py --all && rc=0 || rc=$?
           if [ "$rc" -eq 3 ]; then
             echo "::warning::Blender pipeline skipped (entry script missing)."
             exit 0
@@ -49,7 +47,7 @@ jobs:
           exit "$rc"
 
       - name: Asset validation (generated GLB/previews/metadata vs specs)
-        run: python -m pytest tests/asset_validation -q -rs
+        run: uv run --with-requirements tools/requirements-dev.txt python -m pytest tests/asset_validation -q -rs
 
       - name: Upload preview renders
         if: always()

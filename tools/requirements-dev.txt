@@ -1,5 +1,7 @@
 # Dev/CI dependencies for the validation harness (tests/ + tools/).
-# The 'bpy' module is installed separately in CI (it is a ~300 MB wheel and
-# only needed for the asset pipeline job) — see .github/workflows/assets.yml.
+# Use uv, not global site-packages:
+#   uv run --with-requirements tools/requirements-dev.txt python -m pytest
+# The 'bpy' module is installed separately in CI (it is a large wheel and
+# only needed for the full asset pipeline job). See .github/workflows/assets.yml.
 pytest>=8
 pyyaml>=6

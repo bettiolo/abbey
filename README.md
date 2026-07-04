@@ -24,7 +24,7 @@ unity/      Unity project (runtime, systems, tests, editor tooling)
 blender/    Asset factory: specs, generator scripts, generated output
 tools/      Pipeline entry points (check_all.sh is the gate)
 docs/       Design docs, roadmap, vertical slice spec
-tests/      External Python validation tests (pytest)
+tests/      External Python validation tests (pytest, run through uv)
 ```
 
 ## Running the game on your Mac
@@ -51,14 +51,18 @@ it) — see the graphics notes in [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.m
 # Full validation gate (degrades gracefully if Unity/Blender are unavailable)
 ./tools/check_all.sh
 
-# Generate all Blender assets (requires blender on PATH, or `pip install bpy`)
-python3 tools/run_blender_asset_pipeline.py
+# Generate all Blender assets (requires blender on PATH, or bpy via uv)
+uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/run_blender_asset_pipeline.py --all
 
 # Unity tests — requires a local Unity editor. NOT run in CI: GameCI skips the Unity
 # job unless UNITY_LICENSE/UNITY_EMAIL/UNITY_PASSWORD secrets are set. The C# is
 # currently authored-but-unverified — see docs/VERIFICATION_STATUS.md.
 ./tools/run_unity_tests.sh editmode
 ```
+
+Python tooling is expected to run through `uv`. `./tools/check_all.sh` auto-detects
+`uv`, uses `tools/requirements-dev.txt`, and stores its local cache in `.uv-cache/` when
+`UV_CACHE_DIR` is not already set. Install it with `brew install uv` on macOS.
 
 ## Current status
 

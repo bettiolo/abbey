@@ -4,6 +4,7 @@ blender/generated/blend/
 __pycache__/
 *.pyc
 .pytest_cache/
+.uv-cache/
 
 # Unity
 unity/Library/

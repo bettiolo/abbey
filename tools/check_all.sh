@@ -13,6 +13,7 @@
 #            default run leaves the working tree untouched.
 #
 # Step exit-code convention: 0 = PASS, 3 = SKIP, anything else = FAIL.
+# Python tools run through uv when available, using tools/requirements-dev.txt.
 # pytest exit 5 ("no tests collected") also counts as SKIP.
 set -uo pipefail
 
@@ -71,11 +72,17 @@ run_step() {
   STEP_LOGS+=("$log")
 }
 
-PY=python3
+PY_CMD=(python3)
+if command -v uv >/dev/null 2>&1; then
+  export UV_CACHE_DIR="${UV_CACHE_DIR:-$REPO_ROOT/.uv-cache}"
+  PY_CMD=(uv run --with-requirements tools/requirements-dev.txt python)
+else
+  echo "NOTE: uv not found; falling back to python3. Install uv for a hermetic Python tool env."
+fi
 
 # (a) design validation (REQUIREMENTS.yml consistency)
 run_step "design validation (pytest)" pytest \
-  "$PY" -m pytest tests/design_validation -q
+  "${PY_CMD[@]}" -m pytest tests/design_validation -q
 
 # (b) blender asset pipeline
 # Default: verify mode — build into a temp dir and compare against the
@@ -85,11 +92,11 @@ PIPELINE_ARGS=()
 if [ "$FULL" -eq 1 ]; then PIPELINE_ARGS+=(--all); else PIPELINE_ARGS+=(--changed); fi
 if [ "$WRITE" -eq 0 ]; then PIPELINE_ARGS+=(--verify); fi
 run_step "blender pipeline (${PIPELINE_ARGS[*]})" cmd \
-  "$PY" tools/run_blender_asset_pipeline.py "${PIPELINE_ARGS[@]}"
+  "${PY_CMD[@]}" tools/run_blender_asset_pipeline.py "${PIPELINE_ARGS[@]}"
 
 # (c) generated asset validation
 run_step "asset validation (pytest)" pytest \
-  "$PY" -m pytest tests/asset_validation -q
+  "${PY_CMD[@]}" -m pytest tests/asset_validation -q
 
 # (d)/(e) unity tests
 run_step "unity editmode tests" cmd \
@@ -99,7 +106,7 @@ run_step "unity playmode tests" cmd \
 
 # (f) in-engine screenshot capture
 run_step "unity screenshot capture" cmd \
-  "$PY" tools/capture_unity_screenshot.py
+  "${PY_CMD[@]}" tools/capture_unity_screenshot.py
 
 echo ""
 echo "==============================================="
