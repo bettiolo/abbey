@@ -93,6 +93,26 @@ namespace Abbey.Tests.EditMode
         }
 
         [Test]
+        public void NearestSafePoint_PadsTargetByArrivalRadius()
+        {
+            _config.edgeBandFraction = 0.3f;
+            _config.arrivalRadius = 0.3f;
+            var source = SpawnLight(new Vector3(3f, 0f, 0f), radius: 6f);
+            var from = new Vector3(30f, 0f, 0f);
+
+            Vector3 target = DarknessEvaluator.NearestSafePoint(from);
+            Vector3 dir = PlanarMotion.Direction(target, from);
+            Vector3 possibleStop = target + dir * _config.arrivalRadius;
+
+            Assert.AreEqual(LightZone.Safe, DarknessEvaluator.Classify(target));
+            Assert.AreEqual(LightZone.Safe, DarknessEvaluator.Classify(possibleStop),
+                "agents may stop within arrivalRadius of the target and must still be Safe");
+            Assert.LessOrEqual(
+                PlanarMotion.Distance(possibleStop, source.transform.position),
+                source.EffectiveRadius * (1f - _config.edgeBandFraction));
+        }
+
+        [Test]
         public void ExtinguishedLight_IsDark()
         {
             var source = SpawnLight(Vector3.zero, radius: 10f);
