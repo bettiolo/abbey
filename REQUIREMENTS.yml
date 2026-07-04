@@ -400,12 +400,16 @@ tasks:
       Builder villager job to ConstructionSite (deferred from P2-02/P2-03) and the two
       tender follow-ups from the P2-02 review.
     depends_on: [P2-03]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-restoration
     branch: task/P2-04
-    reviewer: reviewer-p2-restoration
-    review: null
-    merged_commit: null
+    reviewer: orchestrator # inline review; review subagent hit a credit limit, diff was small and confined to allowed files
+    review: approved
+    merged_commit: 47632e3
+    notes: >
+      Gate/BellTower completions expose AbbeyState.GateRepaired / BellRangeMultiplier;
+      NightmareDirector + Bellkeeper scene consumption wired in P2-10. Infirmary heal is
+      instant-on-exposure via ForceState(Idle) (no partial-heal API); revisit in Phase 3.
   - id: P2-05
     title: Full hound bond system
     phase: phase-2
