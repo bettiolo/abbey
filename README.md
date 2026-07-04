@@ -54,15 +54,24 @@ it) — see the graphics notes in [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.m
 # Generate all Blender assets (requires blender on PATH, or `pip install bpy`)
 python3 tools/run_blender_asset_pipeline.py
 
-# Unity tests (requires Unity editor; runs in CI via GameCI otherwise)
+# Unity tests — requires a local Unity editor. NOT run in CI: GameCI skips the Unity
+# job unless UNITY_LICENSE/UNITY_EMAIL/UNITY_PASSWORD secrets are set. The C# is
+# currently authored-but-unverified — see docs/VERIFICATION_STATUS.md.
 ./tools/run_unity_tests.sh editmode
 ```
 
 ## Current status
 
-- **Milestone 0** — repo + automation loop: in progress
-- **Prototype 0.1** — playable night greybox: in progress
+- **Milestone 0** — repo + automation loop ✅
+- **Prototype 0.1** — playable night greybox ✅
+- **Phase 2** — "The First White Night" vertical slice: merged to `main`
 - Roadmap through Phase 4 (second map, second beast): [docs/ROADMAP.md](docs/ROADMAP.md)
+
+> ⚠️ **The runtime is unverified.** The Unity/C# game has never been compiled or run by any
+> automated system — there is no editor in the agent/CI container, and GameCI skips the Unity
+> tests for lack of license secrets, so "green" only covers Blender assets. It can only be
+> compiled and played in a local Unity editor. Details + fix:
+> [docs/VERIFICATION_STATUS.md](docs/VERIFICATION_STATUS.md).
 - Vertical slice spec: [docs/VERTICAL_SLICE_SPEC.md](docs/VERTICAL_SLICE_SPEC.md)
 - Art direction: [ART_BIBLE.md](ART_BIBLE.md) · Game design: [GAME_DESIGN.md](GAME_DESIGN.md)
 

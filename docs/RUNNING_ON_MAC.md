@@ -3,6 +3,10 @@
 The Unity project in `unity/` is a standard cross-platform Unity project. Two ways to run
 it on a Mac:
 
+> ⚠️ **A local Unity editor is currently the *only* environment where this game runs at all.**
+> Neither the LLM agent container nor CI can compile it (no editor; GameCI skips the Unity
+> tests for lack of license secrets). See [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
+
 ## 1. In the editor (recommended during prototyping)
 
 1. Install **Unity Hub**, then the editor version pinned in
@@ -69,9 +73,12 @@ pipeline is still the built-in RP — URP remains a Milestone 1 decision.
 ## Verifying a fresh checkout quickly
 
 ```sh
-./tools/check_all.sh        # asset + design validation locally
-./tools/run_unity_tests.sh editmode   # runs Unity tests if editor is installed
+./tools/check_all.sh        # asset + design validation locally (Unity steps SKIP)
+./tools/run_unity_tests.sh editmode   # runs Unity tests — ONLY if an editor is installed
 ```
 
-CI (GameCI) runs the same Unity tests on every push, so a green branch should open
-cleanly on your Mac.
+> ⚠️ **CI does not compile or run the Unity code.** GameCI's Unity test job is skipped unless
+> the `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD` repository secrets are set (they are
+> not), so a "green" branch has **not** been compile-checked. Opening `unity/` in a local
+> editor (§1) is currently the only way to verify the game builds and runs. See
+> [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
