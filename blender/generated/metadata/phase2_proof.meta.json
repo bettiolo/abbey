@@ -1,0 +1,40 @@
+{
+  "id": "phase2_proof",
+  "generated_at": "2026-07-04T10:25:20.082212+00:00",
+  "description": "The four canonical First-White-Night beats (VERTICAL_SLICE_SPEC.md section 3) assembled from the committed GLBs; the Phase 2 vertical-slice aesthetic-gate proof renders. Standalone stand-in for the Unity in-engine canonical capture (ScreenshotCapture.CaptureCanonicalShots).",
+  "beats": {
+    "phase2_day_camp.png": "Bucolic daylight over the meadow camp.",
+    "phase2_dusk_recall.png": "Colour drains, warm low sun, fire pools rising.",
+    "phase2_night_attack.png": "Near-dark; only firelight pools; pale hounds at the edge of the light, the Black Hound readable at the ruined tower.",
+    "phase2_morning_after.png": "Soft first light over the settlement that endured."
+  },
+  "reuses": "render_scene_proof.py (ground/placements/camera/renderer/day+night rigs)",
+  "camera": {
+    "type": "ORTHO",
+    "pitch_deg": 30.0,
+    "yaw_deg": 45.0,
+    "ortho_scale": 28.2136,
+    "identical_for_all_beats": true
+  },
+  "render": {
+    "engine": "CYCLES (CPU)",
+    "samples": 32,
+    "resolution": [
+      1280,
+      960
+    ],
+    "resolution_percentage": 100
+  },
+  "night_monsters": [
+    "pale_hound_lowpoly",
+    "pale_hound_lowpoly",
+    "pale_hound_lowpoly"
+  ],
+  "placement_count": 71,
+  "files": {
+    "day_camp": "blender/generated/previews/phase2_day_camp.png",
+    "dusk_recall": "blender/generated/previews/phase2_dusk_recall.png",
+    "night_attack": "blender/generated/previews/phase2_night_attack.png",
+    "morning_after": "blender/generated/previews/phase2_morning_after.png"
+  }
+}

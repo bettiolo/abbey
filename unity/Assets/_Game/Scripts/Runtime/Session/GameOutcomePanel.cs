@@ -99,6 +99,11 @@ namespace Abbey.Session
             {
                 return "The settlement survived its first White Night.";
             }
+            if (s.Outcome == GameOutcome.SurvivedBittersweet)
+            {
+                return "The settlement survived its first White Night — " +
+                       "but few remain to see the spring.";
+            }
             switch (s.Reason)
             {
                 case LossReason.BellkeeperDead:
@@ -114,7 +119,9 @@ namespace Abbey.Session
 
         static string SpectrumBlock(SessionSummary s)
         {
-            string villagers = s.Outcome == GameOutcome.Win
+            bool survived = s.Outcome == GameOutcome.Win
+                            || s.Outcome == GameOutcome.SurvivedBittersweet;
+            string villagers = survived
                 ? $"{s.VillagersAlive} villagers saw the dawn"
                 : $"{s.VillagersAlive} villagers still stood";
             string mood = s.VillagersTerrified ? "terrified" : "hopeful";

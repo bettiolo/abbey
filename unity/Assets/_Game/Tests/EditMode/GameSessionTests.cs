@@ -172,14 +172,57 @@ namespace Abbey.Tests.EditMode
         }
 
         [Test]
-        public void Undecided_WhenWhiteNightClearedButBelowThreshold_SoftMiddle()
+        public void BittersweetSurvival_WhenWhiteNightClearedWithFewVillagers()
         {
-            SpawnVillagers(5); // survived, but not the 6 the win demands
+            SpawnVillagers(3); // survived, but far short of the 6 the clean win demands
             _session.WhiteNightCleared = true;
 
-            Assert.AreEqual(GameOutcome.Undecided, _session.Evaluate(),
-                "5 alive is neither a hard win nor a hard loss");
-            Assert.AreEqual(0, _decidedCount);
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Evaluate(),
+                "hero alive, fire lit, 1..threshold-1 villagers is the bittersweet terminal");
+            Assert.AreEqual(LossReason.None, _session.Reason);
+            Assert.AreEqual(1, SessionVerdictRecords(), "exactly one session verdict record");
+            Assert.IsTrue(LogContains("outcome=SurvivedBittersweet"));
+            Assert.AreEqual(1, _decidedCount, "OutcomeDecided fires once");
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _lastDecided.Outcome);
+            Assert.AreEqual(3, _lastDecided.VillagersAlive);
+            Assert.IsTrue(_lastDecided.BellkeeperAlive);
+            Assert.IsTrue(_lastDecided.AbbeyFireLit);
+        }
+
+        [Test]
+        public void BittersweetSurvival_LatchesAndDoesNotRedecideOnLaterCatastrophe()
+        {
+            SpawnVillagers(3);
+            _session.WhiteNightCleared = true;
+
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Evaluate());
+            // Even a later hero death / dead fire does not overturn the latched terminal.
+            _hero.TakeDamage(999f);
+            _flame.Extinguish();
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Evaluate());
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Evaluate());
+
+            Assert.AreEqual(1, _decidedCount, "OutcomeDecided fires exactly once");
+            Assert.AreEqual(1, SessionVerdictRecords(), "only one verdict is logged");
+        }
+
+        [Test]
+        public void WinAndBittersweet_SplitExactlyAtTheThreshold()
+        {
+            // The threshold villager count is the clean Win; one fewer is bittersweet.
+            SpawnVillagers(_sessionConfig.villagerWinThreshold);
+            _session.WhiteNightCleared = true;
+            Assert.AreEqual(GameOutcome.Win, _session.Evaluate(),
+                "exactly the threshold is the clean Win, not bittersweet");
+        }
+
+        [Test]
+        public void BittersweetSurvival_JustBelowThreshold()
+        {
+            SpawnVillagers(_sessionConfig.villagerWinThreshold - 1);
+            _session.WhiteNightCleared = true;
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Evaluate(),
+                "one short of the threshold is bittersweet, not a win");
         }
 
         // ------------------------------------------------------------------
