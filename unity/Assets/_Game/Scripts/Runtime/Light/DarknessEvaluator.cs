@@ -203,8 +203,10 @@ namespace Abbey.Light
                 Vector3 toPos = worldPos - center;
                 toPos.y = 0f;
 
-                // Slightly inside the boundary so the result classifies Safe robustly.
-                float targetRadius = safeRadius * 0.95f;
+                // Pad by movement arrival tolerance so agents that stop near the
+                // target still classify as Safe instead of stopping in Edge.
+                float inwardPadding = Mathf.Max(0.05f, Config.arrivalRadius + 0.05f);
+                float targetRadius = Mathf.Max(0f, safeRadius - inwardPadding);
                 Vector3 dir = toPos.sqrMagnitude > 0.0001f ? toPos.normalized : Vector3.forward;
                 Vector3 candidate = new Vector3(center.x, worldPos.y, center.z) + dir * Mathf.Min(toPos.magnitude, targetRadius);
 
