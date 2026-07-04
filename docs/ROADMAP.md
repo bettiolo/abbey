@@ -69,28 +69,39 @@ Excluded: farming, seasons, laws, multiple beasts, multiple maps, final UI.
 Question: *Does the way you survive change the settlement, beast, abbey, and nightmares?*
 
 1. Seasons: Spring (hope) → Summer (growth) → Autumn (warning) → Winter (judgment);
-   night length scales.
+   night length scales. Moon phase, fog, rain, tempest, and White Night omens affect light
+   effectiveness and bell reliability.
 2. Laws: Food (Equal/Workers First/Beast Share/Fasting), Night labour (No Work After
    Bell/Paid Risk/Forced), Burial (Full Rites/Mass Graves/Use the Dead), Hound
-   (Family/Weapon/Chained/Sacred).
-3. Moral pressures: Mercy, Fear, Faith, Reason, Hunger.
+   (Family/Weapon/Chained/Sacred), Old rites (Tolerate Offerings / Forbid Pagan Rites).
+3. Moral pressures and status: Trust in Bellkeeper, Sanctity of Abbey, Mercy, Fear, Reason,
+   Hunger, Old Faith pressure, household sanity, individual sanity, beast status.
 4. Hound evolution: Guardian, War, Starved, Sacred, Broken.
 5. Consequence nightmares: Hunger Wights, Dead Workers, Grave Crawlers, Chain Hounds,
    Faceless Saints.
 6. Abbey transformation states (Sanctuary/Fortress/Famine/Cult/Broken).
 7. Renewable economy: grain, meat, wool, herbs, tools, coal, candles.
 8. Dilemmas: Missing Salvager, Food Thief, Hound Bites a Child.
-9. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
-10. End summary reflecting actual choices.
+9. Island exploration: daytime expeditions and edge-of-light scouting reveal wreckage, old
+   roads, shrines, wells, boundary stones, survivors, warriors, resources, and new seed
+   slots.
+10. Population growth: survivors can find the lit village, or expeditions can find them.
+    Trust determines whether they stay, volunteer, fight, follow laws, or sail in spring.
+11. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
+12. End summary reflecting actual choices.
 
 Combat & survival co-pillar (direction 2026-07-04, decompose with the rest at phase start):
-11. Clustered settlement growth: authored **seed slots** grow into child slots beside
+13. Clustered settlement growth: authored **seed slots** grow into child slots beside
     existing buildings, paths, and lit ground. A compact village compounds safety through
     overlapping windows, lanterns, and abbey light. Overextension creates light debt.
-12. Emergent roads: villagers wear **desire paths** through work and recall. The player does
+14. Emergent roads: villagers wear **desire paths** through work and recall. The player does
     not build roads directly. Important paths grant movement speed, but they also demand
     lantern coverage and burn more fuel at night.
-13. Two-tier night defense: settlers shelter in homes and sleep if danger stays away. If
+15. Emergency overdrive: Forced Night Work, Candle Line, Lantern Overburn, Bell Toll, Abbey
+    Rite, Hound Hunt, and Volunteer Watch solve tonight at the cost of sanity, candles, oil,
+    trust, beast status, or later nightmares. Candle Line is the core night-work visual:
+    villagers carry candles to light roads and temporary worksites.
+16. Two-tier night defense: settlers shelter in homes and sleep if danger stays away. If
     monsters reach the door, interior lights flare and settlers shoot from **lit** windows
     at a sanity cost. Warriors + beast operate in the dark; buildable **warrior structures
     with an upgrade tree**; direct-control Bellkeeper fights alongside autonomous defenders.
@@ -99,23 +110,25 @@ Combat & survival co-pillar (direction 2026-07-04, decompose with the rest at ph
     **escalate** to set-piece stands. Anti-turtle: houses are **destructible**. If the outer
     line breaks, monsters raze a home and kill the settlers inside, losing that light node
     and colonists. Every night also has one problem only a dark-capable unit can solve.
-14. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
+17. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
     dark; **health resets each morning, sanity does not**. An insane unit spends asylum
     cooldown, **misses the next night**, and is released only by day; the beast is immune.
     If no asylum exists, insane settlers recover slowly at home, but they disturb the
     household at night, spreading dread through screaming, crying, sleeplessness, and
     nightmares. Lower sanity reduces daytime work efficiency; above the insanity threshold,
     villagers stop working until recovered.
-15. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
+18. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
     across the day (meadow regrows before dusk; winter snow covers them instead). Day
     desire paths persist as infrastructure and fuel pressure.
-16. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
+19. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
     provisions · hull/rigging incl. sailcloth) → launch and sail; who-sails/who-stays
     dilemma. Carries the campaign into Phase 4 (arriving at a new coast).
 Tests: law effects, pressure updates, hound evolution, nightmare triggers, seasonal
 transitions, win/loss, summary accuracy, plus: build-slot expansion, desire-path traffic,
 lantern fuel debt, lit-window defense wakeups, woken-house sanity loss, sanity-to-work
-efficiency, home recovery dread spill, asylum miss-a-night accounting, warrior upgrades,
+efficiency, home recovery dread spill, asylum miss-a-night accounting, overdrive costs,
+moon/tempest light modifiers, exploration unlocks, refugee arrivals, warrior recruitment,
+Bellkeeper trust thresholds, Abbey sanctity effects, old-rite tags, warrior upgrades,
 ground-scar decay, spring-ship manifest win, night-escalation curve.
 
 Excluded: multiple maps, multiple beasts, procedural generation, full campaign,

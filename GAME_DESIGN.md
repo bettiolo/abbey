@@ -28,11 +28,14 @@ This document is the durable design reference. Phase sequencing lives in
 8. **The village grows by hugging the light.** New build slots sprout near existing
    buildings, windows, paths, and lit ground. Expansion compounds safety when clustered well,
    but every outward step creates more road to light and more fuel debt to pay.
+9. **The island is older than the abbey.** Bells, candles, shrines, and walls sit on older
+   covenants: wells, stones, moon rites, storm taboos, burial customs, animal spirits, and
+   beast bargains. Use these as local pressures and choices, not as generic spellcasting.
 
 > Pillar note (direction set 2026-07-04): combat was promoted from a thin support role to a
 > co-pillar - *Thronefall-meets-horror-settlement*. The horror identity is preserved by the
 > sanity cost of the dark (pillar 6), the beast's singular centrality (pillar 3), and
-> intimate early nights that escalate only as the seasons turn. Detail in §§17–20.
+> intimate early nights that escalate only as the seasons turn. Detail in §§17-21.
 
 ## 2. Light territory
 
@@ -47,6 +50,21 @@ This document is the durable design reference. Phase sequencing lives in
 
 Positions classify as **Safe / Edge / Dark**. Fires consume fuel. Weak light flickers.
 Monsters avoid strong light and test edges.
+
+Season, weather, and moon phase modify light itself. This is the Frostpunk-style forecast
+pressure for Abbey: the player should see enough of tomorrow's night to dread and prepare for
+it.
+
+| Condition | Light impact |
+|-----------|--------------|
+| Spring | forgiving nights, faster sanity recovery, paths regrow quickly |
+| Summer | longer workdays and safer expansion temptation |
+| Autumn | fog and rain soften lantern edges, fuel pressure rises |
+| Winter | longer nights, slower sanity recovery, snow hides old paths |
+| Full moon | more visibility, weaker darkness, some old things grow bolder |
+| New moon | lantern radius reduced, monsters approach closer |
+| Tempest | flames flicker, lanterns burn extra fuel, bell range suffers |
+| White Night | ordinary safe zones shrink, sacred light matters most |
 
 **Settlement growth rule.** Buildings are not scattered freely across the map. Each map
 starts with a few seed slots near the campfire, abbey, wreck, or other landmarks. Completing
@@ -140,6 +158,22 @@ turns it into the **Horned Accuser**.
 Future beasts (not designed yet): Drowned Mare (grief/water), White Bear (hunger/winter),
 Moth Queen (light/worship).
 
+### Old rites and local belief
+
+The abbey is a Christian/monastic layer over older island covenants. Pagan references should
+feel specific to place: moon phases, sacred wells, boundary stones, storm offerings, animal
+omens, harvest taboos, burial customs, salt, hair, carved wood, and food left at thresholds.
+
+Mechanically, start with tags and choices, not a full new meter. Old-rite tags can alter
+beast reactions, shrine outcomes, nightmare triggers, villager petitions, and exploration
+finds. A few useful examples:
+
+- Moon rites: full moon, new moon, blood moon, and White Night change light and beast rules.
+- Offerings: candles, food, salt, blood, relic fragments, carved wood, hair.
+- Taboos: do not cut the marked tree, do not leave dead unburied, do not ring during a
+  tempest, do not chain the hound under a full moon.
+- Covenant sites: wells, stones, groves, cairns, crypt thresholds, shore shrines.
+
 ## 6. Villagers
 
 State machine, not complex AI: `Idle, AssignedToWork, WalkingToTask, Working,
@@ -163,7 +197,8 @@ settlement shape, light coverage, sanity debt, and the morning report matter. Go
 visible in the world: salvage is hauled, construction piles grow, lantern routes consume oil,
 and households turn stockpiles into safety at night.
 
-Phase 3 renewables: grain, meat, wool, tools, herbs, coal (+ faith, fear as pressures).
+Phase 3 renewables: grain, meat, wool, tools, herbs, coal (+ sanctity, old faith, and fear
+as pressures).
 Map 2: old_wood, green_wood, apples, venison, herbs, resin, sacred_seeds, charcoal -
 renewable but over-usable; extractive vs restorative buildings make the settlement layout
 a moral map. Never Factorio complexity: the economy always feeds the question *"can we keep
@@ -210,6 +245,10 @@ weakened by bell), **Lantern Moth** (extinguishes weak lights, harmless alone, d
 because it creates darkness gaps). Three night problems: protect people, use the bell,
 maintain the light network.
 
+Forecasted conditions are part of the director: moon phase, weather, moth signs, hound
+restlessness, storm warnings, and White Night omens. They should make preparation legible
+without making the night solved.
+
 Phase 3 consequence enemies: Hunger Wights (food cruelty), Dead Workers (forced night
 labour), Grave Crawlers (neglected bodies), Chain Hounds (hound abuse), Faceless Saints
 (extreme faith).
@@ -218,23 +257,61 @@ Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates the abbey bel
 **True Bell vs False Bell** mechanic), Antler Wraith, Hollow Deer, Charcoal Dead. Paths
 shift, fog hides lanterns, villagers walk toward false lights.
 
+### Emergency overdrive actions
+
+Overdrive is a family of desperate actions, not one button. Each action solves tonight and
+creates tomorrow's cost.
+
+| Action | Immediate use | Cost / risk |
+|--------|---------------|-------------|
+| Forced Night Work | finish a building, cut trees, repair a road light after bell | sanity loss, Bellkeeper trust loss, consequence nightmares |
+| Candle Line | villagers carry candles and mark a temporary road or worksite | burns candles fast, attracts moths, collapses if wind rises |
+| Lantern Overburn | stronger lantern radius or monster repulsion for one night | extra oil burn, hard blowout if fuel runs dry |
+| Bell Toll | stronger recall, panic reset, weak nightmare stun | overuse reduces trust, draws sound-following nightmares, unsettles the hound |
+| Abbey Rite | spend candles/relics to strengthen sacred light | increases dependence on the abbey covenant, may conflict with old rites |
+| Hound Hunt | send the hound beyond light to solve one dark problem | pain, hunger, fear, attachment risk |
+| Volunteer Watch | a household, guard post, or warrior group guards a known route | sanity loss, lower work output next day |
+
+Candle Line is the key night-work visual: workers leave home with candle bundles, plant small
+light islands along a road or around a tree stand, work inside those shrinking pools, then
+try to return before the candles fail.
+
 ## 10. Laws and doctrine (Phase 3)
 
-Small trees, real consequences:
+Small trees, real consequences. Park the full law design for a dedicated pass, but keep the
+rule: laws are crisis tools, not abstract menu bonuses. Every law should solve a real problem
+and plant a later problem.
 
 - **Food**: Equal Rations · Workers First · Beast Share · Emergency Fasting.
 - **Night labour**: No Work After Bell · Paid Night Risk · Forced Night Work.
 - **Burial**: Full Rites · Mass Graves · Use the Dead.
 - **Hound**: Family · Weapon · Chained · Sacred.
+- **Old rites**: Tolerate Offerings · Bless the Boundary Stones · Forbid Pagan Rites · Bind
+  Abbey and Old Well.
 
 Each law shifts moral pressures and can unlock consequence nightmares.
 
 ## 11. Morality model (Phase 3)
 
-No good/evil meter. Five pressures: **Mercy, Fear, Faith, Reason, Hunger** - shifted by
-actions (feed injured first → Mercy↑; forced night work → Fear↑; corpse bait → Hunger↑…).
-Pressures drive villager behaviour, hound personality, abbey appearance, available laws,
-nightmare types, and ending text.
+No good/evil meter. Track concrete social and spiritual states:
+
+- **Trust in Bellkeeper**: do people follow the person who was supposed to guide the ship and
+  instead brought them to wreck? Affects recall obedience, law acceptance, volunteers,
+  household petitions, expedition crews, and whether people trust the Bellkeeper to sail in
+  spring.
+- **Sanctity of Abbey**: does the place still protect them? Affects sacred light, fear
+  recovery near abbey ground, shrine/asylum effectiveness, and nightmare resistance.
+- **Village mood**: the settlement's general temperature: hopeful, strained, fearful,
+  mutinous.
+- **Household sanity** and **individual sanity**: who works well, who panics, who must stop
+  working, and who spills dread into a home.
+- **Beast status**: trust, fear, hunger, pain, attachment.
+- **Moral pressures**: Mercy, Fear, Reason, Hunger, and Old Faith pressure. These are not
+  score meters; they are event tags that bias laws, petitions, nightmares, and endings.
+
+Trust in Bellkeeper and Sanctity of Abbey are deliberately separate. The first is leadership:
+"Will we follow this person?" The second is spatial and covenantal: "Does this place still
+hold back the dark?"
 
 ## 12. Campaign carryover (Phase 4)
 
@@ -252,14 +329,14 @@ Dilemmas are data-driven state transitions on the shared event log - not cutscen
 
 Dawn report is storybook-toned, not spreadsheet-only: survivors, injured, missing, insane,
 sleep-starved households, food, fuel, extinguished lights, exposed roads, hound state,
-village mood, abbey status, and one or two generated memory lines (*"The hound slept outside
-the abbey gate. No one dared approach it, but the children left scraps nearby."*). This is
-how the game creates emotional memory.
+village mood, Bellkeeper trust, abbey sanctity, and one or two generated memory lines (*"The
+hound slept outside the abbey gate. No one dared approach it, but the children left scraps
+nearby."*). This is how the game creates emotional memory.
 
 The morning report is also the replay hook. It should leave the player with one clear
 question for the next day: which road needs light, which slot is too exposed, who is in the
-asylum, what did the hound remember, and what did last night prove about the settlement's
-shape?
+asylum, what promise did the Bellkeeper keep or break, what did the hound remember, and what
+did last night prove about the settlement's shape?
 
 ## 15. Data model (canonical spec shapes)
 
@@ -280,8 +357,17 @@ sanity_loss_per_attack, nightmare_spill_radius, destruction_consequence.
 insanity_threshold, home_recovery_per_day, asylum_recovery_per_day,
 nightmare_spill_per_night.
 
+**Bellkeeper trust**: current, recall_obedience_curve, law_acceptance_modifier,
+volunteer_modifier, spring_sail_threshold, recent_promises.
+
+**Abbey sanctity**: current, sacred_light_modifier, fear_recovery_modifier,
+asylum_modifier, old_rite_conflicts, desecration_events.
+
 **Desire path**: id, points, traffic_score, width, movement_bonus, lantern_need,
 fuel_debt_weight, visible_state.
+
+**Island exploration**: node_id, discovered, route_light_requirement, expedition_risk,
+possible_survivors, possible_warriors, resources, old_rite_tags, unlocks_seed_slots.
 
 **Beast**: id, display_name, map_id, temperament, hunger_rate, trust_thresholds,
 fear_thresholds, preferred_rewards, hated_actions, night_abilities, day_abilities,
@@ -326,7 +412,7 @@ into set-piece defensive stands; the **White Nights** are the climaxes.
 **Anti-turtle - safety is conditional (design invariant).** Ranged-from-home is only safe
 while the outer line holds. If the warriors and the beast are **overwhelmed**, monsters reach
 the houses and **destroy them, killing the settlers inside** - which collapses that light node
-(the territory shrinks) and costs colonists (the spring-ship manifest, §20). Hiding everyone
+(the territory shrinks) and costs colonists (the spring-ship manifest, §21). Hiding everyone
 indoors and shooting is therefore not a winning line; you must hold ground outside. On top of
 that, every night carries at least one problem ranged fire cannot answer - a lantern moth
 opening a dark gap that must be physically relit, a monster hugging cover out of arc, a
@@ -402,7 +488,37 @@ decal pass reads the night's records, stamps the terrain, then fades it over the
 source of truth. Emotional target: *relaxing to be in by day, yet you feel last night in the
 dirt.*
 
-## 20. Winter and the spring ship (the season win)
+## 20. Island exploration and population growth
+
+The island map unlocks through daytime expeditions and risky edge-of-light scouting. The
+player should not see the whole island at once. Smoke, bells, coastlines, old roads, stone
+markers, abandoned shrines, wreckage, animal trails, and survivor signs reveal the next
+places to investigate.
+
+Exploration nodes should do at least one concrete thing:
+
+- reveal resources, survivors, old-rite sites, nightmare causes, or weather forecast clues;
+- open a new seed slot, shrine, road marker, salvage site, or old route;
+- create a moral choice that affects Bellkeeper trust, Abbey sanctity, Old Faith pressure, or
+  beast status.
+
+Population grows in two ways:
+
+- **They find the village.** Smoke, lit roads, the abbey flame, and the bell draw refugees at
+  dawn. A visible, surviving settlement becomes a beacon.
+- **The village finds them.** Expeditions discover stranded sailors, hermits, woodcutters,
+  deserters, pilgrims, prisoners, and children hidden in ruins.
+
+Light makes the village visible, trust makes people stay, and exploration finds people before
+the dark does. Low Trust in Bellkeeper can make new arrivals refuse night work, military
+service, expeditions, laws, or the spring voyage. Low Abbey sanctity can make pilgrims avoid
+the abbey or arrive frightened.
+
+Warriors stay rare. Some are found, some arrive because the bell is known, and some villagers
+can train into militia. They may refuse service if trust is low, laws are cruel, or the
+settlement keeps breaking promises.
+
+## 21. Winter and the spring ship (the season win)
 
 The seasonal arc has a destination. The macro-goal is not merely to *survive* winter but to
 reach spring with the means to **leave**: build a new vessel on the abbey shore and sail for
