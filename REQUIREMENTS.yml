@@ -516,12 +516,17 @@ tasks:
       loss); scene bootstrapper updated for the Phase 2 map; 4 canonical proofs:
       day_camp / dusk_recall / night_attack / morning_after.
     depends_on: [P2-08, P2-09]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-validation
     branch: task/P2-10
     reviewer: reviewer-p2-validation
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: 68b17c6
+    notes: >
+      Final Phase 2 task. Bittersweet-survival terminal outcome (user decision); full scene
+      integration (PrototypeSceneBuilder wires the whole slice); full-slice PlayMode test to
+      all five outcomes; canonical Unity screenshots (CI) + 4 committed Blender proofs
+      (phase2_{day_camp,dusk_recall,night_attack,morning_after}). All 10 Phase 2 tasks merged.
 
   # ---------------------------------------------------------------- Phase 3 (epic; break down at phase start)
   - id: P3-EPIC
@@ -554,6 +559,14 @@ gates:
     kind: human_review
     question: Does this already feel like the game?
     status: pending
+    ready: true # all 10 Phase 2 tasks merged 2026-07-04; awaiting human verdict
+    evidence: >
+      All P2-01..P2-10 merged on claude/phase-2-vertical-slice-swr09t; ./tools/check_all.sh
+      green (Unity EditMode/PlayMode/screenshots run in GameCI). Aesthetic proofs:
+      blender/generated/previews/phase2_{day_camp,dusk_recall,night_attack,morning_after}.png.
+      Full-slice PlayMode test drives Day->Dusk->First White Night->Dawn to Win, Bittersweet
+      Survival, and each Loss. NOTE: no local Unity compiler — GameCI must go green before the
+      human playtest is meaningful.
   - id: GATE-P3
     kind: human_review
     question: Does the way you survive visibly change settlement, beast, abbey, nightmares?
