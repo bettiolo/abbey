@@ -459,10 +459,10 @@ tasks:
       trust/fear/resentment shifts, villager beliefs about the hero. Storybook prose
       assembled from data-driven templates; shown on overlay + logged.
     depends_on: [P2-06]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-report
     branch: task/P2-07
-    reviewer: null
+    reviewer: reviewer-p2-report
     review: null
     merged_commit: null
     notes: First builder attempt committed nothing (credit limit); restarted clean.
