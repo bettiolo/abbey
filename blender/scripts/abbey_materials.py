@@ -207,7 +207,8 @@ def _load_texture_image(texture: str) -> bpy.types.Image:
     if not path.is_file():
         raise FileNotFoundError(
             f"Shared texture {path} is missing. Run "
-            "'python3 blender/scripts/generate_textures.py' to regenerate the "
+            "'uv run --with-requirements tools/requirements-dev.txt python "
+            "blender/scripts/generate_textures.py' to regenerate the "
             "committed texture set."
         )
     image = bpy.data.images.load(str(path))

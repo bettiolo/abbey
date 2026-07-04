@@ -63,12 +63,18 @@ if [ -z "$UNITY_BIN" ]; then
   exit 3
 fi
 
+if ! command -v uv >/dev/null 2>&1; then
+  echo "ERROR: uv is required for Unity result parsing. Install it with 'brew install uv'." >&2
+  exit 2
+fi
+export UV_CACHE_DIR="${UV_CACHE_DIR:-$REPO_ROOT/.uv-cache}"
+
 mkdir -p "$RESULTS_DIR"
 
 # Summarize a NUnit3 results XML. Prints counts; exits 1 on failures.
 summarize_results() {
   local xml="$1"
-  python3 - "$xml" <<'PYEOF'
+  uv run --with-requirements tools/requirements-dev.txt python - "$xml" <<'PYEOF'
 import sys
 import xml.etree.ElementTree as ET
 

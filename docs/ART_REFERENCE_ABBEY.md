@@ -138,7 +138,7 @@ pixel-textures** (nearest-neighbor filtered, 64×64) rather than cropping the re
 An opt-in AI candidate pass also exists for the owned baseline image:
 
 ```sh
-GEMINI_API_KEY=... python3 blender/scripts/generate_ai_textures.py
+GEMINI_API_KEY=... uv run --with-requirements tools/requirements-dev.txt python blender/scripts/generate_ai_textures.py
 ```
 
 This calls Gemini/Nano Banana 2 with `docs/abbey-town-1.png` and writes review candidates to

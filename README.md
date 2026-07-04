@@ -60,9 +60,9 @@ uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/ru
 ./tools/run_unity_tests.sh editmode
 ```
 
-Python tooling is expected to run through `uv`. `./tools/check_all.sh` auto-detects
-`uv`, uses `tools/requirements-dev.txt`, and stores its local cache in `.uv-cache/` when
-`UV_CACHE_DIR` is not already set. Install it with `brew install uv` on macOS.
+Python tooling runs through `uv`. `./tools/check_all.sh` requires `uv`, uses
+`tools/requirements-dev.txt`, and stores its local cache in `.uv-cache/` when
+`UV_CACHE_DIR` is not already set. Install `uv` with `brew install uv` on macOS.
 
 ## Current status
 

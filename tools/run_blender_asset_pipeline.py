@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S UV_CACHE_DIR=.uv-cache uv run --with-requirements tools/requirements-dev.txt python
 """Run the Blender asset pipeline with whichever Blender runtime is available.
 
 Resolution order:
   1. The pip-installed ``bpy`` module ("module mode"): the batch entry point
-     ``blender/scripts/build_asset_batch.py`` is executed as a plain Python
+     ``blender/scripts/build_asset_batch.py`` is executed by the uv-managed interpreter
      subprocess and imports bpy itself.
   2. A ``blender`` binary on PATH (or $BLENDER_PATH): executed as
      ``blender -b -P blender/scripts/build_asset_batch.py -- <args>``.

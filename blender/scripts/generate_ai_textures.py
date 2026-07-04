@@ -10,8 +10,8 @@ Required environment:
 
 Example:
 
-    python3 blender/scripts/generate_ai_textures.py
-    python3 blender/scripts/generate_ai_textures.py --textures tex_roof_tiles tex_stone_blocks
+    GEMINI_API_KEY=... uv run --with-requirements tools/requirements-dev.txt python blender/scripts/generate_ai_textures.py
+    GEMINI_API_KEY=... uv run --with-requirements tools/requirements-dev.txt python blender/scripts/generate_ai_textures.py --textures tex_roof_tiles tex_stone_blocks
 
 The default model is Gemini's Nano Banana 2 image model. Override with
 --model if Google renames preview aliases.

@@ -52,9 +52,9 @@ documented** in the commit message / report.
 
 ## Environment notes
 
-- `./tools/check_all.sh` auto-detects `uv` and uses `tools/requirements-dev.txt` for the
-  Python validation environment. If `UV_CACHE_DIR` is unset, the script writes uv's cache
-  to `.uv-cache/`, which is ignored.
+- `uv` is required for Python tooling. `./tools/check_all.sh` uses
+  `tools/requirements-dev.txt` for the Python validation environment. If `UV_CACHE_DIR` is
+  unset, the script writes uv's cache to `.uv-cache/`, which is ignored.
 - Blender may be available as the `blender` binary or as the `bpy` PyPI module; all pipeline
   scripts must work with either (see `tools/run_blender_asset_pipeline.py`).
 - The Unity editor is NOT available in the agent container, so C# cannot be compiled or

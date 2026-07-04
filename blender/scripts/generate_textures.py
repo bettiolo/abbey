@@ -26,7 +26,7 @@ Textures (written to blender/kits/materials/textures/, committed):
 
 Runnable standalone (no bpy required):
 
-    python3 blender/scripts/generate_textures.py
+    uv run --with-requirements tools/requirements-dev.txt python blender/scripts/generate_textures.py
 
 The shared material library (abbey_materials.py) samples these with 'Closest'
 interpolation so the pixel-art read survives into Unity.

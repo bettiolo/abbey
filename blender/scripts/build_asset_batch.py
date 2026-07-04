@@ -1,8 +1,8 @@
 """CLI entrypoint for the asset factory. Runs under BOTH environments:
 
-    # bpy python module (this container):
-    python3 blender/scripts/build_asset_batch.py --asset campfire_t1
-    python3 blender/scripts/build_asset_batch.py --all
+    # bpy python module:
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/build_asset_batch.py --asset campfire_t1
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/build_asset_batch.py --all
 
     # blender binary:
     blender -b -P blender/scripts/build_asset_batch.py -- --asset campfire_t1

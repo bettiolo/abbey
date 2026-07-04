@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S UV_CACHE_DIR=.uv-cache uv run --with-requirements tools/requirements-dev.txt python
 """Capture in-engine Unity screenshots headlessly (CI proof-of-look step).
 
 HONEST STATUS: this is the harness half only. It requires

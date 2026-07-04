@@ -24,8 +24,8 @@ render_scene_proof-style script — NOT part of the asset batch
 
 Usage (either environment, like the other pipeline scripts)::
 
-    python3 blender/scripts/render_phase2_proof.py
-    python3 blender/scripts/render_phase2_proof.py --samples 16 --scale 0.5
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/render_phase2_proof.py
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/render_phase2_proof.py --samples 16 --scale 0.5
     blender -b -P blender/scripts/render_phase2_proof.py -- --samples 16
 
 Outputs::

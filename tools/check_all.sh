@@ -13,7 +13,7 @@
 #            default run leaves the working tree untouched.
 #
 # Step exit-code convention: 0 = PASS, 3 = SKIP, anything else = FAIL.
-# Python tools run through uv when available, using tools/requirements-dev.txt.
+# Python tools run through uv, using tools/requirements-dev.txt.
 # pytest exit 5 ("no tests collected") also counts as SKIP.
 set -uo pipefail
 
@@ -72,13 +72,12 @@ run_step() {
   STEP_LOGS+=("$log")
 }
 
-PY_CMD=(python3)
-if command -v uv >/dev/null 2>&1; then
-  export UV_CACHE_DIR="${UV_CACHE_DIR:-$REPO_ROOT/.uv-cache}"
-  PY_CMD=(uv run --with-requirements tools/requirements-dev.txt python)
-else
-  echo "NOTE: uv not found; falling back to python3. Install uv for a hermetic Python tool env."
+if ! command -v uv >/dev/null 2>&1; then
+  echo "ERROR: uv is required for Python tooling. Install it with 'brew install uv'." >&2
+  exit 2
 fi
+export UV_CACHE_DIR="${UV_CACHE_DIR:-$REPO_ROOT/.uv-cache}"
+PY_CMD=(uv run --with-requirements tools/requirements-dev.txt python)
 
 # (a) design validation (REQUIREMENTS.yml consistency)
 run_step "design validation (pytest)" pytest \

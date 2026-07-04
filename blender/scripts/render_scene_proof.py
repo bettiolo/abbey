@@ -25,8 +25,8 @@ closed 17-material library stays closed.
 
 Usage (both environments, like the other pipeline scripts)::
 
-    python3 blender/scripts/render_scene_proof.py            # full quality
-    python3 blender/scripts/render_scene_proof.py --samples 8 --scale 0.5
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/render_scene_proof.py
+    uv run --with-requirements tools/requirements-dev.txt --with bpy python blender/scripts/render_scene_proof.py --samples 8 --scale 0.5
     blender -b -P blender/scripts/render_scene_proof.py -- --samples 8
 
 Outputs::
