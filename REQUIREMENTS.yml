@@ -516,10 +516,10 @@ tasks:
       loss); scene bootstrapper updated for the Phase 2 map; 4 canonical proofs:
       day_camp / dusk_recall / night_attack / morning_after.
     depends_on: [P2-08, P2-09]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-validation
     branch: task/P2-10
-    reviewer: null
+    reviewer: reviewer-p2-validation
     review: null
     merged_commit: null
 
