@@ -459,13 +459,16 @@ tasks:
       trust/fear/resentment shifts, villager beliefs about the hero. Storybook prose
       assembled from data-driven templates; shown on overlay + logged.
     depends_on: [P2-06]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-report
     branch: task/P2-07
     reviewer: reviewer-p2-report
-    review: null
-    merged_commit: null
-    notes: First builder attempt committed nothing (credit limit); restarted clean.
+    review: approved
+    merged_commit: b3d91ce
+    notes: >
+      Restarted clean after first attempt hit a credit limit. foodEaten/oilBurned report
+      keys read 0 until nightly upkeep exists (upstream gap). MorningReportSystem/Panel
+      need scene wiring in P2-10.
   - id: P2-08
     title: Win/loss + The First White Night scenario
     phase: phase-2
@@ -475,7 +478,12 @@ tasks:
       out / all villagers dead or fled); The First White Night as scripted climax
       night; soft-failure spectrum recorded for the report.
     depends_on: [P2-07]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-winloss
+    branch: task/P2-08
+    reviewer: null
+    review: null
+    merged_commit: null
   - id: P2-09
     title: Phase 2 asset set (buildings + character placeholders)
     phase: phase-2
