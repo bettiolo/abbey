@@ -81,13 +81,16 @@ Combat & survival co-pillar (direction 2026-07-04 — decompose with the rest at
 11. Two-tier night defense: settlers shelter and shoot from **lit** homes (fatigue cost),
     warriors + beast operate in the dark; buildable **warrior structures with an upgrade
     tree**; direct-control Bellkeeper fights alongside autonomous defenders. Nights
-    **escalate** to set-piece stands; anti-turtle rule (every night has one dark-only
-    problem).
+    **escalate** to set-piece stands. Anti-turtle: houses are **destructible** — if the outer
+    line breaks, monsters raze a home and kill the settlers inside (losing that light node and
+    colonists) — plus every night has one problem only a dark-capable unit can solve.
 12. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
     dark; **health resets each morning, sanity does not** — an insane unit spends asylum
     cooldown, **misses the next night**, and is released only by day; the beast is immune.
-13. **Ground scars + desire paths**: a dawn decal consumer of the event log; decay/budget;
-    winter snow covers them nightly.
+13. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
+    across the day (meadow regrows before dusk; winter snow covers them instead). Day
+    desire-paths **persist** as infrastructure — units move faster along them (a
+    defensive-mobility layer).
 14. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
     provisions · hull/rigging incl. sailcloth) → launch and sail; who-sails/who-stays
     dilemma. Carries the campaign into Phase 4 (arriving at a new coast).

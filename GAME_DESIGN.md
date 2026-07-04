@@ -248,10 +248,15 @@ own. Two tiers hold the night:
 **Escalation, not a flat wave:** summer nights are intimate; autumn and winter nights grow
 into set-piece defensive stands; the **White Nights** are the climaxes.
 
-**Anti-turtle rule (design invariant):** every night must contain at least one problem that
-ranged-from-safety cannot solve — a lantern moth opening a dark gap that must be physically
-relit, a monster hugging cover out of arc, a stranded settler to rescue, a wounded beast to
-reach. This keeps *brave-into-the-dark* a live choice, not a mistake.
+**Anti-turtle — safety is conditional (design invariant).** Ranged-from-home is only safe
+while the outer line holds. If the warriors and the beast are **overwhelmed**, monsters reach
+the houses and **destroy them, killing the settlers inside** — which collapses that light node
+(the territory shrinks) and costs colonists (the spring-ship manifest, §20). Hiding everyone
+indoors and shooting is therefore not a winning line; you must hold ground outside. On top of
+that, every night carries at least one problem ranged fire cannot answer — a lantern moth
+opening a dark gap that must be physically relit, a monster hugging cover out of arc, a
+stranded settler to rescue, a wounded beast to reach — keeping *brave-into-the-dark* a live
+choice, not a mistake.
 
 ## 18. Sanity, the dark, and the asylum
 
@@ -282,20 +287,26 @@ Two distinct night costs keep the two tiers honest:
 
 ## 19. The ground remembers — scars and paths
 
-Both halves of the cycle **write to the ground**, and it is read by daylight:
+Both halves of the cycle **write to the ground**, but they write differently — night-writing
+is destructive and **ephemeral**, day-writing is constructive and **durable**:
 
-- **Night:** movement and battle **scar the earth** — scorch where flame was carried,
-  trampled ground on the beast's patrol line, drag-trails and dark stains at kill sites,
-  spent-arrow scatter beneath the defended windows.
-- **Day:** repeated work routes wear **desire paths** into the grass (the Settlers-style
-  territory feel).
+- **Night scars** — scorch where flame was carried, trampled ground on the beast's patrol
+  line, drag-trails and dark stains at kill sites, spent-arrow scatter beneath the defended
+  windows. Scars **stay through the morning** (you read the whole shape of last night by
+  daylight), then **fade across the day** — grass and flower-meadow **regrow before the next
+  night**, so dusk always finds a fresh, bucolic world for the new terror to violate. (In
+  winter there is no regrowth: overnight **snow** covers the marks instead — a clean white
+  silence, and fresh blood on new snow reads far louder than on summer grass.)
+- **Day paths** — repeated work routes wear **desire paths** into the ground. Unlike scars,
+  paths **persist**, and they are **infrastructure**: units move **faster along them**, so
+  warriors redeploy quickly between threatened lit zones at night (a Settlers-2 road/flag
+  network turned into a defensive-mobility layer). Laying good paths by day is preparing your
+  battle lines for the night.
 
-Architecturally this is *one more consumer of the shared event log* (§16): a dawn decal pass
-reads the night's records and stamps the terrain — no new source of truth. Scars **decay**
-over a few days on a budget; only severe events (a death site, a great burn) leave
-semi-permanent stains. **Winter snow** covers the marks each morning — a clean white silence
-the White Night then violates (fresh blood on new snow reads far louder than on summer
-grass). Emotional target: *relaxing to be in by day, yet you feel last night in the dirt.*
+Architecturally the scar pass is *one more consumer of the shared event log* (§16): a dawn
+decal pass reads the night's records, stamps the terrain, then fades it over the day — no new
+source of truth. Emotional target: *relaxing to be in by day, yet you feel last night in the
+dirt.*
 
 ## 20. Winter and the spring ship (the season win)
 
