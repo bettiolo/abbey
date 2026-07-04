@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
@@ -34,8 +35,15 @@ namespace Abbey.Tests.PlayMode
             ResourceLedger.Clear();
             SalvageSite.ClearRegistry();
             JobWorkPoint.ClearRegistry();
+            ConstructionSite.ClearRegistry();
+            Building.ClearRegistry();
+            RestorationNode.ClearRegistry();
+            BuildingPlacer.Clear();
+            AbbeyState.Clear();
             EconomyConfig.ClearCache();
             JobsConfig.ClearCache();
+            BuildingCatalog.ClearCache();
+            PrototypeConfig.ClearCache();
         }
 
         [TearDown]
@@ -49,6 +57,11 @@ namespace Abbey.Tests.PlayMode
                 }
             }
             _spawned.Clear();
+            foreach (var building in Object.FindObjectsByType<Building>(
+                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                Object.DestroyImmediate(building.gameObject); // spawned by Construct
+            }
             foreach (var asset in _assets)
             {
                 if (asset != null)
@@ -59,11 +72,18 @@ namespace Abbey.Tests.PlayMode
             _assets.Clear();
             JobWorkPoint.ClearRegistry();
             SalvageSite.ClearRegistry();
+            ConstructionSite.ClearRegistry();
+            Building.ClearRegistry();
+            RestorationNode.ClearRegistry();
+            BuildingPlacer.Clear();
+            AbbeyState.Clear();
             ResourceLedger.Clear();
             DuskRecallSystem.Clear();
             DarknessEvaluator.Clear();
             EconomyConfig.ClearCache();
             JobsConfig.ClearCache();
+            BuildingCatalog.ClearCache();
+            PrototypeConfig.ClearCache();
             EventBus.ResetAll();
             GameEventLog.Clear();
         }
@@ -213,6 +233,66 @@ namespace Abbey.Tests.PlayMode
             Assert.IsTrue(sawVisibleCarry,
                 "the carried prop must be visible while hauling to storage");
             Assert.IsTrue(LogContains("resource", "wood +2 (salvager)"));
+        }
+
+        [UnityTest]
+        public IEnumerator Builder_HaulsAndBuildsASmallHut_EndToEnd()
+        {
+            var proto = CreatePrototypeConfig();
+            CreateEconomyConfig();
+            var jobs = CreateJobsConfig();
+            CreateClock(proto); // Day, never ticked
+
+            var pileGO = Track(new GameObject("StoragePile"));
+            pileGO.transform.position = Vector3.zero;
+            pileGO.AddComponent<StoragePile>();
+            ResourceLedger.Add(ResourceType.Wood, 10, "test");
+
+            var hutType = new BuildingType
+            {
+                id = "small_hut",
+                displayName = "Small Hut",
+                footprint = new Vector2(2f, 2f),
+                cost = new List<ResourceStack> { new ResourceStack(ResourceType.Wood, 6) },
+                buildWorkSeconds = 1f,
+                function = FunctionKind.Shelter,
+            };
+            var siteGO = Track(new GameObject("ConstructionSite_small_hut"));
+            siteGO.transform.position = new Vector3(0f, 0f, 6f);
+            var site = siteGO.AddComponent<ConstructionSite>();
+            site.Initialize(hutType);
+
+            var agent = CreateWorker(Vector3.zero, VillagerJob.Builder, proto, jobs);
+            var villager = agent.Villager;
+
+            float maxDistanceFromStorage = 0f;
+            bool sawVisibleHaul = false;
+            for (int i = 0; i < 3000 && Building.Active.Count == 0; i++)
+            {
+                villager.Tick(Dt);
+                agent.Tick(Dt);
+                maxDistanceFromStorage = Mathf.Max(maxDistanceFromStorage,
+                    PlanarMotion.Distance(villager.transform.position, Vector3.zero));
+                sawVisibleHaul |= agent.CarriedPropInstance != null
+                                  && agent.CarriedPropInstance.activeInHierarchy;
+                if (i % 25 == 0)
+                {
+                    yield return null; // let Unity breathe between simulated bursts
+                }
+            }
+
+            Assert.IsTrue(site.IsComplete, "the hut must be finished");
+            Assert.AreEqual(1, Building.Active.Count);
+            Assert.AreEqual("small_hut", Building.Active[0].Id);
+            Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
+                "exactly the 6-wood cost was consumed, paid at delivery time");
+            Assert.Greater(maxDistanceFromStorage, 5f,
+                "the builder visibly travelled to the site");
+            Assert.IsTrue(sawVisibleHaul, "the haul must be visible via the carried prop");
+            Assert.IsTrue(LogContains("job", "delivered wood x4 -> small_hut"));
+            Assert.IsTrue(LogContains("job", "delivered wood x2 -> small_hut"));
+            Assert.IsTrue(LogContains("job", "built small_hut"));
+            Assert.IsTrue(LogContains("build", "small_hut complete"));
         }
 
         [UnityTest]

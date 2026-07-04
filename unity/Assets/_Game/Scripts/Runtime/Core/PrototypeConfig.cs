@@ -184,6 +184,14 @@ namespace Abbey.Core
         [Min(0f)] public float bellRadius = 15f;
         [Min(0f)] public float bellCooldownSeconds = 5f;
 
+        [Header("Abbey restoration (P2-04)")]
+        [Tooltip("Bell pulse radius multiplier once the bell tower is repaired (1 = no boost).")]
+        [Min(1f)] public float bellTowerRangeMultiplier = 1.5f;
+        [Tooltip("Villagers within this radius of a completed infirmary corner get treated.")]
+        [Min(0f)] public float infirmaryRadius = 4f;
+        [Tooltip("Continuous seconds of treatment before an Injured/Resting villager is back on its feet.")]
+        [Min(0.01f)] public float infirmaryHealSeconds = 3f;
+
         [Header("Isometric camera")]
         [Min(0f)] public float cameraPanSpeed = 12f;
         [Min(0f)] public float cameraZoomSpeed = 10f;

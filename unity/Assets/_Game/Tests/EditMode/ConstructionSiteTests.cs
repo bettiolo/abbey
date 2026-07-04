@@ -55,6 +55,8 @@ namespace Abbey.Tests.EditMode
 
         static void ClearStatics()
         {
+            AbbeyState.Clear();
+            RestorationNode.ClearRegistry();
             ConstructionSite.ClearRegistry();
             Building.ClearRegistry();
             BuildingPlacer.Clear();

@@ -13,9 +13,11 @@ namespace Abbey.Buildings
     /// <see cref="BuildingPlacer"/> can reject overlapping placements and later
     /// systems (villager roles, abbey nodes) can find structures by
     /// <see cref="Kind"/>. Function behaviour lives in sibling components attached
-    /// by <see cref="Construct"/>: <see cref="Abbey.Light.LightSource"/> or
-    /// <see cref="Abbey.Economy.StoragePile"/>; the remaining kinds have no runtime
-    /// component yet and are identified by <see cref="Kind"/> alone.
+    /// by <see cref="Construct"/>: <see cref="Abbey.Light.LightSource"/> (plain or
+    /// sacred for Shrine), <see cref="Abbey.Economy.StoragePile"/> or
+    /// <see cref="InfirmaryZone"/>; Gate and BellTower completions flip their
+    /// <see cref="AbbeyState"/> flags; the remaining kinds are identified by
+    /// <see cref="Kind"/> alone.
     /// [ExecuteAlways] so EditMode tests get OnEnable/OnDisable registration.
     /// </summary>
     [ExecuteAlways]
@@ -80,10 +82,10 @@ namespace Abbey.Buildings
             var building = go.AddComponent<Building>();
             building.Initialize(type);
 
+            var cfg = PrototypeConfig.LoadOrDefault();
             switch (type.function)
             {
                 case FunctionKind.LightSource:
-                    var cfg = PrototypeConfig.LoadOrDefault();
                     var light = go.AddComponent<LightSource>();
                     bool campfire = type.lightProfile == LightProfile.Campfire;
                     light.radius = campfire ? cfg.campfireRadius : cfg.lanternRadius;
@@ -96,8 +98,35 @@ namespace Abbey.Buildings
                 case FunctionKind.Storage:
                     go.AddComponent<StoragePile>();
                     break;
-                // Shelter, WorkHut, GuardPost, Shrine, Infirmary: identified by
-                // Building.Kind; behaviour arrives with later tasks (P2-04, roles).
+                case FunctionKind.Shrine:
+                    // A candle shrine is a sacred flame: PrototypeConfig sacred
+                    // values, infinite fuel (sacred lights never burn out).
+                    var shrineLight = go.AddComponent<LightSource>();
+                    shrineLight.radius = cfg.sacredFlameRadius;
+                    shrineLight.strength = cfg.sacredFlameStrength;
+                    shrineLight.fuelSeconds = -1f;
+                    shrineLight.sacred = true;
+                    shrineLight.isLit = true;
+                    AbbeyState.MarkShrineLit();
+                    break;
+                case FunctionKind.Infirmary:
+                    var zone = go.AddComponent<InfirmaryZone>();
+                    zone.radius = cfg.infirmaryRadius;
+                    zone.healSeconds = cfg.infirmaryHealSeconds;
+                    AbbeyState.MarkInfirmaryBuilt();
+                    break;
+                case FunctionKind.Gate:
+                    // The repaired gate blocks the dangerous night path. The
+                    // queryable flag is AbbeyState.GateRepaired (the nightmare
+                    // spawner consumes it in its own task); the placeholder visual
+                    // cube below doubles as the physical blocker.
+                    AbbeyState.MarkGateRepaired();
+                    break;
+                case FunctionKind.BellTower:
+                    AbbeyState.MarkBellTowerRepaired(cfg.bellTowerRangeMultiplier);
+                    break;
+                // Shelter, WorkHut, GuardPost: identified by Building.Kind;
+                // behaviour arrives with later tasks (villager housing, roles).
             }
 
             AttachVisual(type, go.transform);
