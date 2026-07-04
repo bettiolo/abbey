@@ -478,10 +478,10 @@ tasks:
       out / all villagers dead or fled); The First White Night as scripted climax
       night; soft-failure spectrum recorded for the report.
     depends_on: [P2-07]
-    status: in_progress
+    status: in_review
     assigned_to: builder-p2-winloss
     branch: task/P2-08
-    reviewer: null
+    reviewer: reviewer-p2-winloss
     review: null
     merged_commit: null
   - id: P2-09
