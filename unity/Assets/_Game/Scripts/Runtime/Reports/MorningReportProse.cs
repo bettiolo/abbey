@@ -64,7 +64,7 @@ namespace Abbey.Reports
             new ReportLine(d => d.Missing > 0,
                 "{missingCap} walked into the dark and did not walk back; we do not yet name them dead."),
             new ReportLine(d => d.Injured > 0,
-                "{injuredCap} carry wounds the night gave them, and keep close to the fire."),
+                "{injuredCap} of us woke wounded, and will keep to the fire until the flesh knits."),
         };
 
         public static readonly ReportLine[] Rescue =
@@ -94,16 +94,16 @@ namespace Abbey.Reports
         public static readonly ReportLine[] Hound =
         {
             new ReportLine(d => d.HoundWentMissing || d.HoundDisposition == "Missing",
-                "The hound is gone. Its chain lies empty in the tower, and the tower is colder for it."),
+                "The hound is gone — its chain lies empty in the tower, and the tower is colder for it."),
             new ReportLine(d => d.HoundDisposition == "Angry"
                                 || (d.HoundIgnoredBell && d.HoundTrustDirection < 0),
-                "The hound would not be gentled. It watched us with the old anger and kept to the dark of the tower."),
+                "The hound would not be gentled; it watched us with the old anger and kept to the dark of the tower."),
             new ReportLine(d => d.HoundProtectedHero,
-                "When the dark closed on the Bellkeeper, the hound broke its chain and stood between. It remembers whose hand fed it."),
+                "When the dark closed on the Bellkeeper, the hound broke its chain and stood between — it remembers whose hand fed it."),
             new ReportLine(d => d.HoundKilledMonster && d.HoundAteKillAlone,
                 "The hound killed in the night and dragged the carcass off into the dark to eat alone; it answers no bell but its own hunger."),
             new ReportLine(d => d.HoundAnsweredBell,
-                "The hound came when the bell called. Something in it has begun to trust the hand that rings it."),
+                "The hound came when the bell called, and something in it has begun to trust the hand that rings it."),
             new ReportLine(d => d.HoundFedByHero || IsBondedWord(d.HoundDisposition),
                 "The hound ate from the Bellkeeper's hand and slept easier; it is not ours yet, but it is no longer only the dark's."),
             new ReportLine(d => d.HoundStillChained,
@@ -118,7 +118,7 @@ namespace Abbey.Reports
             new ReportLine(d => d.PanicEvents > 0,
                 "Fear ran through the camp like cold water at least once, and had to be gathered back by hand."),
             new ReportLine(d => d.ShadowSeen,
-                "A shape stood at the forest's edge and came no closer. None who saw it have spoken of it since."),
+                "A shape stood at the forest's edge and came no closer, and none who saw it have spoken of it since."),
             new ReportLine(d => d.MonstersFaced > 0,
                 "{monstersCap} pale things tested the edge of the light through the night and found it holding."),
             new ReportLine(d => d.Whispers > 0,
@@ -133,7 +133,7 @@ namespace Abbey.Reports
             new ReportLine(d => d.HeroBitten,
                 "The Bellkeeper's hand is bound this morning where the hound's teeth found it, and the lesson was not lost."),
             new ReportLine(d => d.HeroRescuedSomeone && d.HeroCarriedFireIntoDark,
-                "They saw the Bellkeeper walk into the dark with fire in hand and come back leading the lost. This is how the old stories start."),
+                "They saw the Bellkeeper walk into the dark with fire in hand and come back leading the lost — this is how the old stories start."),
             new ReportLine(d => d.HeroRescuedSomeone,
                 "The village remembers who came for them when the light failed."),
             new ReportLine(d => d.HeroCarriedFireIntoDark,
@@ -141,7 +141,7 @@ namespace Abbey.Reports
             new ReportLine(d => d.BellRangCount > 0,
                 "The bell rang {bells} time{bellsPlural} in the night, and each time the dark drew back a step."),
             new ReportLine(d => true,
-                "The settlement wakes, and the abbey still stands. That is enough, this morning."),
+                "The settlement wakes and the abbey still stands, and that is enough this morning."),
         };
 
         // ------------------------------------------------------------------
