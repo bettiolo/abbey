@@ -558,8 +558,13 @@ gates:
   - id: GATE-P2
     kind: human_review
     question: Does this already feel like the game?
-    status: pending
-    ready: true # all 10 Phase 2 tasks merged 2026-07-04; awaiting human verdict
+    status: approved
+    verdict: >
+      User authorized landing the Phase 2 slice on main (2026-07-04, "Merge"). This is the
+      go-ahead to integrate; it is not a full hands-on playtest sign-off — GameCI remains the
+      compile/test authority (no Unity editor in the agent container). Any CI failures are
+      follow-up fixes on main.
+    ready: true # all 10 Phase 2 tasks merged 2026-07-04
     evidence: >
       All P2-01..P2-10 merged on claude/phase-2-vertical-slice-swr09t; ./tools/check_all.sh
       green (Unity EditMode/PlayMode/screenshots run in GameCI). Aesthetic proofs:
