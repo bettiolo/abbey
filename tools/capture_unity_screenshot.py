@@ -27,12 +27,15 @@ import sys
 from pathlib import Path
 
 EXIT_SKIP = 3
+EXIT_TIMEOUT = 124
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROJECT_PATH = REPO_ROOT / "unity"
 UNITY_VERSION = "6000.5.2f1"
 EXECUTE_METHOD = "Abbey.Editor.ScreenshotCapture.CaptureFromCLI"
 OUTPUT_DIR = PROJECT_PATH / "Screenshots"
+LOCKFILE = PROJECT_PATH / "Temp" / "UnityLockfile"
+DEFAULT_TIMEOUT_SECONDS = 300
 
 
 def unity_version() -> str:
@@ -65,9 +68,31 @@ def find_unity() -> str | None:
     return shutil.which("unity-editor") or shutil.which("Unity")
 
 
+def timeout_seconds() -> int:
+    raw = os.environ.get("ABBEY_SCREENSHOT_TIMEOUT_SECONDS")
+    if not raw:
+        return DEFAULT_TIMEOUT_SECONDS
+    try:
+        value = int(raw)
+    except ValueError:
+        print(
+            f"Invalid ABBEY_SCREENSHOT_TIMEOUT_SECONDS={raw!r}; "
+            f"using {DEFAULT_TIMEOUT_SECONDS}.",
+            file=sys.stderr,
+        )
+        return DEFAULT_TIMEOUT_SECONDS
+    return max(1, value)
+
+
 def main() -> int:
     if not PROJECT_PATH.is_dir():
         print(f"SKIP: Unity project not found at {PROJECT_PATH} (task P01-01 not merged yet).")
+        return EXIT_SKIP
+
+    if LOCKFILE.exists():
+        print("SKIP: Unity project is already open; batchmode screenshot capture would wait on")
+        print(f"      the project lock at {LOCKFILE.relative_to(REPO_ROOT)}.")
+        print("      Close the Unity editor and rerun this step to capture screenshots from batchmode.")
         return EXIT_SKIP
 
     unity = find_unity()
@@ -84,7 +109,16 @@ def main() -> int:
         "-quit", "-logFile", "-",
     ]
     print("Running:", " ".join(cmd))
-    result = subprocess.run(cmd)
+    timeout = timeout_seconds()
+    try:
+        result = subprocess.run(cmd, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        print(
+            "Screenshot capture timed out. Unity did not finish the batchmode "
+            f"capture within {timeout} seconds.",
+            file=sys.stderr,
+        )
+        return EXIT_TIMEOUT
     if result.returncode != 0:
         print(f"Screenshot capture failed (exit {result.returncode}). "
               f"The editor method {EXECUTE_METHOD} is delivered by task P01-09; "
