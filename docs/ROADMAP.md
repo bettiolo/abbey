@@ -86,7 +86,9 @@ Question: *Does the way you survive change the settlement, beast, abbey, and nig
    roads, shrines, wells, boundary stones, survivors, warriors, resources, and new seed
    slots.
 10. Population growth: survivors can find the lit village, or expeditions can find them.
-    Trust determines whether they stay, volunteer, fight, follow laws, or sail in spring.
+    Storm shipwreck events can also throw new crews ashore, bringing survivors, specialists,
+    warriors, supplies, and drowned-nightmare risk. Trust determines whether they stay,
+    volunteer, fight, follow laws, or sail in spring.
 11. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
 12. End summary reflecting actual choices.
 
@@ -128,8 +130,8 @@ transitions, win/loss, summary accuracy, plus: build-slot expansion, desire-path
 lantern fuel debt, lit-window defense wakeups, woken-house sanity loss, sanity-to-work
 efficiency, home recovery dread spill, asylum miss-a-night accounting, overdrive costs,
 moon/tempest light modifiers, exploration unlocks, refugee arrivals, warrior recruitment,
-Bellkeeper trust thresholds, Abbey sanctity effects, old-rite tags, warrior upgrades,
-ground-scar decay, spring-ship manifest win, night-escalation curve.
+shipwreck rescue events, Bellkeeper trust thresholds, Abbey sanctity effects, old-rite tags,
+warrior upgrades, ground-scar decay, spring-ship manifest win, night-escalation curve.
 
 Excluded: multiple maps, multiple beasts, procedural generation, full campaign,
 multiplayer, art polish.

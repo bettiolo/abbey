@@ -369,6 +369,9 @@ fuel_debt_weight, visible_state.
 **Island exploration**: node_id, discovered, route_light_requirement, expedition_risk,
 possible_survivors, possible_warriors, resources, old_rite_tags, unlocks_seed_slots.
 
+**Shipwreck event**: event_id, coast_node_id, storm_condition, survivors, possible_warriors,
+specialists, salvage_resources, rescue_deadline, nightmare_tags, trust_outcome.
+
 **Beast**: id, display_name, map_id, temperament, hunger_rate, trust_thresholds,
 fear_thresholds, preferred_rewards, hated_actions, night_abilities, day_abilities,
 bond_events, nightmare_failure_mode.
@@ -508,11 +511,19 @@ Population grows in two ways:
   dawn. A visible, surviving settlement becomes a beacon.
 - **The village finds them.** Expeditions discover stranded sailors, hermits, woodcutters,
   deserters, pilgrims, prisoners, and children hidden in ruins.
+- **The sea throws them ashore.** Later storms can wreck other boats on the island coast.
+  These events bring survivors, specialists, warriors, supplies, and news of the wider world,
+  but they are never free population. The player must find the wreck, light the route, rescue
+  people before night or tide, and decide who gets shelter.
 
 Light makes the village visible, trust makes people stay, and exploration finds people before
 the dark does. Low Trust in Bellkeeper can make new arrivals refuse night work, military
 service, expeditions, laws, or the spring voyage. Low Abbey sanctity can make pilgrims avoid
 the abbey or arrive frightened.
+
+New wrecks should be emotionally pointed because the Bellkeeper already failed one ship.
+Saving another crew can restore trust. Abandoning one, arriving too late, or stripping its
+cargo before saving people can damage trust and seed drowned nightmares.
 
 Warriors stay rare. Some are found, some arrive because the bell is known, and some villagers
 can train into militia. They may refuse service if trust is low, laws are cruel, or the

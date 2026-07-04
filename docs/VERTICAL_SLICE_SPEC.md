@@ -138,9 +138,10 @@ This section exists to prevent scope creep. Additions require editing this file 
 > (Thronefall-meets-horror; see GAME_DESIGN.md §§17-21). This **slice** deliberately stays
 > the intimate-first proof. The escalating warrior economy, full sanity/asylum loop, ground
 > scars, persistent desire-path bonuses, island exploration, full old-rite system, full
-> seasonal forecast, full overdrive suite, and the spring-ship win are **post-slice
-> (Phase 3+)** and remain excluded here. Cheap Phase 2.5 tastes worth prototyping after the
-> gate: dawn ground-scar decals from the hound's kill/drag log, desire paths from villager
-> traffic, dusk window lights when families get home, a small "woken household lost sanity"
-> event feeding the morning report, one moon/weather modifier on light radius, and one Candle
-> Line night-work event where villagers carry candles to a temporary worksite.
+> seasonal forecast, full overdrive suite, storm shipwreck events, and the spring-ship win are
+> **post-slice (Phase 3+)** and remain excluded here. Cheap Phase 2.5 tastes worth prototyping
+> after the gate: dawn ground-scar decals from the hound's kill/drag log, desire paths from
+> villager traffic, dusk window lights when families get home, a small "woken household lost
+> sanity" event feeding the morning report, one moon/weather modifier on light radius, one
+> Candle Line night-work event where villagers carry candles to a temporary worksite, and one
+> offshore wreck omen in the morning report.
