@@ -144,4 +144,6 @@ This section exists to prevent scope creep. Additions require editing this file 
 > villager traffic, dusk window lights when families get home, a small "woken household lost
 > sanity" event feeding the morning report, one moon/weather modifier on light radius, one
 > Candle Line night-work event where villagers carry candles to a temporary worksite, and one
-> offshore wreck omen in the morning report.
+> offshore wreck omen in the morning report. One additional cheap taste: forest-edge
+> woodcutting can increment a hidden "forest stirred" counter that only affects flavour text
+> until the full threat-source system arrives.

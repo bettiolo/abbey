@@ -253,6 +253,31 @@ Phase 3 consequence enemies: Hunger Wights (food cruelty), Dead Workers (forced 
 labour), Grave Crawlers (neglected bodies), Chain Hounds (hound abuse), Faceless Saints
 (extreme faith).
 
+### Threat sources and exploitation pressure
+
+Monsters do not come from a generic spawn pool. They come from places the settlement has
+entered, damaged, drained, mined, felled, desecrated, or overused. At night, the forest, old
+wells, caves, mountains, shore wrecks, crypts, boundary stones, and abandoned roads can each
+become a source.
+
+Each source tracks **exploitation pressure**. Exploitation is often necessary, but it wakes
+what sleeps there:
+
+| Source | Common exploitation | Awakened pressure |
+|--------|---------------------|-------------------|
+| Forest | woodcutting, hunting, forced night logging, charcoal | root walkers, hollow deer, pale hounds on animal paths |
+| Well | heavy water draw, corpse washing, broken offerings | drowned voices, well-crawlers, sickness omens |
+| Cave | mining, hiding stores, sheltering fugitives | blind things, echoes, lost-worker nightmares |
+| Mountain | quarrying, iron digging, shrine breaking | stone saints, avalanche omens, bell-muting winds |
+| Shore / wreck | salvage, stripping bodies, failed rescues | drowned sailors, kelp things, tide ghosts |
+| Crypt / grave | rushed burial, mass graves, relic theft | grave crawlers, faceless saints, dead workers |
+
+This makes the map itself remember exploitation. The player can still cut wood, draw water,
+mine, salvage, and quarry, but overuse changes where monsters come from and what they want.
+Restraint, offerings, repairs, light, proper burial, and old-rite bargains can slow pressure
+or redirect it. Map 2's Forest Debt is the first focused version of this larger source
+pressure rule.
+
 Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates the abbey bell - the
 **True Bell vs False Bell** mechanic), Antler Wraith, Hollow Deer, Charcoal Dead. Paths
 shift, fog hides lanterns, villagers walk toward false lights.
@@ -371,6 +396,9 @@ possible_survivors, possible_warriors, resources, old_rite_tags, unlocks_seed_sl
 
 **Shipwreck event**: event_id, coast_node_id, storm_condition, survivors, possible_warriors,
 specialists, salvage_resources, rescue_deadline, nightmare_tags, trust_outcome.
+
+**Threat source**: source_id, source_type, map_node_id, exploitation_pressure,
+pressure_thresholds, spawn_tags, warning_events, mitigation_actions, old_rite_tags.
 
 **Beast**: id, display_name, map_id, temperament, hunger_rate, trust_thresholds,
 fear_thresholds, preferred_rewards, hated_actions, night_abilities, day_abilities,

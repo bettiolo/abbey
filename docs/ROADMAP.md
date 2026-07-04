@@ -85,25 +85,28 @@ Question: *Does the way you survive change the settlement, beast, abbey, and nig
 9. Island exploration: daytime expeditions and edge-of-light scouting reveal wreckage, old
    roads, shrines, wells, boundary stones, survivors, warriors, resources, and new seed
    slots.
-10. Population growth: survivors can find the lit village, or expeditions can find them.
+10. Threat sources: forests, wells, caves, mountains, shores, crypts, and old roads track
+    exploitation pressure. The more the settlement cuts, mines, drains, salvages, desecrates,
+    or overuses a source, the more source-specific monsters awaken there.
+11. Population growth: survivors can find the lit village, or expeditions can find them.
     Storm shipwreck events can also throw new crews ashore, bringing survivors, specialists,
     warriors, supplies, and drowned-nightmare risk. Trust determines whether they stay,
     volunteer, fight, follow laws, or sail in spring.
-11. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
-12. End summary reflecting actual choices.
+12. Four chapters on one map: The Wreck, The Meadow, The Long Rain, The First White Night.
+13. End summary reflecting actual choices.
 
 Combat & survival co-pillar (direction 2026-07-04, decompose with the rest at phase start):
-13. Clustered settlement growth: authored **seed slots** grow into child slots beside
+14. Clustered settlement growth: authored **seed slots** grow into child slots beside
     existing buildings, paths, and lit ground. A compact village compounds safety through
     overlapping windows, lanterns, and abbey light. Overextension creates light debt.
-14. Emergent roads: villagers wear **desire paths** through work and recall. The player does
+15. Emergent roads: villagers wear **desire paths** through work and recall. The player does
     not build roads directly. Important paths grant movement speed, but they also demand
     lantern coverage and burn more fuel at night.
-15. Emergency overdrive: Forced Night Work, Candle Line, Lantern Overburn, Bell Toll, Abbey
+16. Emergency overdrive: Forced Night Work, Candle Line, Lantern Overburn, Bell Toll, Abbey
     Rite, Hound Hunt, and Volunteer Watch solve tonight at the cost of sanity, candles, oil,
     trust, beast status, or later nightmares. Candle Line is the core night-work visual:
     villagers carry candles to light roads and temporary worksites.
-16. Two-tier night defense: settlers shelter in homes and sleep if danger stays away. If
+17. Two-tier night defense: settlers shelter in homes and sleep if danger stays away. If
     monsters reach the door, interior lights flare and settlers shoot from **lit** windows
     at a sanity cost. Warriors + beast operate in the dark; buildable **warrior structures
     with an upgrade tree**; direct-control Bellkeeper fights alongside autonomous defenders.
@@ -112,17 +115,17 @@ Combat & survival co-pillar (direction 2026-07-04, decompose with the rest at ph
     **escalate** to set-piece stands. Anti-turtle: houses are **destructible**. If the outer
     line breaks, monsters raze a home and kill the settlers inside, losing that light node
     and colonists. Every night also has one problem only a dark-capable unit can solve.
-17. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
+18. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
     dark; **health resets each morning, sanity does not**. An insane unit spends asylum
     cooldown, **misses the next night**, and is released only by day; the beast is immune.
     If no asylum exists, insane settlers recover slowly at home, but they disturb the
     household at night, spreading dread through screaming, crying, sleeplessness, and
     nightmares. Lower sanity reduces daytime work efficiency; above the insanity threshold,
     villagers stop working until recovered.
-18. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
+19. **Ground scars + desire paths**: night scars stamped at dawn from the event log, fading
     across the day (meadow regrows before dusk; winter snow covers them instead). Day
     desire paths persist as infrastructure and fuel pressure.
-19. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
+20. **Spring-ship season win**: survive winter with a three-part manifest (settlers ·
     provisions · hull/rigging incl. sailcloth) → launch and sail; who-sails/who-stays
     dilemma. Carries the campaign into Phase 4 (arriving at a new coast).
 Tests: law effects, pressure updates, hound evolution, nightmare triggers, seasonal
@@ -131,7 +134,8 @@ lantern fuel debt, lit-window defense wakeups, woken-house sanity loss, sanity-t
 efficiency, home recovery dread spill, asylum miss-a-night accounting, overdrive costs,
 moon/tempest light modifiers, exploration unlocks, refugee arrivals, warrior recruitment,
 shipwreck rescue events, Bellkeeper trust thresholds, Abbey sanctity effects, old-rite tags,
-warrior upgrades, ground-scar decay, spring-ship manifest win, night-escalation curve.
+threat-source pressure accumulation, source-weighted spawns, mitigation actions, warrior
+upgrades, ground-scar decay, spring-ship manifest win, night-escalation curve.
 
 Excluded: multiple maps, multiple beasts, procedural generation, full campaign,
 multiplayer, art polish.
