@@ -459,7 +459,13 @@ tasks:
       trust/fear/resentment shifts, villager beliefs about the hero. Storybook prose
       assembled from data-driven templates; shown on overlay + logged.
     depends_on: [P2-06]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-report
+    branch: task/P2-07
+    reviewer: null
+    review: null
+    merged_commit: null
+    notes: First builder attempt committed nothing (credit limit); restarted clean.
   - id: P2-08
     title: Win/loss + The First White Night scenario
     phase: phase-2
