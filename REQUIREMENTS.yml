@@ -478,12 +478,16 @@ tasks:
       out / all villagers dead or fled); The First White Night as scripted climax
       night; soft-failure spectrum recorded for the report.
     depends_on: [P2-07]
-    status: in_review
+    status: merged
     assigned_to: builder-p2-winloss
     branch: task/P2-08
     reviewer: reviewer-p2-winloss
-    review: null
-    merged_commit: null
+    review: approved
+    merged_commit: 938ea3d
+    notes: >
+      User decision 2026-07-04: partial survival (White Night cleared, hero alive, fire
+      lit, but 1-5 villagers) becomes a distinct terminal "Bittersweet Survival" outcome
+      (spec >=6 stays the clean Win). P2-10 implements it in GameSession + tests.
   - id: P2-09
     title: Phase 2 asset set (buildings + character placeholders)
     phase: phase-2
@@ -512,7 +516,12 @@ tasks:
       loss); scene bootstrapper updated for the Phase 2 map; 4 canonical proofs:
       day_camp / dusk_recall / night_attack / morning_after.
     depends_on: [P2-08, P2-09]
-    status: todo
+    status: in_progress
+    assigned_to: builder-p2-validation
+    branch: task/P2-10
+    reviewer: null
+    review: null
+    merged_commit: null
 
   # ---------------------------------------------------------------- Phase 3 (epic; break down at phase start)
   - id: P3-EPIC
