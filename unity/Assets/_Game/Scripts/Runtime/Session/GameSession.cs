@@ -13,7 +13,17 @@ namespace Abbey.Session
     {
         Undecided,
         Win,
-        Loss
+        Loss,
+
+        /// <summary>
+        /// Bittersweet Survival (USER DESIGN DECISION, P2-10): the settlement
+        /// cleared the First White Night with the Bellkeeper alive and the abbey
+        /// fire lit, but with only 1..(villagerWinThreshold-1) villagers left. A
+        /// distinct TERMINAL outcome — the settlement endures at heavy cost. It is
+        /// neither the clean Win (&gt;= threshold) nor any of the three hard Losses.
+        /// Appended last so the serialized Win/Loss indices stay stable.
+        /// </summary>
+        SurvivedBittersweet
     }
 
     /// <summary>Why the settlement fell (VERTICAL_SLICE_SPEC §11 loss list).</summary>
@@ -75,6 +85,9 @@ namespace Abbey.Session
     /// Win  = the dawn after the First White Night survives with at least
     ///        <see cref="GameSessionConfig.villagerWinThreshold"/> villagers alive,
     ///        the Bellkeeper alive, and the abbey fire lit.
+    /// SurvivedBittersweet = the same survival but with only 1..(threshold-1)
+    ///        villagers left — a distinct terminal outcome (P2-10 design decision):
+    ///        the settlement endures, at heavy cost.
     /// Loss = the Bellkeeper dies, the abbey fire goes out (after it was ever lit),
     ///        or every villager is Dead/Missing (fled == Missing in this slice).
     ///
@@ -289,13 +302,20 @@ namespace Abbey.Session
                 return Outcome;
             }
 
-            // ---- Win -----------------------------------------------------
+            // ---- Win / Bittersweet Survival (both terminal survivals) -----
+            // Same gate as the clean Win — the dawn after the White Night is
+            // survived with the Bellkeeper alive and the abbey fire lit — split by
+            // how many villagers remain. A settlement with zero villagers has
+            // already lost above (VillagersLost), so alive >= 1 here.
             if (WhiteNightCleared
-                && alive >= Config.villagerWinThreshold
+                && alive >= 1
                 && bellkeeper != null && bellkeeper.IsAlive
                 && abbeyLit)
             {
-                Decide(GameOutcome.Win, LossReason.None);
+                GameOutcome outcome = alive >= Config.villagerWinThreshold
+                    ? GameOutcome.Win
+                    : GameOutcome.SurvivedBittersweet;
+                Decide(outcome, LossReason.None);
                 return Outcome;
             }
 

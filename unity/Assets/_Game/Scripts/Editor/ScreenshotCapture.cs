@@ -26,11 +26,55 @@ namespace Abbey.EditorTools
         static string OutputDir => Path.GetFullPath(
             Path.Combine(Application.dataPath, "..", "Screenshots"));
 
+        /// <summary>
+        /// The four canonical aesthetic-gate proofs land here (gitignored
+        /// unity/Build/). CI reads them from this fixed path.
+        /// </summary>
+        static string CanonicalOutputDir => Path.GetFullPath(
+            Path.Combine(Application.dataPath, "..", "Build", "screenshots"));
+
         [MenuItem("Tools/Abbey/Capture Screenshots (Day-Dusk-Night)")]
         public static void CaptureFromMenu()
         {
             CaptureAll();
             Debug.Log($"[Abbey] Screenshots written to {OutputDir}");
+        }
+
+        [MenuItem("Tools/Abbey/Capture Canonical Shots")]
+        public static void CaptureCanonicalFromMenu()
+        {
+            CaptureCanonicalShots();
+            Debug.Log($"[Abbey] Canonical shots written to {CanonicalOutputDir}");
+        }
+
+        /// <summary>
+        /// CLI entry for the four canonical aesthetic-gate proofs (day_camp,
+        /// dusk_recall, night_attack, morning_after):
+        ///
+        ///   Unity -batchmode -projectPath unity \
+        ///     -executeMethod Abbey.EditorTools.ScreenshotCapture.CaptureCanonicalFromCLI \
+        ///     -quit -logFile -
+        ///
+        /// Needs a GPU context (run WITHOUT -nographics). Exits nonzero on failure so
+        /// GameCI can gate on it. Writes to unity/Build/screenshots/&lt;name&gt;.png.
+        /// </summary>
+        public static void CaptureCanonicalFromCLI()
+        {
+            int exitCode = 0;
+            try
+            {
+                CaptureCanonicalShots();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Abbey] Canonical shot capture failed: {e}");
+                exitCode = 1;
+            }
+
+            if (Application.isBatchMode)
+            {
+                EditorApplication.Exit(exitCode);
+            }
         }
 
         /// <summary>
@@ -119,6 +163,78 @@ namespace Abbey.EditorTools
             }
         }
 
+        /// <summary>
+        /// The four canonical aesthetic-gate proofs (VERTICAL_SLICE_SPEC §3 beats):
+        /// day_camp (bucolic day on the meadow camp), dusk_recall (colour drains,
+        /// the bell rings), night_attack (near-dark, monsters at the edge of the
+        /// light), morning_after (soft dawn over the settlement). Builds/opens the
+        /// Prototype scene, drives the clock to each beat, adjusts sun/ambient
+        /// (presentation only), renders the locked iso camera and writes each PNG to
+        /// <see cref="CanonicalOutputDir"/>. The scene file on disk is left untouched.
+        /// </summary>
+        static void CaptureCanonicalShots()
+        {
+            OpenOrBuildScene();
+
+            var clock = UnityEngine.Object.FindFirstObjectByType<GameClock>();
+            if (clock == null)
+            {
+                throw new InvalidOperationException("Prototype scene has no GameClock.");
+            }
+            clock.autoTick = false;
+
+            var rig = UnityEngine.Object.FindFirstObjectByType<IsoCameraController>();
+            if (rig == null)
+            {
+                throw new InvalidOperationException("Prototype scene has no IsoCameraController.");
+            }
+            rig.transform.rotation = Quaternion.Euler(
+                IsoCameraController.Pitch, IsoCameraController.Yaw, 0f);
+            rig.TargetCamera.orthographic = true;
+            rig.TargetCamera.orthographicSize = clock.Config.cameraMaxOrthoSize;
+            rig.FocusOn(Vector3.zero);
+
+            Directory.CreateDirectory(CanonicalOutputDir);
+
+            // day_camp.
+            ApplyPhaseLighting(DayPhase.Day);
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "day_camp.png");
+
+            // dusk_recall: cross the Day boundary (raises PhaseChanged -> dusk recall).
+            clock.Tick(clock.GetPhaseDuration(DayPhase.Day) - clock.TimeInPhase + 0.01f);
+            ApplyPhaseLighting(DayPhase.Dusk);
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "dusk_recall.png");
+
+            // night_attack: cross the Dusk boundary and force the night's monsters
+            // into frame (the director is not event-subscribed in edit mode).
+            clock.Tick(clock.GetPhaseDuration(DayPhase.Dusk) + 0.01f);
+            if (clock.Phase != DayPhase.Night)
+            {
+                throw new InvalidOperationException(
+                    $"Clock should be at Night but is at {clock.Phase}.");
+            }
+            var director = UnityEngine.Object.FindFirstObjectByType<NightmareDirector>();
+            if (director != null && director.SpawnedMonsters.Count == 0)
+            {
+                director.monstersAutoTick = false;
+                director.BeginNight();
+            }
+            ApplyPhaseLighting(DayPhase.Night);
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "night_attack.png");
+
+            // morning_after: cross the Night boundary into Dawn.
+            clock.Tick(clock.GetPhaseDuration(DayPhase.Night) + 0.01f);
+            ApplyPhaseLighting(DayPhase.Dawn);
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "morning_after.png");
+
+            // Leave the saved scene exactly as the bootstrapper wrote it.
+            if (File.Exists(Path.GetFullPath(Path.Combine(
+                    Application.dataPath, "..", PrototypeSceneBuilder.ScenePath))))
+            {
+                EditorSceneManager.OpenScene(PrototypeSceneBuilder.ScenePath, OpenSceneMode.Single);
+            }
+        }
+
         static void OpenOrBuildScene()
         {
             string absolute = Path.GetFullPath(Path.Combine(
@@ -149,7 +265,12 @@ namespace Abbey.EditorTools
                     SetSun(sun, 12f, 0.55f, new Color(1f, 0.62f, 0.35f));
                     RenderSettings.ambientLight = new Color(0.35f, 0.28f, 0.3f);
                     break;
-                default: // Night / Dawn
+                case DayPhase.Dawn:
+                    // Soft, cool-warm first light: brighter than night, gentler than day.
+                    SetSun(sun, 8f, 0.5f, new Color(1f, 0.78f, 0.62f));
+                    RenderSettings.ambientLight = new Color(0.32f, 0.34f, 0.4f);
+                    break;
+                default: // Night
                     SetSun(sun, 35f, 0.08f, new Color(0.5f, 0.6f, 0.9f));
                     RenderSettings.ambientLight = new Color(0.08f, 0.1f, 0.16f);
                     break;
@@ -169,6 +290,11 @@ namespace Abbey.EditorTools
 
         static void Capture(Camera camera, string fileName)
         {
+            CaptureTo(camera, OutputDir, fileName);
+        }
+
+        static void CaptureTo(Camera camera, string dir, string fileName)
+        {
             var rt = new RenderTexture(Width, Height, 24, RenderTextureFormat.ARGB32);
             var previousTarget = camera.targetTexture;
             var previousActive = RenderTexture.active;
@@ -183,7 +309,8 @@ namespace Abbey.EditorTools
                 tex.ReadPixels(new Rect(0, 0, Width, Height), 0, 0);
                 tex.Apply();
 
-                string path = Path.Combine(OutputDir, fileName);
+                Directory.CreateDirectory(dir);
+                string path = Path.Combine(dir, fileName);
                 File.WriteAllBytes(path, tex.EncodeToPNG());
                 Debug.Log($"[Abbey] Captured {path}");
             }

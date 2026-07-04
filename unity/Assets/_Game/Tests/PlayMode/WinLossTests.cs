@@ -142,6 +142,57 @@ namespace Abbey.Tests.PlayMode
         }
 
         // ------------------------------------------------------------------
+        // BITTERSWEET SURVIVAL — cleared the White Night, but few remain
+        // ------------------------------------------------------------------
+
+        [UnityTest]
+        public IEnumerator BittersweetSurvival_ClearsWhiteNightWithFewVillagers()
+        {
+            // Only 3 villagers survive to dawn — below the win threshold of 6, but
+            // hero alive + fire lit: the distinct Bittersweet terminal, not Undecided.
+            BuildWorld(villagerCount: 3, whiteNightIndex: 1);
+            _session.autoEvaluate = false;
+            GameSession.OutcomeDecided += OnDecided;
+
+            Assert.AreEqual(GameOutcome.Undecided, _session.Evaluate(),
+                "the run is open while the White Night is still ahead");
+
+            CrossIntoPhase(DayPhase.Dusk);
+            Assert.IsTrue(_scenario.IsArmed);
+            yield return null;
+
+            CrossIntoPhase(DayPhase.Night);
+            Assert.IsTrue(_scenario.HasBegun);
+            for (int i = 0; i < 140; i++)
+            {
+                StepNight(Dt);
+                if (i % 40 == 39)
+                {
+                    yield return null;
+                }
+            }
+            foreach (var v in _villagers)
+            {
+                Assert.AreNotEqual(VillagerState.Dead, v.State);
+                Assert.AreNotEqual(VillagerState.Missing, v.State);
+            }
+
+            CrossIntoPhase(DayPhase.Dawn);
+            _session.Evaluate();
+
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _session.Outcome);
+            Assert.AreEqual(LossReason.None, _session.Reason);
+            Assert.AreEqual(1, _decidedCount, "OutcomeDecided fires once");
+            Assert.AreEqual(GameOutcome.SurvivedBittersweet, _lastDecided.Outcome);
+            Assert.AreEqual(3, _lastDecided.VillagersAlive);
+            Assert.Less(_lastDecided.VillagersAlive, _sessionConfig.villagerWinThreshold);
+            Assert.IsTrue(_lastDecided.BellkeeperAlive);
+            Assert.IsTrue(_lastDecided.AbbeyFireLit);
+            Assert.IsTrue(LogContains("session", "outcome=SurvivedBittersweet"));
+            yield return null;
+        }
+
+        // ------------------------------------------------------------------
         // LOSS paths
         // ------------------------------------------------------------------
 
