@@ -45,6 +45,20 @@ This document is the durable design reference. Phase sequencing lives in
 Positions classify as **Safe / Edge / Dark**. Fires consume fuel. Weak light flickers.
 Monsters avoid strong light and test edges.
 
+**The three bands are a combat gradient** (Phase 3 combat, §17) laid over that same
+classification — light is not just where you *can* stand, it is **home-field advantage**:
+
+| Band | Friendly units | Monsters | Net |
+|------|----------------|----------|-----|
+| **Safe** (strong light) | normal | **debuffed** | you favoured |
+| **Edge** (twilight) | normal | normal | even fight |
+| **Dark** | **debuffed** (+ sanity drain, §18) | normal | they favoured |
+
+Your ground weakens monsters; their ground weakens you; the twilight is a fair fight. This
+is the mechanical reason monsters avoid strong light and test the edges. The **beast is never
+affected** — it fights at full strength in every band, which makes it your natural striker
+for the dark and one more reason it stays singular (§3).
+
 ## 3. Dusk recall
 
 At dusk: villagers check distance to light; far workers abandon tasks; children run home
@@ -240,10 +254,11 @@ own. Two tiers hold the night:
   the oil/wood economy), so house placement becomes a fields-of-fire decision over the
   approaches. Settlers who fight too much at night wake **fatigued and less productive** the
   next day.
-- **Warriors and the beast** are the only units that operate **in the dark**. Warriors are
-  produced and **upgraded** from buildable structures (barracks / watch line) — a real
-  progression axis across the season. They pay the sanity cost of the dark (§18); the beast
-  does not.
+- **Warriors and the beast** are the only units that operate **in the dark** — where they
+  fight **debuffed** (the combat-band gradient, §2) and, for humans, drain sanity (§18).
+  Warriors are produced and **upgraded** from buildable structures (barracks / watch line) —
+  a real progression axis across the season. The **beast is exempt from both band and
+  sanity**: full strength in every zone, your one true striker for the dark.
 
 **Escalation, not a flat wave:** summer nights are intimate; autumn and winter nights grow
 into set-piece defensive stands; the **White Nights** are the climaxes.

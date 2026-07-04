@@ -80,8 +80,10 @@ Question: *Does the way you survive change the settlement, beast, abbey, and nig
 Combat & survival co-pillar (direction 2026-07-04 — decompose with the rest at phase start):
 11. Two-tier night defense: settlers shelter and shoot from **lit** homes (fatigue cost),
     warriors + beast operate in the dark; buildable **warrior structures with an upgrade
-    tree**; direct-control Bellkeeper fights alongside autonomous defenders. Nights
-    **escalate** to set-piece stands. Anti-turtle: houses are **destructible** — if the outer
+    tree**; direct-control Bellkeeper fights alongside autonomous defenders. Combat resolves
+    on a **light-band gradient** (Safe: monsters debuffed / Edge: even / Dark: friendlies
+    debuffed + sanity drain; the beast is exempt everywhere). Nights **escalate** to set-piece
+    stands. Anti-turtle: houses are **destructible** — if the outer
     line breaks, monsters raze a home and kill the settlers inside (losing that light node and
     colonists) — plus every night has one problem only a dark-capable unit can solve.
 12. **Sanity/asylum**: dread → insanity when the light fails and units are caught in the
