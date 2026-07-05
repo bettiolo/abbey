@@ -29,6 +29,7 @@ namespace Abbey.Debugging
         [Min(0.1f)] public float rescanIntervalSeconds = 2f;
 
         HoundController _hound;
+        HoundEvolutionSystem _evolution;
         BellkeeperController _hero;
         NightmareDirector _director;
         float _rescanTimer;
@@ -57,6 +58,10 @@ namespace Abbey.Debugging
             if (_hound == null)
             {
                 _hound = FindFirstObjectByType<HoundController>();
+            }
+            if (_evolution == null)
+            {
+                _evolution = FindFirstObjectByType<HoundEvolutionSystem>();
             }
             if (_hero == null)
             {
@@ -164,6 +169,27 @@ namespace Abbey.Debugging
                  $"engaged={(_hound.EngagedMonster != null ? _hound.EngagedMonster.name : "-")}");
             Line($"trust={_hound.Trust:F2}  hunger={_hound.Hunger:F2}  pain={_hound.Pain:F2}  " +
                  $"fear={_hound.Fear:F2}  attach={_hound.Attachment:F2}");
+            Line($"treatment: feed={_hound.FeedEvents} allied={_hound.AlliedFights} " +
+                 $"solo={_hound.SoloHunts} rites={_hound.Rites} " +
+                 $"chain={_hound.ChainSeconds:F0}s injuries={_hound.Injuries}");
+            DrawEvolution();
+        }
+
+        void DrawEvolution()
+        {
+            if (_evolution == null)
+            {
+                Line("evolution: no HoundEvolutionSystem in scene");
+                return;
+            }
+            Line($"PATH={_evolution.CurrentPath}{(_evolution.PathLocked ? " (LOCKED)" : "")}  " +
+                 $"doctrine={_evolution.Doctrine}  beastStatus={_evolution.BeastStatus:F2}");
+            Line($"scores  Guard={_evolution.ScoreFor(HoundPath.Guardian):F1} " +
+                 $"War={_evolution.ScoreFor(HoundPath.War):F1} " +
+                 $"Starv={_evolution.ScoreFor(HoundPath.Starved):F1} " +
+                 $"Sacr={_evolution.ScoreFor(HoundPath.Sacred):F1} " +
+                 $"Brok={_evolution.ScoreFor(HoundPath.Broken):F1}  " +
+                 $"(adopt≥{_evolution.LastDominantScore:F1})");
         }
 
         void DrawMonstersAndDirector()
