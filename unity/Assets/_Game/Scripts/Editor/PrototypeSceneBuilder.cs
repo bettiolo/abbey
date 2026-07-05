@@ -107,6 +107,7 @@ namespace Abbey.EditorTools
             BuildForestEdgeAndStream();
             BuildVillagers();
             BuildJobsAndEconomy();
+            BuildStarterProduction();
             BuildRestorationNodes();
             BuildSessionReportsAndPanels(hero, director, abbeyFlame);
         }
@@ -410,6 +411,35 @@ namespace Abbey.EditorTools
             go.transform.position = groundPos;
             var point = go.AddComponent<JobWorkPoint>();
             point.job = job;
+        }
+
+        /// <summary>
+        /// The renewable seasonal economy (P3-04): a starter Grain Field and Charcoal
+        /// Kiln standing near camp as completed <see cref="ProductionBuilding"/>s, plus
+        /// an authored field seed-slot for the player to raise more. Assign a Farmer /
+        /// Charcoaler to them (jobs debug flow) and fast-forward days: the field's grain
+        /// ticks up on harvest days and stops in Winter, while the kiln converts wood to
+        /// coal year-round. Recipes/yields all live in EconomyConfig. Watch it on the F2
+        /// economy panel alongside the F7 season panel.
+        /// </summary>
+        static void BuildStarterProduction()
+        {
+            var field = InstantiateGenerated("field_plot_t1", new Vector3(-8f, 0f, 4f),
+                "GrainField", PrimitiveType.Cube, new Vector3(2f, 0.4f, 2f), 0.2f);
+            var fieldProduction = field.AddComponent<ProductionBuilding>();
+            fieldProduction.Initialize("field_plot_t1");
+
+            var kiln = InstantiateGenerated("charcoal_kiln_t1", new Vector3(-9f, 0f, 1f),
+                "CharcoalKiln", PrimitiveType.Cube, new Vector3(2f, 1.4f, 2f), 0.7f);
+            var kilnProduction = kiln.AddComponent<ProductionBuilding>();
+            kilnProduction.Initialize("charcoal_kiln_t1");
+
+            // A starter field plot the player can build (seed-slot gated, P3-02).
+            var slots = UnityEngine.Object.FindFirstObjectByType<SeedSlotSystem>();
+            if (slots != null)
+            {
+                slots.AddAuthoredSlot(new Vector3(-10f, 0f, 4f), SlotSizeClass.Medium);
+            }
         }
 
         /// <summary>

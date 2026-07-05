@@ -679,7 +679,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover production cycles, seasonal yield modifiers, winter shutdown, and ledger accounting for the new resources
       - Validation guide at docs/validation/P3-04.md per docs/validation/README.md
     depends_on: [P3-01]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-05
     title: Light-band combat and two-tier settler home defense

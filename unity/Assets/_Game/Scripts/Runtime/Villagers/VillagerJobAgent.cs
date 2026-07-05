@@ -66,6 +66,8 @@ namespace Abbey.Villagers
         ResourceType _buildFetchType;
         bool _buildFetching;
         bool _guardAtPost;
+        ProductionBuilding _productionTarget;
+        bool _staffingProduction;
         GameObject _carriedProp;
 
         /// <summary>Resource type of the held load (meaningful while CarriedAmount &gt; 0).</summary>
@@ -84,6 +86,12 @@ namespace Abbey.Villagers
 
         /// <summary>True while a guard is standing within post radius during Night.</summary>
         public bool IsAtGuardPost => _guardAtPost;
+
+        /// <summary>Production building this villager is staffing, null when idle/other job.</summary>
+        public ProductionBuilding ProductionTarget => _productionTarget;
+
+        /// <summary>True while this villager is on its production building's work slot.</summary>
+        public bool IsStaffingProduction => _staffingProduction;
 
         /// <summary>The placeholder carried-prop child, null until first shown.</summary>
         public GameObject CarriedPropInstance => _carriedProp;
@@ -137,7 +145,7 @@ namespace Abbey.Villagers
             {
                 v.WorkSpeedMultiplier = Config.SpeedMultiplier(job);
                 if (job == VillagerJob.Builder || job == VillagerJob.Tender
-                    || job == VillagerJob.Guard)
+                    || job == VillagerJob.Guard || VillagerJobs.IsProduction(job))
                 {
                     v.CancelWork(); // these jobs never use the generic day loop
                 }
@@ -192,6 +200,7 @@ namespace Abbey.Villagers
             if (v.SanityWorkEfficiency <= 0f)
             {
                 // Insane: down tools entirely until recovered (P3-03 stop-work state).
+                UnstaffProduction();
                 if (v.HasWorkAssignment)
                 {
                     v.CancelWork();
@@ -201,7 +210,8 @@ namespace Abbey.Villagers
 
             if (!IsJobWorkable(v))
             {
-                return; // injured/panicking/recalled etc.: the job is suspended
+                UnstaffProduction(); // injured/panicking/recalled etc.: leave the work slot
+                return; // the job is suspended
             }
 
             switch (job)
@@ -220,6 +230,12 @@ namespace Abbey.Villagers
                     break;
                 case VillagerJob.Guard:
                     TickGuard(v, dt);
+                    break;
+                case VillagerJob.Farmer:
+                case VillagerJob.Herder:
+                case VillagerJob.Charcoaler:
+                case VillagerJob.Smith:
+                    TickProduction(v, dt);
                     break;
                 // None idles gracefully.
             }
@@ -747,6 +763,101 @@ namespace Abbey.Villagers
             StepSelf(v, post.position, dt);
         }
 
+        // ---- Production (Farmer / Herder / Charcoaler / Smith) --------------
+
+        /// <summary>
+        /// The production errand (P3-04): during a work phase the villager walks to
+        /// the nearest matching <see cref="ProductionBuilding"/> and staffs its work
+        /// slot; while present it registers as a live worker so the building's daily
+        /// <see cref="ProductionBuilding.AdvanceDay"/> counts it. Presence-only, like
+        /// the guard — the cycle math and yields live on the building/economy, never
+        /// here. Off-shift (night/dusk) or with no matching building it stands down.
+        /// </summary>
+        void TickProduction(VillagerAgent v, float dt)
+        {
+            if (!IsWorkPhase())
+            {
+                UnstaffProduction(); // off-shift: leave the field until morning
+                return;
+            }
+
+            var building = NearestProductionBuilding(job);
+            if (building == null)
+            {
+                UnstaffProduction();
+                return; // no matching building built yet: idle gracefully
+            }
+
+            if (building != _productionTarget)
+            {
+                UnstaffProduction();
+                _productionTarget = building;
+            }
+
+            if (v.State != VillagerState.Idle)
+            {
+                return; // an override owns the villager; resume when Idle again
+            }
+
+            float staffRadius = Mathf.Max(Config.productionStaffRadius, v.Config.arrivalRadius);
+            if (PlanarMotion.Distance(transform.position, building.transform.position) <= staffRadius)
+            {
+                if (!_staffingProduction)
+                {
+                    _staffingProduction = true;
+                    building.AddWorker(this);
+                    GameEventLog.Append("job",
+                        $"{name} staffs {building.BuildingId}");
+                }
+                return;
+            }
+
+            // Walking out to the building: not counted as a worker yet.
+            if (_staffingProduction)
+            {
+                building.RemoveWorker(this);
+                _staffingProduction = false;
+            }
+            StepSelf(v, building.transform.position, dt);
+        }
+
+        ProductionBuilding NearestProductionBuilding(VillagerJob forJob)
+        {
+            string wantedId = VillagerJobs.ProductionBuildingId(forJob);
+            if (string.IsNullOrEmpty(wantedId))
+            {
+                return null;
+            }
+            var buildings = ProductionBuilding.Active;
+            ProductionBuilding best = null;
+            float bestDist = float.MaxValue;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                var b = buildings[i];
+                if (b == null || b.BuildingId != wantedId)
+                {
+                    continue;
+                }
+                float dist = PlanarMotion.Distance(transform.position, b.transform.position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = b;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>Leaves the current production work slot (deregisters as a worker).</summary>
+        void UnstaffProduction()
+        {
+            if (_productionTarget != null && _staffingProduction)
+            {
+                _productionTarget.RemoveWorker(this);
+            }
+            _staffingProduction = false;
+        }
+
         // ---- Shared helpers -------------------------------------------------
 
         /// <summary>Recall, panic, injury, rescue and death all suspend the job.</summary>
@@ -903,6 +1014,8 @@ namespace Abbey.Villagers
                 CarriedAmount = 0;
             }
             ResetBuilder();
+            UnstaffProduction();
+            _productionTarget = null;
             _targetSite = null;
             _guardAtPost = false;
             if (v != null)

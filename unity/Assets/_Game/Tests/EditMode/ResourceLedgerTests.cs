@@ -225,7 +225,14 @@ namespace Abbey.Tests.EditMode
         {
             Assert.AreEqual("scrap_iron", ResourceTypes.Id(ResourceType.ScrapIron));
             Assert.AreEqual("relic_fragment", ResourceTypes.Id(ResourceType.RelicFragments));
-            Assert.AreEqual(8, ResourceTypes.Count);
+            // Phase 3 renewable economy resources (P3-04).
+            Assert.AreEqual("grain", ResourceTypes.Id(ResourceType.Grain));
+            Assert.AreEqual("meat", ResourceTypes.Id(ResourceType.Meat));
+            Assert.AreEqual("wool", ResourceTypes.Id(ResourceType.Wool));
+            Assert.AreEqual("herbs", ResourceTypes.Id(ResourceType.Herbs));
+            Assert.AreEqual("tools", ResourceTypes.Id(ResourceType.Tools));
+            Assert.AreEqual("coal", ResourceTypes.Id(ResourceType.Coal));
+            Assert.AreEqual(14, ResourceTypes.Count);
         }
     }
 }

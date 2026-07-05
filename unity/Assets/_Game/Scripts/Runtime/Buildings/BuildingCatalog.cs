@@ -26,7 +26,8 @@ namespace Abbey.Buildings
         Shrine,
         Asylum,
         Gate,
-        BellTower
+        BellTower,
+        Production
     }
 
     /// <summary>
@@ -265,6 +266,54 @@ namespace Abbey.Buildings
                     },
                     buildWorkSeconds = 20f,
                     function = FunctionKind.BellTower,
+                },
+                // Renewable production buildings (P3-04). Each carries a
+                // ProductionBuilding once complete; recipes/yields live in
+                // EconomyConfig (RecipeFor keyed by these ids). field_plot_t1 reuses
+                // the A2-01 field asset; pasture/kiln/smithy get their own specs.
+                new BuildingType
+                {
+                    id = "field_plot_t1",
+                    displayName = "Grain Field",
+                    footprint = new Vector2(2f, 2f),
+                    cost = { new ResourceStack(ResourceType.Wood, 4) },
+                    buildWorkSeconds = 8f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "pasture_t1",
+                    displayName = "Pasture",
+                    footprint = new Vector2(4f, 4f),
+                    cost = { new ResourceStack(ResourceType.Wood, 6) },
+                    buildWorkSeconds = 10f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "charcoal_kiln_t1",
+                    displayName = "Charcoal Kiln",
+                    footprint = new Vector2(2f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 4),
+                        new ResourceStack(ResourceType.Stone, 4),
+                    },
+                    buildWorkSeconds = 12f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "smithy_t1",
+                    displayName = "Smithy",
+                    footprint = new Vector2(3f, 3f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 6),
+                        new ResourceStack(ResourceType.ScrapIron, 3),
+                    },
+                    buildWorkSeconds = 14f,
+                    function = FunctionKind.Production,
                 },
             };
         }

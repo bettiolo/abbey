@@ -1,0 +1,17 @@
+{
+  "id": "pasture_t1",
+  "type": "building",
+  "theme": "field",
+  "footprint": { "width": 4.0, "depth": 4.0, "height": 1.2 },
+  "style": {
+    "silhouette": "fenced grazing paddock: a post-and-rail timber fence ringing a grassy plot, a long water trough on one side and a round hay bale in a corner",
+    "materials": ["mat_warm_wood", "mat_dark_wood", "mat_foliage", "mat_dirt"]
+  },
+  "required_parts": ["ground", "grass", "fence_posts", "fence_rails", "water_trough", "hay_bale"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "work_slot", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

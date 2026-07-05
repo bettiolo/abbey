@@ -138,6 +138,13 @@ namespace Abbey.Buildings
                 case FunctionKind.BellTower:
                     AbbeyState.MarkBellTowerRepaired(cfg.bellTowerRangeMultiplier);
                     break;
+                case FunctionKind.Production:
+                    // Renewable production (P3-04): the component resolves its recipe
+                    // from EconomyConfig by catalog id and runs the day-cycle once
+                    // staffed. Balance stays in EconomyConfig, never here.
+                    var production = go.AddComponent<ProductionBuilding>();
+                    production.Initialize(type.id);
+                    break;
                 // Shelter, WorkHut, GuardPost: identified by Building.Kind;
                 // behaviour arrives with later tasks (villager housing, roles).
             }

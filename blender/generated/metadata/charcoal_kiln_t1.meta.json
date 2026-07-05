@@ -1,0 +1,141 @@
+{
+  "id": "charcoal_kiln_t1",
+  "generated_at": "2026-07-05T15:10:28.235088+00:00",
+  "spec": {
+    "id": "charcoal_kiln_t1",
+    "type": "building",
+    "theme": "camp",
+    "footprint": {
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 1.9
+    },
+    "style": {
+      "silhouette": "squat domed earthen charcoal kiln: a round stone-and-earth mound with a stubby chimney and a dark stoke door, a small stacked-wood pile and a heap of black charcoal beside it, an ember glow at the door",
+      "materials": [
+        "mat_old_stone",
+        "mat_dark_wood",
+        "mat_ash",
+        "mat_ember"
+      ]
+    },
+    "required_parts": [
+      "kiln_dome",
+      "chimney",
+      "stoke_door",
+      "wood_stack",
+      "charcoal_heap",
+      "ember_glow"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "work_slot",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.89238,
+    "depth": 1.58,
+    "height": 1.64,
+    "min": [
+      -0.94619,
+      -0.79,
+      0.0
+    ],
+    "max": [
+      0.94619,
+      0.79,
+      1.64
+    ]
+  },
+  "triangle_count": 268,
+  "material_count": 4,
+  "materials": [
+    "mat_ash",
+    "mat_dark_wood",
+    "mat_ember",
+    "mat_old_stone"
+  ],
+  "anchors": [
+    {
+      "name": "work_slot",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/charcoal_kiln_t1.glb",
+    "blend": "blender/generated/blend/charcoal_kiln_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/charcoal_kiln_t1_preview_day.png",
+      "night": "blender/generated/previews/charcoal_kiln_t1_preview_night.png",
+      "winter": "blender/generated/previews/charcoal_kiln_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/charcoal_kiln_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/charcoal_kiln_t1.glb (34680 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/charcoal_kiln_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.892x1.580x1.640 vs footprint 2.0x2.0x1.9"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "268/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_ash', 'mat_dark_wood', 'mat_ember', 'mat_old_stone']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['work_slot'] present=['work_slot']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "charcoal_kiln_t1_collision present"
+      }
+    ]
+  }
+}

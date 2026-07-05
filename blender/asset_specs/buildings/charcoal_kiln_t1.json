@@ -1,0 +1,17 @@
+{
+  "id": "charcoal_kiln_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 2.0, "depth": 2.0, "height": 1.9 },
+  "style": {
+    "silhouette": "squat domed earthen charcoal kiln: a round stone-and-earth mound with a stubby chimney and a dark stoke door, a small stacked-wood pile and a heap of black charcoal beside it, an ember glow at the door",
+    "materials": ["mat_old_stone", "mat_dark_wood", "mat_ash", "mat_ember"]
+  },
+  "required_parts": ["kiln_dome", "chimney", "stoke_door", "wood_stack", "charcoal_heap", "ember_glow"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "work_slot", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

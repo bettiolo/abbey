@@ -1,0 +1,17 @@
+{
+  "id": "smithy_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 3.0, "depth": 3.0, "height": 2.6 },
+  "style": {
+    "silhouette": "open-fronted forge shed: chunky timber posts under a slanted thatch roof over a back wall, a stone forge with a tall chimney at the back, an iron anvil on a timber block out front and a wooden quench barrel",
+    "materials": ["mat_warm_wood", "mat_old_stone", "mat_iron", "mat_thatch"]
+  },
+  "required_parts": ["back_wall", "posts", "slanted_roof", "forge", "chimney", "anvil", "quench_barrel"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "work_slot", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}
