@@ -14,6 +14,7 @@ using Abbey.Reports;
 using Abbey.Sanity;
 using Abbey.Session;
 using Abbey.Settlement;
+using Abbey.UI;
 using Abbey.Villagers;
 using Abbey.World;
 using UnityEditor;
@@ -168,6 +169,14 @@ namespace Abbey.EditorTools
             // CombatConfig escalation section — no wiring. Only drives the wave when
             // PrototypeConfig.phase3NightsEnabled is on (off by default).
             worldGO.AddComponent<NightEscalationSystem>();
+
+            // Hound evolution (P3-07). Each dawn it scores the five paths (Guardian /
+            // War / Starved / Sacred / Broken) from the hound's accumulated treatment
+            // history + bond averages + Hound doctrine, adopts/locks the dominant path
+            // and pushes its behaviour onto the HoundController, exposing a beast-status
+            // value for P3-10 pressures and the P3-14 end summary. Reads
+            // HoundEvolutionConfig; auto-finds the hound — no wiring.
+            worldGO.AddComponent<HoundEvolutionSystem>();
 
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
@@ -571,8 +580,10 @@ namespace Abbey.EditorTools
             var nightmarePanel = panelsGO.AddComponent<NightmareDebugPanel>();
             nightmarePanel.director = director;
 
-            // Season/weather overlay (F7). WeatherSystem auto-finds the Bellkeeper,
+            // Season/weather overlay (F11). WeatherSystem auto-finds the Bellkeeper,
             // but hand it the reference so the multiplier is pushed from frame one.
+            // (F11/F10 here: F7/F8 belong to the player HUD/minimap below, F5 to the
+            // morning report.)
             panelsGO.AddComponent<SeasonDebugPanel>();
             var weather = UnityEngine.Object.FindFirstObjectByType<WeatherSystem>();
             if (weather != null)
@@ -580,7 +591,7 @@ namespace Abbey.EditorTools
                 weather.bellkeeper = bellkeeper;
             }
 
-            // Seed-slot settlement overlay (F8): slot counts, light debt, slot gizmos.
+            // Seed-slot settlement overlay (F10): slot counts, light debt, slot gizmos.
             panelsGO.AddComponent<SettlementDebugPanel>();
 
             // Sanity overlay (F9, top-left): per-villager sanity/dread bars, asylum
@@ -590,6 +601,11 @@ namespace Abbey.EditorTools
             // Combat + home-defense overlay (F6, right): band multipliers, live
             // monster count, and each destructible home's state + hit-point bar.
             panelsGO.AddComponent<CombatDebugPanel>();
+
+            // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
+            var hudGO = new GameObject("PlayerHud");
+            hudGO.AddComponent<GameHud>();
+            hudGO.AddComponent<MinimapPanel>();
         }
 
         // ------------------------------------------------------------------

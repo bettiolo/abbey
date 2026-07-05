@@ -86,7 +86,53 @@ namespace Abbey.Beast
         Transform _dragCorpse;
         Vector3? _dragTarget;
 
+        // ---- P3-07 evolution: treatment history (deterministic counters) ----
+        int _feedEvents;
+        int _alliedFights;
+        int _soloHunts;
+        int _rites;
+        float _chainSeconds;
+        int _injuries;
+        // Running bond accumulators (lifetime averages, sampled each Tick).
+        float _trustSum, _hungerSum, _painSum, _fearSum, _attachSum;
+        int _bondSamples;
+
         public HoundState State { get; private set; } = HoundState.Chained;
+
+        // ---- P3-07 evolution: path + behaviour parameters ----
+        /// <summary>The evolution path applied by <see cref="HoundEvolutionSystem"/> (display / behaviour).</summary>
+        public HoundPath Path { get; private set; } = HoundPath.Unevolved;
+
+        /// <summary>The hound is the beast: exempt from sanity and light-band combat penalties, always, on every path.</summary>
+        public bool IsBeast => true;
+
+        /// <summary>Outgoing-damage scale from the current path (War hits harder, Sacred softer). 1 by default.</summary>
+        public float AggressionMultiplier { get; private set; } = 1f;
+
+        /// <summary>Bell obedience from the current path: 0 refuses the bell (Starved/Broken), 1 answers normally.</summary>
+        public float BellResponseMultiplier { get; private set; } = 1f;
+
+        /// <summary>How close the hound likes to settle to villagers (Guardian). Display / downstream.</summary>
+        public float VillagerComfortRadius { get; private set; }
+
+        /// <summary>Starved: hunts alone. Sacred: fights only at the abbey. Broken: unreliable.</summary>
+        public bool HuntsAlone { get; private set; }
+        public bool FightsOnlyAtAbbey { get; private set; }
+        public bool Unreliable { get; private set; }
+
+        // ---- P3-07 evolution: treatment counters (read by HoundEvolutionSystem) ----
+        public int FeedEvents => _feedEvents;
+        public int AlliedFights => _alliedFights;
+        public int SoloHunts => _soloHunts;
+        public int Rites => _rites;
+        public float ChainSeconds => _chainSeconds;
+        public int Injuries => _injuries;
+
+        public float AverageTrust => _bondSamples > 0 ? _trustSum / _bondSamples : _trust;
+        public float AverageHunger => _bondSamples > 0 ? _hungerSum / _bondSamples : _hunger;
+        public float AveragePain => _bondSamples > 0 ? _painSum / _bondSamples : _pain;
+        public float AverageFear => _bondSamples > 0 ? _fearSum / _bondSamples : _fear;
+        public float AverageAttachment => _bondSamples > 0 ? _attachSum / _bondSamples : _attachment;
 
         /// <summary>True until the chain is removed (FreeFromChain) or broken (bond override).</summary>
         public bool IsChained { get; private set; } = true;
@@ -210,7 +256,109 @@ namespace Abbey.Beast
             _fleeingToMissing = false;
             _dragCorpse = null;
             _dragTarget = null;
+            _feedEvents = 0;
+            _alliedFights = 0;
+            _soloHunts = 0;
+            _rites = 0;
+            _chainSeconds = 0f;
+            _injuries = 0;
+            _trustSum = _hungerSum = _painSum = _fearSum = _attachSum = 0f;
+            _bondSamples = 0;
+            Path = HoundPath.Unevolved;
+            AggressionMultiplier = 1f;
+            BellResponseMultiplier = 1f;
+            VillagerComfortRadius = 0f;
+            HuntsAlone = false;
+            FightsOnlyAtAbbey = false;
+            Unreliable = false;
             EnsureInit();
+        }
+
+        // ------------------------------------------------------------------
+        // P3-07 evolution: treatment recording + behaviour parameterisation
+        // ------------------------------------------------------------------
+
+        /// <summary>
+        /// A rite / candle offering at the hound (Sacred doctrine). Records a treatment
+        /// event and calms it a little (fear down, attachment up). Written by future
+        /// abbey rites; tests call it directly. Distinct "hound_rite" log record.
+        /// </summary>
+        public void ReceiveRite()
+        {
+            EnsureInit();
+            if (IsMissing)
+            {
+                return;
+            }
+            var cfg = Config;
+            _everInteracted = true;
+            _rites++;
+            Fear -= cfg.bellCalmFearRelief;
+            Attachment += cfg.feedAttachmentGain;
+            GameEventLog.Append("hound_rite", $"{name} rites={_rites} fear={Fear:F2}");
+        }
+
+        /// <summary>Adds one bond sample to the lifetime running averages (called each Tick).</summary>
+        void SampleBond()
+        {
+            _trustSum += _trust;
+            _hungerSum += _hunger;
+            _painSum += _pain;
+            _fearSum += _fear;
+            _attachSum += _attachment;
+            _bondSamples++;
+        }
+
+        /// <summary>Snapshots the accumulated treatment history + bond averages for evolution scoring.</summary>
+        public HoundTreatmentSample BuildTreatmentSample()
+        {
+            return new HoundTreatmentSample(
+                _feedEvents, _alliedFights, _soloHunts, _rites, _chainSeconds / 60f, _injuries,
+                AverageTrust, AverageHunger, AveragePain, AverageFear, AverageAttachment);
+        }
+
+        /// <summary>
+        /// Applies an evolution path's behaviour parameters (called by
+        /// <see cref="HoundEvolutionSystem"/>). Deterministic; only changes behaviour
+        /// knobs — never the bond values. Logged so the transition reads through the log.
+        /// </summary>
+        public void ApplyEvolution(HoundPath path, HoundBehaviourParams behaviour)
+        {
+            Path = path;
+            if (behaviour != null)
+            {
+                AggressionMultiplier = Mathf.Max(0f, behaviour.aggressionMultiplier);
+                BellResponseMultiplier = Mathf.Clamp01(behaviour.bellResponseMultiplier);
+                VillagerComfortRadius = Mathf.Max(0f, behaviour.villagerComfortRadius);
+                HuntsAlone = behaviour.huntsAlone;
+                FightsOnlyAtAbbey = behaviour.fightsOnlyAtAbbey;
+                Unreliable = behaviour.unreliable;
+            }
+            GameEventLog.Append("hound_behaviour",
+                $"{name} path={path} aggr={AggressionMultiplier:F2} bell={BellResponseMultiplier:F2}");
+        }
+
+        /// <summary>True where the hound is allowed to fight given its path (Sacred fights only in sacred light).</summary>
+        bool CanFightHere()
+        {
+            if (!FightsOnlyAtAbbey)
+            {
+                return true;
+            }
+            var sources = DarknessEvaluator.Sources;
+            for (int i = 0; i < sources.Count; i++)
+            {
+                var s = sources[i];
+                if (s == null || !s.sacred || !s.isLit || s.EffectiveRadius <= 0f)
+                {
+                    continue;
+                }
+                if (PlanarMotion.Distance(transform.position, s.transform.position) <= s.EffectiveRadius)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // ------------------------------------------------------------------
@@ -231,6 +379,7 @@ namespace Abbey.Beast
             }
             var cfg = Config;
             _everInteracted = true;
+            _feedEvents++;
             Hunger -= cfg.feedHungerRelief;
             Trust += cfg.feedTrustGain;
             Fear -= cfg.feedFearRelief;
@@ -349,6 +498,7 @@ namespace Abbey.Beast
                 return;
             }
             var cfg = Config;
+            _injuries++;
             Pain += painAmount;
             Fear += cfg.houndHitFearGain;
             GameEventLog.Append("hound_took_hit",
@@ -368,6 +518,15 @@ namespace Abbey.Beast
                 return; // there is no hound to hear it
             }
             var cfg = Config;
+
+            // P3-07: a Starved/Broken path (bell response 0) refuses the bell on every
+            // path — the permanent extension of the P2-05 starved "ignores the bell".
+            if (BellResponseMultiplier <= 0f)
+            {
+                GameEventLog.Append("hound_ignored_bell",
+                    $"{name} path={Path} state={State} trust={Trust:F2}");
+                return;
+            }
 
             if (State == HoundState.Hunting || _fleeingToMissing)
             {
@@ -430,6 +589,13 @@ namespace Abbey.Beast
             Hunger += cfg.houndHungerPerSecond * dt;
             Pain -= cfg.houndPainRecoveryPerSecond * dt;
             _attackCooldown -= dt;
+
+            // P3-07: accumulate chain time + bond averages for evolution scoring.
+            if (IsChained)
+            {
+                _chainSeconds += dt;
+            }
+            SampleBond();
 
             // A freed, no-bond hound runs for the dark until it is gone.
             if (_fleeingToMissing)
@@ -583,6 +749,7 @@ namespace Abbey.Beast
                     GameEventLog.Append("hound_dragged_corpse",
                         $"{name} to={transform.position}");
                     Hunger -= cfg.houndEatHungerRelief;
+                    _soloHunts++;
                     GameEventLog.Append("hound_intervention",
                         $"ate_kill {name} hunger={Hunger:F2}");
                     _dragTarget = null;
@@ -610,7 +777,7 @@ namespace Abbey.Beast
 
         void EvaluateProtective(PrototypeConfig cfg)
         {
-            if (IsStarving || Trust < cfg.chainBreakTrustThreshold)
+            if (IsStarving || Trust < cfg.chainBreakTrustThreshold || !CanFightHere())
             {
                 return;
             }
@@ -653,6 +820,10 @@ namespace Abbey.Beast
             if (_engageTarget != null && _engageTarget.IsAlive)
             {
                 return; // stay on the current quarry
+            }
+            if (!CanFightHere())
+            {
+                return; // Sacred path: will not fight away from the abbey
             }
             var nearest = NearestMonsterTo(transform.position, cfg.houndEngageRange);
             if (nearest != null)
@@ -701,13 +872,18 @@ namespace Abbey.Beast
             {
                 _attackCooldown = cfg.houndAttackCooldownSeconds;
                 GameEventLog.Append("hound_attacked_monster", $"{name} -> {_engageTarget.name}");
-                _engageTarget.TakeDamage(cfg.houndAttackDamage);
+                _engageTarget.TakeDamage(cfg.houndAttackDamage * Mathf.Max(0f, AggressionMultiplier));
                 if (!_engageTarget.IsAlive)
                 {
                     GameEventLog.Append("hound_killed_monster", $"{name} -> {_engageTarget.name}");
                     if (State == HoundState.Hunting)
                     {
                         BeginCorpseDrag(cfg, _engageTarget.transform);
+                    }
+                    else
+                    {
+                        // Fought alongside the settlement (Protective/Guarding/Following).
+                        _alliedFights++;
                     }
                     _engageTarget = null;
                 }

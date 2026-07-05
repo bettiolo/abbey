@@ -1,4 +1,5 @@
 using System;
+using Abbey.Beast;
 using Abbey.World;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Abbey.Core
         public static event Action<GameObject> VillagerEndangered;
         public static event Action<GameObject> VillagerRescued;
         public static event Action<float> HoundFed;
+        public static event Action<HoundPath, HoundPath> HoundEvolved;
         public static event Action<GameObject> MonsterSpawned;
         public static event Action<Season> SeasonChanged;
         public static event Action<Weather> WeatherChanged;
@@ -134,6 +136,13 @@ namespace Abbey.Core
             HoundFed?.Invoke(newTrust);
         }
 
+        /// <summary>The hound's evolution path changed (P3-07). Logs from→to.</summary>
+        public static void RaiseHoundEvolved(HoundPath from, HoundPath to)
+        {
+            GameEventLog.Append("hound_evolved", $"{from} -> {to}");
+            HoundEvolved?.Invoke(from, to);
+        }
+
         public static void RaiseMonsterSpawned(GameObject monster)
         {
             GameEventLog.Append("MonsterSpawned", monster != null ? monster.name : "<null>");
@@ -149,6 +158,7 @@ namespace Abbey.Core
             VillagerEndangered = null;
             VillagerRescued = null;
             HoundFed = null;
+            HoundEvolved = null;
             MonsterSpawned = null;
             SeasonChanged = null;
             WeatherChanged = null;
