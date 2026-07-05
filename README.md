@@ -27,8 +27,10 @@ docs/       Design docs, roadmap, vertical slice spec
 tests/      External Python validation tests (pytest, run through uv)
 ```
 
-Prototype third-party assets live under `unity/Assets/ThirdParty/`; the sourcing policy is
-documented in [docs/THIRD_PARTY_ASSET_STRATEGY.md](docs/THIRD_PARTY_ASSET_STRATEGY.md).
+Prototype third-party source packs live in ignored `third_party_cache/` copies; only
+selected Abbey-named placeholders are committed under `unity/Assets/_Game/Art/`. The
+sourcing policy is documented in
+[docs/THIRD_PARTY_ASSET_STRATEGY.md](docs/THIRD_PARTY_ASSET_STRATEGY.md).
 
 ## Running the game on your Mac
 

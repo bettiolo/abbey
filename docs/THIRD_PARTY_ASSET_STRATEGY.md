@@ -35,39 +35,45 @@ reserve the Blender pipeline for assets that define the game's identity.
 4. **Custom Blender generation** when an asset is an identity asset or when the gameplay
    needs a very specific silhouette that store assets do not cover.
 
-## Staged Packs
+## Cache And Runtime Layout
 
-Current selected files live under `unity/Assets/ThirdParty/` and are documented in
-`unity/Assets/ThirdParty/README.md`.
+Downloaded source packs live in the ignored repo-local cache at `third_party_cache/`.
+The cache may contain full extracted packs, licenses, and exploratory files, but Unity
+runtime code must not reference files from it.
 
-Staged now:
+Only selected placeholders are committed under
+`unity/Assets/_Game/Art/Placeholders/Generic/`, using Abbey-owned
+`abbey_placeholder_*` filenames. Those files are replaceable by designers without
+preserving third-party pack folder structure in the Unity project.
+
+Currently cached/selected sources:
 
 - Kenney Nature Kit, CC0: trees, rocks, campfire, logs, canoe.
-- Quaternius Medieval Village MegaKit Standard, CC0: crate, wagon, abbey wall pieces,
-  round tower roof.
-- Quaternius Universal Base Characters Standard, CC0: male and female base humanoids.
+- Quaternius Medieval Village MegaKit Standard, CC0: crate, wagon-as-barrel proxy,
+  and abbey wall straight segment.
 
-Downloaded but not fully staged:
+Cached but not committed as runtime placeholders:
 
-- Quaternius full archive copies were downloaded to `/tmp` while preparing this import.
-  Raw archives are not committed.
-- Quaternius Stylized Nature MegaKit and Fantasy Props MegaKit are good future sources,
-  but their Itch free download flow did not expose direct file buttons reliably from the
-  agent environment. Keep them on the shortlist for a manual browser download if needed.
+- Quaternius Medieval Village roof and door wall modules. They did not improve the
+  prototype camera read enough to justify staging now.
+- Quaternius Universal Base Characters. A visual review showed these read as mannequins
+  in the prototype camera and are weaker placeholders than the generated villager.
 
 ## Prototype Replacement Intent
 
 Safe replacement targets:
 
-- `campfire_t1`: Kenney `campfire_stones.fbx`
-- `storage_pile_t1`: Kenney `log_stackLarge.fbx`
-- `shipwreck_hull`: Kenney `canoe.fbx` until a better wrecked ship source is staged
-- `shipwreck_crate_closed`: Quaternius `Prop_Crate.fbx`
-- `shipwreck_barrel`: Quaternius `Prop_Wagon.fbx` until a barrel is available
-- `forest_tree_01`: Kenney `tree_pineDefaultA.fbx`
-- `forest_tree_02`: Kenney `tree_oak.fbx`
-- `rock_cluster_01`: Kenney `rock_largeA.fbx`
-- `abbey_wall_broken`: Quaternius `Wall_UnevenBrick_Straight.fbx`
+- `campfire_t1`: `abbey_placeholder_campfire_stones.fbx`
+- `storage_pile_t1`: `abbey_placeholder_storage_logs.fbx`
+- `shipwreck_hull`: `abbey_placeholder_shipwreck_hull.fbx` until a better wrecked
+  ship source is staged
+- `shipwreck_crate_closed`: `abbey_placeholder_wreck_crate.fbx`
+- `shipwreck_barrel`: `abbey_placeholder_wreck_barrel_proxy.fbx` until a barrel is
+  available
+- `forest_tree_01`: `abbey_placeholder_forest_pine.fbx`
+- `forest_tree_02`: `abbey_placeholder_forest_oak.fbx`
+- `rock_cluster_01`: `abbey_placeholder_rock_cluster.fbx`
+- `abbey_wall_broken`: `abbey_placeholder_ruined_wall_straight.fbx`
 
 Keep generated for now:
 
@@ -81,17 +87,19 @@ Keep generated for now:
 - `shelter_t1`, because a visual MCP pass showed the staged Quaternius wall and roof
   modules read as flat panels at the prototype camera scale.
 
-Note: folder and text `.meta` files are committed for stable Unity ownership. FBX
-`ModelImporter` metadata is left to the local Unity editor because the agent environment
-does not have Unity available to produce or validate importer settings.
+Note: selected FBX `.meta` files are committed with the Abbey placeholder copies so
+Unity import identity stays stable across checkouts.
 
 ## Workflow
 
 1. Add or choose the source pack.
 2. Record pack name, source URL, license, download date, and selected files in
-   `unity/Assets/ThirdParty/README.md`.
-3. Stage only the selected runtime files under `unity/Assets/ThirdParty/`.
-4. Add wrapper prefabs or scene-builder mappings that reference the staged source files
-   by path.
-5. Run `./tools/check_all.sh`. Unity import validation still requires a local Unity
+   `unity/Assets/_Game/Art/Placeholders/Generic/README.md`.
+3. Keep the downloaded pack contents in `third_party_cache/`; do not commit the cache
+   contents.
+4. Copy only selected runtime files into
+   `unity/Assets/_Game/Art/Placeholders/Generic/` with Abbey-specific placeholder names.
+5. Add wrapper prefabs or scene-builder mappings that reference the Abbey placeholder
+   files by path.
+6. Run `./tools/check_all.sh`. Unity import validation still requires a local Unity
    editor, as documented in `docs/VERIFICATION_STATUS.md`.

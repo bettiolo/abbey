@@ -12,6 +12,11 @@ __pycache__/
 .pytest_cache/
 .uv-cache/
 
+# Local source-pack cache for downloaded third-party art packs. The runtime only
+# commits selected Abbey-named placeholder copies under unity/Assets/_Game/Art.
+third_party_cache/*
+!third_party_cache/README.md
+
 # Unity generated cache/build output.
 # Do not ignore unity/Assets/**/*.meta or unity/Assets/Generated/BlenderAssets/*.glb:
 # those are committed so fresh checkouts can import generated assets without Blender.

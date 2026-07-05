@@ -37,7 +37,7 @@ namespace Abbey.EditorTools
     /// depend on the scene file (PlayMode tests build their own world), so this only
     /// assembles and cross-references components.
     ///
-    /// Where a third-party prototype replacement exists under Assets/ThirdParty, it
+    /// Where an Abbey-named generic placeholder exists under Assets/_Game/Art, it
     /// is preferred. Otherwise, where a generated Blender GLB is already imported
     /// under Assets/Generated/BlenderAssets it is instantiated; otherwise the
     /// builder degrades to primitives. The menu item never fails hard on missing art,
@@ -47,7 +47,8 @@ namespace Abbey.EditorTools
     {
         public const string ScenePath = "Assets/_Game/Scenes/Prototype01.unity";
         public const string GeneratedAssetFolder = "Assets/Generated/BlenderAssets";
-        public const string ThirdPartyAssetFolder = "Assets/ThirdParty";
+        public const string GenericPlaceholderAssetFolder =
+            "Assets/_Game/Art/Placeholders/Generic";
 
         static readonly Color MeadowColor = new Color(0.34f, 0.55f, 0.22f);
         static readonly Color ForestFloorColor = new Color(0.18f, 0.34f, 0.2f);
@@ -477,10 +478,10 @@ namespace Abbey.EditorTools
             string assetId, Vector3 groundPos, string name,
             PrimitiveType fallback, Vector3 fallbackScale, float primitiveYOffset)
         {
-            var thirdParty = InstantiateThirdPartyReplacement(assetId, groundPos, name);
-            if (thirdParty != null)
+            var placeholder = InstantiateGenericPlaceholder(assetId, groundPos, name);
+            if (placeholder != null)
             {
-                return thirdParty;
+                return placeholder;
             }
 
             try
@@ -670,10 +671,10 @@ namespace Abbey.EditorTools
             return OldStoneColor;
         }
 
-        static GameObject InstantiateThirdPartyReplacement(
+        static GameObject InstantiateGenericPlaceholder(
             string assetId, Vector3 groundPos, string name)
         {
-            string assetPath = ThirdPartyReplacementPathFor(assetId);
+            string assetPath = GenericPlaceholderPathFor(assetId);
             if (string.IsNullOrEmpty(assetPath))
             {
                 return null;
@@ -684,7 +685,7 @@ namespace Abbey.EditorTools
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
                 if (prefab == null)
                 {
-                    Debug.LogWarning($"[Abbey] Third-party replacement for " +
+                    Debug.LogWarning($"[Abbey] Generic placeholder for " +
                                      $"'{assetId}' was not found at {assetPath}; " +
                                      "trying generated art.");
                     return null;
@@ -698,41 +699,41 @@ namespace Abbey.EditorTools
 
                 instance.name = name;
                 instance.transform.position = groundPos;
-                instance.transform.localScale = ThirdPartyReplacementScaleFor(assetId);
+                instance.transform.localScale = GenericPlaceholderScaleFor(assetId);
                 NormalizeImportedMaterials(instance, assetId);
                 return instance;
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"[Abbey] Could not instantiate third-party " +
-                                 $"replacement for '{assetId}' ({e.Message}); " +
+                Debug.LogWarning($"[Abbey] Could not instantiate generic " +
+                                 $"placeholder for '{assetId}' ({e.Message}); " +
                                  "trying generated art.");
                 return null;
             }
         }
 
-        static string ThirdPartyReplacementPathFor(string assetId)
+        static string GenericPlaceholderPathFor(string assetId)
         {
             switch (assetId)
             {
                 case "campfire_t1":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/campfire_stones.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_campfire_stones.fbx";
                 case "storage_pile_t1":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/log_stackLarge.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_storage_logs.fbx";
                 case "shipwreck_hull":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/canoe.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_shipwreck_hull.fbx";
                 case "shipwreck_crate_closed":
-                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Prop_Crate.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_wreck_crate.fbx";
                 case "shipwreck_barrel":
-                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Prop_Wagon.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_wreck_barrel_proxy.fbx";
                 case "abbey_wall_broken":
-                    return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Wall_UnevenBrick_Straight.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_ruined_wall_straight.fbx";
                 case "forest_tree_01":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_pineDefaultA.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_pine.fbx";
                 case "forest_tree_02":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_oak.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_oak.fbx";
                 case "rock_cluster_01":
-                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/rock_largeA.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_rock_cluster.fbx";
                 default:
                     return null;
             }
@@ -750,7 +751,7 @@ namespace Abbey.EditorTools
             return false;
         }
 
-        static Vector3 ThirdPartyReplacementScaleFor(string assetId)
+        static Vector3 GenericPlaceholderScaleFor(string assetId)
         {
             switch (assetId)
             {
