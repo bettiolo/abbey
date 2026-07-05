@@ -6,23 +6,26 @@ are configured.**
 
 ## Current verified path
 
-Latest local validation run: 2026-07-05 on commit `94d4e3e`, using macOS with Unity
-`6000.5.2f1` through MCP for Unity. That commit was docs-only on top of the validated
-runtime commit `63df7e2`.
+Runtime-affecting validation baseline: commit `63df7e2` was verified on 2026-07-05
+using macOS with Unity `6000.5.2f1` through MCP for Unity. Later commits such as
+`94d4e3e` and `815671f` only update validation/support docs and do not change Unity
+runtime code, tests, assets, editor tools, or workflows. Do not bump this section only
+to record another docs-only validation pass; update it when runtime/tooling/test inputs
+or validation evidence change.
 
 - `tools/restart_unity_mcp.sh` starts the pinned Unity editor and MCP bridge.
 - `tools/run_unity_mcp_gate.sh --no-restart` runs the Unity gate, EditMode tests,
   PlayMode tests, and a final console check through MCP.
-- Latest local MCP result:
+- Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-05T14:12:57Z`)
+    `2026-07-05T14:09:44Z`)
   - Scene build: passed
   - Generated asset import validation: passed
   - EditMode tests: 180/180 passed
   - PlayMode tests: 39/39 passed
   - Console errors after the Unity gate: 0
   - Canonical screenshots written to `unity/Build/screenshots/`
-- Latest `./tools/check_all.sh` result on the same commit: OK
+- `./tools/check_all.sh` result on the same runtime tree: OK
   - design validation: 7/7 passed
   - asset validation: 258 passed, 8 skipped
   - Blender changed-asset verification: passed, no changed asset specs or builders
@@ -48,11 +51,11 @@ GameCI still skips the Unity test job. `.github/workflows/unity.yml` gates the r
    the `license-check` job passes and the `Unity EditMode/PlayMode tests` job is **skipped**.
    The workflow therefore reports "success" **without ever compiling the C#.**
 
-Latest observed GitHub "Unity tests" workflow was for `main` commit `63df7e2`:
+Latest observed GitHub "Unity tests" workflow was for runtime commit `63df7e2`:
 [#28743459269](https://github.com/bettiolo/abbey/actions/runs/28743459269) →
 `license-check` = success, `Unity … tests` = **skipped**. The "Blender assets" workflow,
 by contrast, genuinely runs and passes when triggered. No GitHub Actions run was created
-for docs-only commit `94d4e3e`.
+for docs-only validation-record commits `94d4e3e` or `815671f`.
 
 ## What this means
 
