@@ -33,6 +33,17 @@ it on a Mac:
    Light-territory rings (Safe/Edge) draw as gizmos in the Scene view via the
    `LightZoneGizmos` helper on the DebugOverlay object.
 
+### Unity MCP bridge for agents
+
+To restart the local editor and expose it through MCP for Unity:
+
+```sh
+./tools/restart_unity_mcp.sh
+```
+
+See [UNITY_MCP.md](UNITY_MCP.md) for prerequisites, overrides, and the manual
+fallback path.
+
 ## 2. Standalone macOS app
 
 From the repo root on a Mac with the pinned editor installed:
