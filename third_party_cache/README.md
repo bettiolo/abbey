@@ -39,6 +39,13 @@ Current source references:
 - Poly Haven: https://polyhaven.com/
 - ambientCG: https://ambientcg.com/
 
+Current selected texture/material cache entries:
+
+- `ambientCG/Materials/Grass005/` -> `abbey_placeholder_ground_grass_*`
+- `PolyHaven/Textures/coast_sand_03/` -> `abbey_placeholder_beach_sand_*`
+- `PolyHaven/Textures/rock_face_03/` -> `abbey_placeholder_abbey_stone_*`
+- `ambientCG/Materials/Wood095/` -> `abbey_placeholder_weathered_wood_*`
+
 The current cache was populated from downloads used on 2026-07-04 and 2026-07-05.
 Re-download packs from the source pages above if local cache contents are missing or
 stale. `Quaternius/UltimateModularRuins/` may be partial if Google Drive blocks one of

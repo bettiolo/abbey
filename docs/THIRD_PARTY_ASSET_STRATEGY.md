@@ -76,6 +76,10 @@ Currently cached/selected sources:
 - Kenney Pirate Kit, CC0: wrecked ship, shipwreck crate, and shipwreck barrel.
 - KayKit Medieval Builder Pack, CC0: temporary shelter/house placeholder.
 - KayKit Dungeon Remastered, CC0: temporary broken wall and lit torch placeholders.
+- Poly Haven, CC0: selected 1k JPG PBR texture sets for beach sand and abbey stone
+  surfaces.
+- ambientCG, CC0: selected 1k JPG PBR texture sets for meadow/forest ground and
+  weathered wood placeholders.
 
 Approved but not yet selected into Unity placeholders:
 
@@ -83,10 +87,15 @@ Approved but not yet selected into Unity placeholders:
   and dungeon pieces. The 2026-07-05 scripted Google Drive sync was partial because
   Drive blocked public file URLs mid-folder, so no runtime placeholder currently
   depends on this cache.
-- Poly Haven, CC0: temporary PBR textures/HDRIs/models for realistic terrain, rock,
-  wood, stone, and lighting tests.
-- ambientCG, CC0: temporary PBR material sets for terrain, ground scars, stone, plaster,
-  roofing, wood, fabric, and metal tests.
+- Poly Haven HDRIs, scanned rocks, boulders, bark, mossy rocks, gravel roads, and
+  additional coastal/forest terrain variants. `forest_ground_04` was evaluated for
+  meadow/forest ground and skipped because it reads too gray and rocky in the prototype
+  camera; `aerial_grass_rock` was evaluated too and still read more gray-brown than
+  camp meadow.
+- ambientCG mud, wet ground, moss, plaster, roofing tiles, fabric, metal, decals,
+  dirt paths, wood beams, weathering overlays, and stone wall variants.
+- Paid store/Fab/Megascans assets. These remain manual-review-only and should be treated
+  as private/local dependencies unless the exact license permits repo redistribution.
 
 Cached but not committed as runtime placeholders:
 
@@ -101,6 +110,12 @@ Cached but not committed as runtime placeholders:
 
 Safe replacement targets:
 
+- `map_meadow`: `abbey_placeholder_ground_grass_albedo.jpg`
+- `map_ForestFloor`: `abbey_placeholder_ground_grass_albedo.jpg`
+- `map_Beach`: `abbey_placeholder_beach_sand_albedo.jpg`
+- `map_abbey_hill`: `abbey_placeholder_abbey_stone_albedo.jpg`
+- generic wood/stone placeholder materials: curated Abbey albedo maps from
+  `unity/Assets/_Game/Art/Placeholders/Materials/`
 - `campfire_t1`: `abbey_placeholder_campfire_stones.fbx`
 - `storage_pile_t1`: `abbey_placeholder_storage_logs.fbx`
 - `shipwreck_hull`: `abbey_placeholder_shipwreck_hull.fbx`

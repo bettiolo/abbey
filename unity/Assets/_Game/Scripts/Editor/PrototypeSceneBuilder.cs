@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Abbey.Beast;
 using Abbey.Buildings;
@@ -49,6 +50,8 @@ namespace Abbey.EditorTools
         public const string GeneratedAssetFolder = "Assets/Generated/BlenderAssets";
         public const string GenericPlaceholderAssetFolder =
             "Assets/_Game/Art/Placeholders/Generic";
+        public const string MaterialPlaceholderAssetFolder =
+            "Assets/_Game/Art/Placeholders/Materials";
 
         static readonly Color MeadowColor = new Color(0.34f, 0.55f, 0.22f);
         static readonly Color ForestFloorColor = new Color(0.18f, 0.34f, 0.2f);
@@ -65,8 +68,10 @@ namespace Abbey.EditorTools
         static readonly Color WaterColor = new Color(0.25f, 0.45f, 0.7f);
         static readonly Color HoundColor = new Color(0.04f, 0.035f, 0.03f);
 
-        static readonly System.Collections.Generic.Dictionary<string, Material> MaterialCache =
-            new System.Collections.Generic.Dictionary<string, Material>();
+        static readonly Dictionary<string, Material> MaterialCache =
+            new Dictionary<string, Material>();
+        static readonly Dictionary<string, Texture2D> PlaceholderTextureCache =
+            new Dictionary<string, Texture2D>();
 
         // Landmark positions (map layout, not balance — the map is authored here).
         static readonly Vector3 CampCenter = Vector3.zero;
@@ -555,10 +560,13 @@ namespace Abbey.EditorTools
                 {
                     var source = shared[i];
                     string materialName = source != null ? source.name : renderer.name;
+                    string key = $"{assetId}_{materialName}_{renderer.name}";
                     var replacement = BuiltInMaterial(
-                        $"{assetId}_{materialName}_{renderer.name}",
+                        key,
                         PaletteColor(assetId, materialName, renderer.name),
-                        source != null ? source.mainTexture : null);
+                        PlaceholderAlbedoForKey(key) ??
+                        (source != null ? source.mainTexture : null),
+                        PlaceholderTextureScaleForKey(key));
                     if (source != replacement)
                     {
                         shared[i] = replacement;
@@ -579,13 +587,16 @@ namespace Abbey.EditorTools
             {
                 return;
             }
-            renderer.sharedMaterial = BuiltInMaterial(key, color, null);
+            renderer.sharedMaterial = BuiltInMaterial(
+                key, color, PlaceholderAlbedoForKey(key), PlaceholderTextureScaleForKey(key));
         }
 
-        static Material BuiltInMaterial(string key, Color color, Texture texture)
+        static Material BuiltInMaterial(
+            string key, Color color, Texture texture, Vector2 textureScale)
         {
             string textureKey = texture != null ? texture.name : "solid";
-            string cacheKey = $"{key}_{textureKey}_{ColorUtility.ToHtmlStringRGBA(color)}";
+            string cacheKey = $"{key}_{textureKey}_{textureScale.x:0.###}x" +
+                              $"{textureScale.y:0.###}_{ColorUtility.ToHtmlStringRGBA(color)}";
             if (MaterialCache.TryGetValue(cacheKey, out var cached) && cached != null)
             {
                 return cached;
@@ -598,6 +609,10 @@ namespace Abbey.EditorTools
                 color = texture != null ? Color.white : color,
                 mainTexture = texture,
             };
+            if (texture != null)
+            {
+                material.mainTextureScale = textureScale;
+            }
             if (material.HasProperty("_Glossiness"))
             {
                 material.SetFloat("_Glossiness", 0.12f);
@@ -608,6 +623,109 @@ namespace Abbey.EditorTools
             }
             MaterialCache[cacheKey] = material;
             return material;
+        }
+
+        static Texture2D PlaceholderAlbedoForKey(string key)
+        {
+            string surface = PlaceholderSurfaceForKey(key);
+            switch (surface)
+            {
+                case "grass":
+                    return LoadPlaceholderTexture("abbey_placeholder_ground_grass_albedo.jpg");
+                case "sand":
+                    return LoadPlaceholderTexture("abbey_placeholder_beach_sand_albedo.jpg");
+                case "stone":
+                    return LoadPlaceholderTexture("abbey_placeholder_abbey_stone_albedo.jpg");
+                case "wood":
+                    return LoadPlaceholderTexture("abbey_placeholder_weathered_wood_albedo.jpg");
+                default:
+                    return null;
+            }
+        }
+
+        static Vector2 PlaceholderTextureScaleForKey(string key)
+        {
+            string lower = key.ToLowerInvariant();
+            if (lower.Contains("map_meadow"))
+            {
+                return new Vector2(18f, 18f);
+            }
+            if (lower.Contains("map_forestfloor"))
+            {
+                return new Vector2(8f, 6f);
+            }
+            if (lower.Contains("map_beach"))
+            {
+                return new Vector2(7f, 7f);
+            }
+            if (lower.Contains("map_abbey_hill"))
+            {
+                return new Vector2(5f, 5f);
+            }
+            if (lower.Contains("paving") || lower.Contains("plaza"))
+            {
+                return new Vector2(3f, 3f);
+            }
+            return Vector2.one;
+        }
+
+        static Texture2D LoadPlaceholderTexture(string filename)
+        {
+            if (PlaceholderTextureCache.TryGetValue(filename, out var cached))
+            {
+                return cached;
+            }
+
+            string path = $"{MaterialPlaceholderAssetFolder}/{filename}";
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            PlaceholderTextureCache[filename] = texture;
+            return texture;
+        }
+
+        static string PlaceholderSurfaceForKey(string key)
+        {
+            string text = key.ToLowerInvariant();
+
+            if (text.Contains("water") || text.Contains("stream") ||
+                text.Contains("flame") || text.Contains("lantern") ||
+                text.Contains("gold") || text.Contains("hound") ||
+                text.Contains("bellkeeper") || text.Contains("villager") ||
+                text.Contains("drowned") || text.Contains("roof") ||
+                text.Contains("tile") || text.Contains("canvas") ||
+                text.Contains("cloth") || text.Contains("sail") ||
+                text.Contains("thatch") || text.Contains("plaster") ||
+                text.Contains("bone") || text.Contains("skin") ||
+                text.Contains("pale"))
+            {
+                return null;
+            }
+            if (text.Contains("map_beach") || text.Contains("sand"))
+            {
+                return "sand";
+            }
+            if (text.Contains("map_meadow") || text.Contains("map_forestfloor") ||
+                text.Contains("foliage") || text.Contains("leaf") ||
+                text.Contains("grass") || text.Contains("tree") ||
+                text.Contains("field"))
+            {
+                return "grass";
+            }
+            if (text.Contains("map_abbey_hill") || text.Contains("stone") ||
+                text.Contains("ash") || text.Contains("wall") ||
+                text.Contains("rock") || text.Contains("paving") ||
+                text.Contains("plaza"))
+            {
+                return "stone";
+            }
+            if (text.Contains("wood") || text.Contains("bark") ||
+                text.Contains("barrel") || text.Contains("crate") ||
+                text.Contains("hull") || text.Contains("plank") ||
+                text.Contains("shelter") || text.Contains("storage"))
+            {
+                return "wood";
+            }
+
+            return null;
         }
 
         static Color PaletteColor(string assetId, string materialName, string rendererName)
