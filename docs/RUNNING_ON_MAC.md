@@ -23,6 +23,7 @@ it on a Mac:
    | Input | Action |
    |-------|--------|
    | **WASD / arrow keys** | Move the Bellkeeper (camera-relative under the locked 45° yaw; the camera follows the hero). |
+   | **Shift + WASD / arrows** | Run with the Bellkeeper. |
    | **Space** | Ring the bell — recall pulse for villagers, call to the hound (5s cooldown). |
    | **F** | Raise / douse the carried flame (mobile light; drains stamina while lit). |
    | **E** | Rescue the nearest villager / release the escorted one (release inside Safe light to complete the rescue). |
