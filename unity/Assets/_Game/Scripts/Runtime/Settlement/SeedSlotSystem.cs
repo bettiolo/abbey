@@ -168,6 +168,42 @@ namespace Abbey.Settlement
             return true;
         }
 
+        /// <summary>
+        /// Unlocks up to <paramref name="count"/> new Open seed slots on an evenly spaced
+        /// ring around a point — the discovery reward for an expedition reaching an old road,
+        /// well or boundary stone (P3-13). Candidates that overlap an existing building, site
+        /// or slot are skipped (the hug rule does NOT apply: exploration reaches out beyond
+        /// the lit village on purpose). Returns the number actually opened, each logged.
+        /// </summary>
+        public int UnlockSlotsNear(Vector3 center, int count, SlotSizeClass size)
+        {
+            if (count <= 0)
+            {
+                return 0;
+            }
+            var cfg = Config;
+            Vector2 footprint = cfg.FootprintFor(size);
+            float radius = Mathf.Max(cfg.childSlotRingRadius, cfg.minSlotSeparation);
+            int opened = 0;
+            // Sample a wider ring than requested so overlaps do not starve the count.
+            int attempts = count * 4;
+            for (int i = 0; i < attempts && opened < count; i++)
+            {
+                float angle = (Mathf.PI * 2f) * i / Mathf.Max(1, attempts);
+                Vector3 candidate = center + new Vector3(
+                    Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+                if (!IsCandidateFree(candidate, footprint, cfg))
+                {
+                    continue;
+                }
+                _slots.Add(new SeedSlot(candidate, size, SlotState.Open));
+                opened++;
+                GameEventLog.Append("settlement",
+                    $"slot_unlocked reward at ({candidate.x:F1}, {candidate.z:F1})");
+            }
+            return opened;
+        }
+
         // ------------------------------------------------------------------
         // Growth (child slots on completion)
         // ------------------------------------------------------------------

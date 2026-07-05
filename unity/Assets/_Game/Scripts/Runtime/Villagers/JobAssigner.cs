@@ -90,6 +90,13 @@ namespace Abbey.Villagers
                 {
                     continue;
                 }
+                // Villagers out on an island expedition (P3-13) are unavailable for jobs
+                // until they return; they are not counted against the roster quotas.
+                if (Abbey.Island.ExplorationSystem.Instance != null
+                    && Abbey.Island.ExplorationSystem.Instance.IsAway(villager))
+                {
+                    continue;
+                }
 
                 while (jobIndex < RosterOrder.Length
                        && filledInJob >= cfg.DefaultCount(RosterOrder[jobIndex]))

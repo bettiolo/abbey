@@ -71,8 +71,39 @@ namespace Abbey.Nightmares
         bool _nightActive;
         int _nightStartLogIndex;
         int _nightNumber;
+        int _drownedRiskUntilNight = -1;
 
         public IReadOnlyList<MonsterController> SpawnedMonsters => _spawned;
+
+        // ------------------------------------------------------------------
+        // Drowned-nightmare risk window (P3-13 shipwreck rescues)
+        // ------------------------------------------------------------------
+
+        /// <summary>
+        /// Arms the drowned-nightmare window (P3-13): a wet shipwreck rescue lets a drowned
+        /// sailor rise for <paramref name="nights"/> nights after the current one, even
+        /// without a died-by-water record. Extends (never shortens) any live window. The
+        /// P2-06 notes reserved this per-night window for Phase 3.
+        /// </summary>
+        public void ArmDrownedRisk(int nights)
+        {
+            int until = _nightNumber + Mathf.Max(0, nights);
+            if (until > _drownedRiskUntilNight)
+            {
+                _drownedRiskUntilNight = until;
+            }
+            GameEventLog.Append("nightmare",
+                $"drowned_risk_armed from_night={_nightNumber} until_night={_drownedRiskUntilNight}");
+        }
+
+        /// <summary>The last night index the drowned-risk window covers (-1 = never armed).</summary>
+        public int DrownedRiskUntilNight => _drownedRiskUntilNight;
+
+        /// <summary>True when a given night index falls inside the armed drowned-risk window.</summary>
+        public bool IsDrownedRiskArmedForNight(int night) => night > 0 && night <= _drownedRiskUntilNight;
+
+        /// <summary>True when the current night is inside the armed drowned-risk window.</summary>
+        public bool IsDrownedRiskArmed => IsDrownedRiskArmedForNight(_nightNumber);
 
         // ------------------------------------------------------------------
         // Debug-panel state (display only; the panel never tunes anything)
@@ -510,7 +541,9 @@ namespace Abbey.Nightmares
 
         void TrySpawnDrownedSailor(int index, int seed, PrototypeConfig cfg)
         {
-            if (!HasWaterDeathRecord())
+            // It rises from a died-by-water record OR while the P3-13 drowned-risk window
+            // (armed by a wet shipwreck rescue) covers tonight.
+            if (!HasWaterDeathRecord() && !IsDrownedRiskArmed)
             {
                 GameEventLog.Append("nightmare",
                     $"drowned_sailor_skipped night={_nightNumber} reason=no_water_death");

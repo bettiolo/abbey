@@ -250,6 +250,14 @@ namespace Abbey.Morale
                     continue;
                 }
 
+                // Dilemma consequences (P3-13) carry signed deltas on any channel, encoded
+                // as space-separated "Channel=value" tokens (e.g. "Mercy=-0.05 Fear=0.07").
+                if (rec.Type == "pressure_delta")
+                {
+                    ApplyPressureDeltaRecord(rec.Data);
+                    continue;
+                }
+
                 if (cfg.weights != null)
                 {
                     for (int w = 0; w < cfg.weights.Count; w++)
@@ -321,6 +329,37 @@ namespace Abbey.Morale
             {
                 var ch = cfg.ChannelFor(Ids[i]);
                 _pressures[Ids[i]] = Mathf.Clamp(Get(Ids[i]), ch.min, ch.max);
+            }
+        }
+
+        /// <summary>
+        /// Folds a "pressure_delta" record: each space-separated "Channel=value" token whose
+        /// name parses to a <see cref="PressureId"/> adds its signed value to that channel.
+        /// Unknown tokens (e.g. "src=dilemma:...") are ignored. Deterministic.
+        /// </summary>
+        void ApplyPressureDeltaRecord(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return;
+            }
+            var tokens = data.Split(' ');
+            for (int t = 0; t < tokens.Length; t++)
+            {
+                string token = tokens[t];
+                int eq = token.IndexOf('=');
+                if (eq <= 0 || eq >= token.Length - 1)
+                {
+                    continue;
+                }
+                string name = token.Substring(0, eq);
+                string valStr = token.Substring(eq + 1);
+                if (System.Enum.TryParse(name, out PressureId id)
+                    && System.Array.IndexOf(Ids, id) >= 0
+                    && float.TryParse(valStr, NumberStyles.Float, CultureInfo.InvariantCulture, out var v))
+                {
+                    Add(id, v);
+                }
             }
         }
 

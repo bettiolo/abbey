@@ -127,6 +127,7 @@ namespace Abbey.EditorTools
             BuildCamera(config, hero.transform);
             BuildCamp(config);
             BuildSeedSlots();
+            BuildIslandPois();
             var abbeyFlame = BuildAbbeyHill(config);
             var wreckAnchor = BuildBeach();
             director.shipwreckAnchor = wreckAnchor;
@@ -277,12 +278,25 @@ namespace Abbey.EditorTools
             threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Cave, new Vector3(34f, 0f, 8f));
             threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Mountain, new Vector3(40f, 0f, 34f));
 
+            // Island exploration + arrivals + dilemmas (P3-13). ExplorationSystem sends
+            // parties to hidden POIs (authored in BuildIslandPois); a survey reveals the POI
+            // and lands its reward (resources, unlocked seed slots, people, shrine/well threat
+            // sources). ArrivalSystem grows the population — passive dawn walk-ins, expedition
+            // finds, and storm shipwreck crews — integrated by the P3-10 trust tier, arming the
+            // director's drowned-nightmare window on a wet rescue. DilemmaSystem queues the
+            // data-driven choice cards. All read IslandConfig; the island panel is on key I —
+            // worldGO sits at CampCenter (origin) so parties muster/return to the lit camp.
+            worldGO.AddComponent<Abbey.Island.ExplorationSystem>();
+            var arrivals = worldGO.AddComponent<Abbey.Island.ArrivalSystem>();
+            worldGO.AddComponent<Abbey.Island.DilemmaSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
             var directorGO = new GameObject("NightmareDirector");
             directorGO.transform.position = CampCenter; // spawn ring measured from camp
             var director = directorGO.AddComponent<NightmareDirector>();
+            arrivals.director = director; // drowned-risk window on shipwreck rescues
 
             var debugGO = new GameObject("DebugOverlay");
             debugGO.AddComponent<DebugOverlay>();
@@ -405,6 +419,28 @@ namespace Abbey.EditorTools
             // A locked plot further out: only reachable once growth/light reaches it.
             system.AddAuthoredSlot(new Vector3(12f, 0f, 8f), SlotSizeClass.Medium,
                 SlotState.Locked);
+        }
+
+        /// <summary>
+        /// Authors the hidden island points of interest (P3-13): wreckage on the far shore,
+        /// old-road ends, forest-depth shrines, wells, boundary stones, a survivor camp and a
+        /// resource cache — all out beyond the settled camp, revealed only when an expedition
+        /// reaches them. The system itself was created in BuildSimulationCore.
+        /// </summary>
+        static void BuildIslandPois()
+        {
+            var system = UnityEngine.Object.FindFirstObjectByType<Abbey.Island.ExplorationSystem>();
+            if (system == null)
+            {
+                return;
+            }
+            system.AddPoi(Abbey.Island.PoiType.Wreckage, new Vector3(-44f, 0f, -40f));
+            system.AddPoi(Abbey.Island.PoiType.OldRoad, new Vector3(-44f, 0f, 20f));
+            system.AddPoi(Abbey.Island.PoiType.Shrine, new Vector3(-40f, 0f, 44f));
+            system.AddPoi(Abbey.Island.PoiType.Well, new Vector3(22f, 0f, -42f));
+            system.AddPoi(Abbey.Island.PoiType.BoundaryStone, new Vector3(46f, 0f, -8f));
+            system.AddPoi(Abbey.Island.PoiType.SurvivorCamp, new Vector3(44f, 0f, 44f));
+            system.AddPoi(Abbey.Island.PoiType.ResourceCache, new Vector3(-8f, 0f, 46f));
         }
 
         /// <summary>
@@ -714,6 +750,13 @@ namespace Abbey.EditorTools
             // trust tier, beast status + household sanity, the current abbey form + modifier
             // line, and each candidate form's score vs its activation threshold (the "why").
             panelsGO.AddComponent<PressureDebugPanel>();
+
+            // Island exploration / arrivals / dilemmas overlay (key I, bottom-left): the POI
+            // list + discovered state, live expeditions, the arrival forecast/history + spring
+            // departures, and the pending dilemma. While open: 1-3 resolve the dilemma, O
+            // launches an expedition to the nearest hidden POI, U triggers a storm shipwreck,
+            // Y raises the next dilemma card.
+            panelsGO.AddComponent<IslandDebugPanel>();
 
             // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");

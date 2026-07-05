@@ -976,7 +976,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover exploration unlocks (incl. new seed slots), refugee arrival + trust-gated staying, shipwreck rescue events with drowned-nightmare risk, warrior recruitment, and each dilemma's choice consequences
       - Validation guide at docs/validation/P3-13.md per docs/validation/README.md
     depends_on: [P3-02, P3-10]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-14
     title: Spring-ship win, four chapters and end summary
