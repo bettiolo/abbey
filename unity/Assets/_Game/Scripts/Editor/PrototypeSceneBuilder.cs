@@ -315,7 +315,8 @@ namespace Abbey.EditorTools
             for (int i = 0; i < 5; i++)
             {
                 var offset = new Vector3((i % 3) * 4f - 4f, 0f, (i / 3) * 5f);
-                InstantiateGenerated("forest_tree_01", ForestEdgeCenter + offset,
+                var treeAsset = i % 2 == 0 ? "forest_tree_01" : "forest_tree_02";
+                InstantiateGenerated(treeAsset, ForestEdgeCenter + offset,
                     $"ForestTree_{i}", PrimitiveType.Cylinder,
                     new Vector3(0.5f, 3f, 0.5f), 3f);
             }
@@ -728,6 +729,8 @@ namespace Abbey.EditorTools
                     return $"{ThirdPartyAssetFolder}/Quaternius/MedievalVillageMegaKit/FBX/Wall_UnevenBrick_Straight.fbx";
                 case "forest_tree_01":
                     return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_pineDefaultA.fbx";
+                case "forest_tree_02":
+                    return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_oak.fbx";
                 case "rock_cluster_01":
                     return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/rock_largeA.fbx";
                 default:
@@ -753,9 +756,15 @@ namespace Abbey.EditorTools
             {
                 case "shipwreck_hull":
                     return new Vector3(4f, 4f, 4f);
+                // These Quaternius FBX files import at centimeter scale in this project.
+                case "shipwreck_crate_closed":
+                    return new Vector3(100f, 100f, 100f);
+                case "shipwreck_barrel":
+                    return new Vector3(80f, 80f, 80f);
                 case "abbey_wall_broken":
-                    return new Vector3(2f, 2f, 2f);
+                    return new Vector3(100f, 100f, 100f);
                 case "forest_tree_01":
+                case "forest_tree_02":
                     return new Vector3(2f, 2f, 2f);
                 case "rock_cluster_01":
                     return new Vector3(2f, 2f, 2f);

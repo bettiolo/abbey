@@ -65,18 +65,21 @@ Safe replacement targets:
 - `shipwreck_crate_closed`: Quaternius `Prop_Crate.fbx`
 - `shipwreck_barrel`: Quaternius `Prop_Wagon.fbx` until a barrel is available
 - `forest_tree_01`: Kenney `tree_pineDefaultA.fbx`
+- `forest_tree_02`: Kenney `tree_oak.fbx`
 - `rock_cluster_01`: Kenney `rock_largeA.fbx`
 - `abbey_wall_broken`: Quaternius `Wall_UnevenBrick_Straight.fbx`
-- `villager_lowpoly`: Quaternius `Superhero_Male_FullBody.fbx`
 
 Keep generated for now:
 
+- `villager_lowpoly`, because the staged Quaternius base humanoids read as mannequins
+  in the prototype camera and are weaker placeholders than the generated villager.
 - `bellkeeper_lowpoly`, because the Bellkeeper is an identity character.
 - `black_hound_lowpoly` and `hound_chain`, because the beast bond depends on a custom
   silhouette.
 - `bell_tower_ruined`, because it anchors the abbey silhouette.
 - `lantern_post_t1`, until a compatible lamp or torch prop is staged.
-- `shelter_t1`, until a proper shelter prefab can be assembled from modular pieces.
+- `shelter_t1`, because a visual MCP pass showed the staged Quaternius wall and roof
+  modules read as flat panels at the prototype camera scale.
 
 Note: folder and text `.meta` files are committed for stable Unity ownership. FBX
 `ModelImporter` metadata is left to the local Unity editor because the agent environment
