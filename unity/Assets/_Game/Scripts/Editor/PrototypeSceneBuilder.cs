@@ -11,6 +11,7 @@ using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
 using Abbey.Session;
+using Abbey.UI;
 using Abbey.Villagers;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -390,8 +391,9 @@ namespace Abbey.EditorTools
         /// Wires the run-level systems: the MorningReport system+panel (dawn
         /// consequence report), the GameSession win/loss authority (referencing the
         /// hero and the sacred abbey flame), the FirstWhiteNightScenario (arming the
-        /// director for the White Night), the GameOutcome end screen, and the debug
-        /// panels F2–F6 alongside the existing F1 DebugOverlay.
+        /// director for the White Night), the GameOutcome end screen, the debug
+        /// panels F2–F6 alongside the existing F1 DebugOverlay, and the
+        /// player-facing HUD and minimap (F7/F8).
         /// </summary>
         static void BuildSessionReportsAndPanels(
             GameObject hero, NightmareDirector director, LightSource abbeyFlame)
@@ -424,6 +426,12 @@ namespace Abbey.EditorTools
             buildingPanel.placementMarker = hero.transform;
             var nightmarePanel = panelsGO.AddComponent<NightmareDebugPanel>();
             nightmarePanel.director = director;
+
+            // Player-facing HUD + minimap (F7 / F8). Display-only, like the
+            // debug panels, but these ship with the game.
+            var hudGO = new GameObject("PlayerHud");
+            hudGO.AddComponent<GameHud>();
+            hudGO.AddComponent<MinimapPanel>();
         }
 
         // ------------------------------------------------------------------
