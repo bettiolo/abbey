@@ -189,6 +189,16 @@ namespace Abbey.Villagers
             UpdateInterrupts(v);
             UpdateCarriedProp();
 
+            if (v.SanityWorkEfficiency <= 0f)
+            {
+                // Insane: down tools entirely until recovered (P3-03 stop-work state).
+                if (v.HasWorkAssignment)
+                {
+                    v.CancelWork();
+                }
+                return;
+            }
+
             if (!IsJobWorkable(v))
             {
                 return; // injured/panicking/recalled etc.: the job is suspended
@@ -509,7 +519,8 @@ namespace Abbey.Villagers
                     {
                         return RepathOrIdle(v);
                     }
-                    int want = Mathf.Min(Economy.salvageYieldPerCycle, Config.carryCapacity);
+                    int want = ScaleBySanity(
+                        Mathf.Min(Economy.salvageYieldPerCycle, Config.carryCapacity), v);
                     ResourceType type = default;
                     int amount = 0;
                     for (int i = 0; i < ResourceTypes.Count && amount <= 0; i++)
@@ -532,7 +543,8 @@ namespace Abbey.Villagers
                     return true;
 
                 case VillagerJob.Woodcutter:
-                    int yield = Mathf.Min(Config.woodcutterYieldPerCycle, Config.carryCapacity);
+                    int yield = ScaleBySanity(
+                        Mathf.Min(Config.woodcutterYieldPerCycle, Config.carryCapacity), v);
                     if (yield <= 0)
                     {
                         v.CancelWork();
@@ -762,6 +774,25 @@ namespace Abbey.Villagers
         {
             var phase = GameClock.Instance != null ? GameClock.Instance.Phase : DayPhase.Day;
             return phase == DayPhase.Day || phase == DayPhase.Dawn;
+        }
+
+        /// <summary>
+        /// Scales a work-cycle yield by the villager's sanity work efficiency (P3-03).
+        /// Efficiency 1 leaves it unchanged; a shaken mind produces less. Efficiency 0
+        /// never reaches here — the Tick guard downs tools before a cycle completes.
+        /// </summary>
+        static int ScaleBySanity(int amount, VillagerAgent v)
+        {
+            if (amount <= 0)
+            {
+                return amount;
+            }
+            float eff = Mathf.Clamp01(v.SanityWorkEfficiency);
+            if (eff >= 1f)
+            {
+                return amount;
+            }
+            return Mathf.Max(0, Mathf.RoundToInt(amount * eff));
         }
 
         Transform ResolveWorkPoint(VillagerJob forJob)

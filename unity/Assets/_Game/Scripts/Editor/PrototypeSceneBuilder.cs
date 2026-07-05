@@ -10,6 +10,7 @@ using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
+using Abbey.Sanity;
 using Abbey.Session;
 using Abbey.Settlement;
 using Abbey.Villagers;
@@ -145,6 +146,12 @@ namespace Abbey.EditorTools
             // (BuildSeedSlots, once the camp lights exist so the hug rule can read
             // lit ground); completing a building opens child slots beside it.
             worldGO.AddComponent<SeedSlotSystem>();
+
+            // Sanity / dread / asylum (P3-03). Tracks each villager's persistent
+            // sanity track, turns dark-exposure into dread and insanity, drives asylum
+            // admission and the home-recovery dread spill. Observes the clock via
+            // EventBus and reads SanityConfig — no wiring; it auto-finds the AsylumZone.
+            worldGO.AddComponent<SanitySystem>();
 
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
@@ -477,6 +484,10 @@ namespace Abbey.EditorTools
 
             // Seed-slot settlement overlay (F8): slot counts, light debt, slot gizmos.
             panelsGO.AddComponent<SettlementDebugPanel>();
+
+            // Sanity overlay (F9, top-left): per-villager sanity/dread bars, asylum
+            // roster, tonight's held units.
+            panelsGO.AddComponent<SanityDebugPanel>();
         }
 
         // ------------------------------------------------------------------

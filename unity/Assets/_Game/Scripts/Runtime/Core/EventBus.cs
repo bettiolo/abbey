@@ -22,6 +22,10 @@ namespace Abbey.Core
         public static event Action<Season> SeasonChanged;
         public static event Action<Weather> WeatherChanged;
         public static event Action<string> OmenAppeared;
+        public static event Action<GameObject> VillagerWentInsane;
+        public static event Action<GameObject> AsylumAdmitted;
+        public static event Action<GameObject> AsylumReleased;
+        public static event Action<GameObject> HouseholdDisturbed;
 
         public static void RaisePhaseChanged(DayPhase phase)
         {
@@ -52,6 +56,34 @@ namespace Abbey.Core
         {
             GameEventLog.Append("OmenAppeared", description);
             OmenAppeared?.Invoke(description);
+        }
+
+        /// <summary>A villager's sanity fell below the insanity threshold.</summary>
+        public static void RaiseVillagerWentInsane(GameObject villager)
+        {
+            GameEventLog.Append("VillagerWentInsane", villager != null ? villager.name : "<null>");
+            VillagerWentInsane?.Invoke(villager);
+        }
+
+        /// <summary>An insane villager was admitted to the asylum (held, misses the night).</summary>
+        public static void RaiseAsylumAdmitted(GameObject villager)
+        {
+            GameEventLog.Append("AsylumAdmitted", villager != null ? villager.name : "<null>");
+            AsylumAdmitted?.Invoke(villager);
+        }
+
+        /// <summary>A recovered villager was released from the asylum (by day, after cooldown).</summary>
+        public static void RaiseAsylumReleased(GameObject villager)
+        {
+            GameEventLog.Append("AsylumReleased", villager != null ? villager.name : "<null>");
+            AsylumReleased?.Invoke(villager);
+        }
+
+        /// <summary>An insane settler recovering at home disturbed the household this night.</summary>
+        public static void RaiseHouseholdDisturbed(GameObject villager)
+        {
+            GameEventLog.Append("HouseholdDisturbed", villager != null ? villager.name : "<null>");
+            HouseholdDisturbed?.Invoke(villager);
         }
 
         public static void RaiseBellRang(Vector3 position, float radius)
@@ -97,6 +129,10 @@ namespace Abbey.Core
             SeasonChanged = null;
             WeatherChanged = null;
             OmenAppeared = null;
+            VillagerWentInsane = null;
+            AsylumAdmitted = null;
+            AsylumReleased = null;
+            HouseholdDisturbed = null;
         }
     }
 }

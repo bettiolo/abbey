@@ -6,19 +6,21 @@ using UnityEngine;
 namespace Abbey.Buildings
 {
     /// <summary>
-    /// The Asylum Corner's care zone (P3-02 rename of the legacy sick-corner
-    /// building; Phase 2's instant heal-on-exposure behaviour is removed here).
-    /// This is the documented shell P3-03 (sanity, dread and the asylum) fills in:
-    /// it keeps the trigger radius and tracks which villagers currently occupy the
-    /// zone (through the <see cref="DuskRecallSystem"/> villager registry) so the
-    /// coming sanity-recovery / miss-a-night cooldown logic has an occupancy list to
-    /// act on. It applies NO state changes to villagers — recovery, cooldown and the
-    /// "insane settler released only by day" rules land in P3-03's SanitySystem.
+    /// The Asylum Corner's care zone. It keeps the trigger radius and the passive
+    /// occupancy list (villagers currently standing inside, through the
+    /// <see cref="DuskRecallSystem"/> registry), and — the P3-03 behaviour that
+    /// replaced Phase 2's instant heal — it owns the <em>admission roster and
+    /// cooldown</em>: an insane villager admitted by day is parked here, held for
+    /// <see cref="AdmitDayOf"/>..cooldown days (so it misses the coming night), and
+    /// released only once <see cref="CooldownElapsed"/>. The sanity-recovery rate
+    /// itself is applied by <see cref="Abbey.Sanity.SanitySystem"/> (it owns the
+    /// sanity value and the <c>SanityConfig</c> balance) — this component holds no
+    /// balance value beyond the radius, which comes from
+    /// <see cref="Abbey.Core.PrototypeConfig.asylumRadius"/> via
+    /// <see cref="Building.Construct"/>.
     ///
-    /// The radius comes from <see cref="Abbey.Core.PrototypeConfig.asylumRadius"/>
-    /// via <see cref="Building.Construct"/> — no balance lives here. [ExecuteAlways]
-    /// with a manual <see cref="Tick"/> for EditMode tests, mirroring the other
-    /// simulation components.
+    /// [ExecuteAlways] with a manual <see cref="Tick"/> for EditMode tests, mirroring
+    /// the other simulation components.
     /// </summary>
     [ExecuteAlways]
     [DisallowMultipleComponent]
@@ -31,13 +33,81 @@ namespace Abbey.Buildings
         public bool autoTick = true;
 
         readonly List<VillagerAgent> _occupants = new List<VillagerAgent>();
+        readonly Dictionary<VillagerAgent, int> _admitDay = new Dictionary<VillagerAgent, int>();
+        readonly List<VillagerAgent> _roster = new List<VillagerAgent>();
 
-        /// <summary>Villagers currently inside the zone (refreshed each Tick). P3-03 recovers these.</summary>
+        /// <summary>Villagers currently inside the zone (refreshed each Tick).</summary>
         public IReadOnlyList<VillagerAgent> Occupants => _occupants;
+
+        /// <summary>Insane villagers currently held for care (admission order).</summary>
+        public IReadOnlyList<VillagerAgent> Roster => _roster;
+
+        /// <summary>Number of villagers currently admitted.</summary>
+        public int AdmittedCount => _roster.Count;
 
         void OnDisable()
         {
             _occupants.Clear();
+            _admitDay.Clear();
+            _roster.Clear();
+        }
+
+        /// <summary>Whether this villager is currently admitted.</summary>
+        public bool IsAdmitted(VillagerAgent villager)
+        {
+            return villager != null && _admitDay.ContainsKey(villager);
+        }
+
+        /// <summary>Day number the villager was admitted, or -1 if not admitted.</summary>
+        public int AdmitDayOf(VillagerAgent villager)
+        {
+            return villager != null && _admitDay.TryGetValue(villager, out int day) ? day : -1;
+        }
+
+        /// <summary>
+        /// Admits an insane villager for care on <paramref name="currentDay"/> and
+        /// parks it at the zone centre (Safe light), so it misses the coming night.
+        /// Idempotent — re-admitting keeps the original admit day. SanitySystem is
+        /// the sole caller and raises the AsylumAdmitted event.
+        /// </summary>
+        public void Admit(VillagerAgent villager, int currentDay)
+        {
+            if (villager == null || _admitDay.ContainsKey(villager))
+            {
+                return;
+            }
+            _admitDay[villager] = currentDay;
+            _roster.Add(villager);
+            ParkOccupant(villager);
+        }
+
+        /// <summary>Keeps an admitted villager parked at the zone centre (called each Tick).</summary>
+        public void ParkOccupant(VillagerAgent villager)
+        {
+            if (villager != null)
+            {
+                villager.transform.position = transform.position;
+            }
+        }
+
+        /// <summary>
+        /// True once the villager has been held for at least
+        /// <paramref name="cooldownDays"/> days (a value of 1 means the villager is
+        /// released the day after admission, having missed exactly one night).
+        /// </summary>
+        public bool CooldownElapsed(VillagerAgent villager, int currentDay, int cooldownDays)
+        {
+            return _admitDay.TryGetValue(villager, out int day)
+                   && (currentDay - day) >= Mathf.Max(1, cooldownDays);
+        }
+
+        /// <summary>Discharges the villager from care.</summary>
+        public void Release(VillagerAgent villager)
+        {
+            if (villager != null && _admitDay.Remove(villager))
+            {
+                _roster.Remove(villager);
+            }
         }
 
         void Update()

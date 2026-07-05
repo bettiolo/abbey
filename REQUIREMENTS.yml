@@ -636,6 +636,9 @@ tasks:
       - unity/Assets/_Game/Scripts/Runtime/Debug/SanityDebugPanel.cs
       - unity/Assets/_Game/Scripts/Runtime/Buildings/AsylumZone.cs (modify: recovery + cooldown)
       - unity/Assets/_Game/Scripts/Runtime/Villagers/VillagerAgent.cs (modify: efficiency scaling, stop-work state)
+      - unity/Assets/_Game/Scripts/Runtime/Villagers/VillagerJobAgent.cs (modify: sanity work-efficiency scaling + stop-work)
+      - unity/Assets/_Game/Scripts/Runtime/Core/EventBus.cs (modify: VillagerWentInsane/AsylumAdmitted/AsylumReleased/HouseholdDisturbed)
+      - unity/Assets/_Game/Scripts/Editor/PrototypeSceneBuilder.cs (modify: spawn SanitySystem + SanityDebugPanel)
       - unity/Assets/_Game/Tests/EditMode/SanitySystemTests.cs
       - unity/Assets/_Game/Tests/PlayMode/SanityAsylumPlayModeTests.cs
       - docs/validation/P3-03.md
@@ -644,7 +647,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover asylum miss-a-night accounting, home-recovery dread spill, sanity-to-work-efficiency scaling, morning health-reset-but-not-sanity, and beast immunity
       - Validation guide at docs/validation/P3-03.md per docs/validation/README.md
     depends_on: [P3-02]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-04
     title: Renewable seasonal economy
