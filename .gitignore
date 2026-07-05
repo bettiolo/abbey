@@ -15,6 +15,7 @@ __pycache__/
 # Unity generated cache/build output.
 # Do not ignore unity/Assets/**/*.meta or unity/Assets/Generated/BlenderAssets/*.glb:
 # those are committed so fresh checkouts can import generated assets without Blender.
+.utmp/
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -24,6 +25,7 @@ __pycache__/
 [Uu]ser[Ss]ettings/
 [Mm]emoryCaptures/
 [Rr]ecordings/
+.gradle/
 unity/Library/
 unity/Temp/
 unity/Obj/
@@ -31,6 +33,13 @@ unity/Logs/
 unity/UserSettings/
 unity/Build/
 unity/Builds/
+ExportedObj/
+.consulo/
+*.log
+
+# Unity generated/editor integration files inside Assets.
+unity/[Aa]ssets/[Pp]lugins/[Ee]ditor/JetBrains*
+*.DotSettings.user
 
 # Repo-generated prototype scene. Source of truth is PrototypeSceneBuilder.cs.
 unity/Assets/_Game/Scenes/Prototype01.unity
@@ -40,6 +49,7 @@ unity/Assets/_Game/Scenes/Prototype01.unity.meta
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
@@ -51,7 +61,33 @@ unity/Assets/_Game/Scenes/Prototype01.unity.meta
 *.mdb
 *.opendb
 *.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
 sysinfo.txt
+mono_crash.*
+
+# Unity build/test/package outputs.
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+crashlytics-build.properties
+InitTestScene*.unity*
+
+# Unity Addressables, Visual Scripting, and generated scene dependency caches.
+[Ss]erver[Dd]ata/
+unity/[Aa]ssets/[Ss]treaming[Aa]ssets/aa*
+unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/link.xml*
+unity/[Aa]ssets/[Aa]ddressables_Temp*
+unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers.meta
+unity/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+unity/[Aa]ssets/[Ss]cene[Dd]ependency[Cc]ache*
 
 # OS
 .DS_Store
