@@ -839,7 +839,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each law group's mechanical effect (food split, night-labour gate, burial tags, hound doctrine, old-rite tags) and law-change event logging
       - Validation guide at docs/validation/P3-09.md per docs/validation/README.md
     depends_on: [P3-04, P3-07, P3-08]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-10
     title: Moral pressures, household sanity and abbey transformation

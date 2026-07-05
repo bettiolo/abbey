@@ -229,6 +229,16 @@ namespace Abbey.EditorTools
             // sanity / light systems — no wiring.
             worldGO.AddComponent<Abbey.Decrees.OverdriveSystem>();
 
+            // Standing laws (P3-09). Five policy groups (Food, Night labour, Burial,
+            // Hound, Old rites), one active option each, changed by a cooldown-gated
+            // decree. Food drives the dawn ration pass through the ResourceLedger, Night
+            // labour gates the overdrive levers via OverdriveSystem.PermissionProvider,
+            // Burial pays per-death costs/refunds + grave tags, Hound writes the P3-07
+            // doctrine, Old rites drives daily sanctity / old-faith pressure. Reads
+            // LawsConfig; defaults are the humane set (Equal / Paid Risk / Full Rites /
+            // Family / Forbid Pagan Rites) — no wiring.
+            worldGO.AddComponent<Abbey.Decrees.LawSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
@@ -655,6 +665,12 @@ namespace Abbey.EditorTools
             // their permitted/affordable state, the levers active tonight, and the booked
             // + pending nightmare debt. Number keys 1-7 fire a lever while it is open.
             panelsGO.AddComponent<OverdriveDebugPanel>();
+
+            // Laws overlay + decree surface (L, left of the overdrive stack): each group's
+            // active option, its decree cooldown, today's ration math and the accrued tags
+            // + P3-10 pressures. The F-key row is full (F1-F12), so laws take the mnemonic
+            // key L; Shift+1..5 decrees a group while the panel is open.
+            panelsGO.AddComponent<LawsDebugPanel>();
 
             // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");
