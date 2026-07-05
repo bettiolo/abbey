@@ -1,29 +1,74 @@
-# Blender build artifacts — spec + generator script are the source of truth
+# Blender build artifacts - spec + generator script are the source of truth.
+# Keep generated GLBs/previews/metadata committed; ignore only heavy/native
+# Blender working files and editor backups.
 blender/generated/blend/
-*.blend1
+*.blend[0-9]*
+*.blend@
+*.blend~
+
+# Python/tooling caches
 __pycache__/
 *.pyc
 .pytest_cache/
 .uv-cache/
 
-# Unity
+# Unity generated cache/build output.
+# Do not ignore unity/Assets/**/*.meta or unity/Assets/Generated/BlenderAssets/*.glb:
+# those are committed so fresh checkouts can import generated assets without Blender.
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
 unity/Library/
 unity/Temp/
 unity/Obj/
 unity/Logs/
 unity/UserSettings/
 unity/Build/
-unity/*.csproj
-unity/*.sln
-unity/.vs/
+unity/Builds/
+
+# Repo-generated prototype scene. Source of truth is PrototypeSceneBuilder.cs.
+unity/Assets/_Game/Scenes/Prototype01.unity
+unity/Assets/_Game/Scenes/Prototype01.unity.meta
+
+# Unity generated project/IDE files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+sysinfo.txt
 
 # OS
 .DS_Store
+._*
+.Spotlight-V100
+.Trashes
 
 # Local environment/secrets
 .envrc
 *.alf
 test-results/
+
+# Editor local state
+.idea/
+.vscode/
+.vs/
+unity/.vs/
 
 # Claude harness state (agent worktrees live here during orchestration)
 .claude/worktrees/
