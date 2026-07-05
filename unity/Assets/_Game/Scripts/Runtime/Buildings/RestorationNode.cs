@@ -10,7 +10,7 @@ namespace Abbey.Buildings
         AbbeyGate,
         BellTower,
         CandleShrine,
-        InfirmaryCorner
+        AsylumCorner
     }
 
     /// <summary>
@@ -21,10 +21,10 @@ namespace Abbey.Buildings
     /// planning gate; materials are still paid haul by haul via
     /// <see cref="ConstructionSite.DeliverResource"/>, so nothing changes in the
     /// delivery economy). The gate and bell tower use their own catalog entries
-    /// (abbey_gate_repair, bell_tower_repair); the shrine and infirmary reuse the
-    /// free-buildable candle_shrine_t1 / infirmary_corner_t1 entries. Completion
+    /// (abbey_gate_repair, bell_tower_repair); the shrine and asylum reuse the
+    /// free-buildable candle_shrine_t1 / asylum_corner_t1 entries. Completion
     /// effects are catalog-driven inside <see cref="Building.Construct"/> (sacred
-    /// light, infirmary zone, <see cref="AbbeyState"/> flags); this component adds
+    /// light, asylum zone, <see cref="AbbeyState"/> flags); this component adds
     /// the fixed identity, an "abbey" restored log record and a static registry so
     /// builders/debug tools can list the abbey work. [ExecuteAlways] so EditMode
     /// tests get OnEnable/OnDisable registration.
@@ -74,7 +74,7 @@ namespace Abbey.Buildings
                 case RestorationNodeKind.AbbeyGate: return "abbey_gate_repair";
                 case RestorationNodeKind.BellTower: return "bell_tower_repair";
                 case RestorationNodeKind.CandleShrine: return "candle_shrine";
-                case RestorationNodeKind.InfirmaryCorner: return "infirmary_corner";
+                case RestorationNodeKind.AsylumCorner: return "asylum_corner";
                 default: return kind.ToString().ToLowerInvariant();
             }
         }
@@ -87,7 +87,7 @@ namespace Abbey.Buildings
                 case RestorationNodeKind.AbbeyGate: return "abbey_gate_repair";
                 case RestorationNodeKind.BellTower: return "bell_tower_repair";
                 case RestorationNodeKind.CandleShrine: return "candle_shrine_t1";
-                case RestorationNodeKind.InfirmaryCorner: return "infirmary_corner_t1";
+                case RestorationNodeKind.AsylumCorner: return "asylum_corner_t1";
                 default: return null;
             }
         }

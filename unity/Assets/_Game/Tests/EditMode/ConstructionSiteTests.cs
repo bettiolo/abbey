@@ -135,7 +135,7 @@ namespace Abbey.Tests.EditMode
             var expected = new[]
             {
                 "campfire_t1", "storage_pile_t1", "shelter_t1", "woodcutter_t1",
-                "lantern_post_t1", "guard_post_t1", "candle_shrine_t1", "infirmary_corner_t1",
+                "lantern_post_t1", "guard_post_t1", "candle_shrine_t1", "asylum_corner_t1",
             };
             foreach (var id in expected)
             {

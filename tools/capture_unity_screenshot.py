@@ -98,7 +98,8 @@ def main() -> int:
 
     unity = find_unity()
     if unity is None:
-        print("SKIP: no Unity editor available; screenshot capture runs in CI (GameCI).")
+        print("SKIP: no Unity editor available; capture locally via "
+              "tools/run_unity_mcp_gate.sh (CI does not run Unity).")
         print(f"      When present, this runs: Unity -batchmode -projectPath unity "
               f"-executeMethod {EXECUTE_METHOD} -quit -logFile -")
         return EXIT_SKIP

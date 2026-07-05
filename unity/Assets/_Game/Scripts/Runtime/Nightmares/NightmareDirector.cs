@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Light;
 using Abbey.Villagers;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Nightmares
@@ -54,6 +56,9 @@ namespace Abbey.Nightmares
 
         [Tooltip("Where the sea took them: deaths near this anchor count as died-by-water and the drowned sailor rises beside it. Unset = no water deaths are ever recorded.")]
         public Transform shipwreckAnchor;
+
+        [Tooltip("Phase 3 escalation system (optional). Auto-found when phase3NightsEnabled; drives wave budget + the nightly dark objective.")]
+        public NightEscalationSystem escalation;
 
         PrototypeConfig _config;
         readonly List<MonsterController> _spawned = new List<MonsterController>();
@@ -110,6 +115,22 @@ namespace Abbey.Nightmares
             set { _config = value; }
         }
 
+        /// <summary>The escalation system (Phase 3), from the serialized field, the singleton, or the scene.</summary>
+        public NightEscalationSystem Escalation
+        {
+            get
+            {
+                if (escalation == null)
+                {
+                    escalation = NightEscalationSystem.Instance != null
+                        ? NightEscalationSystem.Instance
+                        : FindFirstObjectByType<NightEscalationSystem>();
+                }
+                return escalation;
+            }
+            set { escalation = value; }
+        }
+
         float NightDuration => Mathf.Max(0.01f, Config.nightDurationSeconds);
 
         void OnEnable()
@@ -153,6 +174,12 @@ namespace Abbey.Nightmares
             _nextEventIndex = 0;
             _nightActive = true;
             GameEventLog.Append("night_begins", $"night={_nightNumber}");
+
+            if (cfg.phase3NightsEnabled)
+            {
+                BeginPhase3Night(cfg);
+                return; // Phase 3 spawns the escalation wave up front, no schedule
+            }
 
             if (cfg.phase2NightsEnabled)
             {
@@ -216,9 +243,58 @@ namespace Abbey.Nightmares
             }
         }
 
+        /// <summary>
+        /// The Phase 3 escalating night (P3-06): the <see cref="NightEscalationSystem"/>
+        /// turns tonight's night index + season into a wave budget and generates the
+        /// dark objective; the director spawns that many monsters on the dark ring (a
+        /// set-piece stand mixes in a lantern moth for variety). Fully deterministic:
+        /// spawn seeds derive from the config seed + night index like the legacy path.
+        /// </summary>
+        void BeginPhase3Night(PrototypeConfig cfg)
+        {
+            _schedule = null;
+            var esc = Escalation;
+            var season = SeasonSystem.Instance != null
+                ? SeasonSystem.Instance.CurrentSeason
+                : Season.Spring;
+
+            int count;
+            bool setPiece;
+            if (esc != null)
+            {
+                count = esc.BeginNight(_nightNumber, season, transform.position);
+                setPiece = esc.IsSetPieceTonight;
+            }
+            else
+            {
+                var combat = CombatConfig.LoadOrDefault();
+                count = NightEscalationSystem.WaveMonsterCount(combat, _nightNumber, season);
+                setPiece = NightEscalationSystem.IsSetPieceNight(combat, _nightNumber);
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                int seed = cfg.simulationSeed + _nightNumber * 977 + i * 131;
+                // Set-piece stands mix in a lantern moth every third slot for variety.
+                var type = (setPiece && i % 3 == 2)
+                    ? NightmareType.LanternMoth
+                    : NightmareType.PaleHound;
+                SpawnOnDarkRing(type, $"{type}_{_nightNumber}_{i}", seed, cfg);
+            }
+        }
+
         /// <summary>Cleans up the night and writes the summary. Public for tests/debug tools.</summary>
         public void EndNight()
         {
+            if (Config.phase3NightsEnabled)
+            {
+                var esc = Escalation;
+                if (esc != null)
+                {
+                    esc.ResolveNight();
+                }
+            }
+
             _nightActive = false;
             int dead = 0, injured = 0, missing = 0;
             var villagers = DuskRecallSystem.Villagers;

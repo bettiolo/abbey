@@ -4,6 +4,7 @@ using System.IO;
 using Abbey.Beast;
 using Abbey.Buildings;
 using Abbey.CameraRig;
+using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Debugging;
 using Abbey.Economy;
@@ -11,9 +12,12 @@ using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
+using Abbey.Sanity;
 using Abbey.Session;
+using Abbey.Settlement;
 using Abbey.UI;
 using Abbey.Villagers;
+using Abbey.World;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -122,12 +126,14 @@ namespace Abbey.EditorTools
             var hero = BuildHero();
             BuildCamera(config, hero.transform);
             BuildCamp(config);
+            BuildSeedSlots();
             var abbeyFlame = BuildAbbeyHill(config);
             var wreckAnchor = BuildBeach();
             director.shipwreckAnchor = wreckAnchor;
             BuildForestEdgeAndStream();
             BuildVillagers();
             BuildJobsAndEconomy();
+            BuildStarterProduction();
             BuildRestorationNodes();
             BuildSessionReportsAndPanels(hero, director, abbeyFlame);
         }
@@ -173,6 +179,47 @@ namespace Abbey.EditorTools
         {
             var clockGO = new GameObject("GameClock");
             clockGO.AddComponent<GameClock>();
+
+            // Seasonal calendar + weather (P3-01). SeasonSystem scales the clock's
+            // night phase toward Winter; WeatherSystem pushes the light/bell
+            // effectiveness multipliers into DarknessEvaluator and the Bellkeeper.
+            // Both observe the clock via EventBus and read SeasonConfig — no wiring.
+            var worldGO = new GameObject("WorldSystems");
+            worldGO.AddComponent<SeasonSystem>();
+            worldGO.AddComponent<WeatherSystem>();
+
+            // Seed-slot settlement growth (P3-02). Authored slots are added later
+            // (BuildSeedSlots, once the camp lights exist so the hug rule can read
+            // lit ground); completing a building opens child slots beside it.
+            worldGO.AddComponent<SeedSlotSystem>();
+
+            // Sanity / dread / asylum (P3-03). Tracks each villager's persistent
+            // sanity track, turns dark-exposure into dread and insanity, drives asylum
+            // admission and the home-recovery dread spill. Observes the clock via
+            // EventBus and reads SanityConfig — no wiring; it auto-finds the AsylumZone.
+            worldGO.AddComponent<SanitySystem>();
+
+            // Light-band combat + two-tier settler home defense (P3-05). Each night
+            // HomeDefenseSystem keeps occupied destructible homes asleep until a
+            // monster reaches the door, then flares the interior light and fires from
+            // lit windows at a sanity cost; overwhelmed homes are razed. Reads
+            // CombatConfig and the SanitySystem shelter map — no wiring.
+            worldGO.AddComponent<HomeDefenseSystem>();
+
+            // Night escalation + nightly dark objective (P3-06). Turns the night index
+            // + season into a wave budget for the director and generates one dark
+            // objective per night that only a warrior/hero/beast can solve. Reads the
+            // CombatConfig escalation section — no wiring. Only drives the wave when
+            // PrototypeConfig.phase3NightsEnabled is on (off by default).
+            worldGO.AddComponent<NightEscalationSystem>();
+
+            // Hound evolution (P3-07). Each dawn it scores the five paths (Guardian /
+            // War / Starved / Sacred / Broken) from the hound's accumulated treatment
+            // history + bond averages + Hound doctrine, adopts/locks the dominant path
+            // and pushes its behaviour onto the HoundController, exposing a beast-status
+            // value for P3-10 pressures and the P3-14 end summary. Reads
+            // HoundEvolutionConfig; auto-finds the hound — no wiring.
+            worldGO.AddComponent<HoundEvolutionSystem>();
 
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
@@ -232,10 +279,12 @@ namespace Abbey.EditorTools
                 "StoragePile", PrimitiveType.Cube, new Vector3(1.2f, 0.6f, 1.2f), 0.3f);
             storage.AddComponent<StoragePile>();
 
-            InstantiateGenerated("shelter_t1", new Vector3(-4f, 0f, 2f), "Shelter_A",
-                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
-            InstantiateGenerated("shelter_t1", new Vector3(-2f, 0f, 5f), "Shelter_B",
-                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
+            // Shelters are destructible homes (P3-05): they carry a Building bound to
+            // the shelter_t1 catalog entry so HomeDefenseSystem can wake, flare and
+            // (if overwhelmed) raze them. Occupants are assigned at play-start by the
+            // SettlerHomeBootstrap through the SanitySystem shelter map.
+            MakeHome(new Vector3(-4f, 0f, 2f), "Shelter_A");
+            MakeHome(new Vector3(-2f, 0f, 5f), "Shelter_B");
 
             // Lantern post on the camp's dark side, toward the abbey path.
             var lantern = InstantiateGenerated("lantern_post_t1", new Vector3(10f, 0f, 6f),
@@ -245,6 +294,61 @@ namespace Abbey.EditorTools
             lanternLight.strength = config.lanternStrength;
             lanternLight.fuelSeconds = config.defaultFuelSeconds;
             lanternLight.fuelConsumptionPerSecond = config.fuelConsumptionPerSecond;
+
+            // Warrior tier (P3-06): a lodge on the dark edge of camp promotes settlers
+            // into Dark-capable warriors (recruit via the F6 combat panel / debug tools)
+            // and a watchtower gives ranged support + the vision that arms the nightly
+            // dark objective. Both carry a Building bound to their catalog entry so the
+            // WarriorStructure component (attached by Building.Construct) drives them.
+            MakeWarriorStructure("warrior_lodge_t1", new Vector3(-8f, 0f, 6f), "WarriorLodge",
+                WarriorStructureRole.Lodge, new Vector3(3f, 2.5f, 3f), 1.25f);
+            MakeWarriorStructure("watchtower_t1", new Vector3(8f, 0f, -4f), "Watchtower",
+                WarriorStructureRole.Watchtower, new Vector3(1.6f, 3.5f, 1.6f), 1.75f);
+        }
+
+        /// <summary>
+        /// A warrior structure (P3-06): the catalog visual plus a Building bound to the
+        /// entry and the matching <see cref="WarriorStructure"/> role. Mirrors
+        /// <see cref="MakeHome"/> (no Building.Construct, so no build-time side effects).
+        /// </summary>
+        static void MakeWarriorStructure(string id, Vector3 groundPos, string name,
+            WarriorStructureRole role, Vector3 placeholderScale, float placeholderYOffset)
+        {
+            var go = InstantiateGenerated(id, groundPos, name,
+                PrimitiveType.Cube, placeholderScale, placeholderYOffset);
+            var building = go.AddComponent<Building>();
+            var type = BuildingCatalog.LoadOrDefault().Find(id);
+            if (type != null)
+            {
+                building.Initialize(type);
+            }
+            var structure = go.AddComponent<WarriorStructure>();
+            structure.role = role;
+        }
+
+        /// <summary>
+        /// Authors the initial seed-slot set (P3-02) once the camp lights stand, so
+        /// the hug rule sees lit ground. Slots ring the camp — beside the shelters
+        /// and along the lit path toward the abbey — as the open plots the player
+        /// grows from. Completing a building on any of them opens child slots beside
+        /// it. The system itself was created in BuildSimulationCore.
+        /// </summary>
+        static void BuildSeedSlots()
+        {
+            var system = UnityEngine.Object.FindFirstObjectByType<SeedSlotSystem>();
+            if (system == null)
+            {
+                return;
+            }
+
+            // Open plots hugging the camp fire/shelters and the lantern-lit path.
+            system.AddAuthoredSlot(new Vector3(-6f, 0f, 2f), SlotSizeClass.Medium);
+            system.AddAuthoredSlot(new Vector3(-4f, 0f, 5f), SlotSizeClass.Medium);
+            system.AddAuthoredSlot(new Vector3(4f, 0f, -3f), SlotSizeClass.Small);
+            system.AddAuthoredSlot(new Vector3(6f, 0f, 3f), SlotSizeClass.Large);
+            // A locked plot further out: only reachable once growth/light reaches it.
+            system.AddAuthoredSlot(new Vector3(12f, 0f, 8f), SlotSizeClass.Medium,
+                SlotState.Locked);
         }
 
         /// <summary>
@@ -356,6 +460,22 @@ namespace Abbey.EditorTools
             CreateVillager("Villager_FarNW", FarVillagerPost, seed: 11);
         }
 
+        /// <summary>
+        /// A destructible-home shelter: the shelter_t1 visual plus a Building bound to
+        /// the catalog entry so P3-05 home defense (wake / flare / raze) drives it.
+        /// </summary>
+        static void MakeHome(Vector3 groundPos, string name)
+        {
+            var go = InstantiateGenerated("shelter_t1", groundPos, name,
+                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
+            var building = go.AddComponent<Building>();
+            var type = BuildingCatalog.LoadOrDefault().Find("shelter_t1");
+            if (type != null)
+            {
+                building.Initialize(type);
+            }
+        }
+
         static void CreateVillager(string name, Vector3 groundPos, int seed)
         {
             // villager_lowpoly GLB when imported, else a small capsule.
@@ -396,6 +516,11 @@ namespace Abbey.EditorTools
 
             var econGO = new GameObject("EconomyBootstrap");
             econGO.AddComponent<SettlementEconomyBootstrap>();
+
+            // Assign settlers to the destructible-home shelters (P3-05 occupancy) via
+            // the SanitySystem shelter map, so homes have someone to defend and lose.
+            var homeGO = new GameObject("SettlerHomeBootstrap");
+            homeGO.AddComponent<SettlerHomeBootstrap>();
         }
 
         static void CreateJobWorkPoint(string name, VillagerJob job, Vector3 groundPos)
@@ -404,6 +529,35 @@ namespace Abbey.EditorTools
             go.transform.position = groundPos;
             var point = go.AddComponent<JobWorkPoint>();
             point.job = job;
+        }
+
+        /// <summary>
+        /// The renewable seasonal economy (P3-04): a starter Grain Field and Charcoal
+        /// Kiln standing near camp as completed <see cref="ProductionBuilding"/>s, plus
+        /// an authored field seed-slot for the player to raise more. Assign a Farmer /
+        /// Charcoaler to them (jobs debug flow) and fast-forward days: the field's grain
+        /// ticks up on harvest days and stops in Winter, while the kiln converts wood to
+        /// coal year-round. Recipes/yields all live in EconomyConfig. Watch it on the F2
+        /// economy panel alongside the F7 season panel.
+        /// </summary>
+        static void BuildStarterProduction()
+        {
+            var field = InstantiateGenerated("field_plot_t1", new Vector3(-8f, 0f, 4f),
+                "GrainField", PrimitiveType.Cube, new Vector3(2f, 0.4f, 2f), 0.2f);
+            var fieldProduction = field.AddComponent<ProductionBuilding>();
+            fieldProduction.Initialize("field_plot_t1");
+
+            var kiln = InstantiateGenerated("charcoal_kiln_t1", new Vector3(-9f, 0f, 1f),
+                "CharcoalKiln", PrimitiveType.Cube, new Vector3(2f, 1.4f, 2f), 0.7f);
+            var kilnProduction = kiln.AddComponent<ProductionBuilding>();
+            kilnProduction.Initialize("charcoal_kiln_t1");
+
+            // A starter field plot the player can build (seed-slot gated, P3-02).
+            var slots = UnityEngine.Object.FindFirstObjectByType<SeedSlotSystem>();
+            if (slots != null)
+            {
+                slots.AddAuthoredSlot(new Vector3(-10f, 0f, 4f), SlotSizeClass.Medium);
+            }
         }
 
         /// <summary>
@@ -420,7 +574,7 @@ namespace Abbey.EditorTools
                 basePos + new Vector3(0f, 0f, 0.5f));
             RestorationNode.Place(RestorationNodeKind.CandleShrine,
                 basePos + new Vector3(3.5f, 0f, 2f));
-            RestorationNode.Place(RestorationNodeKind.InfirmaryCorner,
+            RestorationNode.Place(RestorationNodeKind.AsylumCorner,
                 basePos + new Vector3(-3.5f, 0f, 3.5f));
         }
 
@@ -467,7 +621,28 @@ namespace Abbey.EditorTools
             var nightmarePanel = panelsGO.AddComponent<NightmareDebugPanel>();
             nightmarePanel.director = director;
 
-            // Player-facing HUD + minimap. Display-only; F7/F8 toggle them.
+            // Season/weather overlay (F11). WeatherSystem auto-finds the Bellkeeper,
+            // but hand it the reference so the multiplier is pushed from frame one.
+            // (F11/F10 here: F7/F8 belong to the player HUD/minimap below, F5 to the
+            // morning report.)
+            panelsGO.AddComponent<SeasonDebugPanel>();
+            var weather = UnityEngine.Object.FindFirstObjectByType<WeatherSystem>();
+            if (weather != null)
+            {
+                weather.bellkeeper = bellkeeper;
+            }
+
+            // Seed-slot settlement overlay (F10): slot counts, light debt, slot gizmos.
+            panelsGO.AddComponent<SettlementDebugPanel>();
+
+            // Sanity overlay (F9, top-left): per-villager sanity/dread bars, asylum
+            // roster, tonight's held units.
+            panelsGO.AddComponent<SanityDebugPanel>();
+
+            // Combat + home-defense overlay (F6, right): band multipliers, live
+            // monster count, and each destructible home's state + hit-point bar.
+            panelsGO.AddComponent<CombatDebugPanel>();
+            // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");
             hudGO.AddComponent<GameHud>();
             hudGO.AddComponent<MinimapPanel>();

@@ -9,11 +9,12 @@ namespace Abbey.Buildings
     /// What a completed building *is* to the simulation. Completion attaches the
     /// matching runtime component: <see cref="Abbey.Light.LightSource"/> for
     /// LightSource, <see cref="Abbey.Economy.StoragePile"/> for Storage, a sacred
-    /// LightSource for Shrine, an <see cref="InfirmaryZone"/> for Infirmary; Gate
+    /// LightSource for Shrine, an <see cref="AsylumZone"/> for Asylum; Gate
     /// and BellTower flip their <see cref="AbbeyState"/> flags (abbey restoration,
     /// P2-04). Shelter, WorkHut and GuardPost are identified by
     /// <see cref="Building.Kind"/> alone. New kinds append at the end (serialized
-    /// enum indices must stay stable).
+    /// enum indices must stay stable — Asylum keeps index 6, the former sick-corner
+    /// slot, renamed in P3-02).
     /// </summary>
     public enum FunctionKind
     {
@@ -23,9 +24,12 @@ namespace Abbey.Buildings
         WorkHut,
         GuardPost,
         Shrine,
-        Infirmary,
+        Asylum,
         Gate,
-        BellTower
+        BellTower,
+        Production,
+        WarriorLodge,
+        Watchtower
     }
 
     /// <summary>
@@ -68,6 +72,14 @@ namespace Abbey.Buildings
 
         [Tooltip("Optional finished-building visual (generated GLB prefab hook). Null = placeholder cube scaled to the footprint.")]
         public GameObject completedVisualPrefab;
+
+        [Tooltip("A home settlers shelter in at night: destructible under the P3-05 night assault "
+                 + "(monsters can raze it, killing the occupants and losing its light node). "
+                 + "Structural property, not balance — the hit-point number lives in CombatConfig.")]
+        public bool destructibleHome;
+
+        [Tooltip("Per-type multiplier on CombatConfig.baseHomeHitPoints (sturdier homes take more to raze). Only used when destructibleHome.")]
+        [Min(0f)] public float homeHitPointMultiplier = 1f;
 
         /// <summary>Occupied ground rect when centered at a world position (XZ plane).</summary>
         public Rect FootprintAt(Vector3 worldPosition)
@@ -144,7 +156,7 @@ namespace Abbey.Buildings
 
         /// <summary>
         /// Coded default catalog: the buildable set of VERTICAL_SLICE_SPEC §5 with
-        /// GAME_DESIGN.md §8 cost flavours (shrine = candles+relic, infirmary =
+        /// GAME_DESIGN.md §8 cost flavours (shrine = candles+relic, asylum corner =
         /// medicine+wood). An asset at Resources/BuildingCatalog overrides all of it.
         /// </summary>
         static List<BuildingType> CreateDefaultBuildings()
@@ -178,6 +190,7 @@ namespace Abbey.Buildings
                     cost = { new ResourceStack(ResourceType.Wood, 10) },
                     buildWorkSeconds = 15f,
                     function = FunctionKind.Shelter,
+                    destructibleHome = true,
                 },
                 new BuildingType
                 {
@@ -226,8 +239,8 @@ namespace Abbey.Buildings
                 },
                 new BuildingType
                 {
-                    id = "infirmary_corner_t1",
-                    displayName = "Infirmary Corner",
+                    id = "asylum_corner_t1",
+                    displayName = "Asylum Corner",
                     footprint = new Vector2(3f, 3f),
                     cost =
                     {
@@ -235,7 +248,7 @@ namespace Abbey.Buildings
                         new ResourceStack(ResourceType.Medicine, 2),
                     },
                     buildWorkSeconds = 12f,
-                    function = FunctionKind.Infirmary,
+                    function = FunctionKind.Asylum,
                 },
                 // Abbey restoration nodes (GAME_DESIGN.md §8: gate = wood+stone,
                 // bell tower = wood+iron). Fixed pre-placed sites; see RestorationNode.
@@ -264,6 +277,86 @@ namespace Abbey.Buildings
                     },
                     buildWorkSeconds = 20f,
                     function = FunctionKind.BellTower,
+                },
+                // Renewable production buildings (P3-04). Each carries a
+                // ProductionBuilding once complete; recipes/yields live in
+                // EconomyConfig (RecipeFor keyed by these ids). field_plot_t1 reuses
+                // the A2-01 field asset; pasture/kiln/smithy get their own specs.
+                new BuildingType
+                {
+                    id = "field_plot_t1",
+                    displayName = "Grain Field",
+                    footprint = new Vector2(2f, 2f),
+                    cost = { new ResourceStack(ResourceType.Wood, 4) },
+                    buildWorkSeconds = 8f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "pasture_t1",
+                    displayName = "Pasture",
+                    footprint = new Vector2(4f, 4f),
+                    cost = { new ResourceStack(ResourceType.Wood, 6) },
+                    buildWorkSeconds = 10f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "charcoal_kiln_t1",
+                    displayName = "Charcoal Kiln",
+                    footprint = new Vector2(2f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 4),
+                        new ResourceStack(ResourceType.Stone, 4),
+                    },
+                    buildWorkSeconds = 12f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "smithy_t1",
+                    displayName = "Smithy",
+                    footprint = new Vector2(3f, 3f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 6),
+                        new ResourceStack(ResourceType.ScrapIron, 3),
+                    },
+                    buildWorkSeconds = 14f,
+                    function = FunctionKind.Production,
+                },
+                // Warrior tier (P3-06). The lodge recruits/houses/upgrades warriors;
+                // the watchtower adds ranged support and the vision that arms the
+                // nightly dark objective. Warrior stats + upgrade costs live in
+                // CombatConfig, never here — the build cost is the structure's own.
+                new BuildingType
+                {
+                    id = "warrior_lodge_t1",
+                    displayName = "Warrior Lodge",
+                    footprint = new Vector2(4f, 4f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 10),
+                        new ResourceStack(ResourceType.ScrapIron, 4),
+                        new ResourceStack(ResourceType.Tools, 2),
+                    },
+                    buildWorkSeconds = 18f,
+                    function = FunctionKind.WarriorLodge,
+                },
+                new BuildingType
+                {
+                    id = "watchtower_t1",
+                    displayName = "Watchtower",
+                    footprint = new Vector2(2.5f, 2.5f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 8),
+                        new ResourceStack(ResourceType.Stone, 4),
+                        new ResourceStack(ResourceType.ScrapIron, 2),
+                    },
+                    buildWorkSeconds = 16f,
+                    function = FunctionKind.Watchtower,
                 },
             };
         }

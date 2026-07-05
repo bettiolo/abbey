@@ -1,7 +1,47 @@
+using System.Collections.Generic;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Economy
 {
+    /// <summary>
+    /// One renewable production recipe (P3-04): what a completed production building
+    /// turns a day of staffed work into. All values are data — never in the
+    /// <see cref="ProductionBuilding"/> MonoBehaviour.
+    ///
+    /// <para><b>Seasonal (growth) recipes</b> — <see cref="seasonal"/> true — are
+    /// scaled by <see cref="EconomyConfig.SeasonalYieldMultiplier"/>: they ripen more
+    /// toward autumn and do not grow at all in winter (multiplier 0 halts them).
+    /// Fields and pastures are seasonal.</para>
+    ///
+    /// <para><b>Conversion recipes</b> — <see cref="seasonal"/> false — run
+    /// year-round at ×1 (winter never stops a kiln or a smithy). They consume
+    /// <see cref="inputs"/> from the ledger to make <see cref="outputs"/>.</para>
+    /// </summary>
+    [System.Serializable]
+    public class ProductionRecipe
+    {
+        [Tooltip("Catalog id of the building that runs this recipe (BuildingType.id).")]
+        public string buildingId;
+
+        [Tooltip("True = growth recipe (season-scaled yield, halted in winter). "
+                 + "False = conversion recipe (year-round, ×1).")]
+        public bool seasonal = true;
+
+        [Tooltip("Staffed workers needed before the cycle advances at all.")]
+        [Min(1)] public int workersRequired = 1;
+
+        [Tooltip("Worker-days of staffed work to complete one production cycle. "
+                 + "Progress accrues by (staffed workers) per growing day.")]
+        [Min(0.01f)] public float cycleDays = 2f;
+
+        [Tooltip("Resources consumed from the ledger each completed cycle (conversion inputs).")]
+        public List<ResourceStack> inputs = new List<ResourceStack>();
+
+        [Tooltip("Resources deposited to the ledger each completed cycle (before seasonal scaling).")]
+        public List<ResourceStack> outputs = new List<ResourceStack>();
+    }
+
     /// <summary>
     /// Single ScriptableObject holding ALL Phase 2 economy tunables (AGENTS.md rule:
     /// no balance values inside MonoBehaviours). Systems fetch it via
@@ -48,6 +88,23 @@ namespace Abbey.Economy
         [Tooltip("Remaining fraction at or below this looks Stripped.")]
         [Range(0f, 1f)] public float salvageStrippedFraction = 0.25f;
 
+        [Header("Renewable economy — seasonal growth yield multipliers (P3-04)")]
+        [Tooltip("Spring (hope): sowing and first growth — the baseline yield.")]
+        [Min(0f)] public float springGrowthYield = 1f;
+        [Tooltip("Summer (growth): fuller harvests.")]
+        [Min(0f)] public float summerGrowthYield = 1.5f;
+        [Tooltip("Autumn (warning): the great harvest — the year's peak yield.")]
+        [Min(0f)] public float autumnGrowthYield = 2f;
+        [Tooltip("Winter (judgment): nothing grows. 0 halts every growth recipe, forcing stockpiling.")]
+        [Min(0f)] public float winterGrowthYield = 0f;
+
+        [Tooltip("Food units one milled/cooked unit of grain yields (grain -> food, 1:N). "
+                 + "Downstream conversion (P3-10 hunger, P3-14 manifest); not auto-applied here.")]
+        [Min(1)] public int grainToFoodRatio = 2;
+
+        [Tooltip("Renewable production recipes, one per production building (P3-04).")]
+        public List<ProductionRecipe> productionRecipes = CreateDefaultRecipes();
+
         static EconomyConfig _cached;
 
         /// <summary>
@@ -75,6 +132,104 @@ namespace Abbey.Economy
         public static void ClearCache()
         {
             _cached = null;
+        }
+
+        /// <summary>
+        /// Growth yield multiplier for a season (P3-04): autumn peaks, winter is 0 so
+        /// nothing grows. Conversion recipes ignore this and always run at ×1.
+        /// </summary>
+        public float SeasonalYieldMultiplier(Season season)
+        {
+            switch (season)
+            {
+                case Season.Spring: return springGrowthYield;
+                case Season.Summer: return summerGrowthYield;
+                case Season.Autumn: return autumnGrowthYield;
+                case Season.Winter: return winterGrowthYield;
+                default: return springGrowthYield;
+            }
+        }
+
+        /// <summary>Production recipe for a building id, or null (linear scan; tiny list).</summary>
+        public ProductionRecipe RecipeFor(string buildingId)
+        {
+            if (string.IsNullOrEmpty(buildingId) || productionRecipes == null)
+            {
+                return null;
+            }
+            for (int i = 0; i < productionRecipes.Count; i++)
+            {
+                if (productionRecipes[i] != null && productionRecipes[i].buildingId == buildingId)
+                {
+                    return productionRecipes[i];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>Food a quantity of grain mills into at the config ratio (grain -> food).</summary>
+        public int GrainToFood(int grain)
+        {
+            return grain <= 0 ? 0 : grain * Mathf.Max(1, grainToFoodRatio);
+        }
+
+        /// <summary>
+        /// Coded default renewable recipes (P3-04). Growth recipes (field, pasture)
+        /// are season-scaled and winter-halted; conversion recipes (charcoal kiln,
+        /// smithy) run year-round consuming ledger inputs. An asset at
+        /// Resources/EconomyConfig overrides all of it.
+        /// </summary>
+        static List<ProductionRecipe> CreateDefaultRecipes()
+        {
+            return new List<ProductionRecipe>
+            {
+                new ProductionRecipe
+                {
+                    buildingId = "field_plot_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    outputs =
+                    {
+                        new ResourceStack(ResourceType.Grain, 3),
+                        new ResourceStack(ResourceType.Herbs, 1),
+                    },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "pasture_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    outputs =
+                    {
+                        new ResourceStack(ResourceType.Meat, 2),
+                        new ResourceStack(ResourceType.Wool, 2),
+                    },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "charcoal_kiln_t1",
+                    seasonal = false,
+                    workersRequired = 1,
+                    cycleDays = 1f,
+                    inputs = { new ResourceStack(ResourceType.Wood, 2) },
+                    outputs = { new ResourceStack(ResourceType.Coal, 1) },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "smithy_t1",
+                    seasonal = false,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    inputs =
+                    {
+                        new ResourceStack(ResourceType.ScrapIron, 1),
+                        new ResourceStack(ResourceType.Coal, 1),
+                    },
+                    outputs = { new ResourceStack(ResourceType.Tools, 1) },
+                },
+            };
         }
     }
 }

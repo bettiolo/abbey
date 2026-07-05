@@ -25,6 +25,17 @@ namespace Abbey.Villagers
         [Min(0)] public int defaultTenders = 1;
         [Min(0)] public int defaultGuards = 1;
 
+        [Header("Renewable production roster (P3-04; assigned explicitly, default 0)")]
+        [Min(0)] public int defaultFarmers = 0;
+        [Min(0)] public int defaultHerders = 0;
+        [Min(0)] public int defaultCharcoalers = 0;
+        [Min(0)] public int defaultSmiths = 0;
+
+        [Header("Production work")]
+        [Tooltip("Standing within this radius of the production building's work slot "
+                 + "counts as staffing it (mirrors the guard post radius).")]
+        [Min(0.1f)] public float productionStaffRadius = 1.5f;
+
         [Header("Hauling")]
         [Tooltip("Units of one resource a villager can physically carry per trip.")]
         [Min(1)] public int carryCapacity = 4;
@@ -61,6 +72,7 @@ namespace Abbey.Villagers
         [Min(0.1f)] public float woodcutterSpeedMultiplier = 1f;
         [Min(0.1f)] public float tenderSpeedMultiplier = 1.15f;
         [Min(0.1f)] public float guardSpeedMultiplier = 1.1f;
+        [Min(0.1f)] public float productionSpeedMultiplier = 1f;
 
         /// <summary>Walk-speed multiplier for a job (1 for None/unknown).</summary>
         public float SpeedMultiplier(VillagerJob job)
@@ -72,6 +84,11 @@ namespace Abbey.Villagers
                 case VillagerJob.Woodcutter: return woodcutterSpeedMultiplier;
                 case VillagerJob.Tender: return tenderSpeedMultiplier;
                 case VillagerJob.Guard: return guardSpeedMultiplier;
+                case VillagerJob.Farmer:
+                case VillagerJob.Herder:
+                case VillagerJob.Charcoaler:
+                case VillagerJob.Smith:
+                    return productionSpeedMultiplier;
                 default: return 1f;
             }
         }
@@ -86,6 +103,10 @@ namespace Abbey.Villagers
                 case VillagerJob.Woodcutter: return defaultWoodcutters;
                 case VillagerJob.Tender: return defaultTenders;
                 case VillagerJob.Guard: return defaultGuards;
+                case VillagerJob.Farmer: return defaultFarmers;
+                case VillagerJob.Herder: return defaultHerders;
+                case VillagerJob.Charcoaler: return defaultCharcoalers;
+                case VillagerJob.Smith: return defaultSmiths;
                 default: return 0;
             }
         }

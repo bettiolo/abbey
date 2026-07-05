@@ -189,10 +189,8 @@ namespace Abbey.Core
         [Header("Abbey restoration (P2-04)")]
         [Tooltip("Bell pulse radius multiplier once the bell tower is repaired (1 = no boost).")]
         [Min(1f)] public float bellTowerRangeMultiplier = 1.5f;
-        [Tooltip("Villagers within this radius of a completed infirmary corner get treated.")]
-        [Min(0f)] public float infirmaryRadius = 4f;
-        [Tooltip("Continuous seconds of treatment before an Injured/Resting villager is back on its feet.")]
-        [Min(0.01f)] public float infirmaryHealSeconds = 3f;
+        [Tooltip("Villagers within this radius of a completed asylum corner occupy its care zone (AsylumZone; P3-03 recovery uses this).")]
+        [Min(0f)] public float asylumRadius = 4f;
 
         [Header("Isometric camera")]
         [Min(0f)] public float cameraPanSpeed = 12f;
@@ -255,6 +253,10 @@ namespace Abbey.Core
 
         [Tooltip("Whispers rise from a dark point on this inner ring fraction of monsterSpawnMinRadius (the unlit road, nearer than the spawn ring).")]
         [Range(0f, 1f)] public float whisperRingFraction = 0.6f;
+
+        [Header("Nightmares — Phase 3 escalation (P3-06)")]
+        [Tooltip("Opt-in: run the Phase 3 escalating night (wave budget from the CombatConfig escalation curve + a nightly dark objective) instead of the scripted Phase 2 night. Takes precedence over phase2NightsEnabled. Off keeps the legacy / Phase 2 behaviour so the 0.1 tests are untouched.")]
+        public bool phase3NightsEnabled;
 
         // ============================== end nightmare block ===============
 

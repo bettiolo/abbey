@@ -1,0 +1,18 @@
+{
+  "id": "asylum_corner_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 3.0, "depth": 3.0, "height": 2.4 },
+  "style": {
+    "silhouette": "sheltered asylum corner: two low plank walls meeting in an L, a canvas awning stretched over the corner on poles, a raised cot with a pale bedroll, a second bedroll on the ground, a stool with a bone bowl — a quiet place for the mind-sick to rest",
+    "materials": ["mat_warm_wood", "mat_dark_wood", "mat_canvas", "mat_bone"]
+  },
+  "required_parts": ["l_walls", "awning", "poles", "cot", "bedrolls", "stool", "bowl"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2500, "max_materials": 4 },
+  "anchors": [
+    { "name": "bed", "type": "rest" },
+    { "name": "work_slot", "type": "work" }
+  ],
+  "pivot": "center_bottom"
+}

@@ -111,7 +111,7 @@ villager waiting for the Asylum direction to arrive in Phase 3.
 Blender: shipwreck_hull, shipwreck_crate (closed/open), shipwreck_barrel, sailcloth,
 campfire_t1, lantern_post_t1, shelter_t1, storage_pile_t1, woodcutter_t1, guard_post_t1,
 abbey_gate (ruined/repaired), bell_tower (ruined/repaired), candle_shrine_t1,
-asylum_corner_t1 (legacy placeholder may still be infirmary_corner_t1), abbey_wall_broken,
+asylum_corner_t1, abbey_wall_broken,
 hound_chain, grave_marker, forest_tree_01/02,
 rock_cluster, dirt_road_segment.
 Characters (low-poly placeholders, never block gameplay on art): bellkeeper, villager,

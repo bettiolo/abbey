@@ -53,6 +53,7 @@ namespace Abbey.Debugging
             _scroll = GUILayout.BeginScrollView(_scroll);
 
             DrawLedger();
+            DrawProductionBuildings();
             DrawSalvageSites();
             DrawLogTail();
 
@@ -103,6 +104,29 @@ namespace Abbey.Debugging
             }
         }
 
+        void DrawProductionBuildings()
+        {
+            var buildings = ProductionBuilding.Active;
+            Header($"Production ({buildings.Count})");
+            var season = Abbey.World.SeasonSystem.Instance != null
+                ? Abbey.World.SeasonSystem.Instance.CurrentSeason.ToString()
+                : "—";
+            Line($"season={season}");
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                var b = buildings[i];
+                if (b == null)
+                {
+                    continue;
+                }
+                var recipe = b.Recipe;
+                string kind = recipe == null ? "?" : (recipe.seasonal ? "growth" : "convert");
+                Line($"{b.BuildingId} [{kind}] staff={b.StaffedWorkers}" +
+                     (b.IsStaffed ? "" : " (idle)"));
+                Line($"  cycle {b.CycleProgress01 * 100f:F0}%  done={b.CompletedCycles}");
+            }
+        }
+
         void DrawSalvageSites()
         {
             var sites = SalvageSite.Active;
@@ -130,7 +154,8 @@ namespace Abbey.Debugging
             int shown = 0;
             for (int i = records.Count - 1; i >= 0 && shown < logTailCount; i--)
             {
-                if (records[i].Type != "resource" && records[i].Type != "salvage")
+                if (records[i].Type != "resource" && records[i].Type != "salvage"
+                    && records[i].Type != "production")
                 {
                     continue;
                 }

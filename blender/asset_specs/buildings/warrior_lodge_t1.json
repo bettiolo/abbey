@@ -1,0 +1,18 @@
+{
+  "id": "warrior_lodge_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 3.4, "depth": 3.4, "height": 3.6 },
+  "style": {
+    "silhouette": "stout timber longhall with a low sloped thatch roof, a weapon rack of spears leaning by the wide plank door, an iron-banded shield hung over the lintel, and a squat watch-lantern on the ridge",
+    "materials": ["mat_dark_wood", "mat_warm_wood", "mat_thatch", "mat_iron"]
+  },
+  "required_parts": ["body", "sloped_roof", "door", "weapon_rack", "shield", "ridge_lantern"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2600, "max_materials": 4 },
+  "anchors": [
+    { "name": "muster", "type": "work" },
+    { "name": "flame", "type": "light" }
+  ],
+  "pivot": "center_bottom"
+}

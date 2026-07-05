@@ -1,0 +1,141 @@
+{
+  "id": "pasture_t1",
+  "generated_at": "2026-07-05T15:10:21.751937+00:00",
+  "spec": {
+    "id": "pasture_t1",
+    "type": "building",
+    "theme": "field",
+    "footprint": {
+      "width": 4.0,
+      "depth": 4.0,
+      "height": 1.2
+    },
+    "style": {
+      "silhouette": "fenced grazing paddock: a post-and-rail timber fence ringing a grassy plot, a long water trough on one side and a round hay bale in a corner",
+      "materials": [
+        "mat_warm_wood",
+        "mat_dark_wood",
+        "mat_foliage",
+        "mat_dirt"
+      ]
+    },
+    "required_parts": [
+      "ground",
+      "grass",
+      "fence_posts",
+      "fence_rails",
+      "water_trough",
+      "hay_bale"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2500,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "work_slot",
+        "type": "work"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 3.94,
+    "depth": 3.94,
+    "height": 0.9,
+    "min": [
+      -1.97,
+      -1.97,
+      0.0
+    ],
+    "max": [
+      1.97,
+      1.97,
+      0.9
+    ]
+  },
+  "triangle_count": 432,
+  "material_count": 4,
+  "materials": [
+    "mat_dark_wood",
+    "mat_dirt",
+    "mat_foliage",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "work_slot",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/pasture_t1.glb",
+    "blend": "blender/generated/blend/pasture_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/pasture_t1_preview_day.png",
+      "night": "blender/generated/previews/pasture_t1_preview_night.png",
+      "winter": "blender/generated/previews/pasture_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/pasture_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/pasture_t1.glb (58108 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/pasture_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 3.940x3.940x0.900 vs footprint 4.0x4.0x1.2"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "432/2500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_dark_wood', 'mat_dirt', 'mat_foliage', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['work_slot'] present=['work_slot']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "pasture_t1_collision present"
+      }
+    ]
+  }
+}

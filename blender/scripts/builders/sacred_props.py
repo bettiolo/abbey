@@ -1,18 +1,18 @@
 """Builder family: sacred small structures — candle shrine, grave marker,
-infirmary corner.
+asylum corner.
 
 candle_shrine_t1: stepped stone plinth, back slab with a sheltered niche
 holding a gold icon, a huddled cluster of fat pale candles with warm flame
 tips. The camp's first sacred light. Anchors: flame (light), pray_slot (work).
 
-infirmary_corner_t1: two low plank walls in an L, canvas awning over the
+asylum_corner_t1: two low plank walls in an L, canvas awning over the
 corner, a raised cot with a pale bedroll, a ground bedroll, stool + bone bowl.
-Sickness is visible, not abstract. Anchors: bed (rest), work_slot (work).
+A sheltered place for the mind-sick to rest. Anchors: bed (rest), work_slot (work).
 
 grave_marker: one fresh grave — leaning stone cross at the head of a low
 earth mound, field stones at its foot. The cost of a bad night, in one prop.
 
-Budgets: shrine 800/4, infirmary 2500/4, grave 300/3.
+Budgets: shrine 800/4, asylum 2500/4, grave 300/3.
 """
 
 from __future__ import annotations
@@ -95,8 +95,8 @@ def build_candle_shrine(spec: dict) -> list[bpy.types.Object]:
     return objects
 
 
-@register_builder("infirmary_corner_t1")
-def build_infirmary_corner(spec: dict) -> list[bpy.types.Object]:
+@register_builder("asylum_corner_t1")
+def build_asylum_corner(spec: dict) -> list[bpy.types.Object]:
     objects: list[bpy.types.Object] = []
 
     # --- l_walls: low plank walls along +Y (back) and -X (left) ------------------

@@ -1,0 +1,149 @@
+{
+  "id": "warrior_lodge_t1",
+  "generated_at": "2026-07-05T17:14:10.498692+00:00",
+  "spec": {
+    "id": "warrior_lodge_t1",
+    "type": "building",
+    "theme": "camp",
+    "footprint": {
+      "width": 3.4,
+      "depth": 3.4,
+      "height": 3.6
+    },
+    "style": {
+      "silhouette": "stout timber longhall with a low sloped thatch roof, a weapon rack of spears leaning by the wide plank door, an iron-banded shield hung over the lintel, and a squat watch-lantern on the ridge",
+      "materials": [
+        "mat_dark_wood",
+        "mat_warm_wood",
+        "mat_thatch",
+        "mat_iron"
+      ]
+    },
+    "required_parts": [
+      "body",
+      "sloped_roof",
+      "door",
+      "weapon_rack",
+      "shield",
+      "ridge_lantern"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2600,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "muster",
+        "type": "work"
+      },
+      {
+        "name": "flame",
+        "type": "light"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 3.07615,
+    "depth": 3.13093,
+    "height": 3.07,
+    "min": [
+      -1.53807,
+      -1.56546,
+      0.0
+    ],
+    "max": [
+      1.53807,
+      1.56546,
+      3.07
+    ]
+  },
+  "triangle_count": 252,
+  "material_count": 4,
+  "materials": [
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_thatch",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "muster",
+      "type": "work"
+    },
+    {
+      "name": "flame",
+      "type": "light"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/warrior_lodge_t1.glb",
+    "blend": "blender/generated/blend/warrior_lodge_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/warrior_lodge_t1_preview_day.png",
+      "night": "blender/generated/previews/warrior_lodge_t1_preview_night.png",
+      "winter": "blender/generated/previews/warrior_lodge_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/warrior_lodge_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/warrior_lodge_t1.glb (35508 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/warrior_lodge_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 3.076x3.131x3.070 vs footprint 3.4x3.4x3.6"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "252/2600 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_dark_wood', 'mat_iron', 'mat_thatch', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['muster', 'flame'] present=['flame', 'muster']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "warrior_lodge_t1_collision present"
+      }
+    ]
+  }
+}

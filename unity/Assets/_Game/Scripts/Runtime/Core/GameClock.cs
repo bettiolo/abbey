@@ -37,6 +37,14 @@ namespace Abbey.Core
         /// <summary>1-based day counter; increments each time Dawn wraps back to Day.</summary>
         public int DayNumber { get; private set; } = 1;
 
+        /// <summary>
+        /// Season-driven scaling of the Night phase duration (SeasonSystem writes it;
+        /// default 1 = no scaling). Kept as a plain hook so the clock never imports
+        /// the calendar — nights lengthen toward Winter without season logic living
+        /// here (brief / AGENTS.md).
+        /// </summary>
+        public float NightLengthMultiplier { get; set; } = 1f;
+
         /// <summary>Total simulated seconds since the clock started.</summary>
         public float TotalTime => _totalTime;
 
@@ -150,7 +158,7 @@ namespace Abbey.Core
             {
                 case DayPhase.Day: return cfg.dayDurationSeconds;
                 case DayPhase.Dusk: return cfg.duskDurationSeconds;
-                case DayPhase.Night: return cfg.nightDurationSeconds;
+                case DayPhase.Night: return cfg.nightDurationSeconds * Mathf.Max(0.01f, NightLengthMultiplier);
                 case DayPhase.Dawn: return cfg.dawnDurationSeconds;
                 default: return cfg.dayDurationSeconds;
             }
@@ -159,12 +167,19 @@ namespace Abbey.Core
         void AdvancePhase()
         {
             var next = (DayPhase)(((int)Phase + 1) % 4);
-            if (next == DayPhase.Day)
+            bool newDay = next == DayPhase.Day;
+            if (newDay)
             {
                 DayNumber++;
             }
             Phase = next;
             EventBus.RaisePhaseChanged(Phase);
+            // Raise the day-counter event AFTER the phase event so listeners see the
+            // clock already on Day 1 of the new day (the calendar's callback surface).
+            if (newDay)
+            {
+                EventBus.RaiseDayChanged(DayNumber);
+            }
         }
     }
 }

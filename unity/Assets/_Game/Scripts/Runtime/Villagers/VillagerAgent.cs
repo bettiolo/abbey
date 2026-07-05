@@ -93,6 +93,14 @@ namespace Abbey.Villagers
         /// <summary>Job walk-speed multiplier applied to the work loop legs only.</summary>
         public float WorkSpeedMultiplier { get; set; } = 1f;
 
+        /// <summary>
+        /// Daytime work-efficiency multiplier written by
+        /// <see cref="Abbey.Sanity.SanitySystem"/> from the villager's sanity (1 when
+        /// no sanity system exists). The job layer scales its output by this and stops
+        /// working entirely at 0 — an insane villager downs tools until it recovers.
+        /// </summary>
+        public float SanityWorkEfficiency { get; set; } = 1f;
+
         /// <summary>True while the villager holds a day-loop assignment.</summary>
         public bool HasWorkAssignment => _hasAssignment;
 

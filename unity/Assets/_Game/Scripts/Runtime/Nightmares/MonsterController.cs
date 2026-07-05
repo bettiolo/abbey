@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Abbey.Buildings;
+using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Light;
 using Abbey.Villagers;
@@ -40,6 +42,7 @@ namespace Abbey.Nightmares
         public bool autoTick = true;
 
         PrototypeConfig _config;
+        CombatConfig _combat;
         bool _initialized;
         Transform _fleeFrom;
         float _attackCooldown;
@@ -72,6 +75,23 @@ namespace Abbey.Nightmares
                 return _config;
             }
             set { _config = value; }
+        }
+
+        /// <summary>
+        /// Combat tunables for the door-assault (band-scaled home damage). Lazily
+        /// loaded like <see cref="Config"/>; tests inject a specific instance.
+        /// </summary>
+        public CombatConfig Combat
+        {
+            get
+            {
+                if (_combat == null)
+                {
+                    _combat = CombatConfig.LoadOrDefault();
+                }
+                return _combat;
+            }
+            set { _combat = value; }
         }
 
         protected virtual void OnEnable()
@@ -184,22 +204,117 @@ namespace Abbey.Nightmares
             }
 
             var target = FindTargetVillager(cfg);
-            if (target == null)
+            bool reachableTarget = target != null
+                && DarknessEvaluator.Classify(target.transform.position) != LightZone.Safe;
+            if (reachableTarget)
+            {
+                Vector3 targetPos = target.transform.position;
+                float dist = PlanarMotion.Distance(transform.position, targetPos);
+                if (dist <= cfg.monsterAttackRange)
+                {
+                    TryAttack(target, cfg);
+                    return;
+                }
+
+                Vector3 next = PlanarMotion.Step(
+                    transform.position, targetPos, cfg.monsterMoveSpeed, dt, cfg.arrivalRadius, out _);
+                TryMoveTo(next, cfg);
+                return;
+            }
+
+            // No exposed villager to reach: assault an occupied home instead (P3-05
+            // anti-turtle). The monster braves the flaring door light to raze the
+            // house — its strikes are debuffed by the Safe band (the resolver), but
+            // numbers win.
+            if (TickDoorAssault(cfg, dt))
             {
                 return;
             }
 
-            Vector3 targetPos = target.transform.position;
-            float dist = PlanarMotion.Distance(transform.position, targetPos);
+            // Legacy fallback: with no home to raze, stalk a villager sheltering in
+            // Safe light (move toward it and recoil at the light, as before P3-05).
+            if (target != null)
+            {
+                Vector3 next = PlanarMotion.Step(
+                    transform.position, target.transform.position, cfg.monsterMoveSpeed, dt,
+                    cfg.arrivalRadius, out _);
+                TryMoveTo(next, cfg);
+            }
+        }
+
+        /// <summary>
+        /// Door-assault behaviour: close on the nearest occupied, unrazed home and
+        /// batter it. Unlike the villager hunt, the charge does NOT recoil from the
+        /// home's interior flare — the monster pushes into the light to break the
+        /// door (accepting the Safe-band damage penalty applied in
+        /// <see cref="TryAttackHome"/>). Returns true when a home was targeted.
+        /// </summary>
+        protected bool TickDoorAssault(PrototypeConfig cfg, float dt)
+        {
+            var home = FindTargetHome(cfg);
+            if (home == null)
+            {
+                return false;
+            }
+
+            Vector3 homePos = home.transform.position;
+            float dist = PlanarMotion.Distance(transform.position, homePos);
             if (dist <= cfg.monsterAttackRange)
             {
-                TryAttack(target, cfg);
-                return;
+                TryAttackHome(home, cfg);
+                return true;
             }
 
-            Vector3 next = PlanarMotion.Step(
-                transform.position, targetPos, cfg.monsterMoveSpeed, dt, cfg.arrivalRadius, out _);
-            TryMoveTo(next, cfg);
+            // Charge the door straight through the light (ignores IsTooBright).
+            transform.position = PlanarMotion.Step(
+                transform.position, homePos, cfg.monsterMoveSpeed, dt, cfg.monsterAttackRange * 0.5f, out _);
+            return true;
+        }
+
+        /// <summary>
+        /// The nearest occupied, unrazed destructible home in sight, or null. Empty
+        /// homes are ignored — the monster only presses a house with settlers inside.
+        /// </summary>
+        protected Building FindTargetHome(PrototypeConfig cfg)
+        {
+            Building best = null;
+            float bestDist = float.MaxValue;
+            var buildings = Building.Active;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                var b = buildings[i];
+                if (b == null || !b.IsDestructibleHome || b.IsRazed || b.Occupants.Count == 0)
+                {
+                    continue;
+                }
+                float dist = PlanarMotion.Distance(transform.position, b.transform.position);
+                if (dist <= cfg.monsterSightRange && dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = b;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>
+        /// Strikes a home within reach, dealing band-scaled structural damage through
+        /// <see cref="LightBandCombatResolver"/> (Safe doorstep ⇒ debuffed). The
+        /// attack cooldown gates repeat strikes; reaching zero hit points razes it.
+        /// </summary>
+        protected void TryAttackHome(Building home, PrototypeConfig cfg)
+        {
+            if (home == null || _attackCooldown > 0f)
+            {
+                return;
+            }
+            _attackCooldown = cfg.monsterAttackCooldownSeconds;
+            var band = DarknessEvaluator.Classify(transform.position);
+            var treatment = LightBandCombatResolver.Resolve(CombatSide.Monster, false, band, Combat);
+            float damage = Combat.monsterHomeAttackDamage * treatment.DamageMultiplier;
+            GameEventLog.Append("monster_attacked_home",
+                $"{name} -> {home.name} band={band} dmg={damage:F1}");
+            home.TakeStructuralDamage(damage);
         }
 
         /// <summary>
