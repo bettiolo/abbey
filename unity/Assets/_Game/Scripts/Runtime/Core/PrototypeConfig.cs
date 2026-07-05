@@ -252,6 +252,10 @@ namespace Abbey.Core
         [Tooltip("Whispers rise from a dark point on this inner ring fraction of monsterSpawnMinRadius (the unlit road, nearer than the spawn ring).")]
         [Range(0f, 1f)] public float whisperRingFraction = 0.6f;
 
+        [Header("Nightmares — Phase 3 escalation (P3-06)")]
+        [Tooltip("Opt-in: run the Phase 3 escalating night (wave budget from the CombatConfig escalation curve + a nightly dark objective) instead of the scripted Phase 2 night. Takes precedence over phase2NightsEnabled. Off keeps the legacy / Phase 2 behaviour so the 0.1 tests are untouched.")]
+        public bool phase3NightsEnabled;
+
         // ============================== end nightmare block ===============
 
         static PrototypeConfig _cached;

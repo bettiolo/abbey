@@ -27,7 +27,9 @@ namespace Abbey.Buildings
         Asylum,
         Gate,
         BellTower,
-        Production
+        Production,
+        WarriorLodge,
+        Watchtower
     }
 
     /// <summary>
@@ -323,6 +325,38 @@ namespace Abbey.Buildings
                     },
                     buildWorkSeconds = 14f,
                     function = FunctionKind.Production,
+                },
+                // Warrior tier (P3-06). The lodge recruits/houses/upgrades warriors;
+                // the watchtower adds ranged support and the vision that arms the
+                // nightly dark objective. Warrior stats + upgrade costs live in
+                // CombatConfig, never here — the build cost is the structure's own.
+                new BuildingType
+                {
+                    id = "warrior_lodge_t1",
+                    displayName = "Warrior Lodge",
+                    footprint = new Vector2(4f, 4f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 10),
+                        new ResourceStack(ResourceType.ScrapIron, 4),
+                        new ResourceStack(ResourceType.Tools, 2),
+                    },
+                    buildWorkSeconds = 18f,
+                    function = FunctionKind.WarriorLodge,
+                },
+                new BuildingType
+                {
+                    id = "watchtower_t1",
+                    displayName = "Watchtower",
+                    footprint = new Vector2(2.5f, 2.5f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 8),
+                        new ResourceStack(ResourceType.Stone, 4),
+                        new ResourceStack(ResourceType.ScrapIron, 2),
+                    },
+                    buildWorkSeconds = 16f,
+                    function = FunctionKind.Watchtower,
                 },
             };
         }

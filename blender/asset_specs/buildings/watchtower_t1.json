@@ -1,0 +1,18 @@
+{
+  "id": "watchtower_t1",
+  "type": "building",
+  "theme": "camp",
+  "footprint": { "width": 2.4, "depth": 2.6, "height": 6.0 },
+  "style": {
+    "silhouette": "tall slender timber watchtower on four iron-braced legs: a railed lookout deck, a pointed thatch cap, a leaning ladder, and a bright warm signal lantern hung at the deck corner marking the dark edge of the light territory",
+    "materials": ["mat_dark_wood", "mat_iron", "mat_thatch", "mat_warm_window"]
+  },
+  "required_parts": ["legs", "iron_braces", "deck", "railing", "roof_cap", "ladder", "signal_lantern"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2600, "max_materials": 4 },
+  "anchors": [
+    { "name": "watch_slot", "type": "work" },
+    { "name": "beacon", "type": "light" }
+  ],
+  "pivot": "center_bottom"
+}

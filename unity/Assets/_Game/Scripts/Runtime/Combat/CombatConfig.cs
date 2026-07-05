@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Abbey.Buildings;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Combat
@@ -86,6 +88,92 @@ namespace Abbey.Combat
         {
             float mult = type != null ? Mathf.Max(0f, type.homeHitPointMultiplier) : 1f;
             return Mathf.Max(1f, baseHomeHitPoints * (mult <= 0f ? 1f : mult));
+        }
+
+        // ==================================================================
+        // WARRIOR TIER (P3-06). Dark-capable professional defenders promoted at
+        // the lodge; their stats and the upgrade tree are ALL data here (no
+        // balance in the WarriorAgent / WarriorStructure MonoBehaviours).
+        // ==================================================================
+
+        [Header("Warriors — base stats (tier 0, before any lodge upgrade)")]
+        [Tooltip("A fresh warrior's structural health.")]
+        [Min(1f)] public float warriorBaseMaxHealth = 60f;
+        [Tooltip("Damage one warrior strike deals to a monster (before band scaling).")]
+        [Min(0f)] public float warriorBaseAttackDamage = 12f;
+        [Tooltip("How close a warrior must be to strike a monster.")]
+        [Min(0f)] public float warriorAttackRange = 1.6f;
+        [Tooltip("Seconds between warrior strikes.")]
+        [Min(0.01f)] public float warriorAttackCooldownSeconds = 0.6f;
+        [Tooltip("Warrior move speed while mustering / engaging in the dark.")]
+        [Min(0f)] public float warriorMoveSpeed = 3.5f;
+        [Tooltip("How close a warrior senses a monster to engage it.")]
+        [Min(0f)] public float warriorSightRange = 40f;
+        [Tooltip("How close a warrior must reach a dark objective to solve it.")]
+        [Min(0f)] public float warriorObjectiveSolveRadius = 1.5f;
+        [Tooltip("Fraction (0..1) of the Dark-band friendly sanity drain a warrior actually suffers (trained to endure the dark). 1 = same as a settler, 0 = immune.")]
+        [Range(0f, 1f)] public float warriorBaseDarkSanityDrainFraction = 0.6f;
+
+        [Header("Warrior lodge / recruitment")]
+        [Tooltip("Warriors a single lodge can house.")]
+        [Min(0)] public int warriorLodgeCapacity = 4;
+        [Tooltip("Trust/arrivals multiplier on recruitment volume (plain provider; defaults to 1 until P3-10/P3-13 wire real trust). Recruited count = floor(capacity * this).")]
+        [Range(0f, 1f)] public float warriorRecruitTrustMultiplier = 1f;
+        [Tooltip("Where a mustered warrior patrols: distance out from the lodge along the dark side.")]
+        [Min(0f)] public float warriorPatrolRadius = 12f;
+
+        [Header("Watchtower")]
+        [Tooltip("Vision radius that arms (reveals) the dark-objective marker so it can be solved.")]
+        [Min(0f)] public float watchtowerVisionRadius = 30f;
+        [Tooltip("Ranged support damage a watchtower deals to the nearest monster in range (before band scaling).")]
+        [Min(0f)] public float watchtowerShotDamage = 4f;
+        [Tooltip("Seconds between watchtower support shots.")]
+        [Min(0.01f)] public float watchtowerShotIntervalSeconds = 1.5f;
+        [Tooltip("Range of the watchtower's ranged support.")]
+        [Min(0f)] public float watchtowerRange = 20f;
+
+        [Header("Warrior upgrade tree (data-driven; no hard-coded stat numbers)")]
+        [Tooltip("Ordered lodge upgrade tiers. Each debits its cost from the ledger and adds its stat deltas cumulatively to every housed warrior.")]
+        public List<WarriorUpgradeTier> warriorUpgradeTiers = WarriorUpgrades.DefaultTiers();
+
+        // ==================================================================
+        // NIGHT ESCALATION CURVE (P3-06). Wave budget by night index + season,
+        // fed to the NightmareDirector so late-year nights become set-piece
+        // stands. Curve data lives here, never in NightEscalationSystem.
+        // ==================================================================
+
+        [Header("Night escalation — wave budget curve")]
+        [Tooltip("Wave budget on the very first night (night index 1).")]
+        [Min(0f)] public float escalationBaseWaveBudget = 1f;
+        [Tooltip("Extra wave budget added per night index (linear ramp within a season).")]
+        [Min(0f)] public float escalationPerNightGrowth = 0.5f;
+        [Tooltip("Budget cost of one spawned monster (budget / cost = monster count).")]
+        [Min(0.01f)] public float escalationMonsterUnitCost = 1f;
+        [Tooltip("Hard cap on monsters spawned in one night (safety).")]
+        [Min(0)] public int escalationMaxWaveMonsters = 24;
+
+        [Header("Night escalation — season multipliers (Autumn/Winter step up)")]
+        [Min(0f)] public float escalationSpringMultiplier = 1f;
+        [Min(0f)] public float escalationSummerMultiplier = 1.15f;
+        [Min(0f)] public float escalationAutumnMultiplier = 1.6f;
+        [Min(0f)] public float escalationWinterMultiplier = 2.2f;
+
+        [Header("Night escalation — set-piece stands")]
+        [Tooltip("Every Nth night is a set-piece stand with a larger wave. 0 disables set-piece nights.")]
+        [Min(0)] public int escalationSetPieceEveryNNights = 5;
+        [Tooltip("Wave-budget multiplier applied on a set-piece night.")]
+        [Min(1f)] public float escalationSetPieceMultiplier = 1.8f;
+
+        /// <summary>Wave-budget season multiplier (Autumn/Winter step up toward judgment).</summary>
+        public float SeasonWaveMultiplier(Season season)
+        {
+            switch (season)
+            {
+                case Season.Summer: return Mathf.Max(0f, escalationSummerMultiplier);
+                case Season.Autumn: return Mathf.Max(0f, escalationAutumnMultiplier);
+                case Season.Winter: return Mathf.Max(0f, escalationWinterMultiplier);
+                default: return Mathf.Max(0f, escalationSpringMultiplier);
+            }
         }
 
         static CombatConfig _cached;

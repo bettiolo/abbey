@@ -337,6 +337,16 @@ namespace Abbey.Buildings
                     var production = go.AddComponent<ProductionBuilding>();
                     production.Initialize(type.id);
                     break;
+                case FunctionKind.WarriorLodge:
+                    // Warrior tier (P3-06): recruits/houses/upgrades warriors. Stats and
+                    // upgrade costs live in CombatConfig.
+                    var lodge = go.AddComponent<WarriorStructure>();
+                    lodge.role = WarriorStructureRole.Lodge;
+                    break;
+                case FunctionKind.Watchtower:
+                    var tower = go.AddComponent<WarriorStructure>();
+                    tower.role = WarriorStructureRole.Watchtower;
+                    break;
                 // Shelter, WorkHut, GuardPost: identified by Building.Kind;
                 // behaviour arrives with later tasks (villager housing, roles).
             }

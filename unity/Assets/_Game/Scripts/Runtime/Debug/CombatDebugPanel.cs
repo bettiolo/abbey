@@ -68,11 +68,13 @@ namespace Abbey.Debugging
             }
 
             EnsureStyles();
-            GUILayout.BeginArea(new Rect(x, y, width, Mathf.Min(Screen.height - y - 8f, 380f)),
+            GUILayout.BeginArea(new Rect(x, y, width, Mathf.Min(Screen.height - y - 8f, 560f)),
                 GUI.skin.box);
 
             DrawBands();
             DrawHomes();
+            DrawEscalation();
+            DrawWarriors();
 
             GUILayout.EndArea();
         }
@@ -119,6 +121,84 @@ namespace Abbey.Debugging
             if (rows == 0)
             {
                 GUILayout.Label("(no destructible homes placed)", _labelStyle);
+            }
+        }
+
+        void DrawEscalation()
+        {
+            Header("Night escalation (P3-06)");
+            var esc = NightEscalationSystem.Instance;
+            if (esc == null)
+            {
+                GUILayout.Label("(no escalation system; Phase 3 nights off)", _labelStyle);
+                return;
+            }
+            GUILayout.Label(
+                $"night {esc.NightIndex}  season {esc.NightSeason}  " +
+                $"{(esc.IsSetPieceTonight ? "SET-PIECE" : "standard")}", _labelStyle);
+            GUILayout.Label(
+                $"wave budget {esc.TonightWaveBudget:0.0}  -> monsters {esc.TonightMonsterCount}",
+                _labelStyle);
+            var marker = esc.ActiveMarker;
+            if (marker != null)
+            {
+                string state = marker.IsSolved ? "SOLVED"
+                    : (marker.IsRevealed ? "active" : "unrevealed");
+                var band = DarknessEvaluator.Classify(marker.transform.position);
+                GUILayout.Label(
+                    $"objective {marker.Objective.KindId} [{state}] band={band}", _labelStyle);
+            }
+            else
+            {
+                GUILayout.Label("objective: (none tonight)", _labelStyle);
+            }
+        }
+
+        void DrawWarriors()
+        {
+            Header("Warriors");
+            var warriors = WarriorAgent.Active;
+            var lodges = WarriorStructure.Active;
+            for (int i = 0; i < lodges.Count; i++)
+            {
+                var s = lodges[i];
+                if (s == null)
+                {
+                    continue;
+                }
+                if (s.Role == WarriorStructureRole.Lodge)
+                {
+                    GUILayout.Label(
+                        $"{s.name}  lodge  tier {s.AppliedTierCount}/{s.MaxTierCount}  " +
+                        $"roster {s.Roster.Count}/{s.EffectiveCapacity}", _labelStyle);
+                }
+                else
+                {
+                    GUILayout.Label($"{s.name}  watchtower  vision/support", _labelStyle);
+                }
+            }
+            int live = 0;
+            for (int i = 0; i < warriors.Count; i++)
+            {
+                if (warriors[i] != null && warriors[i].IsAlive)
+                {
+                    live++;
+                }
+            }
+            GUILayout.Label($"warriors afield: {live}", _labelStyle);
+            int shown = 0;
+            for (int i = 0; i < warriors.Count && shown < maxRows; i++)
+            {
+                var w = warriors[i];
+                if (w == null)
+                {
+                    continue;
+                }
+                shown++;
+                var band = DarknessEvaluator.Classify(w.transform.position);
+                GUILayout.Label(
+                    $"  {w.name} [{w.State}] band={band} hp {w.Health:0}/{w.Stats.MaxHealth:0} " +
+                    $"san {w.Sanity:0.00}", _labelStyle);
             }
         }
 

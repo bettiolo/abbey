@@ -1,0 +1,150 @@
+{
+  "id": "watchtower_t1",
+  "generated_at": "2026-07-05T17:14:49.930895+00:00",
+  "spec": {
+    "id": "watchtower_t1",
+    "type": "building",
+    "theme": "camp",
+    "footprint": {
+      "width": 2.4,
+      "depth": 2.6,
+      "height": 6.0
+    },
+    "style": {
+      "silhouette": "tall slender timber watchtower on four iron-braced legs: a railed lookout deck, a pointed thatch cap, a leaning ladder, and a bright warm signal lantern hung at the deck corner marking the dark edge of the light territory",
+      "materials": [
+        "mat_dark_wood",
+        "mat_iron",
+        "mat_thatch",
+        "mat_warm_window"
+      ]
+    },
+    "required_parts": [
+      "legs",
+      "iron_braces",
+      "deck",
+      "railing",
+      "roof_cap",
+      "ladder",
+      "signal_lantern"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2600,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "watch_slot",
+        "type": "work"
+      },
+      {
+        "name": "beacon",
+        "type": "light"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.86676,
+    "depth": 2.26864,
+    "height": 5.92,
+    "min": [
+      -0.93338,
+      -1.13432,
+      0.0
+    ],
+    "max": [
+      0.93338,
+      1.13432,
+      5.92
+    ]
+  },
+  "triangle_count": 450,
+  "material_count": 4,
+  "materials": [
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_thatch",
+    "mat_warm_window"
+  ],
+  "anchors": [
+    {
+      "name": "watch_slot",
+      "type": "work"
+    },
+    {
+      "name": "beacon",
+      "type": "light"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/watchtower_t1.glb",
+    "blend": "blender/generated/blend/watchtower_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/watchtower_t1_preview_day.png",
+      "night": "blender/generated/previews/watchtower_t1_preview_night.png",
+      "winter": "blender/generated/previews/watchtower_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/watchtower_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/watchtower_t1.glb (60704 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/watchtower_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.867x2.269x5.920 vs footprint 2.4x2.6x6.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "450/2600 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_dark_wood', 'mat_iron', 'mat_thatch', 'mat_warm_window']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['watch_slot', 'beacon'] present=['beacon', 'watch_slot']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "watchtower_t1_collision present"
+      }
+    ]
+  }
+}

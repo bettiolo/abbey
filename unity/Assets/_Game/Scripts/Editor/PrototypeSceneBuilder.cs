@@ -162,6 +162,13 @@ namespace Abbey.EditorTools
             // CombatConfig and the SanitySystem shelter map — no wiring.
             worldGO.AddComponent<HomeDefenseSystem>();
 
+            // Night escalation + nightly dark objective (P3-06). Turns the night index
+            // + season into a wave budget for the director and generates one dark
+            // objective per night that only a warrior/hero/beast can solve. Reads the
+            // CombatConfig escalation section — no wiring. Only drives the wave when
+            // PrototypeConfig.phase3NightsEnabled is on (off by default).
+            worldGO.AddComponent<NightEscalationSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
@@ -235,6 +242,36 @@ namespace Abbey.EditorTools
             lanternLight.strength = config.lanternStrength;
             lanternLight.fuelSeconds = config.defaultFuelSeconds;
             lanternLight.fuelConsumptionPerSecond = config.fuelConsumptionPerSecond;
+
+            // Warrior tier (P3-06): a lodge on the dark edge of camp promotes settlers
+            // into Dark-capable warriors (recruit via the F6 combat panel / debug tools)
+            // and a watchtower gives ranged support + the vision that arms the nightly
+            // dark objective. Both carry a Building bound to their catalog entry so the
+            // WarriorStructure component (attached by Building.Construct) drives them.
+            MakeWarriorStructure("warrior_lodge_t1", new Vector3(-8f, 0f, 6f), "WarriorLodge",
+                WarriorStructureRole.Lodge, new Vector3(3f, 2.5f, 3f), 1.25f);
+            MakeWarriorStructure("watchtower_t1", new Vector3(8f, 0f, -4f), "Watchtower",
+                WarriorStructureRole.Watchtower, new Vector3(1.6f, 3.5f, 1.6f), 1.75f);
+        }
+
+        /// <summary>
+        /// A warrior structure (P3-06): the catalog visual plus a Building bound to the
+        /// entry and the matching <see cref="WarriorStructure"/> role. Mirrors
+        /// <see cref="MakeHome"/> (no Building.Construct, so no build-time side effects).
+        /// </summary>
+        static void MakeWarriorStructure(string id, Vector3 groundPos, string name,
+            WarriorStructureRole role, Vector3 placeholderScale, float placeholderYOffset)
+        {
+            var go = InstantiateGenerated(id, groundPos, name,
+                PrimitiveType.Cube, placeholderScale, placeholderYOffset);
+            var building = go.AddComponent<Building>();
+            var type = BuildingCatalog.LoadOrDefault().Find(id);
+            if (type != null)
+            {
+                building.Initialize(type);
+            }
+            var structure = go.AddComponent<WarriorStructure>();
+            structure.role = role;
         }
 
         /// <summary>

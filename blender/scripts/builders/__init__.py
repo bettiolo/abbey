@@ -28,4 +28,5 @@ from builders import shipwreck_hull  # noqa: E402,F401
 from builders import shipwreck_salvage  # noqa: E402,F401
 from builders import terrain_features  # noqa: E402,F401
 from builders import town_props  # noqa: E402,F401
+from builders import warrior_buildings  # noqa: E402,F401
 from builders import work_buildings  # noqa: E402,F401
