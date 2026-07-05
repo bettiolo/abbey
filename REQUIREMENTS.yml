@@ -941,7 +941,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover desire-path emergence from traffic, path speed bonus, lantern fuel debt on lit paths at night, ground-scar stamping at dawn, day fade, and winter snow-cover branch
       - Validation guide at docs/validation/P3-12.md per docs/validation/README.md
     depends_on: [P3-01, P3-02]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-13
     title: Island exploration, arrivals and dilemmas

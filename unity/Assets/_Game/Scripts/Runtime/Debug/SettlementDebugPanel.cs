@@ -17,6 +17,9 @@ namespace Abbey.Debugging
         [Tooltip("Key that shows/hides the panel.")]
         public KeyCode toggleKey = KeyCode.F10;
 
+        [Tooltip("Key that toggles the traffic/desire-path wear heatmap gizmo (P3-12).")]
+        public KeyCode heatmapKey = KeyCode.K;
+
         [Tooltip("Start with the panel visible.")]
         public bool visible = true;
 
@@ -31,6 +34,10 @@ namespace Abbey.Debugging
             if (Input.GetKeyDown(toggleKey))
             {
                 visible = !visible;
+            }
+            if (Input.GetKeyDown(heatmapKey))
+            {
+                TrafficGrid.DrawHeatmap = !TrafficGrid.DrawHeatmap;
             }
         }
 
@@ -47,10 +54,11 @@ namespace Abbey.Debugging
 
             EnsureStyles();
 
-            GUILayout.BeginArea(new Rect(x, y, width, Mathf.Min(Screen.height - y - 8f, 200f)),
+            GUILayout.BeginArea(new Rect(x, y, width, Mathf.Min(Screen.height - y - 8f, 260f)),
                 GUI.skin.box);
 
             DrawSlots();
+            DrawPathsAndScars();
 
             GUILayout.EndArea();
         }
@@ -107,6 +115,38 @@ namespace Abbey.Debugging
                 Line($"{slot.state} {slot.sizeClass} {origin} " +
                      $"({slot.position.x:F0},{slot.position.z:F0})");
                 shown++;
+            }
+        }
+
+        /// <summary>Desire-path tiers + fuel/light debt and the transient ground-scar count (P3-12).</summary>
+        void DrawPathsAndScars()
+        {
+            Header($"Desire paths   [{heatmapKey}] heatmap {(TrafficGrid.DrawHeatmap ? "ON" : "off")}");
+            var grid = TrafficGrid.Instance;
+            var paths = DesirePathSystem.Instance;
+            if (grid == null || paths == null)
+            {
+                Line("no TrafficGrid / DesirePathSystem in scene");
+            }
+            else
+            {
+                int tier1 = grid.CountCellsAtTier(1);
+                int important = grid.CountCellsAtTier(paths.Config.importantTier);
+                Line($"path cells {tier1}  important {important}  wear {grid.TotalWear():F0}");
+                Line($"lit-path debt {paths.PathLightDebt:F1}  unlit {paths.UnlitImportantCellCount}" +
+                     $"  fuel-boosted lanterns {paths.BoostedLanternCount}");
+            }
+
+            var scars = GroundScarSystem.Instance;
+            Header("Ground scars");
+            if (scars == null)
+            {
+                Line("no GroundScarSystem in scene");
+            }
+            else
+            {
+                Line($"scars {scars.ScarCount}  snow-covered {scars.SnowCoveredCount()}" +
+                     $"  pending {scars.PendingViolenceCount}  ({scars.CurrentSeason})");
             }
         }
 

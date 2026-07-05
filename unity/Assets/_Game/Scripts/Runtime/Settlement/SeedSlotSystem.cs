@@ -289,7 +289,14 @@ namespace Abbey.Settlement
             {
                 return true;
             }
-            return zone == LightZone.Edge && cfg.litGroundIncludesEdge;
+            if (zone == LightZone.Edge && cfg.litGroundIncludesEdge)
+            {
+                return true;
+            }
+            // Child slots also hug existing desire paths (P3-12): the village grows
+            // "beside existing buildings, paths, and lit ground".
+            var paths = DesirePathSystem.Instance;
+            return paths != null && paths.TierAt(candidate) >= 1;
         }
 
         // ------------------------------------------------------------------
@@ -330,6 +337,13 @@ namespace Abbey.Settlement
                 float area = Mathf.Max(0f, building.Type.footprint.x)
                              * Mathf.Max(0f, building.Type.footprint.y);
                 debt += area * cfg.DebtWeightFor(zone);
+            }
+
+            // Unlit important desire paths read as danger and add to the debt (P3-12).
+            var paths = DesirePathSystem.Instance;
+            if (paths != null)
+            {
+                debt += paths.ComputePathLightDebt();
             }
 
             return debt;

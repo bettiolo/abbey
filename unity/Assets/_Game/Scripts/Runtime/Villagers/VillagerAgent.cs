@@ -601,10 +601,15 @@ namespace Abbey.Villagers
             return WorkDurationOverride > 0f ? WorkDurationOverride : cfg.villagerWorkDurationSeconds;
         }
 
-        /// <summary>Steps toward a target, returns true when arrived.</summary>
+        /// <summary>
+        /// Steps toward a target, returns true when arrived. Villager foot travel wears
+        /// desire paths and reads their speed bonus (P3-12) via
+        /// <see cref="PlanarMotion.StepWorn"/>; with no TrafficGrid/DesirePathSystem in
+        /// the scene this is identical to <see cref="PlanarMotion.Step"/>.
+        /// </summary>
         bool StepTowards(Vector3 target, float speed, float dt)
         {
-            transform.position = PlanarMotion.Step(
+            transform.position = PlanarMotion.StepWorn(
                 transform.position, target, speed, dt, Config.arrivalRadius, out bool arrived);
             return arrived;
         }

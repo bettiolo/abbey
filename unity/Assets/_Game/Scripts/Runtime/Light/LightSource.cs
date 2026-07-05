@@ -36,6 +36,15 @@ namespace Abbey.Light
         /// <summary>Territory radius after strength scaling; 0 when unlit.</summary>
         public float EffectiveRadius => isLit ? radius * Mathf.Clamp01(strength) : 0f;
 
+        /// <summary>
+        /// Fuel-burn multiplier applied on top of the base rate (P3-12). The
+        /// <see cref="Abbey.Settlement.DesirePathSystem"/> raises it above 1 at dusk on
+        /// a lantern that covers an important desire path, so keeping a road lit through
+        /// the night burns extra fuel (fuel debt); it is restored to 1 at dawn. Default
+        /// 1 means no debt — an off-path lantern is untouched.
+        /// </summary>
+        [Min(0f)] public float PathFuelMultiplier = 1f;
+
         public bool HasInfiniteFuel => fuelSeconds < 0f;
 
         // ---- P3-08 overdrive: temporary "burn brighter, burn faster" mode ----
@@ -73,7 +82,7 @@ namespace Abbey.Light
                 return;
             }
 
-            fuelSeconds -= fuelConsumptionPerSecond * dt;
+            fuelSeconds -= fuelConsumptionPerSecond * Mathf.Max(0f, PathFuelMultiplier) * dt;
             if (fuelSeconds <= 0f)
             {
                 fuelSeconds = 0f;

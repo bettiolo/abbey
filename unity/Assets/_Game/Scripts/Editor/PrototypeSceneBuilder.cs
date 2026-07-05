@@ -193,6 +193,20 @@ namespace Abbey.EditorTools
             // lit ground); completing a building opens child slots beside it.
             worldGO.AddComponent<SeedSlotSystem>();
 
+            // Desire paths + ground scars (P3-12). The TrafficGrid accumulates villager
+            // foot traffic into a wear field (sized to the map bounds); DesirePathSystem
+            // turns wear into path tiers -> a walk-speed bonus (wired through
+            // PlanarMotion, so every villager participates with no per-agent code), decays
+            // untrodden paths each day, and at dusk makes lanterns over important paths
+            // burn extra fuel while unlit important paths add to the P3-02 light debt.
+            // GroundScarSystem stamps the night's razed homes at dawn as scars that fade
+            // before dusk (or persist snow-covered in Winter). Read PathsConfig; the grid
+            // heatmap toggles on the SettlementDebugPanel (key K) — no other wiring.
+            var trafficGrid = worldGO.AddComponent<TrafficGrid>();
+            trafficGrid.ConfigureBounds(new Vector2(-48f, -48f), new Vector2(48f, 48f));
+            worldGO.AddComponent<DesirePathSystem>();
+            worldGO.AddComponent<GroundScarSystem>();
+
             // Sanity / dread / asylum (P3-03). Tracks each villager's persistent
             // sanity track, turns dark-exposure into dread and insanity, drives asylum
             // admission and the home-recovery dread spill. Observes the clock via
