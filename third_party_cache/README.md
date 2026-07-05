@@ -46,6 +46,9 @@ Current selected texture/material cache entries:
 - `PolyHaven/Textures/rock_face_03/` -> `abbey_placeholder_abbey_stone_*`
 - `ambientCG/Materials/Wood095/` -> `abbey_placeholder_weathered_wood_*`
 
+See `unity/Assets/_Game/Art/Placeholders/Materials/README.md` for the acquisition
+method, source URLs, and prototype roles for these selected material placeholders.
+
 The current cache was populated from downloads used on 2026-07-04 and 2026-07-05.
 Re-download packs from the source pages above if local cache contents are missing or
 stale. `Quaternius/UltimateModularRuins/` may be partial if Google Drive blocks one of

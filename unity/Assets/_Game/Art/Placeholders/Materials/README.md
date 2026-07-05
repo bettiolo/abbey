@@ -6,14 +6,31 @@ runtime code must reference only these Abbey-named placeholder files.
 
 Downloaded on 2026-07-05. All selected files are 1k JPG maps.
 
+## Acquisition
+
+Poly Haven assets were discovered through the public API using a unique User-Agent and
+downloaded from the file URLs returned by `https://api.polyhaven.com/files/<asset_id>`.
+For each selected Poly Haven material, the 1k JPG `Diffuse`, `nor_gl`, and `Rough`
+maps were copied into this folder with Abbey-owned names.
+
+ambientCG assets were discovered through the v3 assets API and downloaded as 1K-JPG ZIP
+archives from the `downloads` URL returned by:
+
+- `https://ambientCG.com/api/v3/assets?type=material&q=grass&sort=popular&limit=8&include=title,url,downloads,maps,tags`
+- `https://ambientCG.com/api/v3/assets?type=material&q=wood&sort=popular&limit=10&include=title,url,downloads,maps,tags`
+
+The selected archives were `https://ambientCG.com/get?file=Grass005_1K-JPG.zip` and
+`https://ambientCG.com/get?file=Wood095_1K-JPG.zip`. Their `Color`, `NormalGL`, and
+`Roughness` maps were copied into this folder with Abbey-owned names.
+
 ## Selected Sources
 
-| Abbey placeholder | Source asset | Provider | Source URL | Cache path |
-| --- | --- | --- | --- | --- |
-| `abbey_placeholder_ground_grass_*` | `Grass005` | ambientCG, CC0 | https://ambientcg.com/a/Grass005 | `third_party_cache/ambientCG/Materials/Grass005/` |
-| `abbey_placeholder_beach_sand_*` | `coast_sand_03` | Poly Haven, CC0 | https://polyhaven.com/a/coast_sand_03 | `third_party_cache/PolyHaven/Textures/coast_sand_03/` |
-| `abbey_placeholder_abbey_stone_*` | `rock_face_03` | Poly Haven, CC0 | https://polyhaven.com/a/rock_face_03 | `third_party_cache/PolyHaven/Textures/rock_face_03/` |
-| `abbey_placeholder_weathered_wood_*` | `Wood095` | ambientCG, CC0 | https://ambientcg.com/a/Wood095 | `third_party_cache/ambientCG/Materials/Wood095/` |
+| Abbey placeholder | Prototype role | Source asset | Provider | Source URL | Cache path |
+| --- | --- | --- | --- | --- | --- |
+| `abbey_placeholder_ground_grass_*` | Meadow and forest floor map material (`map_meadow`, `map_ForestFloor`) | `Grass005` | ambientCG, CC0 | https://ambientcg.com/a/Grass005 | `third_party_cache/ambientCG/Materials/Grass005/` |
+| `abbey_placeholder_beach_sand_*` | Shipwreck beach map material (`map_Beach`) | `coast_sand_03` | Poly Haven, CC0 | https://polyhaven.com/a/coast_sand_03 | `third_party_cache/PolyHaven/Textures/coast_sand_03/` |
+| `abbey_placeholder_abbey_stone_*` | Abbey hill, rocks, walls, paving, and plaza placeholder material (`map_abbey_hill` plus stone-like imported placeholders) | `rock_face_03` | Poly Haven, CC0 | https://polyhaven.com/a/rock_face_03 | `third_party_cache/PolyHaven/Textures/rock_face_03/` |
+| `abbey_placeholder_weathered_wood_*` | Generic temporary wood for barrels, crates, hulls, planks, shelter, and storage placeholders | `Wood095` | ambientCG, CC0 | https://ambientcg.com/a/Wood095 | `third_party_cache/ambientCG/Materials/Wood095/` |
 
 ## Runtime Use
 

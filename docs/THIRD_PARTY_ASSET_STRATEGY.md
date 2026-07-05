@@ -81,6 +81,10 @@ Currently cached/selected sources:
 - ambientCG, CC0: selected 1k JPG PBR texture sets for meadow/forest ground and
   weathered wood placeholders.
 
+The exact acquisition method, source asset IDs, cache paths, and Abbey placeholder roles
+for the selected material maps are recorded in
+`unity/Assets/_Game/Art/Placeholders/Materials/README.md`.
+
 Approved but not yet selected into Unity placeholders:
 
 - Quaternius Ultimate Modular Ruins Pack, CC0: promising ruin modules, props, trees,
