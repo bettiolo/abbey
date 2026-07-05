@@ -175,7 +175,14 @@ namespace Abbey.Tests.PlayMode
             Assert.IsTrue(farmer.IsStaffingProduction, "the farmer reached and staffed the field");
             Assert.AreSame(field, farmer.ProductionTarget);
             Assert.AreEqual(1, field.StaffedWorkers, "the building counts the farmer as a worker");
-            Assert.Greater(maxDistance, 5f, "the farmer visibly walked out to the field");
+            float staffRadius = Mathf.Max(jobs.productionStaffRadius, proto.arrivalRadius);
+            Assert.Greater(maxDistance,
+                PlanarMotion.Distance(Vector3.zero, field.transform.position) - staffRadius - 0.1f,
+                "the farmer visibly walked out to the configured field staffing radius");
+            Assert.LessOrEqual(
+                PlanarMotion.Distance(villager.transform.position, field.transform.position),
+                staffRadius + 0.05f,
+                "the farmer staffed the field from within its configured work radius");
 
             // Two staffed days complete the 2-day cycle and deposit grain.
             Assert.IsFalse(field.AdvanceDay(Season.Spring));

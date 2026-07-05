@@ -52,6 +52,7 @@ namespace Abbey.Tests.EditMode
 
             Assert.Greater(c.bellkeeperMoveSpeed, 0f);
             Assert.Greater(c.bellkeeperSprintMultiplier, 1f);
+            Assert.Greater(c.movementObstaclePadding, 0f);
 
             Assert.Greater(c.villagerWalkSpeed, 0f);
             Assert.GreaterOrEqual(c.villagerPanicSpeed, c.villagerWalkSpeed);

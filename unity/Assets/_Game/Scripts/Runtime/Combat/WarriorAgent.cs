@@ -294,17 +294,18 @@ namespace Abbey.Combat
                 }
                 else
                 {
-                    transform.position = PlanarMotion.Step(
+                    transform.position = PlanarMotion.StepAroundBuildings(
                         transform.position, monster.transform.position, _stats.MoveSpeed, dt,
-                        _stats.AttackRange * 0.5f, out _);
+                        _stats.AttackRange * 0.5f, Config.movementObstaclePadding, out _);
                 }
                 return;
             }
 
             // Priority 3: hold the patrol line out in the dark (visibly outside the light).
             SetState(WarriorState.Mustering);
-            transform.position = PlanarMotion.Step(
-                transform.position, _patrolPoint, _stats.MoveSpeed, dt, Config.arrivalRadius, out _);
+            transform.position = PlanarMotion.StepAroundBuildings(
+                transform.position, _patrolPoint, _stats.MoveSpeed, dt, Config.arrivalRadius,
+                Config.movementObstaclePadding, out _);
         }
 
         bool TrySolveObjective(float dt)
@@ -328,9 +329,10 @@ namespace Abbey.Combat
             }
             else
             {
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, objective.transform.position, _stats.MoveSpeed, dt,
-                    Combat.warriorObjectiveSolveRadius * 0.5f, out _);
+                    Combat.warriorObjectiveSolveRadius * 0.5f,
+                    Config.movementObstaclePadding, out _);
             }
             return true;
         }
@@ -348,8 +350,9 @@ namespace Abbey.Combat
                 return;
             }
             SetState(WarriorState.Returning);
-            transform.position = PlanarMotion.Step(
-                transform.position, _garrisonPoint, _stats.MoveSpeed, dt, Config.arrivalRadius, out _);
+            transform.position = PlanarMotion.StepAroundBuildings(
+                transform.position, _garrisonPoint, _stats.MoveSpeed, dt, Config.arrivalRadius,
+                Config.movementObstaclePadding, out _);
         }
 
         void TryAttack(MonsterController monster)
@@ -397,6 +400,7 @@ namespace Abbey.Combat
         bool IsClosestWarriorTo(Vector3 position)
         {
             float myDist = PlanarMotion.Distance(transform.position, position);
+            int myIndex = _active.IndexOf(this);
             for (int i = 0; i < _active.Count; i++)
             {
                 var other = _active[i];
@@ -406,7 +410,7 @@ namespace Abbey.Combat
                 }
                 float dist = PlanarMotion.Distance(other.transform.position, position);
                 if (dist < myDist || (Mathf.Approximately(dist, myDist)
-                    && other.GetInstanceID() < GetInstanceID()))
+                    && i < myIndex))
                 {
                     return false;
                 }

@@ -52,6 +52,8 @@ namespace Abbey.Core
         [Header("Movement (shared kinematic steering)")]
         [Tooltip("Distance at which straight-line steering counts as arrived.")]
         [Min(0.01f)] public float arrivalRadius = 0.3f;
+        [Tooltip("Extra clearance units around building footprints for kinematic unit avoidance.")]
+        [Min(0f)] public float movementObstaclePadding = 0.35f;
 
         [Header("Villagers")]
         [Min(0f)] public float villagerWalkSpeed = 2f;

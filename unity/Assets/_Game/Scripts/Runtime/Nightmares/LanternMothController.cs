@@ -55,9 +55,11 @@ namespace Abbey.Nightmares
                     _wasFleeingHero = true;
                     GameEventLog.Append("nightmare", $"moth_flees_bellkeeper name={name}");
                 }
-                transform.position += PlanarMotion.Direction(
-                                          hero.transform.position, transform.position)
-                                      * cfg.lanternMothFleeSpeed * dt;
+                transform.position = PlanarMotion.MoveAroundBuildings(
+                    transform.position,
+                    PlanarMotion.Direction(hero.transform.position, transform.position)
+                    * cfg.lanternMothFleeSpeed * dt,
+                    cfg.movementObstaclePadding);
                 return;
             }
             _wasFleeingHero = false;
@@ -78,9 +80,10 @@ namespace Abbey.Nightmares
             if (dist > cfg.lanternMothDrainRange)
             {
                 // Fly straight at the glow — light never repels a moth.
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, _drainTarget.transform.position,
-                    cfg.lanternMothMoveSpeed, dt, cfg.lanternMothDrainRange * 0.5f, out _);
+                    cfg.lanternMothMoveSpeed, dt, cfg.lanternMothDrainRange * 0.5f,
+                    cfg.movementObstaclePadding, out _);
                 return;
             }
 

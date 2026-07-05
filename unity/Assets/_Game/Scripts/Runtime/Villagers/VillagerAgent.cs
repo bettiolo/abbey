@@ -529,9 +529,9 @@ namespace Abbey.Villagers
                 float dist = PlanarMotion.Distance(transform.position, _escort.position);
                 if (dist > cfg.rescueFollowDistance)
                 {
-                    transform.position = PlanarMotion.Step(
+                    transform.position = PlanarMotion.StepAroundBuildings(
                         transform.position, _escort.position, speed, dt,
-                        cfg.rescueFollowDistance, out _);
+                        cfg.rescueFollowDistance, cfg.movementObstaclePadding, out _);
                 }
                 return;
             }
@@ -559,7 +559,9 @@ namespace Abbey.Villagers
                 float angle = (float)(_rng.NextDouble() * Mathf.PI * 2.0);
                 _panicDir = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             }
-            transform.position += _panicDir * cfg.villagerPanicSpeed * dt;
+            transform.position = PlanarMotion.MoveAroundBuildings(
+                transform.position, _panicDir * cfg.villagerPanicSpeed * dt,
+                cfg.movementObstaclePadding);
 
             // Panic breaks when fear falls low enough (safe light drains it fastest).
             if (Fear < cfg.villagerPanicFearThreshold * cfg.villagerPanicBreakFearFraction)
@@ -591,8 +593,9 @@ namespace Abbey.Villagers
         /// <summary>Steps toward a target, returns true when arrived.</summary>
         bool StepTowards(Vector3 target, float speed, float dt)
         {
-            transform.position = PlanarMotion.Step(
-                transform.position, target, speed, dt, Config.arrivalRadius, out bool arrived);
+            transform.position = PlanarMotion.StepAroundBuildings(
+                transform.position, target, speed, dt, Config.arrivalRadius,
+                Config.movementObstaclePadding, out bool arrived);
             return arrived;
         }
 

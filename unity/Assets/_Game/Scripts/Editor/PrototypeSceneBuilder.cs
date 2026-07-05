@@ -266,6 +266,7 @@ namespace Abbey.EditorTools
             // Campfire: the first light zone. GLB when imported, cylinder otherwise.
             var campfire = InstantiateGenerated("campfire_t1", CampCenter, "Campfire",
                 PrimitiveType.Cylinder, new Vector3(0.8f, 0.25f, 0.8f), 0.25f);
+            TagPrototypeBuilding(campfire, "campfire_t1");
             var fireLight = campfire.AddComponent<LightSource>();
             fireLight.radius = config.campfireRadius;
             fireLight.strength = config.campfireStrength;
@@ -277,6 +278,7 @@ namespace Abbey.EditorTools
             // SettlementEconomyBootstrap, once this pile's capacity is counted.
             var storage = InstantiateGenerated("storage_pile_t1", new Vector3(3f, 0f, 3f),
                 "StoragePile", PrimitiveType.Cube, new Vector3(1.2f, 0.6f, 1.2f), 0.3f);
+            TagPrototypeBuilding(storage, "storage_pile_t1");
             storage.AddComponent<StoragePile>();
 
             // Shelters are destructible homes (P3-05): they carry a Building bound to
@@ -289,6 +291,7 @@ namespace Abbey.EditorTools
             // Lantern post on the camp's dark side, toward the abbey path.
             var lantern = InstantiateGenerated("lantern_post_t1", new Vector3(10f, 0f, 6f),
                 "LanternPost", PrimitiveType.Cube, new Vector3(0.3f, 2f, 0.3f), 1f);
+            TagPrototypeBuilding(lantern, "lantern_post_t1");
             var lanternLight = lantern.AddComponent<LightSource>();
             lanternLight.radius = config.lanternRadius;
             lanternLight.strength = config.lanternStrength;
@@ -349,6 +352,21 @@ namespace Abbey.EditorTools
             // A locked plot further out: only reachable once growth/light reaches it.
             system.AddAuthoredSlot(new Vector3(12f, 0f, 8f), SlotSizeClass.Medium,
                 SlotState.Locked);
+        }
+
+        static void TagPrototypeBuilding(GameObject go, string buildingId)
+        {
+            if (go == null)
+            {
+                return;
+            }
+            var type = BuildingCatalog.LoadOrDefault().Find(buildingId);
+            if (type == null)
+            {
+                return;
+            }
+            var building = go.GetComponent<Building>() ?? go.AddComponent<Building>();
+            building.Initialize(type);
         }
 
         /// <summary>

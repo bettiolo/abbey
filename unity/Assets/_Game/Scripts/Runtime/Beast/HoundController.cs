@@ -694,9 +694,9 @@ namespace Abbey.Beast
             if (_bellTarget.HasValue)
             {
                 BreakChainIfNeeded("answer_bell");
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, _bellTarget.Value, cfg.houndMoveSpeed, dt,
-                    cfg.arrivalRadius, out bool arrived);
+                    cfg.arrivalRadius, cfg.movementObstaclePadding, out bool arrived);
                 if (arrived)
                 {
                     GameEventLog.Append("hound_reached_bell", name);
@@ -721,7 +721,9 @@ namespace Abbey.Beast
 
         void TickFlee(PrototypeConfig cfg, float dt)
         {
-            transform.position += _fleeDirection * cfg.houndMoveSpeed * dt;
+            transform.position = PlanarMotion.MoveAroundBuildings(
+                transform.position, _fleeDirection * cfg.houndMoveSpeed * dt,
+                cfg.movementObstaclePadding);
             if (PlanarMotion.Distance(transform.position, _fleeOrigin) >= cfg.houndFleeDistance)
             {
                 _fleeingToMissing = false;
@@ -737,9 +739,9 @@ namespace Abbey.Beast
             // Drag the kill toward darkness, then eat alone.
             if (_dragTarget.HasValue)
             {
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, _dragTarget.Value, cfg.houndMoveSpeed, dt,
-                    cfg.arrivalRadius, out bool arrived);
+                    cfg.arrivalRadius, cfg.movementObstaclePadding, out bool arrived);
                 if (_dragCorpse != null)
                 {
                     _dragCorpse.position = transform.position;
@@ -862,9 +864,10 @@ namespace Abbey.Beast
             float dist = PlanarMotion.Distance(transform.position, _engageTarget.transform.position);
             if (dist > cfg.houndAttackRange)
             {
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, _engageTarget.transform.position,
-                    cfg.houndMoveSpeed, dt, cfg.houndAttackRange * 0.5f, out _);
+                    cfg.houndMoveSpeed, dt, cfg.houndAttackRange * 0.5f,
+                    cfg.movementObstaclePadding, out _);
                 return;
             }
 

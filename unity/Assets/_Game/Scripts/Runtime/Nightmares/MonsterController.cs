@@ -216,8 +216,9 @@ namespace Abbey.Nightmares
                     return;
                 }
 
-                Vector3 next = PlanarMotion.Step(
-                    transform.position, targetPos, cfg.monsterMoveSpeed, dt, cfg.arrivalRadius, out _);
+                Vector3 next = PlanarMotion.StepAroundBuildings(
+                    transform.position, targetPos, cfg.monsterMoveSpeed, dt, cfg.arrivalRadius,
+                    cfg.movementObstaclePadding, out _);
                 TryMoveTo(next, cfg);
                 return;
             }
@@ -235,9 +236,9 @@ namespace Abbey.Nightmares
             // Safe light (move toward it and recoil at the light, as before P3-05).
             if (target != null)
             {
-                Vector3 next = PlanarMotion.Step(
+                Vector3 next = PlanarMotion.StepAroundBuildings(
                     transform.position, target.transform.position, cfg.monsterMoveSpeed, dt,
-                    cfg.arrivalRadius, out _);
+                    cfg.arrivalRadius, cfg.movementObstaclePadding, out _);
                 TryMoveTo(next, cfg);
             }
         }
@@ -266,8 +267,14 @@ namespace Abbey.Nightmares
             }
 
             // Charge the door straight through the light (ignores IsTooBright).
-            transform.position = PlanarMotion.Step(
-                transform.position, homePos, cfg.monsterMoveSpeed, dt, cfg.monsterAttackRange * 0.5f, out _);
+            transform.position = PlanarMotion.StepAroundBuildings(
+                transform.position, homePos, cfg.monsterMoveSpeed, dt,
+                cfg.monsterAttackRange * 0.5f, cfg.movementObstaclePadding,
+                out bool reachedDoor);
+            if (reachedDoor)
+            {
+                TryAttackHome(home, cfg);
+            }
             return true;
         }
 
@@ -331,9 +338,10 @@ namespace Abbey.Nightmares
             float threatDist = PlanarMotion.Distance(transform.position, _fleeFrom.position);
             if (threatDist < cfg.monsterFleeDistance)
             {
-                Vector3 away = transform.position
-                               + PlanarMotion.Direction(_fleeFrom.position, transform.position)
-                               * fleeSpeed * dt;
+                Vector3 away = PlanarMotion.MoveAroundBuildings(
+                    transform.position,
+                    PlanarMotion.Direction(_fleeFrom.position, transform.position) * fleeSpeed * dt,
+                    cfg.movementObstaclePadding);
                 TryMoveTo(away, cfg);
                 return true;
             }
@@ -384,9 +392,11 @@ namespace Abbey.Nightmares
             {
                 return; // blocked but no single source to recoil from: hold position
             }
-            Vector3 away = transform.position
-                           + PlanarMotion.Direction(light.transform.position, transform.position)
-                           * cfg.monsterMoveSpeed * (1f / 60f); // small deterministic recoil step
+            Vector3 away = PlanarMotion.MoveAroundBuildings(
+                transform.position,
+                PlanarMotion.Direction(light.transform.position, transform.position)
+                * cfg.monsterMoveSpeed * (1f / 60f), // small deterministic recoil step
+                cfg.movementObstaclePadding);
             if (!IsTooBright(away, cfg))
             {
                 transform.position = away;

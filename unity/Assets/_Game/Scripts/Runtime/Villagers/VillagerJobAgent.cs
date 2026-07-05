@@ -953,8 +953,9 @@ namespace Abbey.Villagers
         bool StepSelf(VillagerAgent v, Vector3 target, float dt)
         {
             float speed = v.Config.villagerWalkSpeed * Config.SpeedMultiplier(job);
-            transform.position = PlanarMotion.Step(
-                transform.position, target, speed, dt, v.Config.arrivalRadius, out bool arrived);
+            transform.position = PlanarMotion.StepAroundBuildings(
+                transform.position, target, speed, dt, v.Config.arrivalRadius,
+                v.Config.movementObstaclePadding, out bool arrived);
             return arrived;
         }
 
