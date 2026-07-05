@@ -399,7 +399,10 @@ namespace Abbey.Hero
             // Camera-relative ground directions under the locked 45° yaw.
             Vector3 forward = Quaternion.Euler(0f, IsoCameraController.Yaw, 0f) * Vector3.forward;
             Vector3 right = Quaternion.Euler(0f, IsoCameraController.Yaw, 0f) * Vector3.right;
-            Vector3 delta = (right * x + forward * z).normalized * cfg.bellkeeperMoveSpeed * dt;
+            bool sprint = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            float speed = cfg.bellkeeperMoveSpeed *
+                          (sprint ? cfg.bellkeeperSprintMultiplier : 1f);
+            Vector3 delta = (right * x + forward * z).normalized * speed * dt;
             transform.position += delta;
         }
     }

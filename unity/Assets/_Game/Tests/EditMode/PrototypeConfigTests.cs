@@ -50,6 +50,9 @@ namespace Abbey.Tests.EditMode
             Assert.Greater(c.sacredFlameRadius, 0f);
             Assert.GreaterOrEqual(c.fuelConsumptionPerSecond, 0f);
 
+            Assert.Greater(c.bellkeeperMoveSpeed, 0f);
+            Assert.Greater(c.bellkeeperSprintMultiplier, 1f);
+
             Assert.Greater(c.villagerWalkSpeed, 0f);
             Assert.GreaterOrEqual(c.villagerPanicSpeed, c.villagerWalkSpeed);
             Assert.That(c.villagerBraveryMin, Is.InRange(0f, 1f));

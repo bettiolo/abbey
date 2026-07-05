@@ -36,6 +36,8 @@ namespace Abbey.Core
 
         [Header("Bellkeeper")]
         [Min(0f)] public float bellkeeperMoveSpeed = 4f;
+        [Tooltip("Direct-input run multiplier while holding Shift with WASD/arrow movement.")]
+        [Min(1f)] public float bellkeeperSprintMultiplier = 1.65f;
         [Min(0f)] public float bellkeeperMaxHealth = 100f;
         [Min(0f)] public float bellkeeperMaxStamina = 100f;
         [Min(0f)] public float bellkeeperStaminaRegenPerSecond = 4f;
