@@ -871,7 +871,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover pressure updates from scripted event sequences, trust-threshold gates, household sanity aggregation, and each abbey transformation state's trigger + modifiers
       - Validation guide at docs/validation/P3-10.md per docs/validation/README.md
     depends_on: [P3-03, P3-09]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-11
     title: Consequence nightmares and threat-source pressure

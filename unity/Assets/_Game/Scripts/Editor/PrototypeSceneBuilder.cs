@@ -239,6 +239,14 @@ namespace Abbey.EditorTools
             // Family / Forbid Pagan Rites) — no wiring.
             worldGO.AddComponent<Abbey.Decrees.LawSystem>();
 
+            // Moral pressures (P3-10): a deterministic fold over the event log + law tags
+            // into Trust / Sanctity / Mercy / Fear / Reason / Hunger / Old-faith, recomputed
+            // each dawn. The abbey transformation then derives the settlement's form
+            // (Sanctuary / Fortress / Famine / Cult / Broken) and pushes its modifiers onto
+            // AbbeyState. Reads PressuresConfig; coded defaults — no wiring.
+            worldGO.AddComponent<Abbey.Morale.PressureSystem>();
+            worldGO.AddComponent<Abbey.Morale.AbbeyTransformationSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
@@ -671,6 +679,11 @@ namespace Abbey.EditorTools
             // + P3-10 pressures. The F-key row is full (F1-F12), so laws take the mnemonic
             // key L; Shift+1..5 decrees a group while the panel is open.
             panelsGO.AddComponent<LawsDebugPanel>();
+
+            // Moral-pressures + abbey-form overlay (M, bottom-left): every pressure with its
+            // trust tier, beast status + household sanity, the current abbey form + modifier
+            // line, and each candidate form's score vs its activation threshold (the "why").
+            panelsGO.AddComponent<PressureDebugPanel>();
 
             // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");

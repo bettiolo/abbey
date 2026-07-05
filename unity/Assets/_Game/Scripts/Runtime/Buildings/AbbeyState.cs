@@ -1,4 +1,5 @@
 using Abbey.Core;
+using Abbey.Morale;
 using UnityEngine;
 
 namespace Abbey.Buildings
@@ -36,6 +37,41 @@ namespace Abbey.Buildings
         /// consumed (DuskRecallSystem), never inside BellkeeperController.
         /// </summary>
         public static float BellRangeMultiplier { get; private set; } = 1f;
+
+        // ---- Transformation state (P3-10) ---------------------------------
+
+        /// <summary>
+        /// The abbey's derived identity (P3-10), written by
+        /// <see cref="Abbey.Morale.AbbeyTransformationSystem"/>: Balanced until a
+        /// transformation dominates, then one of Sanctuary / Fortress / Famine / Cult /
+        /// Broken. Read-only for everyone else.
+        /// </summary>
+        public static AbbeyForm CurrentForm { get; private set; } = AbbeyForm.Balanced;
+
+        /// <summary>
+        /// The settlement-wide modifiers the current form applies (magnitudes from
+        /// PressuresConfig — P3-10). Neutral under Balanced. Consumers read these instead of
+        /// branching on <see cref="CurrentForm"/>: sacred-light radius (Sanctuary), window
+        /// volley (Fortress), ration ceiling (Famine), recall penalty (Broken), offerings /
+        /// sanctity decay (Cult). Never null.
+        /// </summary>
+        public static AbbeyFormModifiers Modifiers { get; private set; } = NeutralModifiers();
+
+        static AbbeyFormModifiers NeutralModifiers()
+        {
+            return new AbbeyFormModifiers { rationCeilingMultiplier = 1f, note = "balanced" };
+        }
+
+        /// <summary>
+        /// Adopts a transformation form and its modifiers (called by
+        /// <see cref="Abbey.Morale.AbbeyTransformationSystem"/>). Idempotent; a null
+        /// modifier set falls back to the neutral one.
+        /// </summary>
+        public static void SetTransformation(AbbeyForm form, AbbeyFormModifiers modifiers)
+        {
+            CurrentForm = form;
+            Modifiers = modifiers ?? NeutralModifiers();
+        }
 
         public static void MarkGateRepaired()
         {
@@ -87,6 +123,8 @@ namespace Abbey.Buildings
             ShrineLit = false;
             AsylumBuilt = false;
             BellRangeMultiplier = 1f;
+            CurrentForm = AbbeyForm.Balanced;
+            Modifiers = NeutralModifiers();
         }
     }
 }
