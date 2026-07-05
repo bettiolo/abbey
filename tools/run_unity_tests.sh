@@ -8,7 +8,8 @@
 #   0 all requested test runs passed
 #   1 at least one test failed (or Unity itself failed)
 #   2 bad usage
-#   3 SKIP: no Unity editor available (normal in the agent container; CI runs GameCI)
+#   3 SKIP: no Unity editor available (normal in the agent container; CI does not
+#           run Unity either — verify locally with tools/run_unity_mcp_gate.sh)
 set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -59,7 +60,8 @@ find_unity() {
 UNITY_BIN="$(find_unity || true)"
 if [ -z "$UNITY_BIN" ]; then
   echo "SKIP: no Unity editor found (set UNITY_PATH or install $UNITY_VERSION)."
-  echo "      Unity tests run in CI via GameCI (.github/workflows/unity.yml)."
+  echo "      CI does NOT run Unity tests (no GameCI license secrets; Unity Personal)."
+  echo "      Verify on the Mac with tools/run_unity_mcp_gate.sh — see docs/VERIFICATION_STATUS.md."
   exit 3
 fi
 

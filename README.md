@@ -75,9 +75,11 @@ Python tooling runs through `uv`. `./tools/check_all.sh` requires `uv`, uses
 - **Phase 2** — "The First White Night" vertical slice: merged to `main`
 - Roadmap through Phase 4 (second map, second beast): [docs/ROADMAP.md](docs/ROADMAP.md)
 
-> **Unity verification:** local macOS editor verification now runs through MCP for Unity with
-> `tools/run_unity_mcp_gate.sh`. CI still skips Unity tests until GameCI license secrets are
-> configured, so a GitHub-green workflow alone is not proof that Unity compiled. Details:
+> **Unity verification:** local macOS editor verification runs through MCP for Unity with
+> `tools/run_unity_mcp_gate.sh`, and that local gate is the project's compile/test authority.
+> CI never runs the Unity tests — the repo owner is on Unity Personal (free), so the GameCI
+> license secrets are not (and won't be) configured — meaning a GitHub-green workflow is
+> never proof that Unity compiled. Run the local gate before merging Unity changes. Details:
 > [docs/VERIFICATION_STATUS.md](docs/VERIFICATION_STATUS.md).
 - Vertical slice spec: [docs/VERTICAL_SLICE_SPEC.md](docs/VERTICAL_SLICE_SPEC.md)
 - Art direction: [ART_BIBLE.md](ART_BIBLE.md) · Game design: [GAME_DESIGN.md](GAME_DESIGN.md)

@@ -58,11 +58,13 @@ documented** in the commit message / report.
 - Blender may be available as the `blender` binary or as the `bpy` PyPI module; all pipeline
   scripts must work with either (see `tools/run_blender_asset_pipeline.py`).
 - The Unity editor is NOT available in the agent container, so C# cannot be compiled or
-  tested here — `./tools/check_all.sh` SKIPs every Unity step. **Nor does CI currently run
-  them:** GameCI's Unity test job is gated behind `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD`
-  secrets that are not configured, so it SKIPs and the workflow goes green without compiling
-  anything. The Unity runtime is therefore **authored but unverified** — it can only be
-  compiled or run by opening `unity/` in a local editor. See
+  tested here — `./tools/check_all.sh` SKIPs every Unity step. **Nor does CI run them, ever:**
+  GameCI's Unity test job is gated behind `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD`
+  secrets that are not configured and will not be (the repo owner is on Unity Personal), so
+  it SKIPs and the workflow goes green without compiling anything. The **compile/test
+  authority is the local MCP gate** — the human runs `tools/run_unity_mcp_gate.sh` in the
+  macOS editor. Never present a green GitHub workflow as evidence that Unity code compiles
+  or passes tests; ask for (or wait for) a local MCP gate run instead. See
   [docs/VERIFICATION_STATUS.md](docs/VERIFICATION_STATUS.md). Author Unity code so PlayMode
   tests construct their world programmatically and never depend on hand-authored scene files.
 - Generated `.blend` files are build artifacts and are gitignored. Source of truth is the

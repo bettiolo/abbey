@@ -3,9 +3,9 @@
 The Unity project in `unity/` is a standard cross-platform Unity project. Two ways to run
 it on a Mac:
 
-> **Unity verification note:** local macOS editor verification now runs through MCP for Unity.
-> CI still skips Unity tests until GameCI license secrets are configured. See
-> [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
+> **Unity verification note:** local macOS editor verification runs through MCP for Unity and
+> is the project's compile/test authority. CI never runs Unity tests (Unity Personal — no
+> GameCI license secrets, by decision). See [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
 
 ## 1. In the editor (recommended during prototyping)
 
@@ -99,8 +99,9 @@ Python validation runs through `uv`, using `tools/requirements-dev.txt`; it shou
 depend on a globally installed `pytest`. The gate stores uv's cache in `.uv-cache/` unless
 you set `UV_CACHE_DIR`.
 
-> ⚠️ **CI does not compile or run the Unity code.** GameCI's Unity test job is skipped unless
-> the `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD` repository secrets are set (they are
-> not), so a "green" branch has **not** been compile-checked. Opening `unity/` in a local
-> editor (§1) is currently the only way to verify the game builds and runs. See
-> [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
+> ⚠️ **CI does not compile or run the Unity code — and never will on this repo.** GameCI's
+> Unity test job requires the `UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD` repository
+> secrets, which are not configured and won't be (the repo owner is on Unity Personal). A
+> "green" branch has **not** been compile-checked. The local MCP gate
+> (`tools/run_unity_mcp_gate.sh`, §1) is the only — and authoritative — way to verify the
+> game builds and runs. See [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
