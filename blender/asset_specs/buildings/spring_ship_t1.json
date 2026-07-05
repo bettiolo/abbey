@@ -1,0 +1,20 @@
+{
+  "id": "spring_ship_t1",
+  "type": "building",
+  "theme": "shipwreck",
+  "footprint": { "width": 6.0, "depth": 3.0, "height": 3.4 },
+  "style": {
+    "silhouette": "a small single-masted coastal ship rebuilt from wreck timber on a launch cradle: curved clinker hull with a raised prow, a stubby central mast with a furled canvas sail on a crossed spar, coiled rope rigging fore and aft, planked deck",
+    "materials": ["mat_dark_wood", "mat_warm_wood", "mat_canvas", "mat_iron"]
+  },
+  "required_parts": ["launch_cradle", "keel", "clinker_hull", "raised_prow", "deck", "mast", "spar", "furled_sail", "rigging"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 2600, "max_materials": 4 },
+  "anchors": [
+    { "name": "stage_keel", "type": "work" },
+    { "name": "stage_hull", "type": "work" },
+    { "name": "stage_rigging", "type": "work" },
+    { "name": "stage_sail", "type": "flag" }
+  ],
+  "pivot": "center_bottom"
+}

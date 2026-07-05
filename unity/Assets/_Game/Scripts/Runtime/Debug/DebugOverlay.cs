@@ -3,7 +3,9 @@ using Abbey.Core;
 using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
+using Abbey.Session;
 using Abbey.Villagers;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -89,6 +91,7 @@ namespace Abbey.Debugging
             _scroll = GUILayout.BeginScrollView(_scroll);
 
             DrawClock();
+            DrawCampaign();
             DrawHero();
             DrawHound();
             DrawMonstersAndDirector();
@@ -140,6 +143,42 @@ namespace Abbey.Debugging
                  $"({clock.TimeInPhase:F1}s / {clock.GetPhaseDuration(clock.Phase):F0}s)  " +
                  $"t={clock.TotalTime:F1}s");
         }
+
+        void DrawCampaign()
+        {
+            var chapters = ChapterSystem.Instance;
+            var ship = SpringShipScenario.Instance;
+            if (chapters == null && ship == null)
+            {
+                return; // Phase 2 slice: no campaign systems in the scene.
+            }
+
+            Header("Campaign (P3-14)");
+            var season = SeasonSystem.Instance;
+            string yearSeason = season != null
+                ? $"year {season.YearNumber} — {season.CurrentSeason} (day-of-year {season.DayOfYear})"
+                : "no SeasonSystem";
+            if (chapters != null)
+            {
+                Line($"chapter {chapters.CurrentChapterIndex + 1}/4: {chapters.CurrentChapterName}   {yearSeason}");
+            }
+            else
+            {
+                Line(yearSeason);
+            }
+
+            if (ship != null)
+            {
+                var m = ship.EvaluateManifest();
+                Line($"manifest: settlers {Mark(m.SettlersReady)} ({m.WillingSailors}/{m.SettlersRequired})  " +
+                     $"provisions {Mark(m.ProvisionsReady)}  hull {Mark(m.HullReady)}  " +
+                     $"=> {(m.Complete ? "COMPLETE" : "incomplete")}");
+                Line($"launch window: {(ship.LaunchWindowOpen ? "OPEN" : "closed")}  " +
+                     $"sailed={(ship.HasSailed ? "yes" : "no")}");
+            }
+        }
+
+        static string Mark(bool ready) => ready ? "OK" : "--";
 
         void DrawHero()
         {

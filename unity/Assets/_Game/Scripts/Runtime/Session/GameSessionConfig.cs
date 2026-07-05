@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Abbey.Economy;
 using UnityEngine;
 
 namespace Abbey.Session
@@ -45,6 +47,85 @@ namespace Abbey.Session
             "0.86:shadow",
             "0.94:pale_hound",
         };
+
+        // ------------------------------------------------------------------
+        // Phase 3 campaign (P3-14): four chapters + spring-ship win
+        // ------------------------------------------------------------------
+
+        [Header("Phase 3 campaign (P3-14)")]
+        [Tooltip("Opt-in for the Phase 3 campaign: four calendar chapters and the spring-ship "
+                 + "launch win. When OFF the run behaves exactly as the Phase 2 slice (the White "
+                 + "Night is the campaign end). Mirrors the P2-06 phase2NightsEnabled precedent.")]
+        public bool phase3CampaignEnabled;
+
+        [Tooltip("The four narrative chapters keyed to the year's four seasons, in season order "
+                 + "(Spring/Summer/Autumn/Winter). Length 4; data only — ChapterSystem reads it.")]
+        public string[] chapterNames =
+        {
+            "The Wreck",
+            "The Meadow",
+            "The Long Rain",
+            "The First White Night",
+        };
+
+        [Tooltip("One-line morning-report flavour logged when each chapter begins. Length 4, "
+                 + "aligned with chapterNames.")]
+        public string[] chapterFlavour =
+        {
+            "Salvage from the wreck litters the shore; the abbey is a ruin, and the year is young.",
+            "The meadow greens and the fields take; for a little while the light feels like enough.",
+            "The long rain sets in from the sea, and something in the dark grows bolder each night.",
+            "Winter closes its hand; the first White Night is coming, and after it — if we live — the spring tide.",
+        };
+
+        [Header("Spring-ship launch window")]
+        [Tooltip("Year (1-based, SeasonSystem.YearNumber) whose SPRING opens the launch window. "
+                 + "Default 2: survive the first year, then sail the following spring.")]
+        [Min(1)] public int springLaunchYear = 2;
+
+        [Header("Manifest — part 1: settlers (willing sailors)")]
+        [Tooltip("Minimum willing sailors (volunteers + spring departure intents from P3-13) that "
+                 + "must be aboard for the settlers part of the manifest to be complete.")]
+        [Min(1)] public int manifestSettlers = 4;
+
+        [Header("Manifest — part 2: provisions (ledger thresholds)")]
+        [Tooltip("Stockpile the ship must carry to sail. Grain counts toward Food at "
+                 + "EconomyConfig.GrainToFood before the check. Candles + Tools are per-manifest "
+                 + "totals, not per-head. Data only.")]
+        public List<ResourceStack> manifestProvisions = new List<ResourceStack>
+        {
+            new ResourceStack(ResourceType.Food, 24),
+            new ResourceStack(ResourceType.Candles, 6),
+            new ResourceStack(ResourceType.Tools, 3),
+        };
+
+        [Header("Manifest — part 3: hull / rigging (ship reconstruction)")]
+        [Tooltip("BuildingCatalog id of the staged ship reconstruction site whose completion "
+                 + "satisfies the hull/rigging part of the manifest (includes sailcloth in its "
+                 + "build cost, woven from wool).")]
+        public string shipBuildingId = "spring_ship_t1";
+
+        /// <summary>Chapter display name for a season (Spring..Winter), safe-indexed.</summary>
+        public string ChapterNameFor(int seasonIndex)
+        {
+            if (chapterNames == null || chapterNames.Length == 0)
+            {
+                return $"Chapter {seasonIndex + 1}";
+            }
+            int i = Mathf.Clamp(seasonIndex, 0, chapterNames.Length - 1);
+            return chapterNames[i];
+        }
+
+        /// <summary>Chapter flavour line for a season index, safe-indexed (empty when none).</summary>
+        public string ChapterFlavourFor(int seasonIndex)
+        {
+            if (chapterFlavour == null || chapterFlavour.Length == 0)
+            {
+                return string.Empty;
+            }
+            int i = Mathf.Clamp(seasonIndex, 0, chapterFlavour.Length - 1);
+            return chapterFlavour[i];
+        }
 
         static GameSessionConfig _cached;
 

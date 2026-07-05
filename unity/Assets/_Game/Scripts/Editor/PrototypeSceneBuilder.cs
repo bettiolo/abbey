@@ -187,6 +187,9 @@ namespace Abbey.EditorTools
             // Both observe the clock via EventBus and read SeasonConfig — no wiring.
             var worldGO = new GameObject("WorldSystems");
             worldGO.AddComponent<SeasonSystem>();
+            // Four narrative chapters keyed to the calendar (P3-14). Harmless in the
+            // Phase 2 slice; only logs transitions when phase3CampaignEnabled is set.
+            worldGO.AddComponent<Abbey.Session.ChapterSystem>();
             worldGO.AddComponent<WeatherSystem>();
 
             // Seed-slot settlement growth (P3-02). Authored slots are added later
@@ -670,6 +673,39 @@ namespace Abbey.EditorTools
                 basePos + new Vector3(-3.5f, 0f, 3.5f));
         }
 
+        /// <summary>
+        /// The spring-ship reconstruction site (P3-14), pre-placed at the wreck on the
+        /// beach. A normal <see cref="ConstructionSite"/> initialized straight from the
+        /// catalog (spring_ship_t1) so Builders serve it through the usual delivery economy;
+        /// its greybox visual grows through the build as materials/work arrive. Returns null
+        /// when the catalog lacks the entry.
+        /// </summary>
+        static ConstructionSite BuildSpringShipSite()
+        {
+            var type = BuildingPlacer.Catalog.Find("spring_ship_t1");
+            if (type == null)
+            {
+                GameEventLog.Append("spring_ship", "site rejected (no catalog entry)");
+                return null;
+            }
+
+            var position = BeachCenter + new Vector3(-2f, 0.3f, -4f);
+            var go = new GameObject("SpringShipSite");
+            go.transform.position = position;
+
+            var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            visual.name = "SpringShipGreybox";
+            visual.transform.SetParent(go.transform, false);
+            visual.transform.localScale = new Vector3(type.footprint.x, 1.6f, type.footprint.y);
+
+            var site = go.AddComponent<ConstructionSite>();
+            site.visualRoot = visual.transform;
+            site.Initialize(type);
+            GameEventLog.Append("spring_ship",
+                $"site placed at ({position.x:F1}, {position.z:F1})");
+            return site;
+        }
+
         // ------------------------------------------------------------------
         // Session, reports, and debug panels
         // ------------------------------------------------------------------
@@ -703,6 +739,16 @@ namespace Abbey.EditorTools
             session.bellkeeper = bellkeeper;
             session.abbeyFlame = abbeyFlame;
             sessionGO.AddComponent<GameOutcomePanel>();
+
+            // The Phase 3 campaign close (P3-14): the spring-ship scenario tracks the
+            // three-part manifest and, at the launch window, sails the ship (latching the
+            // win on GameSession). It reads the ship reconstruction site placed at the
+            // wreck below. Inert unless phase3CampaignEnabled is set in GameSessionConfig.
+            var shipSite = BuildSpringShipSite();
+            var springShipGO = new GameObject("SpringShipScenario");
+            var springShip = springShipGO.AddComponent<SpringShipScenario>();
+            springShip.session = session;
+            springShip.shipSite = shipSite;
 
             // Debug overlays for every hidden system (AGENTS.md): F2 economy, F3
             // buildings, F4 nightmare (F1 DebugOverlay is built in BuildSimulationCore).

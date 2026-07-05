@@ -1013,7 +1013,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover chapter transitions, manifest completion accounting, spring-ship launch win, failure when a manifest part is missing at spring, who-sails/who-stays outcome recording, and end-summary accuracy against a scripted event log
       - Validation guide at docs/validation/P3-14.md per docs/validation/README.md
     depends_on: [P3-04, P3-11, P3-13]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
   - id: P4-EPIC
