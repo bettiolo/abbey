@@ -534,6 +534,12 @@ namespace Abbey.EditorTools
         {
             foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
             {
+                if (IsCollisionVisual(renderer.gameObject))
+                {
+                    renderer.enabled = false;
+                    continue;
+                }
+
                 var shared = renderer.sharedMaterials;
                 if (shared == null || shared.Length == 0)
                 {
@@ -724,11 +730,21 @@ namespace Abbey.EditorTools
                     return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/tree_pineDefaultA.fbx";
                 case "rock_cluster_01":
                     return $"{ThirdPartyAssetFolder}/Kenney/NatureKit/FBX/rock_largeA.fbx";
-                case "villager_lowpoly":
-                    return $"{ThirdPartyAssetFolder}/Quaternius/UniversalBaseCharacters/BaseCharacters/Unity/Superhero_Male_FullBody.fbx";
                 default:
                     return null;
             }
+        }
+
+        static bool IsCollisionVisual(GameObject go)
+        {
+            for (var current = go.transform; current != null; current = current.parent)
+            {
+                if (current.name.IndexOf("collision", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         static Vector3 ThirdPartyReplacementScaleFor(string assetId)
