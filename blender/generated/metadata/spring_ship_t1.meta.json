@@ -1,0 +1,168 @@
+{
+  "id": "spring_ship_t1",
+  "generated_at": "2026-07-05T20:40:01.648590+00:00",
+  "spec": {
+    "id": "spring_ship_t1",
+    "type": "building",
+    "theme": "shipwreck",
+    "footprint": {
+      "width": 6.0,
+      "depth": 3.0,
+      "height": 3.4
+    },
+    "style": {
+      "silhouette": "a small single-masted coastal ship rebuilt from wreck timber on a launch cradle: curved clinker hull with a raised prow, a stubby central mast with a furled canvas sail on a crossed spar, coiled rope rigging fore and aft, planked deck",
+      "materials": [
+        "mat_dark_wood",
+        "mat_warm_wood",
+        "mat_canvas",
+        "mat_iron"
+      ]
+    },
+    "required_parts": [
+      "launch_cradle",
+      "keel",
+      "clinker_hull",
+      "raised_prow",
+      "deck",
+      "mast",
+      "spar",
+      "furled_sail",
+      "rigging"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 2600,
+      "max_materials": 4
+    },
+    "anchors": [
+      {
+        "name": "stage_keel",
+        "type": "work"
+      },
+      {
+        "name": "stage_hull",
+        "type": "work"
+      },
+      {
+        "name": "stage_rigging",
+        "type": "work"
+      },
+      {
+        "name": "stage_sail",
+        "type": "flag"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 5.21994,
+    "depth": 2.11876,
+    "height": 3.11,
+    "min": [
+      -2.60997,
+      -1.05938,
+      0.0
+    ],
+    "max": [
+      2.60997,
+      1.05938,
+      3.11
+    ]
+  },
+  "triangle_count": 628,
+  "material_count": 4,
+  "materials": [
+    "mat_canvas",
+    "mat_dark_wood",
+    "mat_iron",
+    "mat_warm_wood"
+  ],
+  "anchors": [
+    {
+      "name": "stage_sail",
+      "type": "flag"
+    },
+    {
+      "name": "stage_rigging",
+      "type": "work"
+    },
+    {
+      "name": "stage_keel",
+      "type": "work"
+    },
+    {
+      "name": "stage_hull",
+      "type": "work"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/spring_ship_t1.glb",
+    "blend": "blender/generated/blend/spring_ship_t1.blend",
+    "previews": {
+      "day": "blender/generated/previews/spring_ship_t1_preview_day.png",
+      "night": "blender/generated/previews/spring_ship_t1_preview_night.png",
+      "winter": "blender/generated/previews/spring_ship_t1_preview_winter.png",
+      "grayscale": "blender/generated/previews/spring_ship_t1_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/spring_ship_t1.glb (76920 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/spring_ship_t1.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 5.220x2.119x3.110 vs footprint 6.0x3.0x3.4"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "628/2600 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "4/4 materials: ['mat_canvas', 'mat_dark_wood', 'mat_iron', 'mat_warm_wood']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['stage_keel', 'stage_hull', 'stage_rigging', 'stage_sail'] present=['stage_hull', 'stage_keel', 'stage_rigging', 'stage_sail']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "spring_ship_t1_collision present"
+      }
+    ]
+  }
+}
