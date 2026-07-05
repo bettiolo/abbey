@@ -7,6 +7,11 @@ packs belong in the ignored `third_party_cache/` folder, not under `unity/Assets
 Designers can replace any placeholder by preserving the Abbey filename, or by updating
 `PrototypeSceneBuilder` to point at the replacement asset.
 
+`PrototypeSceneBuilder` normalizes these models by visible renderer bounds after
+instantiation. The source pack's authored unit scale is not trusted directly: each
+placeholder gets an Abbey target world size, collision helper meshes are ignored, and
+the visible bottom is snapped back to the requested ground position.
+
 Source pages:
 
 - Kenney Nature Kit: https://kenney.nl/assets/nature-kit, downloaded 2026-07-04,

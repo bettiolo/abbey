@@ -817,8 +817,9 @@ namespace Abbey.EditorTools
 
                 instance.name = name;
                 instance.transform.position = groundPos;
-                instance.transform.localScale = GenericPlaceholderScaleFor(assetId);
+                instance.transform.localScale = Vector3.one;
                 NormalizeImportedMaterials(instance, assetId);
+                NormalizeGenericPlaceholderBounds(instance, assetId, groundPos.y);
                 return instance;
             }
             catch (Exception e)
@@ -873,29 +874,139 @@ namespace Abbey.EditorTools
             return false;
         }
 
-        static Vector3 GenericPlaceholderScaleFor(string assetId)
+        static void NormalizeGenericPlaceholderBounds(
+            GameObject instance, string assetId, float groundY)
+        {
+            if (instance == null)
+            {
+                return;
+            }
+
+            var targetBounds = GenericPlaceholderTargetBoundsFor(assetId);
+            if (targetBounds.sqrMagnitude > 0f &&
+                TryGetVisibleRendererBounds(instance, out var bounds))
+            {
+                var scale = ScaleToFitBounds(
+                    bounds.size,
+                    targetBounds,
+                    GenericPlaceholderPreservesAspect(assetId));
+                instance.transform.localScale = Vector3.Scale(instance.transform.localScale, scale);
+            }
+
+            SnapVisibleBottomToGround(instance, groundY);
+        }
+
+        static Vector3 ScaleToFitBounds(
+            Vector3 currentSize, Vector3 targetSize, bool preserveAspect)
+        {
+            float x = AxisScale(currentSize.x, targetSize.x);
+            float y = AxisScale(currentSize.y, targetSize.y);
+            float z = AxisScale(currentSize.z, targetSize.z);
+            if (!preserveAspect)
+            {
+                return new Vector3(x, y, z);
+            }
+
+            float uniform = Mathf.Min(x, Mathf.Min(y, z));
+            if (float.IsNaN(uniform) || float.IsInfinity(uniform) || uniform <= 0f)
+            {
+                return Vector3.one;
+            }
+            return Vector3.one * uniform;
+        }
+
+        static float AxisScale(float current, float target)
+        {
+            if (current <= 0.0001f || target <= 0.0001f)
+            {
+                return 1f;
+            }
+            return target / current;
+        }
+
+        static void SnapVisibleBottomToGround(GameObject instance, float groundY)
+        {
+            if (!TryGetVisibleRendererBounds(instance, out var bounds))
+            {
+                return;
+            }
+
+            float yOffset = groundY - bounds.min.y;
+            instance.transform.position += new Vector3(0f, yOffset, 0f);
+        }
+
+        static bool TryGetVisibleRendererBounds(GameObject root, out Bounds bounds)
+        {
+            bounds = new Bounds(Vector3.zero, Vector3.zero);
+            if (root == null)
+            {
+                return false;
+            }
+
+            bool hasBounds = false;
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer == null || !renderer.enabled ||
+                    IsCollisionVisual(renderer.gameObject))
+                {
+                    continue;
+                }
+
+                if (!hasBounds)
+                {
+                    bounds = renderer.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
+            }
+
+            return hasBounds;
+        }
+
+        static bool GenericPlaceholderPreservesAspect(string assetId)
         {
             switch (assetId)
             {
                 case "shipwreck_hull":
-                    return new Vector3(1.6f, 1.6f, 1.6f);
-                case "shipwreck_crate_closed":
-                    return new Vector3(1.25f, 1.25f, 1.25f);
-                case "shipwreck_barrel":
-                    return new Vector3(1.25f, 1.25f, 1.25f);
-                case "shelter_t1":
-                    return new Vector3(1.15f, 1.15f, 1.15f);
                 case "lantern_post_t1":
-                    return new Vector3(1.8f, 1.8f, 1.8f);
                 case "abbey_wall_broken":
-                    return new Vector3(1.8f, 1.8f, 1.8f);
-                case "forest_tree_01":
-                case "forest_tree_02":
-                    return new Vector3(2f, 2f, 2f);
-                case "rock_cluster_01":
-                    return new Vector3(2f, 2f, 2f);
+                    return false;
                 default:
-                    return Vector3.one;
+                    return true;
+            }
+        }
+
+        static Vector3 GenericPlaceholderTargetBoundsFor(string assetId)
+        {
+            switch (assetId)
+            {
+                case "campfire_t1":
+                    return new Vector3(0.9f, 0.15f, 0.9f);
+                case "storage_pile_t1":
+                    return new Vector3(1.45f, 0.8f, 1.45f);
+                case "shipwreck_hull":
+                    return new Vector3(7.5f, 3.2f, 4.5f);
+                case "shipwreck_crate_closed":
+                    return new Vector3(1f, 0.8f, 1f);
+                case "shipwreck_barrel":
+                    return new Vector3(0.85f, 0.9f, 0.85f);
+                case "shelter_t1":
+                    return new Vector3(2.7f, 1.55f, 2.6f);
+                case "lantern_post_t1":
+                    return new Vector3(0.5f, 2.2f, 0.5f);
+                case "abbey_wall_broken":
+                    return new Vector3(3.8f, 1.45f, 0.7f);
+                case "forest_tree_01":
+                    return new Vector3(1.6f, 4.2f, 1.6f);
+                case "forest_tree_02":
+                    return new Vector3(1.9f, 3.7f, 1.9f);
+                case "rock_cluster_01":
+                    return new Vector3(1.8f, 0.55f, 1.8f);
+                default:
+                    return Vector3.zero;
             }
         }
     }
