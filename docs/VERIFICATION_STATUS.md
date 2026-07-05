@@ -31,6 +31,15 @@ Use this faster form when MCP is already connected:
 UNITY_MCP_UV_OFFLINE=1 tools/run_unity_mcp_gate.sh --no-restart
 ```
 
+## Pending per-change verification
+
+- **HUD + minimap (commit `6f281fd`, branch `claude/game-hud-minimap-smk0hz`)** — authored
+  2026-07-05 in a container with no Unity editor, so the new C# (`Abbey.UI.GameHud`,
+  `Abbey.UI.MinimapPanel`, their EditMode tests, and the `PlayerHud` scene wiring) has
+  **never been compiled or run**. Awaiting editor-connected verification per
+  [VERIFICATION_HUD_MINIMAP.md](VERIFICATION_HUD_MINIMAP.md) (compile check → EditMode
+  tests → PlayMode regression → scene rebuild → Play-mode screenshot → F7/F8 toggles).
+
 ## CI status
 
 GameCI still skips the Unity test job. `.github/workflows/unity.yml` gates the real test job
