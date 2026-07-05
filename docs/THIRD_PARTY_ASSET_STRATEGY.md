@@ -72,12 +72,17 @@ structure in the Unity project.
 
 Currently cached/selected sources:
 
-- Kenney Nature Kit, CC0: trees, rocks, campfire, logs, canoe.
-- Quaternius Medieval Village MegaKit Standard, CC0: crate, wagon-as-barrel proxy,
-  and abbey wall straight segment.
+- Kenney Nature Kit, CC0: trees, rocks, campfire, and logs.
+- Kenney Pirate Kit, CC0: wrecked ship, shipwreck crate, and shipwreck barrel.
+- KayKit Medieval Builder Pack, CC0: temporary shelter/house placeholder.
+- KayKit Dungeon Remastered, CC0: temporary broken wall and lit torch placeholders.
 
 Approved but not yet selected into Unity placeholders:
 
+- Quaternius Ultimate Modular Ruins Pack, CC0: promising ruin modules, props, trees,
+  and dungeon pieces. The 2026-07-05 scripted Google Drive sync was partial because
+  Drive blocked public file URLs mid-folder, so no runtime placeholder currently
+  depends on this cache.
 - Poly Haven, CC0: temporary PBR textures/HDRIs/models for realistic terrain, rock,
   wood, stone, and lighting tests.
 - ambientCG, CC0: temporary PBR material sets for terrain, ground scars, stone, plaster,
@@ -87,6 +92,8 @@ Cached but not committed as runtime placeholders:
 
 - Quaternius Medieval Village roof and door wall modules. They did not improve the
   prototype camera read enough to justify staging now.
+- Quaternius Medieval Village crate, wagon proxy, and straight wall modules. These were
+  replaced by better Kenney/KayKit placeholders.
 - Quaternius Universal Base Characters. A visual review showed these read as mannequins
   in the prototype camera and are weaker placeholders than the generated villager.
 
@@ -96,15 +103,15 @@ Safe replacement targets:
 
 - `campfire_t1`: `abbey_placeholder_campfire_stones.fbx`
 - `storage_pile_t1`: `abbey_placeholder_storage_logs.fbx`
-- `shipwreck_hull`: `abbey_placeholder_shipwreck_hull.fbx` until a better wrecked
-  ship source is staged
+- `shipwreck_hull`: `abbey_placeholder_shipwreck_hull.fbx`
 - `shipwreck_crate_closed`: `abbey_placeholder_wreck_crate.fbx`
-- `shipwreck_barrel`: `abbey_placeholder_wreck_barrel_proxy.fbx` until a barrel is
-  available
+- `shipwreck_barrel`: `abbey_placeholder_wreck_barrel.fbx`
+- `shelter_t1`: `abbey_placeholder_shelter_house.fbx`
+- `lantern_post_t1`: `abbey_placeholder_lantern_torch.glb`
 - `forest_tree_01`: `abbey_placeholder_forest_pine.fbx`
 - `forest_tree_02`: `abbey_placeholder_forest_oak.fbx`
 - `rock_cluster_01`: `abbey_placeholder_rock_cluster.fbx`
-- `abbey_wall_broken`: `abbey_placeholder_ruined_wall_straight.fbx`
+- `abbey_wall_broken`: `abbey_placeholder_ruined_wall_broken.glb`
 
 Keep generated for now:
 
@@ -114,11 +121,8 @@ Keep generated for now:
 - `black_hound_lowpoly` and `hound_chain`, because the beast bond depends on a custom
   silhouette.
 - `bell_tower_ruined`, because it anchors the abbey silhouette.
-- `lantern_post_t1`, until a compatible lamp or torch prop is staged.
-- `shelter_t1`, because a visual MCP pass showed the staged Quaternius wall and roof
-  modules read as flat panels at the prototype camera scale.
 
-Note: selected FBX `.meta` files are committed with the Abbey placeholder copies so
+Note: selected placeholder `.meta` files are committed with the Abbey placeholder copies so
 Unity import identity stays stable across checkouts.
 
 ## Workflow

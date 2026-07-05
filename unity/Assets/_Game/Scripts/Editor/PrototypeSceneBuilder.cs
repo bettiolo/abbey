@@ -725,9 +725,13 @@ namespace Abbey.EditorTools
                 case "shipwreck_crate_closed":
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_wreck_crate.fbx";
                 case "shipwreck_barrel":
-                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_wreck_barrel_proxy.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_wreck_barrel.fbx";
+                case "shelter_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_shelter_house.fbx";
+                case "lantern_post_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_lantern_torch.glb";
                 case "abbey_wall_broken":
-                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_ruined_wall_straight.fbx";
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_ruined_wall_broken.glb";
                 case "forest_tree_01":
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_pine.fbx";
                 case "forest_tree_02":
@@ -756,14 +760,17 @@ namespace Abbey.EditorTools
             switch (assetId)
             {
                 case "shipwreck_hull":
-                    return new Vector3(4f, 4f, 4f);
-                // These Quaternius FBX files import at centimeter scale in this project.
+                    return new Vector3(1.6f, 1.6f, 1.6f);
                 case "shipwreck_crate_closed":
-                    return new Vector3(100f, 100f, 100f);
+                    return new Vector3(1.25f, 1.25f, 1.25f);
                 case "shipwreck_barrel":
-                    return new Vector3(80f, 80f, 80f);
+                    return new Vector3(1.25f, 1.25f, 1.25f);
+                case "shelter_t1":
+                    return new Vector3(1.15f, 1.15f, 1.15f);
+                case "lantern_post_t1":
+                    return new Vector3(1.8f, 1.8f, 1.8f);
                 case "abbey_wall_broken":
-                    return new Vector3(100f, 100f, 100f);
+                    return new Vector3(1.8f, 1.8f, 1.8f);
                 case "forest_tree_01":
                 case "forest_tree_02":
                     return new Vector3(2f, 2f, 2f);
