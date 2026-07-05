@@ -576,7 +576,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover seasonal night-length scaling, moon/fog/tempest light modifiers, bell reliability under tempest, and same-seed weather schedule reproducibility
       - Validation guide at docs/validation/P3-01.md per docs/validation/README.md
     depends_on: [P2-10, GATE-P2]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-02
     title: Seed-slot settlement growth + Asylum Corner rename (Phase 2 cleanup)

@@ -42,7 +42,25 @@ namespace Abbey.Light
 
         public static float EdgeBandFraction => Mathf.Clamp(Config.edgeBandFraction, 0.01f, 0.99f);
 
+        /// <summary>
+        /// Global light-effectiveness multiplier (default 1). WeatherSystem lowers it
+        /// under fog/rain/tempest/White-Night and raises it on a full moon; it scales
+        /// every source's effective radius so a Safe spot on a clear night can slip to
+        /// Edge or Dark when the weather turns. Reset by <see cref="Clear"/>.
+        /// </summary>
+        public static float LightEffectivenessMultiplier { get; set; } = 1f;
+
         public static IReadOnlyList<LightSource> Sources => _sources;
+
+        /// <summary>A source's effective radius after the global weather multiplier.</summary>
+        public static float EffectiveRadiusOf(LightSource source)
+        {
+            if (source == null)
+            {
+                return 0f;
+            }
+            return source.EffectiveRadius * Mathf.Max(0f, LightEffectivenessMultiplier);
+        }
 
         public static void Register(LightSource source)
         {
@@ -62,6 +80,7 @@ namespace Abbey.Light
         {
             _sources.Clear();
             _config = null;
+            LightEffectivenessMultiplier = 1f;
         }
 
         public static LightZone Classify(Vector3 worldPos)
@@ -77,7 +96,7 @@ namespace Abbey.Light
                     continue;
                 }
 
-                float effective = source.EffectiveRadius;
+                float effective = EffectiveRadiusOf(source);
                 if (effective <= 0f)
                 {
                     continue;
@@ -113,7 +132,7 @@ namespace Abbey.Light
                     continue;
                 }
 
-                float effective = source.EffectiveRadius;
+                float effective = EffectiveRadiusOf(source);
                 if (effective <= 0f)
                 {
                     continue;
@@ -147,7 +166,7 @@ namespace Abbey.Light
                     continue;
                 }
 
-                float effective = source.EffectiveRadius;
+                float effective = EffectiveRadiusOf(source);
                 if (effective <= 0f)
                 {
                     continue;
@@ -193,7 +212,7 @@ namespace Abbey.Light
                     continue;
                 }
 
-                float safeRadius = source.EffectiveRadius * innerFactor;
+                float safeRadius = EffectiveRadiusOf(source) * innerFactor;
                 if (safeRadius <= 0f)
                 {
                     continue;

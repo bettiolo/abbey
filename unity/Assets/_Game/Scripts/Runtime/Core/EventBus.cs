@@ -1,4 +1,5 @@
 using System;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Core
@@ -12,16 +13,45 @@ namespace Abbey.Core
     public static class EventBus
     {
         public static event Action<DayPhase> PhaseChanged;
+        public static event Action<int> DayChanged;
         public static event Action<Vector3, float> BellRang;
         public static event Action<GameObject> VillagerEndangered;
         public static event Action<GameObject> VillagerRescued;
         public static event Action<float> HoundFed;
         public static event Action<GameObject> MonsterSpawned;
+        public static event Action<Season> SeasonChanged;
+        public static event Action<Weather> WeatherChanged;
+        public static event Action<string> OmenAppeared;
 
         public static void RaisePhaseChanged(DayPhase phase)
         {
             GameEventLog.Append("PhaseChanged", phase.ToString());
             PhaseChanged?.Invoke(phase);
+        }
+
+        /// <summary>The day counter advanced (the calendar's callback surface).</summary>
+        public static void RaiseDayChanged(int dayNumber)
+        {
+            GameEventLog.Append("DayChanged", dayNumber.ToString());
+            DayChanged?.Invoke(dayNumber);
+        }
+
+        public static void RaiseSeasonChanged(Season season)
+        {
+            GameEventLog.Append("SeasonChanged", season.ToString());
+            SeasonChanged?.Invoke(season);
+        }
+
+        public static void RaiseWeatherChanged(Weather weather)
+        {
+            GameEventLog.Append("WeatherChanged", weather.ToString());
+            WeatherChanged?.Invoke(weather);
+        }
+
+        public static void RaiseOmenAppeared(string description)
+        {
+            GameEventLog.Append("OmenAppeared", description);
+            OmenAppeared?.Invoke(description);
         }
 
         public static void RaiseBellRang(Vector3 position, float radius)
@@ -58,11 +88,15 @@ namespace Abbey.Core
         public static void ResetAll()
         {
             PhaseChanged = null;
+            DayChanged = null;
             BellRang = null;
             VillagerEndangered = null;
             VillagerRescued = null;
             HoundFed = null;
             MonsterSpawned = null;
+            SeasonChanged = null;
+            WeatherChanged = null;
+            OmenAppeared = null;
         }
     }
 }

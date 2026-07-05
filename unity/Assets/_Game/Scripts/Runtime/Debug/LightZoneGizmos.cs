@@ -41,7 +41,9 @@ namespace Abbey.Debugging
                     continue;
                 }
 
-                float effective = source.EffectiveRadius;
+                // The global weather multiplier scales the classified territory, so
+                // the rings shrink under fog/rain/tempest and swell on a full moon.
+                float effective = DarknessEvaluator.EffectiveRadiusOf(source);
                 if (effective <= 0f)
                 {
                     continue;

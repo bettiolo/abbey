@@ -12,6 +12,7 @@ using Abbey.Nightmares;
 using Abbey.Reports;
 using Abbey.Session;
 using Abbey.Villagers;
+using Abbey.World;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -129,6 +130,14 @@ namespace Abbey.EditorTools
         {
             var clockGO = new GameObject("GameClock");
             clockGO.AddComponent<GameClock>();
+
+            // Seasonal calendar + weather (P3-01). SeasonSystem scales the clock's
+            // night phase toward Winter; WeatherSystem pushes the light/bell
+            // effectiveness multipliers into DarknessEvaluator and the Bellkeeper.
+            // Both observe the clock via EventBus and read SeasonConfig — no wiring.
+            var worldGO = new GameObject("WorldSystems");
+            worldGO.AddComponent<SeasonSystem>();
+            worldGO.AddComponent<WeatherSystem>();
 
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
@@ -424,6 +433,15 @@ namespace Abbey.EditorTools
             buildingPanel.placementMarker = hero.transform;
             var nightmarePanel = panelsGO.AddComponent<NightmareDebugPanel>();
             nightmarePanel.director = director;
+
+            // Season/weather overlay (F7). WeatherSystem auto-finds the Bellkeeper,
+            // but hand it the reference so the multiplier is pushed from frame one.
+            panelsGO.AddComponent<SeasonDebugPanel>();
+            var weather = UnityEngine.Object.FindFirstObjectByType<WeatherSystem>();
+            if (weather != null)
+            {
+                weather.bellkeeper = bellkeeper;
+            }
         }
 
         // ------------------------------------------------------------------

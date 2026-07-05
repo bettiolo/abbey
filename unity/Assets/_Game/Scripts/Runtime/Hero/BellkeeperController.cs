@@ -51,6 +51,14 @@ namespace Abbey.Hero
 
         public bool HasMoveTarget => _moveTarget.HasValue;
 
+        /// <summary>
+        /// Weather-driven bell reliability (default 1). WeatherSystem lowers it under
+        /// fog/rain/tempest and the White Night, shrinking the recall pulse radius so
+        /// the bell reaches fewer villagers when the sky turns against you. Balance
+        /// values live in <see cref="SeasonConfig"/>, never here.
+        /// </summary>
+        public float BellReliabilityMultiplier { get; set; } = 1f;
+
         public PrototypeConfig Config
         {
             get
@@ -128,8 +136,10 @@ namespace Abbey.Hero
                 return false;
             }
             _bellCooldown = Config.bellCooldownSeconds;
-            GameEventLog.Append("hero_rang_bell", $"pos={transform.position}");
-            EventBus.RaiseBellRang(transform.position, Config.bellRadius);
+            float radius = Config.bellRadius * Mathf.Max(0f, BellReliabilityMultiplier);
+            GameEventLog.Append("hero_rang_bell",
+                $"pos={transform.position} radius={radius:F2} reliability={BellReliabilityMultiplier:F2}");
+            EventBus.RaiseBellRang(transform.position, radius);
             return true;
         }
 
