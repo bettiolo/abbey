@@ -22,6 +22,13 @@ namespace Abbey.EditorTools
     {
         const int Width = 1920;
         const int Height = 1080;
+        public static readonly string[] CanonicalShotNames =
+        {
+            "day_camp.png",
+            "dusk_recall.png",
+            "night_attack.png",
+            "morning_after.png",
+        };
 
         static string OutputDir => Path.GetFullPath(
             Path.Combine(Application.dataPath, "..", "Screenshots"));
@@ -63,7 +70,7 @@ namespace Abbey.EditorTools
             int exitCode = 0;
             try
             {
-                CaptureCanonicalShots();
+                CaptureCanonicalShotsForGate();
             }
             catch (Exception e)
             {
@@ -100,6 +107,16 @@ namespace Abbey.EditorTools
             {
                 EditorApplication.Exit(exitCode);
             }
+        }
+
+        /// <summary>
+        /// Public wrapper for the combined Unity gate. Returns the deterministic
+        /// file names expected under unity/Build/screenshots/.
+        /// </summary>
+        public static string[] CaptureCanonicalShotsForGate()
+        {
+            CaptureCanonicalShots();
+            return (string[])CanonicalShotNames.Clone();
         }
 
         static void CaptureAll()
@@ -198,12 +215,12 @@ namespace Abbey.EditorTools
 
             // day_camp.
             ApplyPhaseLighting(DayPhase.Day);
-            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "day_camp.png");
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, CanonicalShotNames[0]);
 
             // dusk_recall: cross the Day boundary (raises PhaseChanged -> dusk recall).
             clock.Tick(clock.GetPhaseDuration(DayPhase.Day) - clock.TimeInPhase + 0.01f);
             ApplyPhaseLighting(DayPhase.Dusk);
-            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "dusk_recall.png");
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, CanonicalShotNames[1]);
 
             // night_attack: cross the Dusk boundary and force the night's monsters
             // into frame (the director is not event-subscribed in edit mode).
@@ -220,12 +237,12 @@ namespace Abbey.EditorTools
                 director.BeginNight();
             }
             ApplyPhaseLighting(DayPhase.Night);
-            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "night_attack.png");
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, CanonicalShotNames[2]);
 
             // morning_after: cross the Night boundary into Dawn.
             clock.Tick(clock.GetPhaseDuration(DayPhase.Night) + 0.01f);
             ApplyPhaseLighting(DayPhase.Dawn);
-            CaptureTo(rig.TargetCamera, CanonicalOutputDir, "morning_after.png");
+            CaptureTo(rig.TargetCamera, CanonicalOutputDir, CanonicalShotNames[3]);
 
             // Leave the saved scene exactly as the bootstrapper wrote it.
             if (File.Exists(Path.GetFullPath(Path.Combine(

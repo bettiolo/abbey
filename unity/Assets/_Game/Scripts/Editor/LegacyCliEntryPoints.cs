@@ -21,4 +21,12 @@ namespace Abbey.Editor
             EditorTools.Builds.BuildMacOS();
         }
     }
+
+    public static class AbbeyUnityGate
+    {
+        public static void RunFromCLI()
+        {
+            EditorTools.AbbeyUnityGate.RunFromCLI();
+        }
+    }
 }

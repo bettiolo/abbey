@@ -63,6 +63,14 @@ if [ -z "$UNITY_BIN" ]; then
   exit 3
 fi
 
+LOCKFILE="$PROJECT_PATH/Temp/UnityLockfile"
+if [ -f "$LOCKFILE" ]; then
+  echo "SKIP: Unity project is already open; batchmode tests would wait on"
+  echo "      the project lock at unity/Temp/UnityLockfile."
+  echo "      Close the Unity editor and rerun this step, or run tests through the open editor/MCP."
+  exit 3
+fi
+
 if ! command -v uv >/dev/null 2>&1; then
   echo "ERROR: uv is required for Unity result parsing. Install it with 'brew install uv'." >&2
   exit 2
@@ -110,6 +118,10 @@ run_platform() {
   local log="$RESULTS_DIR/unity-$key.log"
 
   echo "== Unity $platform tests =="
+  # Avoid false-green summaries from stale NUnit XML if Unity aborts before
+  # producing fresh results (for example when the project is already open).
+  rm -f "$xml" "$log"
+
   "$UNITY_BIN" -batchmode -nographics \
     -projectPath "$PROJECT_PATH" \
     -runTests -testPlatform "$platform" \
