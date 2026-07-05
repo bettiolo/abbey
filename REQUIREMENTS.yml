@@ -528,13 +528,463 @@ tasks:
       all five outcomes; canonical Unity screenshots (CI) + 4 committed Blender proofs
       (phase2_{day_camp,dusk_recall,night_attack,morning_after}). All 10 Phase 2 tasks merged.
 
-  # ---------------------------------------------------------------- Phase 3 (epic; break down at phase start)
+  # ---------------------------------------------------------------- Phase 3 (decomposed 2026-07-05)
   - id: P3-EPIC
     title: Seasons, laws, moral pressures, hound evolution, consequence nightmares, abbey transformation, dilemmas
     phase: phase-3
     depends_on: [P2-10, GATE-P2]
+    status: in_progress
+    assigned_to: orchestrator # parent epic; child tasks P3-01..P3-14 carry the build work
+    branch: claude/next-game-phases-rwywit # phase-3 planning/integration branch
+    description: >
+      Parent epic. Decomposed 2026-07-05 into P3-01..P3-14 below, grouped as:
+      3A simulation backbone (P3-01..P3-04: seasons/weather, seed slots + Asylum
+      Corner rename, sanity/asylum, renewable economy); 3B night-defense co-pillar
+      (P3-05..P3-08: light-band combat + settler tier, warriors + escalation, hound
+      evolution, emergency overdrive); 3C moral consequence (P3-09..P3-11: laws,
+      pressures + abbey transformation, consequence nightmares + threat sources);
+      3D world + win (P3-12..P3-14: desire paths + ground scars, exploration +
+      arrivals + dilemmas, spring-ship win + chapters + end summary). This entry
+      stays in_progress until all P3 tasks are merged; GATE-P3 answers the phase
+      question afterwards.
+
+  - id: P3-01
+    title: Seasonal calendar, weather and light modifiers
+    phase: phase-3
+    description: >
+      CalendarSystem over GameClock: Spring (hope) -> Summer (growth) -> Autumn
+      (warning) -> Winter (judgment), N days per season and night length scaling per
+      season from data; WeatherSystem with moon phase, fog, rain, tempest, and White
+      Night omens on a deterministic seeded schedule. Weather and moon modify light
+      effectiveness (modifier hook in DarknessEvaluator/LightSource) and bell
+      reliability (bell range/recall strength). All tunables in a new SeasonConfig
+      ScriptableObject (Resources path "SeasonConfig", CreateInstance defaults like
+      EconomyConfig), NOT in PrototypeConfig. Season/weather state on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/World/SeasonSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/World/WeatherSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/World/SeasonConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/SeasonDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Core/GameClock.cs (modify: calendar day counter hook)
+      - unity/Assets/_Game/Scripts/Runtime/Light/DarknessEvaluator.cs (modify: global light-effectiveness modifier)
+      - unity/Assets/_Game/Scripts/Runtime/Hero/BellkeeperController.cs (modify: bell reliability modifier)
+      - unity/Assets/_Game/Tests/EditMode/SeasonSystemTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/SeasonWeatherPlayModeTests.cs
+      - docs/validation/P3-01.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (Unity steps SKIP as expected)
+      - EditMode/PlayMode tests build their world programmatically and cover seasonal night-length scaling, moon/fog/tempest light modifiers, bell reliability under tempest, and same-seed weather schedule reproducibility
+      - Validation guide at docs/validation/P3-01.md per docs/validation/README.md
+    depends_on: [P2-10, GATE-P2]
     status: todo
-    notes: Decompose per docs/ROADMAP.md Phase 3 brief when unblocked.
+
+  - id: P3-02
+    title: Seed-slot settlement growth + Asylum Corner rename (Phase 2 cleanup)
+    phase: phase-3
+    description: >
+      Bend the build system toward seed slots per the Phase 2 direction addendum:
+      authored seed slots hug existing buildings and lit ground; completing a building
+      opens nearby child slots; BuildingPlacer only accepts placement on open slots;
+      a light-debt metric penalises overextension beyond lantern/abbey coverage.
+      Phase 2 cleanup in the same task: rename infirmary_corner_t1 -> asylum_corner_t1
+      (spec, generated glb/previews/metadata, BuildingCatalog id, PrototypeSceneBuilder)
+      and rename InfirmaryZone -> AsylumZone as a shell (sanity recovery behaviour
+      lands in P3-03; the instant ForceState(Idle) heal from P2-04 is removed).
+      Tunables in SettlementGrowthConfig ScriptableObject. Slot graph + light debt on
+      debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/SeedSlot.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/SeedSlotSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/SettlementGrowthConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/SettlementDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/BuildingPlacer.cs (modify: slot-constrained placement)
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/AsylumZone.cs (rename from InfirmaryZone.cs)
+      - unity/Assets/_Game/Scripts/Editor/PrototypeSceneBuilder.cs (modify: authored initial slots + rename)
+      - blender/asset_specs/buildings/asylum_corner_t1.json (replaces infirmary_corner_t1.json; regenerate glb/previews/metadata)
+      - unity/Assets/_Game/Tests/EditMode/SeedSlotSystemTests.cs
+      - docs/validation/P3-02.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (asset pipeline validates asylum_corner_t1)
+      - EditMode/PlayMode tests build their world programmatically and cover child-slot opening on completion, rejection of off-slot placement, and light-debt accounting
+      - No infirmary_corner / InfirmaryZone references remain outside git history
+      - Validation guide at docs/validation/P3-02.md per docs/validation/README.md
+    depends_on: [P2-10, GATE-P2]
+    status: todo
+
+  - id: P3-03
+    title: Sanity, dread and the asylum
+    phase: phase-3
+    description: >
+      Per-villager sanity and dread: dark exposure when light fails builds dread ->
+      insanity; health resets each morning, sanity does not. An insane unit enters
+      asylum cooldown, misses the next night, and is released only by day; with no
+      asylum built, insane settlers recover slowly at home but disturb the household
+      at night, spreading dread (screaming, crying, sleeplessness, nightmares). Lower
+      sanity reduces daytime work efficiency; above the insanity threshold villagers
+      stop working until recovered. The beast is immune. AsylumZone (P3-02 shell)
+      gains sanity-recovery behaviour, replacing Phase 2 infirmary healing. All
+      thresholds/rates in SanityConfig ScriptableObject. Sanity states on debug
+      overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Sanity/SanitySystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Sanity/SanityState.cs
+      - unity/Assets/_Game/Scripts/Runtime/Sanity/SanityConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/SanityDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/AsylumZone.cs (modify: recovery + cooldown)
+      - unity/Assets/_Game/Scripts/Runtime/Villagers/VillagerAgent.cs (modify: efficiency scaling, stop-work state)
+      - unity/Assets/_Game/Tests/EditMode/SanitySystemTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/SanityAsylumPlayModeTests.cs
+      - docs/validation/P3-03.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover asylum miss-a-night accounting, home-recovery dread spill, sanity-to-work-efficiency scaling, morning health-reset-but-not-sanity, and beast immunity
+      - Validation guide at docs/validation/P3-03.md per docs/validation/README.md
+    depends_on: [P3-02]
+    status: todo
+
+  - id: P3-04
+    title: Renewable seasonal economy
+    phase: phase-3
+    description: >
+      Renewable resources grain, meat, wool, herbs, tools, coal (candles already
+      exist) added to ResourceType/ResourceLedger; production buildings on the
+      construction system (field plot growth cycle, pasture, charcoal kiln, smithy)
+      with new villager production jobs; seasonal yield modifiers driven by
+      SeasonSystem (harvest in autumn, nothing grows in winter -> stockpile pressure).
+      All costs/yields/cycles data-driven in EconomyConfig extension (no balance
+      values in MonoBehaviours). Placeholder Blender specs through the standard
+      pipeline.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Economy/ResourceType.cs (modify)
+      - unity/Assets/_Game/Scripts/Runtime/Economy/EconomyConfig.cs (modify: renewable section)
+      - unity/Assets/_Game/Scripts/Runtime/Economy/ProductionBuilding.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/BuildingCatalog.cs (modify: new buildables)
+      - unity/Assets/_Game/Scripts/Runtime/Villagers/JobsConfig.cs (modify: Farmer/Herder/Charcoaler/Smith)
+      - blender/asset_specs/buildings/pasture_t1.json (+ generated glb/previews/metadata)
+      - blender/asset_specs/buildings/charcoal_kiln_t1.json (+ generated)
+      - blender/asset_specs/buildings/smithy_t1.json (+ generated)
+      - unity/Assets/_Game/Tests/EditMode/RenewableEconomyTests.cs
+      - docs/validation/P3-04.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (new assets validate through the pipeline)
+      - EditMode/PlayMode tests build their world programmatically and cover production cycles, seasonal yield modifiers, winter shutdown, and ledger accounting for the new resources
+      - Validation guide at docs/validation/P3-04.md per docs/validation/README.md
+    depends_on: [P3-01]
+    status: todo
+
+  - id: P3-05
+    title: Light-band combat and two-tier settler home defense
+    phase: phase-3
+    description: >
+      Combat resolves on the light-band gradient — Safe: monsters debuffed; Edge:
+      even; Dark: friendlies debuffed + sanity drain; the beast is exempt everywhere
+      (LightBandCombatResolver, pure/deterministic, unit-testable). Settler tier of
+      night defense: settlers shelter in homes and sleep if danger stays away; if
+      monsters reach the door, interior lights flare and settlers shoot from lit
+      windows at a sanity cost. Anti-turtle: houses are destructible — if the outer
+      line breaks, monsters raze a home, kill the settlers inside, and that light
+      node and its colonists are lost. Tunables in CombatConfig ScriptableObject.
+      Bands, home threat and wakeup states on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Combat/LightBandCombatResolver.cs
+      - unity/Assets/_Game/Scripts/Runtime/Combat/HomeDefenseSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Combat/CombatConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/CombatDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/Building.cs (modify: destructible homes, occupancy, window light flare)
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/MonsterController.cs (modify: door assault behaviour, band debuffs)
+      - unity/Assets/_Game/Tests/EditMode/LightBandCombatTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/HomeDefensePlayModeTests.cs
+      - docs/validation/P3-05.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover band debuff math (incl. beast exemption), lit-window defense wakeups, woken-house sanity loss, and home razing removing the light node and killing occupants
+      - Validation guide at docs/validation/P3-05.md per docs/validation/README.md
+    depends_on: [P3-01, P3-03]
+    status: todo
+
+  - id: P3-06
+    title: Warriors, warrior structures with upgrade tree, night escalation
+    phase: phase-3
+    description: >
+      Warrior tier of night defense: autonomous dark-capable WarriorAgents fight
+      alongside the direct-control Bellkeeper and the beast; buildable warrior
+      structures (lodge, watchtower) with a data-driven upgrade tree; nights escalate
+      across the year to set-piece stands via an escalation curve in config feeding
+      NightmareDirector; every night generates one problem only a dark-capable unit
+      can solve (dark objective: e.g. downed villager or breached lantern outside all
+      light). Warrior recruitment sourced from trust/arrivals hooks (finalised in
+      P3-13). Tunables in CombatConfig warrior section; structures through the
+      standard asset pipeline.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Combat/WarriorAgent.cs
+      - unity/Assets/_Game/Scripts/Runtime/Combat/WarriorStructure.cs
+      - unity/Assets/_Game/Scripts/Runtime/Combat/WarriorUpgrades.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/NightEscalationSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/DarkObjectiveGenerator.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/BuildingCatalog.cs (modify: warrior buildables)
+      - blender/asset_specs/buildings/warrior_lodge_t1.json (+ generated glb/previews/metadata)
+      - blender/asset_specs/buildings/watchtower_t1.json (+ generated)
+      - unity/Assets/_Game/Tests/EditMode/WarriorUpgradeTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/NightEscalationPlayModeTests.cs
+      - docs/validation/P3-06.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (new assets validate through the pipeline)
+      - EditMode/PlayMode tests build their world programmatically and cover warrior upgrade effects, night-escalation curve, dark-objective generation each night, and warriors operating in Dark band without settler debuffs beyond the band rules
+      - Validation guide at docs/validation/P3-06.md per docs/validation/README.md
+    depends_on: [P3-05]
+    status: todo
+
+  - id: P3-07
+    title: Hound evolution paths and beast status
+    phase: phase-3
+    description: >
+      Evolution paths Guardian / War / Starved / Sacred / Broken layered on the P2-05
+      bond system: deterministic progression from trust/hunger/pain/fear/attachment
+      plus a treatment history (feeding, combat use, rites, chaining) and a hound
+      doctrine input (written by the Hound law in P3-09; sensible default until then).
+      Each path changes night behaviour and exposes a beast-status value consumed by
+      pressures (P3-10) and the end summary. Beast exemptions asserted: immune to
+      sanity and light-band debuffs. Thresholds in HoundEvolutionConfig
+      ScriptableObject; all transitions event-logged; path progress on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Beast/HoundEvolutionSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Beast/HoundEvolutionConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Beast/HoundController.cs (modify: treatment history + path behaviours)
+      - unity/Assets/_Game/Scripts/Runtime/Debug/DebugOverlay.cs (modify: evolution readout)
+      - unity/Assets/_Game/Tests/EditMode/HoundEvolutionTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/HoundEvolutionPlayModeTests.cs
+      - docs/validation/P3-07.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover each of the five evolution paths from scripted treatment histories, event-logged transitions, and beast sanity/band immunity
+      - Validation guide at docs/validation/P3-07.md per docs/validation/README.md
+    depends_on: [P3-05]
+    status: todo
+
+  - id: P3-08
+    title: Emergency overdrive actions (Candle Line et al.)
+    phase: phase-3
+    description: >
+      Player emergency levers that solve tonight at a cost: Forced Night Work, Candle
+      Line, Lantern Overburn, Bell Toll, Abbey Rite, Hound Hunt, Volunteer Watch.
+      Costs are data-driven (sanity, candles, oil, trust, beast status) plus deferred
+      nightmare-debt tags consumed by NightmareDirector on later nights. Candle Line
+      is the core night-work visual: villagers carry candles as mobile LightSources
+      lighting roads and temporary worksites. All action definitions/costs in
+      OverdriveConfig ScriptableObject; every activation event-logged; active
+      overdrives and accrued debts on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/OverdriveSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/OverdriveAction.cs
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/OverdriveConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/OverdriveDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Villagers/VillagerAgent.cs (modify: night work + candle carry states)
+      - unity/Assets/_Game/Scripts/Runtime/Light/LightSource.cs (modify: overburn mode)
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/NightmareDirector.cs (modify: nightmare-debt consumption)
+      - unity/Assets/_Game/Tests/EditMode/OverdriveCostTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/CandleLinePlayModeTests.cs
+      - docs/validation/P3-08.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover per-action cost application, Candle Line mobile light zones enabling night work, Lantern Overburn fuel burn, and deferred nightmare-debt consumption on a later night
+      - Validation guide at docs/validation/P3-08.md per docs/validation/README.md
+    depends_on: [P3-03, P3-05]
+    status: todo
+
+  - id: P3-09
+    title: Laws and decrees
+    phase: phase-3
+    description: >
+      Standing law system with five groups — Food (Equal / Workers First / Beast
+      Share / Fasting), Night labour (No Work After Bell / Paid Risk / Forced),
+      Burial (Full Rites / Mass Graves / Use the Dead), Hound (Family / Weapon /
+      Chained / Sacred), Old rites (Tolerate Offerings / Forbid Pagan Rites). Each
+      option applies data-driven mechanical effects: food distribution through the
+      ResourceLedger, night-work permissions gating P3-08 overdrives, corpse-handling
+      tags for burials/deaths, hound doctrine feeding P3-07 evolution, old-rite tags
+      for later nightmare triggers. Law changes are events (logged, with a decree
+      cooldown). Effect tables in LawsConfig ScriptableObject; active laws on debug
+      overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/LawSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/LawDefinitions.cs
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/LawsConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/LawsDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Economy/ResourceLedger.cs (modify: rationed distribution hook)
+      - unity/Assets/_Game/Scripts/Runtime/Beast/HoundEvolutionSystem.cs (modify: doctrine input)
+      - unity/Assets/_Game/Scripts/Runtime/Decrees/OverdriveSystem.cs (modify: night-labour gating)
+      - unity/Assets/_Game/Tests/EditMode/LawEffectsTests.cs
+      - docs/validation/P3-09.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover each law group's mechanical effect (food split, night-labour gate, burial tags, hound doctrine, old-rite tags) and law-change event logging
+      - Validation guide at docs/validation/P3-09.md per docs/validation/README.md
+    depends_on: [P3-04, P3-07, P3-08]
+    status: todo
+
+  - id: P3-10
+    title: Moral pressures, household sanity and abbey transformation
+    phase: phase-3
+    description: >
+      Deterministic pressure model updated from the event log and active laws: Trust
+      in Bellkeeper, Sanctity of Abbey, Mercy, Fear, Reason, Hunger, Old Faith
+      pressure; household sanity aggregated from individual sanity (P3-03); beast
+      status (P3-07) as input. Bellkeeper trust thresholds gate volunteer behaviours
+      (guards, night watch, later warrior recruitment). Abbey transformation states
+      Sanctuary / Fortress / Famine / Cult / Broken derived from pressures + laws,
+      extending AbbeyState with state-specific modifiers (light, recall, rites).
+      Update rules/weights in PressuresConfig ScriptableObject; all pressures and the
+      abbey state on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Morale/PressureSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Morale/PressureDefinitions.cs
+      - unity/Assets/_Game/Scripts/Runtime/Morale/PressuresConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Morale/AbbeyTransformationSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/PressureDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Buildings/AbbeyState.cs (modify: transformation modifiers)
+      - unity/Assets/_Game/Tests/EditMode/PressureUpdateTests.cs
+      - unity/Assets/_Game/Tests/EditMode/AbbeyTransformationTests.cs
+      - docs/validation/P3-10.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover pressure updates from scripted event sequences, trust-threshold gates, household sanity aggregation, and each abbey transformation state's trigger + modifiers
+      - Validation guide at docs/validation/P3-10.md per docs/validation/README.md
+    depends_on: [P3-03, P3-09]
+    status: todo
+
+  - id: P3-11
+    title: Consequence nightmares and threat-source pressure
+    phase: phase-3
+    description: >
+      Consequence nightmares with data-driven trigger conditions on law tags +
+      pressures: Hunger Wights (fasting/hunger), Dead Workers (forced-labour deaths),
+      Grave Crawlers (mass graves / use the dead), Chain Hounds (chained or broken
+      hound), Faceless Saints (forbidden rites / low sanctity). ThreatSourceSystem:
+      forests, wells, caves, mountains, shores, crypts and old roads accumulate
+      exploitation pressure from economy actions (cutting, mining, draining,
+      salvaging, desecrating, overuse); NightmareDirector spawns become
+      source-weighted; mitigation actions reduce pressure. Deterministic seeded
+      spawns. Trigger tables and pressure rates in ThreatConfig ScriptableObject;
+      threat sources and armed triggers on NightmareDebugPanel. Placeholder monster
+      specs through the standard asset pipeline.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/ConsequenceNightmareCatalog.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/ConsequenceMonsterController.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/ThreatSourceSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/ThreatConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Nightmares/NightmareDirector.cs (modify: source-weighted, tag-triggered spawns)
+      - unity/Assets/_Game/Scripts/Runtime/Debug/NightmareDebugPanel.cs (modify)
+      - blender/asset_specs/characters/hunger_wight_lowpoly.json (+ generated glb/previews/metadata)
+      - blender/asset_specs/characters/grave_crawler_lowpoly.json (+ generated)
+      - blender/asset_specs/characters/chain_hound_lowpoly.json (+ generated)
+      - blender/asset_specs/characters/faceless_saint_lowpoly.json (+ generated)
+      - unity/Assets/_Game/Tests/EditMode/ConsequenceNightmareTests.cs
+      - unity/Assets/_Game/Tests/EditMode/ThreatSourceTests.cs
+      - docs/validation/P3-11.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (new assets validate through the pipeline)
+      - EditMode/PlayMode tests build their world programmatically and cover each nightmare's trigger condition, threat-source pressure accumulation from economy actions, source-weighted spawn selection under a fixed seed, and mitigation reducing pressure
+      - Validation guide at docs/validation/P3-11.md per docs/validation/README.md
+    depends_on: [P3-04, P3-10]
+    status: todo
+
+  - id: P3-12
+    title: Desire paths and ground scars
+    phase: phase-3
+    description: >
+      Emergent roads: villager traffic accumulates on a TrafficGrid; heavily used
+      routes become desire paths (the player never places roads). Important paths
+      grant movement speed but demand lantern coverage and burn more fuel at night
+      (lantern fuel debt). Ground scars: night scars stamped at dawn from the
+      GameEventLog, fading across the day — meadow regrows before dusk; in winter
+      (P3-01) snow covers them instead of regrowth. Day desire paths persist as
+      infrastructure. Placeholder visuals (mesh/decal tint) are fine; traffic heatmap
+      + path tiers + fuel debt on the settlement debug panel. Tunables in PathsConfig
+      ScriptableObject.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/TrafficGrid.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/DesirePathSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/GroundScarSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/PathsConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/SettlementDebugPanel.cs (modify)
+      - unity/Assets/_Game/Scripts/Runtime/Core/PlanarMotion.cs (modify: traffic reporting + path speed bonus)
+      - unity/Assets/_Game/Tests/EditMode/DesirePathTests.cs
+      - unity/Assets/_Game/Tests/EditMode/GroundScarDecayTests.cs
+      - docs/validation/P3-12.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover desire-path emergence from traffic, path speed bonus, lantern fuel debt on lit paths at night, ground-scar stamping at dawn, day fade, and winter snow-cover branch
+      - Validation guide at docs/validation/P3-12.md per docs/validation/README.md
+    depends_on: [P3-01, P3-02]
+    status: todo
+
+  - id: P3-13
+    title: Island exploration, arrivals and dilemmas
+    phase: phase-3
+    description: >
+      Daytime expeditions and edge-of-light scouting reveal points of interest
+      (wreckage, old roads, shrines, wells, boundary stones, survivors, warriors,
+      resources, new seed slots feeding P3-02). Population growth: survivors can find
+      the lit village, expeditions can find them, and storm shipwreck events throw
+      new crews ashore (survivors, specialists, warriors, supplies, drowned-nightmare
+      risk); trust (P3-10) determines whether newcomers stay, volunteer, fight,
+      follow laws, or sail in spring. Dilemma events as data-driven choice cards
+      writing pressures/law tags: Missing Salvager, Food Thief, Hound Bites a Child.
+      Deterministic seeded decks. All tables in IslandConfig ScriptableObject; POIs,
+      arrivals and pending dilemmas on debug overlay.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Island/ExplorationSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Island/PointOfInterest.cs
+      - unity/Assets/_Game/Scripts/Runtime/Island/ArrivalSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Island/DilemmaSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Island/IslandConfig.cs
+      - unity/Assets/_Game/Scripts/Runtime/Debug/IslandDebugPanel.cs
+      - unity/Assets/_Game/Scripts/Runtime/Settlement/SeedSlotSystem.cs (modify: exploration-unlocked slots)
+      - unity/Assets/_Game/Tests/EditMode/ExplorationTests.cs
+      - unity/Assets/_Game/Tests/EditMode/ArrivalTests.cs
+      - unity/Assets/_Game/Tests/EditMode/DilemmaTests.cs
+      - docs/validation/P3-13.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container
+      - EditMode/PlayMode tests build their world programmatically and cover exploration unlocks (incl. new seed slots), refugee arrival + trust-gated staying, shipwreck rescue events with drowned-nightmare risk, warrior recruitment, and each dilemma's choice consequences
+      - Validation guide at docs/validation/P3-13.md per docs/validation/README.md
+    depends_on: [P3-02, P3-10]
+    status: todo
+
+  - id: P3-14
+    title: Spring-ship win, four chapters and end summary
+    phase: phase-3
+    description: >
+      Year structure and campaign close. Four chapters on one map keyed to the
+      calendar: The Wreck, The Meadow, The Long Rain, The First White Night. Spring-
+      ship season win: survive winter while completing a three-part manifest —
+      settlers, provisions, hull/rigging incl. sailcloth (ship rebuild through the
+      construction system + ledger) — then launch and sail; who-sails/who-stays
+      dilemma decides the crew and feeds the outcome. End summary reflecting actual
+      choices (laws enacted, pressures, hound path, abbey state, deaths, overdrives)
+      generated from the GameEventLog in the P2-07 storybook voice. CampaignOutcome
+      serialized for Phase 4 carryover. GameSession win/loss extended (Phase 2 White
+      Night outcomes become chapter 4 rather than the campaign end when the Phase 3
+      scenario is active). Manifest thresholds/chapter bounds in GameSessionConfig;
+      chapter + manifest progress on debug overlay. Ship stages through the standard
+      asset pipeline.
+    files:
+      - unity/Assets/_Game/Scripts/Runtime/Session/ChapterSystem.cs
+      - unity/Assets/_Game/Scripts/Runtime/Session/SpringShipScenario.cs
+      - unity/Assets/_Game/Scripts/Runtime/Session/CampaignOutcome.cs
+      - unity/Assets/_Game/Scripts/Runtime/Session/GameSession.cs (modify)
+      - unity/Assets/_Game/Scripts/Runtime/Session/GameSessionConfig.cs (modify: manifest + chapters)
+      - unity/Assets/_Game/Scripts/Runtime/Reports/EndSummary.cs
+      - blender/asset_specs/buildings/spring_ship_t1.json (staged hull; + generated glb/previews/metadata)
+      - unity/Assets/_Game/Tests/EditMode/SpringShipManifestTests.cs
+      - unity/Assets/_Game/Tests/PlayMode/SpringShipWinPlayModeTests.cs
+      - docs/validation/P3-14.md
+    acceptance:
+      - ./tools/check_all.sh passes in the agent container (ship asset validates through the pipeline)
+      - EditMode/PlayMode tests build their world programmatically and cover chapter transitions, manifest completion accounting, spring-ship launch win, failure when a manifest part is missing at spring, who-sails/who-stays outcome recording, and end-summary accuracy against a scripted event log
+      - Validation guide at docs/validation/P3-14.md per docs/validation/README.md
+    depends_on: [P3-04, P3-11, P3-13]
+    status: todo
 
   # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
   - id: P4-EPIC
