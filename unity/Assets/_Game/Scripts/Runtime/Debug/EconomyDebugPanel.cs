@@ -42,7 +42,9 @@ namespace Abbey.Debugging
             float x = Screen.width - width - 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, 8f, width, 22f), $"[{toggleKey}] economy panel");
+                float labelWidth = 220f;
+                float labelX = Mathf.Max(8f, Screen.width - labelWidth - 8f);
+                GUI.Label(new Rect(labelX, 32f, labelWidth, 22f), $"[{toggleKey}] economy panel");
                 return;
             }
 

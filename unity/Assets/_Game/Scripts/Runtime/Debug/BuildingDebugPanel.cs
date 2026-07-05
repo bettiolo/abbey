@@ -56,7 +56,9 @@ namespace Abbey.Debugging
             const float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] building panel");
+                const float labelWidth = 220f;
+                float labelX = Mathf.Max(8f, Screen.width - labelWidth - 8f);
+                GUI.Label(new Rect(labelX, 56f, labelWidth, 22f), $"[{toggleKey}] building panel");
                 return;
             }
 
