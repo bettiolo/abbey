@@ -7,8 +7,8 @@ namespace Abbey.Debugging
 {
     /// <summary>
     /// Debug overlay for the seasonal calendar + weather (AGENTS.md "debug overlays
-    /// for every hidden system"). Toggled with <see cref="toggleKey"/> (F7, so it
-    /// coexists with F1-F6). Shows the current season, day-of-year / in-season day,
+    /// for every hidden system"). Toggled with <see cref="toggleKey"/> (F11, so it
+    /// coexists with the other debug panels and the player HUD/minimap on F7/F8). Shows the current season, day-of-year / in-season day,
     /// the night-length multiplier, weather, moon phase, the live light/bell
     /// effectiveness multipliers, the White Night flag and the next omen day.
     /// Display-only: nothing here holds or tunes a balance value.
@@ -17,7 +17,7 @@ namespace Abbey.Debugging
     public class SeasonDebugPanel : MonoBehaviour
     {
         [Tooltip("Key that shows/hides the panel.")]
-        public KeyCode toggleKey = KeyCode.F7;
+        public KeyCode toggleKey = KeyCode.F11;
 
         [Tooltip("Start with the panel visible.")]
         public bool visible = true;

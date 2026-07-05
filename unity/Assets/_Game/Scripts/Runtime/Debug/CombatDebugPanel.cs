@@ -11,7 +11,7 @@ namespace Abbey.Debugging
     /// <summary>
     /// Debug overlay for the light-band combat + two-tier home defense systems
     /// (AGENTS.md "debug overlays for every hidden system"). Toggled with
-    /// <see cref="toggleKey"/> (F6, so it coexists with F1-F4 and F7-F9) and drawn on
+    /// <see cref="toggleKey"/> (F6, so it coexists with the other debug panels; player HUD/minimap are F7/F8) and drawn on
     /// the right. Surfaces the hidden state: the band-combat multipliers from
     /// <see cref="CombatConfig"/>, the band under each home, and every defended home's
     /// state (sleeping / awake / razed) with its hit-point bar. Display-only: nothing

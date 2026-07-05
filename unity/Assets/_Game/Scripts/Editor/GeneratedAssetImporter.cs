@@ -203,6 +203,12 @@ namespace Abbey.EditorTools
         static void WriteReport(GeneratedAssetValidator.ImportReport report)
         {
             string absolute = Path.Combine(ProjectRoot, ReportPath);
+            if (File.Exists(absolute) && ReportMatchesExceptGeneratedAt(
+                    File.ReadAllText(absolute), report))
+            {
+                return;
+            }
+
             string dir = Path.GetDirectoryName(absolute);
             if (!string.IsNullOrEmpty(dir))
             {
@@ -210,6 +216,35 @@ namespace Abbey.EditorTools
             }
             File.WriteAllText(absolute, JsonUtility.ToJson(report, prettyPrint: true) + "\n");
             AssetDatabase.Refresh();
+        }
+
+        public static bool ReportMatchesExceptGeneratedAt(
+            string existingJson, GeneratedAssetValidator.ImportReport report)
+        {
+            if (string.IsNullOrEmpty(existingJson) || report == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                var existing = JsonUtility.FromJson<GeneratedAssetValidator.ImportReport>(
+                    existingJson);
+                if (existing == null)
+                {
+                    return false;
+                }
+
+                existing.generatedAt = report.generatedAt;
+                string existingNormalized =
+                    JsonUtility.ToJson(existing, prettyPrint: true) + "\n";
+                string current = JsonUtility.ToJson(report, prettyPrint: true) + "\n";
+                return existingNormalized == current;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

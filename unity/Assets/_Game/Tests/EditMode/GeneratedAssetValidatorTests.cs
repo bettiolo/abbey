@@ -156,5 +156,75 @@ namespace Abbey.Tests.EditMode
 
             Assert.IsEmpty(missing, "the fake import satisfies its metadata anchors");
         }
+
+        [Test]
+        public void ReportMatchesExceptGeneratedAt_IgnoresTimestampOnlyChanges()
+        {
+            var current = new GeneratedAssetValidator.ImportReport
+            {
+                generatedAt = "2026-07-05T14:00:00.0000000Z",
+                totalAssets = 1,
+                passed = 1,
+                failed = 0,
+                results = new List<GeneratedAssetValidator.AssetResult>
+                {
+                    new GeneratedAssetValidator.AssetResult
+                    {
+                        id = "campfire_t1",
+                        imported = true,
+                        passed = true,
+                        anchorsChecked = 2,
+                        missingAnchors = new string[0],
+                        message = "ok (2 anchor(s) present)",
+                    },
+                },
+            };
+            const string existing = @"{
+    ""generatedAt"": ""2026-07-05T13:00:00.0000000Z"",
+    ""totalAssets"": 1,
+    ""passed"": 1,
+    ""failed"": 0,
+    ""message"": """",
+    ""results"": [
+        {
+            ""id"": ""campfire_t1"",
+            ""imported"": true,
+            ""passed"": true,
+            ""anchorsChecked"": 2,
+            ""missingAnchors"": [],
+            ""message"": ""ok (2 anchor(s) present)""
+        }
+    ]
+}
+";
+
+            Assert.IsTrue(GeneratedAssetImporter.ReportMatchesExceptGeneratedAt(
+                existing, current));
+        }
+
+        [Test]
+        public void ReportMatchesExceptGeneratedAt_DetectsValidationChanges()
+        {
+            var current = new GeneratedAssetValidator.ImportReport
+            {
+                generatedAt = "2026-07-05T14:00:00.0000000Z",
+                totalAssets = 1,
+                passed = 0,
+                failed = 1,
+                results = new List<GeneratedAssetValidator.AssetResult>(),
+            };
+            const string existing = @"{
+    ""generatedAt"": ""2026-07-05T13:00:00.0000000Z"",
+    ""totalAssets"": 1,
+    ""passed"": 1,
+    ""failed"": 0,
+    ""message"": """",
+    ""results"": []
+}
+";
+
+            Assert.IsFalse(GeneratedAssetImporter.ReportMatchesExceptGeneratedAt(
+                existing, current));
+        }
     }
 }

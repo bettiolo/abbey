@@ -1,7 +1,7 @@
 {
-    "generatedAt": "2026-07-02T19:08:36.6223860Z",
-    "totalAssets": 23,
-    "passed": 23,
+    "generatedAt": "2026-07-05T13:18:09.8226490Z",
+    "totalAssets": 38,
+    "passed": 38,
     "failed": 0,
     "message": "",
     "results": [
@@ -20,6 +20,22 @@
             "anchorsChecked": 2,
             "missingAnchors": [],
             "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "abbey_gate_repaired",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "abbey_gate_ruined",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
         },
         {
             "id": "abbey_town_diorama_t1",
@@ -54,6 +70,14 @@
             "message": "ok (3 anchor(s) present)"
         },
         {
+            "id": "bellkeeper_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
             "id": "black_hound_lowpoly",
             "imported": true,
             "passed": true,
@@ -70,12 +94,28 @@
             "message": "ok (2 anchor(s) present)"
         },
         {
+            "id": "candle_shrine_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
             "id": "dirt_road_segment",
             "imported": true,
             "passed": true,
             "anchorsChecked": 0,
             "missingAnchors": [],
             "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "drowned_sailor_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
         },
         {
             "id": "field_plot_t1",
@@ -94,7 +134,47 @@
             "message": "ok (0 anchor(s) present)"
         },
         {
+            "id": "forest_tree_02",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "grave_marker",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 0,
+            "missingAnchors": [],
+            "message": "ok (0 anchor(s) present)"
+        },
+        {
+            "id": "guard_post_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
             "id": "hound_chain",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "infirmary_corner_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "lantern_moth_lowpoly",
             "imported": true,
             "passed": true,
             "anchorsChecked": 1,
@@ -108,6 +188,14 @@
             "anchorsChecked": 2,
             "missingAnchors": [],
             "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "pale_hound_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
         },
         {
             "id": "paving_patch",
@@ -134,6 +222,14 @@
             "message": "ok (0 anchor(s) present)"
         },
         {
+            "id": "sailcloth",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
             "id": "shelter_t1",
             "imported": true,
             "passed": true,
@@ -156,6 +252,14 @@
             "anchorsChecked": 1,
             "missingAnchors": [],
             "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "shipwreck_crate_open",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
         },
         {
             "id": "shipwreck_hull",
@@ -182,7 +286,23 @@
             "message": "ok (3 anchor(s) present)"
         },
         {
+            "id": "villager_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
             "id": "well_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "woodcutter_t1",
             "imported": true,
             "passed": true,
             "anchorsChecked": 2,

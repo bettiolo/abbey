@@ -7,7 +7,7 @@ namespace Abbey.Debugging
     /// <summary>
     /// Debug overlay for the sanity/dread/asylum system (AGENTS.md "debug overlays
     /// for every hidden system"). Toggled with <see cref="toggleKey"/> (F9, so it
-    /// coexists with F1-F8). Surfaces the hidden per-villager state: a sanity + dread
+    /// coexists with the other debug panels; player HUD/minimap are F7/F8). Surfaces the hidden per-villager state: a sanity + dread
     /// bar and band per tracked villager, the asylum roster, and tonight's held
     /// ("missing") units. Display-only: nothing here holds or tunes a balance value.
     /// </summary>

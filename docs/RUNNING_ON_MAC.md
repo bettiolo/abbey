@@ -23,12 +23,15 @@ it on a Mac:
    | Input | Action |
    |-------|--------|
    | **WASD / arrow keys** | Move the Bellkeeper (camera-relative under the locked 45° yaw; the camera follows the hero). |
+   | **Shift + WASD / arrows** | Run with the Bellkeeper. |
    | **Space** | Ring the bell — recall pulse for villagers, call to the hound (5s cooldown). |
    | **F** | Raise / douse the carried flame (mobile light; drains stamina while lit). |
    | **E** | Rescue the nearest villager / release the escorted one (release inside Safe light to complete the rescue). |
    | **H** | Feed the Black Hound (within interact range; costs one carried food). |
    | **Mouse scroll wheel** | Zoom (orthographic size only — the camera never rotates). |
    | **F1** | Toggle the debug overlay: time-of-day + phase progress, per-villager states, hound bond values, monsters, director, lights/resources. |
+   | **F7** | Toggle the player HUD. |
+   | **F8** | Toggle the minimap. |
 
    Light-territory rings (Safe/Edge) draw as gizmos in the Scene view via the
    `LightZoneGizmos` helper on the DebugOverlay object.

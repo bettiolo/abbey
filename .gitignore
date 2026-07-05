@@ -1,29 +1,115 @@
-# Blender build artifacts — spec + generator script are the source of truth
+# Blender build artifacts - spec + generator script are the source of truth.
+# Keep generated GLBs/previews/metadata committed; ignore only heavy/native
+# Blender working files and editor backups.
 blender/generated/blend/
-*.blend1
+*.blend[0-9]*
+*.blend@
+*.blend~
+
+# Python/tooling caches
 __pycache__/
 *.pyc
 .pytest_cache/
 .uv-cache/
 
-# Unity
+# Local source-pack cache for downloaded third-party art packs. The runtime only
+# commits selected Abbey-named placeholder copies under unity/Assets/_Game/Art.
+third_party_cache/*
+!third_party_cache/README.md
+
+# Unity generated cache/build output.
+# Do not ignore unity/Assets/**/*.meta or unity/Assets/Generated/BlenderAssets/*.glb:
+# those are committed so fresh checkouts can import generated assets without Blender.
+.utmp/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+.gradle/
 unity/Library/
 unity/Temp/
 unity/Obj/
 unity/Logs/
 unity/UserSettings/
 unity/Build/
-unity/*.csproj
-unity/*.sln
-unity/.vs/
+unity/Builds/
+ExportedObj/
+.consulo/
+*.log
+
+# Unity generated/editor integration files inside Assets.
+unity/[Aa]ssets/[Pp]lugins/[Ee]ditor/JetBrains*
+*.DotSettings.user
+
+# Repo-generated prototype scene. Source of truth is PrototypeSceneBuilder.cs.
+unity/Assets/_Game/Scenes/Prototype01.unity
+unity/Assets/_Game/Scenes/Prototype01.unity.meta
+
+# Unity generated project/IDE files
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+mono_crash.*
+
+# Unity build/test/package outputs.
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+crashlytics-build.properties
+InitTestScene*.unity*
+
+# Unity Addressables, Visual Scripting, and generated scene dependency caches.
+[Ss]erver[Dd]ata/
+unity/[Aa]ssets/[Ss]treaming[Aa]ssets/aa*
+unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/link.xml*
+unity/[Aa]ssets/[Aa]ddressables_Temp*
+unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers
+unity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers.meta
+unity/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+unity/[Aa]ssets/[Ss]cene[Dd]ependency[Cc]ache*
 
 # OS
 .DS_Store
+._*
+.Spotlight-V100
+.Trashes
 
 # Local environment/secrets
 .envrc
 *.alf
 test-results/
+
+# Editor local state
+.idea/
+.vscode/
+.vs/
+unity/.vs/
 
 # Claude harness state (agent worktrees live here during orchestration)
 .claude/worktrees/

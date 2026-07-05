@@ -5,8 +5,8 @@ namespace Abbey.Debugging
 {
     /// <summary>
     /// Debug overlay for the seed-slot settlement system (AGENTS.md "debug overlays
-    /// for every hidden system"). Toggled with <see cref="toggleKey"/> (F8, so it
-    /// coexists with F1-F7). Shows slot counts by state, the live light debt, and a
+    /// for every hidden system"). Toggled with <see cref="toggleKey"/> (F10, so it
+    /// coexists with the other debug panels and the player HUD/minimap on F7/F8). Shows slot counts by state, the live light debt, and a
     /// short slot list; draws a ground gizmo for every slot (green = Open, amber =
     /// Occupied, grey = Locked) so growth and the hug rule are visible in the Scene
     /// view. Display-only: nothing here holds or tunes a balance value.
@@ -15,7 +15,7 @@ namespace Abbey.Debugging
     public class SettlementDebugPanel : MonoBehaviour
     {
         [Tooltip("Key that shows/hides the panel.")]
-        public KeyCode toggleKey = KeyCode.F8;
+        public KeyCode toggleKey = KeyCode.F10;
 
         [Tooltip("Start with the panel visible.")]
         public bool visible = true;
