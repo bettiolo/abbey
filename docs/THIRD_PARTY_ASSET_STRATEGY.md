@@ -7,8 +7,8 @@ reserve the Blender pipeline for assets that define the game's identity.
 ## Policy
 
 - Use third-party assets for gameplay placeholders, readable props, terrain dressing,
-  generic villagers, crates, walls, trees, rocks, camp objects, and other non-signature
-  art.
+  temporary PBR textures/materials, generic villagers, crates, walls, trees, rocks, camp
+  objects, and other non-signature art.
 - Keep custom generated assets for identity pieces: the ruined abbey silhouette, bell
   tower, Black Hound, hound chain, signature nightmares, sacred flame language, and any
   asset that needs to match the art bible exactly.
@@ -25,32 +25,63 @@ reserve the Blender pipeline for assets that define the game's identity.
 
 ## Source Priority
 
-1. **Kenney CC0 assets** for environment primitives and simple props. These are easy to
-   download directly, lightweight, and suitable for temporary gameplay art.
-2. **Quaternius CC0 assets** for stylized 3D characters, medieval modular pieces, and
-   fantasy props. These fit the low-poly direction and provide Unity-ready FBX files.
-3. **Paid store packs** only for a clear bottleneck where CC0 sources are not good
-   enough. Record the invoice, license, permitted seats, and redistribution limits before
-   committing anything.
-4. **Custom Blender generation** when an asset is an identity asset or when the gameplay
+1. **Poly Haven CC0 assets** for higher-fidelity temporary PBR textures, HDRIs, rocks,
+   scanned natural props, and other realistic surface/reference assets.
+2. **ambientCG CC0 assets** for temporary PBR materials: ground, mud, grass, stone,
+   plaster, wood, roof, fabric, metal, and weathering overlays.
+3. **Kenney/Quaternius/KayKit CC0 assets** only for blockout, simple props, or gameplay
+   silhouettes when the low-poly style is acceptable for the specific object.
+4. **Paid store/Fab/marketplace packs** only for a clear bottleneck where CC0 sources
+   are not enough. Record the invoice, license, permitted seats, and redistribution
+   limits before committing anything.
+5. **Custom Blender generation** when an asset is an identity asset or when the gameplay
    needs a very specific silhouette that store assets do not cover.
+
+## Temporary Texture Sources
+
+Approved default sources:
+
+- **Poly Haven**: https://polyhaven.com/ - CC0 textures, HDRIs, and models. Use for
+  natural ground, stone, rock, bark/wood, weathered surfaces, and scene lighting
+  reference.
+- **ambientCG**: https://ambientcg.com/ - CC0 PBR materials, HDRIs, and models. Use for
+  ground, mud, grass, stone, plaster, roof, fabric, metal, and wood material tests.
+
+Manual-review-only sources:
+
+- **ShareTextures** and similar "CC0-based" libraries with redistribution limits. These
+  can be useful for local experiments, but do not commit raw files or derived texture
+  sets unless the exact asset license allows repository redistribution.
+- **Fab/Megascans/paid stores**. These can be excellent visual placeholders, but usually
+  belong in a private/local dependency workflow rather than a public committed asset
+  path. Document seat/license requirements before use.
 
 ## Cache And Runtime Layout
 
-Downloaded source packs live in the ignored repo-local cache at `third_party_cache/`.
-The cache may contain full extracted packs, licenses, and exploratory files, but Unity
-runtime code must not reference files from it.
+Downloaded source packs and texture/material archives live in the ignored repo-local
+cache at `third_party_cache/`. The cache may contain full extracted packs, source
+licenses, exploratory textures, HDRIs, and material maps, but Unity runtime code must not
+reference files from it.
 
 Only selected placeholders are committed under
-`unity/Assets/_Game/Art/Placeholders/Generic/`, using Abbey-owned
-`abbey_placeholder_*` filenames. Those files are replaceable by designers without
-preserving third-party pack folder structure in the Unity project.
+`unity/Assets/_Game/Art/Placeholders/`, using Abbey-owned `abbey_placeholder_*`
+filenames. Mesh placeholders currently live under `Generic/`; selected texture/material
+placeholders should live under a dedicated textures/materials subfolder when first used.
+Those files are replaceable by designers without preserving third-party pack folder
+structure in the Unity project.
 
 Currently cached/selected sources:
 
 - Kenney Nature Kit, CC0: trees, rocks, campfire, logs, canoe.
 - Quaternius Medieval Village MegaKit Standard, CC0: crate, wagon-as-barrel proxy,
   and abbey wall straight segment.
+
+Approved but not yet selected into Unity placeholders:
+
+- Poly Haven, CC0: temporary PBR textures/HDRIs/models for realistic terrain, rock,
+  wood, stone, and lighting tests.
+- ambientCG, CC0: temporary PBR material sets for terrain, ground scars, stone, plaster,
+  roofing, wood, fabric, and metal tests.
 
 Cached but not committed as runtime placeholders:
 
@@ -92,13 +123,13 @@ Unity import identity stays stable across checkouts.
 
 ## Workflow
 
-1. Add or choose the source pack.
+1. Add or choose the source pack or texture/material set.
 2. Record pack name, source URL, license, download date, and selected files in
-   `unity/Assets/_Game/Art/Placeholders/Generic/README.md`.
+   the relevant `unity/Assets/_Game/Art/Placeholders/` README.
 3. Keep the downloaded pack contents in `third_party_cache/`; do not commit the cache
    contents.
 4. Copy only selected runtime files into
-   `unity/Assets/_Game/Art/Placeholders/Generic/` with Abbey-specific placeholder names.
+   `unity/Assets/_Game/Art/Placeholders/` with Abbey-specific placeholder names.
 5. Add wrapper prefabs or scene-builder mappings that reference the Abbey placeholder
    files by path.
 6. Run `./tools/check_all.sh`. Unity import validation still requires a local Unity
