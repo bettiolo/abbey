@@ -272,6 +272,18 @@ namespace Abbey.Nightmares
                 setPiece = NightEscalationSystem.IsSetPieceNight(combat, _nightNumber);
             }
 
+            // P3-08: earlier nights' overdrive levers booked a nightmare debt; the
+            // director cashes it in now, spawning extra monsters on top of the season
+            // wave (P3-11 nightmares extend this hook).
+            var overdrive = Abbey.Decrees.OverdriveSystem.Instance;
+            int debtExtra = overdrive != null ? overdrive.ConsumeNightmareDebtForNight() : 0;
+            if (debtExtra > 0)
+            {
+                GameEventLog.Append("night_escalation",
+                    $"debt_monsters night={_nightNumber} extra={debtExtra}");
+            }
+            count += debtExtra;
+
             for (int i = 0; i < count; i++)
             {
                 int seed = cfg.simulationSeed + _nightNumber * 977 + i * 131;

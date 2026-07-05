@@ -38,6 +38,14 @@ namespace Abbey.Light
 
         public bool HasInfiniteFuel => fuelSeconds < 0f;
 
+        // ---- P3-08 overdrive: temporary "burn brighter, burn faster" mode ----
+        bool _overburning;
+        float _baseRadius;
+        float _baseFuelRate;
+
+        /// <summary>True while an overdrive Lantern Overburn is boosting this light.</summary>
+        public bool IsOverburning => _overburning;
+
         void OnEnable()
         {
             DarknessEvaluator.Register(this);
@@ -105,6 +113,40 @@ namespace Abbey.Light
             }
             isLit = true;
             GameEventLog.Append("LightIgnited", $"{name} sacred={sacred}");
+        }
+
+        /// <summary>
+        /// Lantern Overburn (P3-08): the light burns brighter — radius scaled up — at a
+        /// multiplied fuel-consumption rate, so it eats its fuel faster and may gutter out
+        /// mid-night. Idempotent: re-applying restores from the original values first, so
+        /// the multipliers never stack. Multipliers below 1 are clamped to 1 (overburn
+        /// only ever brightens/burns faster).
+        /// </summary>
+        public void ApplyOverburn(float radiusMultiplier, float fuelRateMultiplier)
+        {
+            if (!_overburning)
+            {
+                _baseRadius = radius;
+                _baseFuelRate = fuelConsumptionPerSecond;
+                _overburning = true;
+            }
+            radius = _baseRadius * Mathf.Max(1f, radiusMultiplier);
+            fuelConsumptionPerSecond = _baseFuelRate * Mathf.Max(1f, fuelRateMultiplier);
+            GameEventLog.Append("light_overburn",
+                $"{name} radius={radius:F1} fuelRate={fuelConsumptionPerSecond:F2}");
+        }
+
+        /// <summary>Ends overburn, restoring the pre-overburn radius and fuel rate. No-op when not overburning.</summary>
+        public void ClearOverburn()
+        {
+            if (!_overburning)
+            {
+                return;
+            }
+            _overburning = false;
+            radius = _baseRadius;
+            fuelConsumptionPerSecond = _baseFuelRate;
+            GameEventLog.Append("light_overburn", $"{name} cleared radius={radius:F1}");
         }
 
         void OnDrawGizmosSelected()

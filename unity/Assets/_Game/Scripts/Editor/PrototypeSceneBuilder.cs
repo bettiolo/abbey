@@ -221,6 +221,14 @@ namespace Abbey.EditorTools
             // HoundEvolutionConfig; auto-finds the hound — no wiring.
             worldGO.AddComponent<HoundEvolutionSystem>();
 
+            // Emergency overdrive levers (P3-08). The player's panic buttons — Forced
+            // Night Work, Candle Line, Lantern Overburn, Bell Toll, Abbey Rite, Hound
+            // Hunt, Volunteer Watch — each solve tonight at an immediate cost (resources,
+            // sanity, trust, beast status) plus a deferred nightmare debt the director
+            // cashes in on later nights. Reads OverdriveConfig and reuses the ledger /
+            // sanity / light systems — no wiring.
+            worldGO.AddComponent<Abbey.Decrees.OverdriveSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
@@ -642,6 +650,12 @@ namespace Abbey.EditorTools
             // Combat + home-defense overlay (F6, right): band multipliers, live
             // monster count, and each destructible home's state + hit-point bar.
             panelsGO.AddComponent<CombatDebugPanel>();
+
+            // Overdrive overlay + trigger (F12, right): the seven emergency levers with
+            // their permitted/affordable state, the levers active tonight, and the booked
+            // + pending nightmare debt. Number keys 1-7 fire a lever while it is open.
+            panelsGO.AddComponent<OverdriveDebugPanel>();
+
             // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");
             hudGO.AddComponent<GameHud>();

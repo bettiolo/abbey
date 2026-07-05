@@ -104,6 +104,15 @@ namespace Abbey.Villagers
         /// <summary>True while the villager holds a day-loop assignment.</summary>
         public bool HasWorkAssignment => _hasAssignment;
 
+        /// <summary>
+        /// P3-08 overdrive: while true the villager is pressed into night service (Forced
+        /// Night Work, a Candle Line carrier, Volunteer Watch) and ignores the dusk recall
+        /// / bell — it keeps working out in the (overdriven) light. The
+        /// <see cref="Abbey.Decrees.OverdriveSystem"/> sets it at activation and clears it
+        /// at dawn, handing the villager back to the normal recall.
+        /// </summary>
+        public bool NightWorkExempt { get; set; }
+
         /// <summary>Fear 0..1. Panic threshold and rates come from config.</summary>
         public float Fear { get; private set; }
 
@@ -203,6 +212,10 @@ namespace Abbey.Villagers
         /// </summary>
         public void OrderReturnToLight(bool bellBoosted, float delaySeconds = 0f)
         {
+            if (NightWorkExempt)
+            {
+                return; // pressed into overdrive night service: it does not recall
+            }
             switch (State)
             {
                 case VillagerState.Missing:
