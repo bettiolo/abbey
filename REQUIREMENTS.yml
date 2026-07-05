@@ -909,7 +909,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each nightmare's trigger condition, threat-source pressure accumulation from economy actions, source-weighted spawn selection under a fixed seed, and mitigation reducing pressure
       - Validation guide at docs/validation/P3-11.md per docs/validation/README.md
     depends_on: [P3-04, P3-10]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-12
     title: Desire paths and ground scars

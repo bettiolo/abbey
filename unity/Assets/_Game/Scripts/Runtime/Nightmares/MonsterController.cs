@@ -64,6 +64,13 @@ namespace Abbey.Nightmares
         /// <summary>Weak nightmares freeze when the bell rings over them.</summary>
         protected virtual bool IsStunnedByBell => false;
 
+        /// <summary>
+        /// Per-species multiplier on <see cref="PrototypeConfig.monsterMaxHealth"/>, applied
+        /// at init. Base = 1 (the pale hound); consequence nightmares override it from
+        /// <see cref="ThreatConfig"/>.
+        /// </summary>
+        protected virtual float HealthScale => 1f;
+
         public PrototypeConfig Config
         {
             get
@@ -126,7 +133,7 @@ namespace Abbey.Nightmares
             {
                 return;
             }
-            Health = Config.monsterMaxHealth;
+            Health = Config.monsterMaxHealth * Mathf.Max(0.01f, HealthScale);
             _initialized = true;
         }
 

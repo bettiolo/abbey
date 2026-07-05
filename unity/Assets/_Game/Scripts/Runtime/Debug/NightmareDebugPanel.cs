@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Abbey.Core;
 using Abbey.Nightmares;
 using UnityEngine;
@@ -11,7 +12,10 @@ namespace Abbey.Debugging
     /// bottom-right. Shows the night script (fired/pending entries), time into
     /// night and countdown to the next event, spawned/alive counts per nightmare
     /// type, the water-death gate, and the recent whisper/panic/nightmare log
-    /// tail. Display-only: nothing here holds or tunes a balance value.
+    /// tail. P3-11 adds the per-source exploitation-pressure bars
+    /// (<see cref="ThreatSourceSystem"/>) and tonight's armed consequence nightmares
+    /// (<see cref="ConsequenceNightmareCatalog"/>). Display-only: nothing here holds or
+    /// tunes a balance value.
     /// </summary>
     [DisallowMultipleComponent]
     public class NightmareDebugPanel : MonoBehaviour
@@ -81,6 +85,8 @@ namespace Abbey.Debugging
                 DrawSchedule(dir);
                 DrawMonsters(dir);
             }
+            DrawThreatSources();
+            DrawArmedTriggers();
             DrawLogTail();
 
             GUILayout.EndScrollView();
@@ -120,8 +126,9 @@ namespace Abbey.Debugging
 
         void DrawMonsters(NightmareDirector dir)
         {
-            int[] spawned = new int[3];
-            int[] alive = new int[3];
+            var types = (NightmareType[])System.Enum.GetValues(typeof(NightmareType));
+            int[] spawned = new int[types.Length];
+            int[] alive = new int[types.Length];
             var monsters = dir.SpawnedMonsters;
             for (int i = 0; i < monsters.Count; i++)
             {
@@ -138,12 +145,74 @@ namespace Abbey.Debugging
                 }
             }
             Header($"Nightmares ({monsters.Count} tracked)");
-            Line($"pale_hound     spawned={spawned[(int)NightmareType.PaleHound]} " +
-                 $"alive={alive[(int)NightmareType.PaleHound]}");
-            Line($"drowned_sailor spawned={spawned[(int)NightmareType.DrownedSailor]} " +
-                 $"alive={alive[(int)NightmareType.DrownedSailor]}");
-            Line($"lantern_moth   spawned={spawned[(int)NightmareType.LanternMoth]} " +
-                 $"alive={alive[(int)NightmareType.LanternMoth]}");
+            for (int t = 0; t < types.Length; t++)
+            {
+                if (spawned[t] == 0)
+                {
+                    continue;
+                }
+                Line($"{types[t],-14} spawned={spawned[t]} alive={alive[t]}");
+            }
+        }
+
+        // ---- P3-11: threat sources + armed consequence triggers ----------
+
+        void DrawThreatSources()
+        {
+            var threat = ThreatSourceSystem.Instance;
+            Header("Threat sources (exploitation pressure)");
+            if (threat == null)
+            {
+                Line("no ThreatSourceSystem in scene");
+                return;
+            }
+            float max = Mathf.Max(0.01f, threat.Config.maxSourcePressure);
+            var sources = threat.Sources;
+            var seen = new HashSet<ThreatSourceType>();
+            for (int i = 0; i < sources.Count; i++)
+            {
+                var type = sources[i].Type;
+                if (!seen.Add(type))
+                {
+                    continue; // one bar per source type (several sites share a type's pressure)
+                }
+                float p = threat.PressureFor(type);
+                Line($"{type,-9} {Bar(p / max)} {p:F2}");
+            }
+            if (sources.Count == 0)
+            {
+                Line("(no source locations registered)");
+            }
+        }
+
+        void DrawArmedTriggers()
+        {
+            Header("Armed consequence nightmares (tonight)");
+            if (Abbey.Decrees.LawSystem.Instance == null)
+            {
+                Line("no LawSystem — consequences disarmed");
+                return;
+            }
+            var cfg = ThreatConfig.LoadOrDefault();
+            var ctx = ConsequenceNightmareCatalog.BuildContext();
+            var armed = ConsequenceNightmareCatalog.EvaluateArmed(cfg, ctx);
+            if (armed.Count == 0)
+            {
+                Line("none armed");
+                return;
+            }
+            for (int i = 0; i < armed.Count; i++)
+            {
+                Line($"{armed[i].type,-14} x{armed[i].spawnCount} @ {armed[i].preferredSource}");
+            }
+        }
+
+        static string Bar(float fraction01)
+        {
+            fraction01 = Mathf.Clamp01(fraction01);
+            const int width = 12;
+            int filled = Mathf.RoundToInt(fraction01 * width);
+            return "[" + new string('#', filled) + new string('-', width - filled) + "]";
         }
 
         void DrawLogTail()

@@ -1,0 +1,139 @@
+{
+  "id": "hunger_wight_lowpoly",
+  "generated_at": "2026-07-05T19:13:37.256448+00:00",
+  "spec": {
+    "id": "hunger_wight_lowpoly",
+    "type": "character",
+    "theme": "beast",
+    "footprint": {
+      "width": 1.3,
+      "depth": 1.0,
+      "height": 2.1
+    },
+    "style": {
+      "silhouette": "the starved dead: a tall emaciated figure, ash-grey and hollow, ribs jutting from a caved-in chest above a swollen distended belly, spindle limbs, a lolling sunken head with two black pits for eyes, both arms reaching forward for food that never comes",
+      "materials": [
+        "mat_ash",
+        "mat_bone",
+        "mat_nightmare_black"
+      ]
+    },
+    "required_parts": [
+      "spindle_legs",
+      "distended_belly",
+      "caved_chest",
+      "ribs",
+      "hollow_head",
+      "reaching_arms"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "mouth",
+        "type": "interaction"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 0.81,
+    "depth": 0.89185,
+    "height": 2.02706,
+    "min": [
+      -0.405,
+      -0.44592,
+      0.0
+    ],
+    "max": [
+      0.405,
+      0.44592,
+      2.02706
+    ]
+  },
+  "triangle_count": 240,
+  "material_count": 3,
+  "materials": [
+    "mat_ash",
+    "mat_bone",
+    "mat_nightmare_black"
+  ],
+  "anchors": [
+    {
+      "name": "mouth",
+      "type": "interaction"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/hunger_wight_lowpoly.glb",
+    "blend": "blender/generated/blend/hunger_wight_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/hunger_wight_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/hunger_wight_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/hunger_wight_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/hunger_wight_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/hunger_wight_lowpoly.glb (34716 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/hunger_wight_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 0.810x0.892x2.027 vs footprint 1.3x1.0x2.1"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "240/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_ash', 'mat_bone', 'mat_nightmare_black']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['mouth'] present=['mouth']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "hunger_wight_lowpoly_collision present"
+      }
+    ]
+  }
+}

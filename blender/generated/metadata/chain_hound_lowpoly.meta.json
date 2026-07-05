@@ -1,0 +1,149 @@
+{
+  "id": "chain_hound_lowpoly",
+  "generated_at": "2026-07-05T19:15:28.715106+00:00",
+  "spec": {
+    "id": "chain_hound_lowpoly",
+    "type": "character",
+    "theme": "beast",
+    "footprint": {
+      "width": 3.0,
+      "depth": 1.0,
+      "height": 1.9
+    },
+    "style": {
+      "silhouette": "the doctrine of the chain made flesh: the black hound's heavy build gone wrong \u2014 thick low chest, hunched shoulders, head slung low and forward, a massive iron collar with a broken length of chain dragging back from it, two ember eyes burning in the dark",
+      "materials": [
+        "mat_nightmare_black",
+        "mat_iron",
+        "mat_ember"
+      ]
+    },
+    "required_parts": [
+      "heavy_torso",
+      "chest",
+      "haunches",
+      "low_head",
+      "legs",
+      "iron_collar",
+      "dragging_chain",
+      "ember_eyes"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "mouth",
+        "type": "interaction"
+      },
+      {
+        "name": "collar",
+        "type": "attach"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 2.75016,
+    "depth": 0.74,
+    "height": 1.29087,
+    "min": [
+      -1.37508,
+      -0.37,
+      0.0
+    ],
+    "max": [
+      1.37508,
+      0.37,
+      1.29087
+    ]
+  },
+  "triangle_count": 460,
+  "material_count": 3,
+  "materials": [
+    "mat_ember",
+    "mat_iron",
+    "mat_nightmare_black"
+  ],
+  "anchors": [
+    {
+      "name": "mouth",
+      "type": "interaction"
+    },
+    {
+      "name": "collar",
+      "type": "attach"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/chain_hound_lowpoly.glb",
+    "blend": "blender/generated/blend/chain_hound_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/chain_hound_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/chain_hound_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/chain_hound_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/chain_hound_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/chain_hound_lowpoly.glb (51192 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/chain_hound_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 2.750x0.740x1.291 vs footprint 3.0x1.0x1.9"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "460/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_ember', 'mat_iron', 'mat_nightmare_black']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['mouth', 'collar'] present=['collar', 'mouth']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "chain_hound_lowpoly_collision present"
+      }
+    ]
+  }
+}

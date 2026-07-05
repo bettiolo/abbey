@@ -61,7 +61,9 @@ namespace Abbey.Nightmares
         public NightEscalationSystem escalation;
 
         PrototypeConfig _config;
+        ThreatConfig _threat;
         readonly List<MonsterController> _spawned = new List<MonsterController>();
+        readonly List<NightmareType> _tonightConsequences = new List<NightmareType>();
         readonly HashSet<VillagerAgent> _observedDead = new HashSet<VillagerAgent>();
         List<NightmareSchedule.Entry> _schedule;
         int _nextEventIndex;
@@ -114,6 +116,23 @@ namespace Abbey.Nightmares
             }
             set { _config = value; }
         }
+
+        /// <summary>P3-11 threat/consequence balance (Resources "ThreatConfig"; coded defaults otherwise).</summary>
+        public ThreatConfig ThreatCfg
+        {
+            get
+            {
+                if (_threat == null)
+                {
+                    _threat = ThreatConfig.LoadOrDefault();
+                }
+                return _threat;
+            }
+            set { _threat = value; }
+        }
+
+        /// <summary>The consequence-nightmare species armed and spawned tonight (debug display).</summary>
+        public IReadOnlyList<NightmareType> TonightConsequences => _tonightConsequences;
 
         /// <summary>The escalation system (Phase 3), from the serialized field, the singleton, or the scene.</summary>
         public NightEscalationSystem Escalation
@@ -284,6 +303,14 @@ namespace Abbey.Nightmares
             }
             count += debtExtra;
 
+            // P3-11: refold exploitation pressure so tonight's placement reflects the day's
+            // economy; the base wave is source-weighted when a threat registry exists.
+            var threat = ThreatSourceSystem.Instance;
+            if (threat != null)
+            {
+                threat.RecomputeFromLog();
+            }
+
             for (int i = 0; i < count; i++)
             {
                 int seed = cfg.simulationSeed + _nightNumber * 977 + i * 131;
@@ -291,8 +318,70 @@ namespace Abbey.Nightmares
                 var type = (setPiece && i % 3 == 2)
                     ? NightmareType.LanternMoth
                     : NightmareType.PaleHound;
-                SpawnOnDarkRing(type, $"{type}_{_nightNumber}_{i}", seed, cfg);
+                SpawnSourceWeighted(type, $"{type}_{_nightNumber}_{i}", seed, cfg, threat, null);
             }
+
+            SpawnConsequenceNightmares(cfg, threat, count);
+        }
+
+        /// <summary>
+        /// P3-11: arms the consequence nightmares from the settlement's moral state (law tags +
+        /// pressures + grave/rite tags + abbey form) and spawns each armed species at its
+        /// pressured source. Only runs when a <see cref="Abbey.Decrees.LawSystem"/> exists —
+        /// consequences are driven by standing policy, so a bare test world summons none.
+        /// </summary>
+        void SpawnConsequenceNightmares(PrototypeConfig cfg, ThreatSourceSystem threat, int baseCount)
+        {
+            _tonightConsequences.Clear();
+            if (Abbey.Decrees.LawSystem.Instance == null)
+            {
+                return;
+            }
+
+            var tcfg = ThreatCfg;
+            var ctx = ConsequenceNightmareCatalog.BuildContext();
+            var armed = ConsequenceNightmareCatalog.EvaluateArmed(tcfg, ctx);
+
+            int index = baseCount;
+            for (int a = 0; a < armed.Count; a++)
+            {
+                var rule = armed[a];
+                GameEventLog.Append("consequence_nightmare",
+                    $"armed type={rule.type} night={_nightNumber} source={rule.preferredSource} count={rule.spawnCount}");
+                for (int j = 0; j < rule.spawnCount; j++)
+                {
+                    int seed = cfg.simulationSeed + _nightNumber * 977 + index * 131;
+                    SpawnSourceWeighted(rule.type, $"{rule.type}_{_nightNumber}_{index}",
+                        seed, cfg, threat, rule.preferredSource);
+                    index++;
+                }
+                _tonightConsequences.Add(rule.type);
+            }
+        }
+
+        /// <summary>
+        /// Spawns one monster at a location weighted toward the pressured threat sources: with
+        /// a registry present it draws a source (biased to <paramref name="preferred"/>) and
+        /// finds a dark point beside it; without one it falls back to the dark ring so the
+        /// legacy/escalation behaviour is unchanged.
+        /// </summary>
+        void SpawnSourceWeighted(NightmareType type, string name, int seed, PrototypeConfig cfg,
+            ThreatSourceSystem threat, ThreatSourceType? preferred)
+        {
+            if (threat != null)
+            {
+                var rng = new System.Random(seed);
+                var src = threat.SelectWeightedSource(rng, preferred);
+                if (src != null)
+                {
+                    Vector3? point = FindDarkSpawnPoint(
+                        src.Position, 0.5f, cfg.monsterSpawnMinRadius, seed, cfg.monsterSpawnAttempts)
+                        ?? src.Position;
+                    SpawnMonster(type, point.Value, name, cfg);
+                    return;
+                }
+            }
+            SpawnOnDarkRing(type, name, seed, cfg);
         }
 
         /// <summary>Cleans up the night and writes the summary. Public for tests/debug tools.</summary>
@@ -466,6 +555,17 @@ namespace Abbey.Nightmares
                     break;
                 case NightmareType.LanternMoth:
                     monster = go.AddComponent<LanternMothController>();
+                    break;
+                case NightmareType.HungerWight:
+                case NightmareType.DeadWorker:
+                case NightmareType.GraveCrawler:
+                case NightmareType.ChainHound:
+                case NightmareType.FacelessSaint:
+                    // P3-11 consequence nightmares: one shared controller, species + stats
+                    // injected from ThreatConfig before Configure resets health.
+                    var consequence = go.AddComponent<ConsequenceMonsterController>();
+                    consequence.ConfigureConsequence(type, ThreatCfg);
+                    monster = consequence;
                     break;
                 default:
                     // Legacy nights keep the base class (the pale hound behaviour)

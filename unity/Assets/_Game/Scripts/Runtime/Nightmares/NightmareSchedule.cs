@@ -4,12 +4,23 @@ using Abbey.Core;
 
 namespace Abbey.Nightmares
 {
-    /// <summary>The three concrete Phase 2 nightmare species (GAME_DESIGN.md §9).</summary>
+    /// <summary>
+    /// The nightmare species. The first three are the Phase 2 scripted-night species
+    /// (GAME_DESIGN.md §9); the last five are the Phase 3 consequence nightmares (P3-11),
+    /// armed by moral state (law tags + pressures) rather than the fixed night script.
+    /// </summary>
     public enum NightmareType
     {
         PaleHound,
         DrownedSailor,
-        LanternMoth
+        LanternMoth,
+
+        // ---- P3-11 consequence nightmares ----
+        HungerWight,   // Fasting law / high Hunger pressure
+        DeadWorker,    // deaths under forced night labour
+        GraveCrawler,  // Mass Graves / Use the Dead grave tags
+        ChainHound,    // Chained hound doctrine / Broken abbey
+        FacelessSaint  // Forbidden pagan rites + high Old-faith / low Sanctity
     }
 
     /// <summary>Everything the Phase 2 night script can fire at a scheduled moment.</summary>

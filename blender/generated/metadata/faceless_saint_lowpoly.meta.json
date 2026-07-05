@@ -1,0 +1,139 @@
+{
+  "id": "faceless_saint_lowpoly",
+  "generated_at": "2026-07-05T19:15:35.500527+00:00",
+  "spec": {
+    "id": "faceless_saint_lowpoly",
+    "type": "character",
+    "theme": "beast",
+    "footprint": {
+      "width": 1.5,
+      "depth": 1.2,
+      "height": 2.7
+    },
+    "style": {
+      "silhouette": "the old faith's answer to forbidden rites: an unnaturally tall robed figure standing dead straight in a heavy pale column of a robe, wide draped sleeves, a smooth blank golden oval where a face should be, a thin gold halo hovering behind the head, the dark void of the hood swallowing everything above the collar",
+      "materials": [
+        "mat_canvas",
+        "mat_sacred_gold",
+        "mat_nightmare_black"
+      ]
+    },
+    "required_parts": [
+      "robe_column",
+      "wide_sleeves",
+      "faceless_head",
+      "halo",
+      "hidden_hands",
+      "hem"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "blessing",
+        "type": "interaction"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.06,
+    "depth": 0.62,
+    "height": 2.625,
+    "min": [
+      -0.53,
+      -0.31,
+      0.0
+    ],
+    "max": [
+      0.53,
+      0.31,
+      2.625
+    ]
+  },
+  "triangle_count": 240,
+  "material_count": 3,
+  "materials": [
+    "mat_canvas",
+    "mat_nightmare_black",
+    "mat_sacred_gold"
+  ],
+  "anchors": [
+    {
+      "name": "blessing",
+      "type": "interaction"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/faceless_saint_lowpoly.glb",
+    "blend": "blender/generated/blend/faceless_saint_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/faceless_saint_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/faceless_saint_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/faceless_saint_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/faceless_saint_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/faceless_saint_lowpoly.glb (29288 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/faceless_saint_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.060x0.620x2.625 vs footprint 1.5x1.2x2.7"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "240/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_canvas', 'mat_nightmare_black', 'mat_sacred_gold']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['blessing'] present=['blessing']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "faceless_saint_lowpoly_collision present"
+      }
+    ]
+  }
+}

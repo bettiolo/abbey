@@ -247,6 +247,22 @@ namespace Abbey.EditorTools
             worldGO.AddComponent<Abbey.Morale.PressureSystem>();
             worldGO.AddComponent<Abbey.Morale.AbbeyTransformationSystem>();
 
+            // Threat sources + consequence nightmares (P3-11). ThreatSourceSystem folds
+            // exploitation pressure (woodcutting→forest, coal→cave, salvage→shore, grave
+            // handling→crypt, the daily draw→well, hauling→old road) from the event log and
+            // weights the director's spawn placement; the director arms consequence nightmares
+            // (Hunger Wights / Dead Workers / Grave Crawlers / Chain Hounds / Faceless Saints)
+            // off the law tags + pressures. Reads ThreatConfig; the source LOCATIONS are the
+            // map layout authored just below — no other wiring.
+            var threat = worldGO.AddComponent<Abbey.Nightmares.ThreatSourceSystem>();
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Forest, ForestEdgeCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Shore, BeachCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Crypt, AbbeyHillCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Well, CampCenter + new Vector3(4f, 0f, 4f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.OldRoad, new Vector3(-14f, 0f, 14f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Cave, new Vector3(34f, 0f, 8f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Mountain, new Vector3(40f, 0f, 34f));
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 

@@ -1,0 +1,17 @@
+{
+  "id": "grave_crawler_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 1.6, "depth": 2.0, "height": 1.0 },
+  "style": {
+    "silhouette": "what claws out of a mass grave: a low, long, earth-caked thing dragging itself flat along the ground on too many splayed clawing limbs, grave-dirt matted over a broken back, a split lolling head low between the shoulders, pale bone spurs breaking through the soil-black hide",
+    "materials": ["mat_dirt", "mat_nightmare_black", "mat_bone"]
+  },
+  "required_parts": ["low_body", "clawing_limbs", "claw_hands", "dragged_hindquarters", "split_head", "bone_spurs"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "mouth", "type": "interaction" }
+  ],
+  "pivot": "center_bottom"
+}
