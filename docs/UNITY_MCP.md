@@ -7,6 +7,16 @@ MCP for Unity:
 ./tools/restart_unity_mcp.sh
 ```
 
+Once the bridge is connected, use the combined verification helper:
+
+```sh
+tools/run_unity_mcp_gate.sh --no-restart
+```
+
+That command runs `Tools > Abbey > Run Unity Gate`, then EditMode and PlayMode
+tests through MCP, then prints final Unity console errors. If MCP is not already
+connected, omit `--no-restart` and it will call `restart_unity_mcp.sh` first.
+
 The script does the same sequence that worked by hand:
 
 1. Stops Unity editors already running this repo's `unity/` project.
@@ -49,6 +59,8 @@ Debug options:
 ```sh
 ./tools/restart_unity_mcp.sh --keep-temp-script
 ./tools/restart_unity_mcp.sh --no-kill-port
+tools/run_unity_mcp_gate.sh --skip-tests
+UNITY_MCP_UV_OFFLINE=1 tools/run_unity_mcp_gate.sh --no-restart
 ```
 
 ## Manual fallback

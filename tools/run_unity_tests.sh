@@ -67,7 +67,8 @@ LOCKFILE="$PROJECT_PATH/Temp/UnityLockfile"
 if [ -f "$LOCKFILE" ]; then
   echo "SKIP: Unity project is already open; batchmode tests would wait on"
   echo "      the project lock at unity/Temp/UnityLockfile."
-  echo "      Close the Unity editor and rerun this step, or run tests through the open editor/MCP."
+  echo "      Close the Unity editor and rerun this step, or use:"
+  echo "      tools/run_unity_mcp_gate.sh --no-restart"
   exit 3
 fi
 

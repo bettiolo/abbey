@@ -3,9 +3,9 @@
 The Unity project in `unity/` is a standard cross-platform Unity project. Two ways to run
 it on a Mac:
 
-> ⚠️ **A local Unity editor is currently the *only* environment where this game runs at all.**
-> Neither the LLM agent container nor CI can compile it (no editor; GameCI skips the Unity
-> tests for lack of license secrets). See [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
+> **Unity verification note:** local macOS editor verification now runs through MCP for Unity.
+> CI still skips Unity tests until GameCI license secrets are configured. See
+> [VERIFICATION_STATUS.md](VERIFICATION_STATUS.md).
 
 ## 1. In the editor (recommended during prototyping)
 
@@ -39,6 +39,12 @@ To restart the local editor and expose it through MCP for Unity:
 
 ```sh
 ./tools/restart_unity_mcp.sh
+```
+
+To run the Unity gate, EditMode tests, PlayMode tests, screenshots, and final console check:
+
+```sh
+tools/run_unity_mcp_gate.sh
 ```
 
 See [UNITY_MCP.md](UNITY_MCP.md) for prerequisites, overrides, and the manual
@@ -86,7 +92,7 @@ pipeline is still the built-in RP — URP remains a Milestone 1 decision.
 ```sh
 brew install uv            # if uv is not already installed
 ./tools/check_all.sh        # asset + design validation locally (Unity steps SKIP)
-./tools/run_unity_tests.sh editmode   # runs Unity tests — ONLY if an editor is installed
+tools/run_unity_mcp_gate.sh # runs Unity gate/tests/screenshots through an open editor
 ```
 
 Python validation runs through `uv`, using `tools/requirements-dev.txt`; it should not

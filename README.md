@@ -54,12 +54,13 @@ it) — see the graphics notes in [docs/RUNNING_ON_MAC.md](docs/RUNNING_ON_MAC.m
 # Full validation gate (degrades gracefully if Unity/Blender are unavailable)
 ./tools/check_all.sh
 
+# Local Unity editor gate through MCP for Unity on macOS
+tools/run_unity_mcp_gate.sh
+
 # Generate all Blender assets (requires blender on PATH, or bpy via uv)
 uv run --with-requirements tools/requirements-dev.txt --with bpy python tools/run_blender_asset_pipeline.py --all
 
-# Unity tests — requires a local Unity editor. NOT run in CI: GameCI skips the Unity
-# job unless UNITY_LICENSE/UNITY_EMAIL/UNITY_PASSWORD secrets are set. The C# is
-# currently authored-but-unverified — see docs/VERIFICATION_STATUS.md.
+# Batchmode Unity tests — requires a closed local Unity editor.
 ./tools/run_unity_tests.sh editmode
 ```
 
@@ -74,10 +75,9 @@ Python tooling runs through `uv`. `./tools/check_all.sh` requires `uv`, uses
 - **Phase 2** — "The First White Night" vertical slice: merged to `main`
 - Roadmap through Phase 4 (second map, second beast): [docs/ROADMAP.md](docs/ROADMAP.md)
 
-> ⚠️ **The runtime is unverified.** The Unity/C# game has never been compiled or run by any
-> automated system — there is no editor in the agent/CI container, and GameCI skips the Unity
-> tests for lack of license secrets, so "green" only covers Blender assets. It can only be
-> compiled and played in a local Unity editor. Details + fix:
+> **Unity verification:** local macOS editor verification now runs through MCP for Unity with
+> `tools/run_unity_mcp_gate.sh`. CI still skips Unity tests until GameCI license secrets are
+> configured, so a GitHub-green workflow alone is not proof that Unity compiled. Details:
 > [docs/VERIFICATION_STATUS.md](docs/VERIFICATION_STATUS.md).
 - Vertical slice spec: [docs/VERTICAL_SLICE_SPEC.md](docs/VERTICAL_SLICE_SPEC.md)
 - Art direction: [ART_BIBLE.md](ART_BIBLE.md) · Game design: [GAME_DESIGN.md](GAME_DESIGN.md)

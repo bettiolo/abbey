@@ -92,7 +92,8 @@ def main() -> int:
     if LOCKFILE.exists():
         print("SKIP: Unity project is already open; batchmode screenshot capture would wait on")
         print(f"      the project lock at {LOCKFILE.relative_to(REPO_ROOT)}.")
-        print("      Close the Unity editor and rerun this step to capture screenshots from batchmode.")
+        print("      Close the Unity editor and rerun this step, or use:")
+        print("      tools/run_unity_mcp_gate.sh --no-restart")
         return EXIT_SKIP
 
     unity = find_unity()
