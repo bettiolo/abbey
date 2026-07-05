@@ -6,18 +6,26 @@ are configured.**
 
 ## Current verified path
 
-As of 2026-07-05, the repo has been verified on macOS with Unity `6000.5.2f1` through
-MCP for Unity:
+As of 2026-07-05, `main` commit `63df7e2` has been verified on macOS with Unity
+`6000.5.2f1` through MCP for Unity:
 
 - `tools/restart_unity_mcp.sh` starts the pinned Unity editor and MCP bridge.
 - `tools/run_unity_mcp_gate.sh --no-restart` runs the Unity gate, EditMode tests,
   PlayMode tests, and a final console check through MCP.
 - Latest local MCP result:
-  - Unity gate: passed
+  - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
+    `2026-07-05T14:09:44Z`)
+  - Scene build: passed
+  - Generated asset import validation: passed
   - EditMode tests: 180/180 passed
   - PlayMode tests: 39/39 passed
   - Console errors after the Unity gate: 0
   - Canonical screenshots written to `unity/Build/screenshots/`
+- Latest `./tools/check_all.sh` result on the same commit: OK
+  - design validation: 7/7 passed
+  - asset validation: 258 passed, 8 skipped
+  - Blender changed-asset verification: passed, no changed asset specs or builders
+  - Unity batch steps: skipped because the editor was open; covered by the MCP gate above
 
 Use this command when the editor/MCP bridge is not already running:
 
@@ -39,9 +47,10 @@ GameCI still skips the Unity test job. `.github/workflows/unity.yml` gates the r
    the `license-check` job passes and the `Unity EditMode/PlayMode tests` job is **skipped**.
    The workflow therefore reports "success" **without ever compiling the C#.**
 
-Verified on `main` commit `bd8575d` (Phase 2 landing): workflow run "Unity tests" #21 →
+Verified again on `main` commit `63df7e2`: workflow run "Unity tests"
+[#28743459269](https://github.com/bettiolo/abbey/actions/runs/28743459269) →
 `license-check` = success, `Unity … tests` = **skipped**. The "Blender assets" workflow,
-by contrast, genuinely runs and passes.
+by contrast, genuinely runs and passes when triggered.
 
 ## What this means
 
