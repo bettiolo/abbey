@@ -27,8 +27,8 @@ namespace Abbey.Buildings
         /// <summary>True once a candle shrine stands (a sacred light burns).</summary>
         public static bool ShrineLit { get; private set; }
 
-        /// <summary>True once an infirmary corner stands (injured villagers heal faster).</summary>
-        public static bool InfirmaryBuilt { get; private set; }
+        /// <summary>True once an asylum corner stands (P3-03 sanity recovery hangs off this).</summary>
+        public static bool AsylumBuilt { get; private set; }
 
         /// <summary>
         /// Bell pulse radius multiplier. 1 until the bell tower is repaired, then
@@ -69,14 +69,14 @@ namespace Abbey.Buildings
             GameEventLog.Append("abbey", "shrine_lit (sacred flame burns)");
         }
 
-        public static void MarkInfirmaryBuilt()
+        public static void MarkAsylumBuilt()
         {
-            if (InfirmaryBuilt)
+            if (AsylumBuilt)
             {
                 return;
             }
-            InfirmaryBuilt = true;
-            GameEventLog.Append("abbey", "infirmary_built");
+            AsylumBuilt = true;
+            GameEventLog.Append("abbey", "asylum_built");
         }
 
         /// <summary>Test isolation.</summary>
@@ -85,7 +85,7 @@ namespace Abbey.Buildings
             GateRepaired = false;
             BellTowerRepaired = false;
             ShrineLit = false;
-            InfirmaryBuilt = false;
+            AsylumBuilt = false;
             BellRangeMultiplier = 1f;
         }
     }

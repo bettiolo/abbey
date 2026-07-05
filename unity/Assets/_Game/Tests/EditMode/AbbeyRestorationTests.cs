@@ -12,9 +12,9 @@ namespace Abbey.Tests.EditMode
     /// Abbey restoration nodes (P2-04): fixed pre-placed construction sites whose
     /// completion effects are catalog-driven — the gate flips the static
     /// path-blocked flag, the bell tower boosts every bell pulse through
-    /// DuskRecallSystem, the shrine spawns a sacred light, the infirmary heals
-    /// injured villagers through the public VillagerAgent API. Everything lands
-    /// as "abbey" event-log records. Deterministic, no scenes, manual ticks.
+    /// DuskRecallSystem, the shrine spawns a sacred light, the asylum corner (P3-02
+    /// rename of the legacy sick-corner) attaches its care-zone shell. Everything
+    /// lands as "abbey" event-log records. Deterministic, no scenes, manual ticks.
     /// </summary>
     public class AbbeyRestorationTests
     {
@@ -149,8 +149,8 @@ namespace Abbey.Tests.EditMode
                 RestorationNode.CatalogId(RestorationNodeKind.AbbeyGate));
             Assert.AreEqual("bell_tower_repair",
                 RestorationNode.CatalogId(RestorationNodeKind.BellTower));
-            Assert.AreEqual("infirmary_corner_t1",
-                RestorationNode.CatalogId(RestorationNodeKind.InfirmaryCorner));
+            Assert.AreEqual("asylum_corner_t1",
+                RestorationNode.CatalogId(RestorationNodeKind.AsylumCorner));
         }
 
         [Test]
@@ -244,18 +244,18 @@ namespace Abbey.Tests.EditMode
         }
 
         [Test]
-        public void InfirmaryCompletion_HealsInjuredVillagersInsideTheRadius()
+        public void AsylumCompletion_AttachesCareZoneShell_TracksOccupantsWithoutHealing()
         {
             var cfg = PrototypeConfig.LoadOrDefault();
-            var node = RestorationNode.Place(RestorationNodeKind.InfirmaryCorner, Vector3.zero);
+            var node = RestorationNode.Place(RestorationNodeKind.AsylumCorner, Vector3.zero);
             var building = CompleteNode(node);
 
-            Assert.IsTrue(AbbeyState.InfirmaryBuilt);
-            Assert.IsTrue(LogContains("abbey", "infirmary_built"));
-            var zone = building.GetComponent<InfirmaryZone>();
-            Assert.IsNotNull(zone, "a completed infirmary must treat villagers");
-            Assert.AreEqual(cfg.infirmaryRadius, zone.radius);
-            Assert.AreEqual(cfg.infirmaryHealSeconds, zone.healSeconds);
+            Assert.IsTrue(AbbeyState.AsylumBuilt);
+            Assert.IsTrue(LogContains("abbey", "asylum_built"));
+            var zone = building.GetComponent<AsylumZone>();
+            Assert.IsNotNull(zone, "a completed asylum corner must carry the care zone shell");
+            Assert.AreEqual(cfg.asylumRadius, zone.radius, "radius comes from PrototypeConfig");
+            zone.autoTick = false;
 
             var patientGO = new GameObject("Patient");
             patientGO.transform.position = new Vector3(1f, 0f, 0f); // inside the radius
@@ -271,64 +271,20 @@ namespace Abbey.Tests.EditMode
             far.Config = cfg;
             far.ForceState(VillagerState.Injured);
 
-            var healthyGO = new GameObject("Healthy");
-            healthyGO.transform.position = new Vector3(0f, 0f, 1f);
-            var healthy = healthyGO.AddComponent<VillagerAgent>();
-            healthy.autoTick = false;
-            healthy.Config = cfg;
-
-            // Treatment is continuous exposure: half the time heals nobody...
-            for (int i = 0; i < 3; i++)
+            // The shell tracks occupancy but changes NO villager state (P3-03 fills
+            // recovery). Ticking any number of times must leave the patient injured.
+            for (int i = 0; i < 10; i++)
             {
-                zone.Tick(zone.healSeconds / 6f);
+                zone.Tick(1f);
             }
+            CollectionAssert.Contains(zone.Occupants, patient,
+                "the inside villager is tracked as an occupant");
+            CollectionAssert.DoesNotContain(zone.Occupants, far,
+                "villagers outside the radius are not occupants");
             Assert.AreEqual(VillagerState.Injured, patient.State,
-                "half the treatment time heals nobody");
-
-            // ...and the full time puts the inside patient (only) back on its feet.
-            for (int i = 0; i < 4; i++)
-            {
-                zone.Tick(zone.healSeconds / 6f);
-            }
-            Assert.AreEqual(VillagerState.Idle, patient.State,
-                "the treated villager recovers through the public ForceState hook");
-            Assert.AreEqual(VillagerState.Injured, far.State,
-                "villagers outside the radius are not treated");
-            Assert.AreEqual(VillagerState.Idle, healthy.State, "healthy villagers are untouched");
-            Assert.AreEqual(1, LogCount("abbey", "infirmary_heal Patient"));
-            Assert.IsFalse(LogContains("abbey", "infirmary_heal FarPatient"));
-        }
-
-        [Test]
-        public void InfirmaryZone_InterruptedTreatment_StartsOver()
-        {
-            var zoneGO = new GameObject("Infirmary");
-            var zone = zoneGO.AddComponent<InfirmaryZone>();
-            zone.radius = 4f;
-            zone.healSeconds = 2f;
-            zone.autoTick = false;
-
-            var cfg = PrototypeConfig.LoadOrDefault();
-            var patientGO = new GameObject("Walkout");
-            patientGO.transform.position = Vector3.zero;
-            var patient = patientGO.AddComponent<VillagerAgent>();
-            patient.autoTick = false;
-            patient.Config = cfg;
-            patient.ForceState(VillagerState.Injured);
-
-            zone.Tick(1.5f); // almost healed...
-            patientGO.transform.position = new Vector3(10f, 0f, 0f);
-            zone.Tick(1f); // ...but walked out, so exposure resets
-            patientGO.transform.position = Vector3.zero;
-            zone.Tick(1.5f);
-            Assert.AreEqual(VillagerState.Injured, patient.State,
-                "exposure is continuous: 1.5s + 1.5s with a walkout is not 2s");
-
-            zone.Tick(0.5f);
-            Assert.AreEqual(VillagerState.Idle, patient.State);
-
-            Object.DestroyImmediate(zoneGO);
-            Object.DestroyImmediate(patientGO);
+                "the P3-02 asylum shell never heals — recovery is P3-03");
+            Assert.IsFalse(LogContains("abbey", "asylum_heal"),
+                "the removed heal behaviour must not log");
         }
 
         [Test]
@@ -337,7 +293,7 @@ namespace Abbey.Tests.EditMode
             AbbeyState.MarkGateRepaired();
             AbbeyState.MarkBellTowerRepaired(2f);
             AbbeyState.MarkShrineLit();
-            AbbeyState.MarkInfirmaryBuilt();
+            AbbeyState.MarkAsylumBuilt();
             Assert.AreEqual(2f, AbbeyState.BellRangeMultiplier);
 
             AbbeyState.Clear();
@@ -345,7 +301,7 @@ namespace Abbey.Tests.EditMode
             Assert.IsFalse(AbbeyState.GateRepaired);
             Assert.IsFalse(AbbeyState.BellTowerRepaired);
             Assert.IsFalse(AbbeyState.ShrineLit);
-            Assert.IsFalse(AbbeyState.InfirmaryBuilt);
+            Assert.IsFalse(AbbeyState.AsylumBuilt);
             Assert.AreEqual(1f, AbbeyState.BellRangeMultiplier);
 
             AbbeyState.MarkBellTowerRepaired(0.5f);

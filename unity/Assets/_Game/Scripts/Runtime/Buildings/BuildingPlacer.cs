@@ -1,5 +1,6 @@
 using Abbey.Core;
 using Abbey.Economy;
+using Abbey.Settlement;
 using UnityEngine;
 
 namespace Abbey.Buildings
@@ -10,7 +11,8 @@ namespace Abbey.Buildings
         None,
         UnknownBuilding,
         Overlapping,
-        Unaffordable
+        Unaffordable,
+        NoOpenSlot
     }
 
     /// <summary>
@@ -22,6 +24,14 @@ namespace Abbey.Buildings
     /// planning gate only; nothing is spent at placement, materials are paid as
     /// they are delivered to the site). Successful placements append a "build"
     /// record to the event log. Deterministic, no RNG.
+    ///
+    /// P3-02 seed-slot constraint: when a <see cref="SeedSlotSystem"/> is present in
+    /// the scene the player no longer free-places — the position must fall on an
+    /// Open slot (within the config's snap tolerance), checked FIRST, ahead of the
+    /// footprint/affordability gates. A successful <see cref="PlaceConstructionSite"/>
+    /// marks that slot Occupied. When no SeedSlotSystem exists (most unit tests, the
+    /// fixed abbey RestorationNodes, which bypass this class entirely) placement is
+    /// unconstrained, exactly as in Phase 2.
     /// </summary>
     public static class BuildingPlacer
     {
@@ -65,6 +75,17 @@ namespace Abbey.Buildings
             if (type == null)
             {
                 error = PlacementError.UnknownBuilding;
+                return false;
+            }
+
+            // Seed-slot constraint (P3-02): when the settlement grows through slots,
+            // only an Open slot near the position accepts a placement. Checked ahead
+            // of the footprint/affordability gates. Skipped when no system exists.
+            var slots = SeedSlotSystem.Instance;
+            if (slots != null &&
+                slots.FindOpenSlotNear(position, slots.Config.slotPlacementTolerance) == null)
+            {
+                error = PlacementError.NoOpenSlot;
                 return false;
             }
 
@@ -118,6 +139,18 @@ namespace Abbey.Buildings
             go.transform.position = position;
             var site = go.AddComponent<ConstructionSite>();
             site.Initialize(type);
+
+            // Occupy the seed slot this placement landed on (P3-02), if any.
+            var slots = SeedSlotSystem.Instance;
+            if (slots != null)
+            {
+                var slot = slots.FindOpenSlotNear(position, slots.Config.slotPlacementTolerance);
+                if (slot != null)
+                {
+                    slots.OccupySlot(slot, type.id);
+                }
+            }
+
             GameEventLog.Append("build",
                 $"{type.id} placed at ({position.x:F1}, {position.z:F1})");
             return site;

@@ -11,6 +11,7 @@ using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
 using Abbey.Session;
+using Abbey.Settlement;
 using Abbey.Villagers;
 using Abbey.World;
 using UnityEditor;
@@ -98,6 +99,7 @@ namespace Abbey.EditorTools
             var hero = BuildHero();
             BuildCamera(config, hero.transform);
             BuildCamp(config);
+            BuildSeedSlots();
             var abbeyFlame = BuildAbbeyHill(config);
             var wreckAnchor = BuildBeach();
             director.shipwreckAnchor = wreckAnchor;
@@ -138,6 +140,11 @@ namespace Abbey.EditorTools
             var worldGO = new GameObject("WorldSystems");
             worldGO.AddComponent<SeasonSystem>();
             worldGO.AddComponent<WeatherSystem>();
+
+            // Seed-slot settlement growth (P3-02). Authored slots are added later
+            // (BuildSeedSlots, once the camp lights exist so the hug rule can read
+            // lit ground); completing a building opens child slots beside it.
+            worldGO.AddComponent<SeedSlotSystem>();
 
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
@@ -210,6 +217,31 @@ namespace Abbey.EditorTools
             lanternLight.strength = config.lanternStrength;
             lanternLight.fuelSeconds = config.defaultFuelSeconds;
             lanternLight.fuelConsumptionPerSecond = config.fuelConsumptionPerSecond;
+        }
+
+        /// <summary>
+        /// Authors the initial seed-slot set (P3-02) once the camp lights stand, so
+        /// the hug rule sees lit ground. Slots ring the camp — beside the shelters
+        /// and along the lit path toward the abbey — as the open plots the player
+        /// grows from. Completing a building on any of them opens child slots beside
+        /// it. The system itself was created in BuildSimulationCore.
+        /// </summary>
+        static void BuildSeedSlots()
+        {
+            var system = UnityEngine.Object.FindFirstObjectByType<SeedSlotSystem>();
+            if (system == null)
+            {
+                return;
+            }
+
+            // Open plots hugging the camp fire/shelters and the lantern-lit path.
+            system.AddAuthoredSlot(new Vector3(-6f, 0f, 2f), SlotSizeClass.Medium);
+            system.AddAuthoredSlot(new Vector3(-4f, 0f, 5f), SlotSizeClass.Medium);
+            system.AddAuthoredSlot(new Vector3(4f, 0f, -3f), SlotSizeClass.Small);
+            system.AddAuthoredSlot(new Vector3(6f, 0f, 3f), SlotSizeClass.Large);
+            // A locked plot further out: only reachable once growth/light reaches it.
+            system.AddAuthoredSlot(new Vector3(12f, 0f, 8f), SlotSizeClass.Medium,
+                SlotState.Locked);
         }
 
         /// <summary>
@@ -387,7 +419,7 @@ namespace Abbey.EditorTools
                 basePos + new Vector3(0f, 0f, 0.5f));
             RestorationNode.Place(RestorationNodeKind.CandleShrine,
                 basePos + new Vector3(3.5f, 0f, 2f));
-            RestorationNode.Place(RestorationNodeKind.InfirmaryCorner,
+            RestorationNode.Place(RestorationNodeKind.AsylumCorner,
                 basePos + new Vector3(-3.5f, 0f, 3.5f));
         }
 
@@ -442,6 +474,9 @@ namespace Abbey.EditorTools
             {
                 weather.bellkeeper = bellkeeper;
             }
+
+            // Seed-slot settlement overlay (F8): slot counts, light debt, slot gizmos.
+            panelsGO.AddComponent<SettlementDebugPanel>();
         }
 
         // ------------------------------------------------------------------

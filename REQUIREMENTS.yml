@@ -611,7 +611,9 @@ tasks:
       - No infirmary_corner / InfirmaryZone references remain outside git history
       - Validation guide at docs/validation/P3-02.md per docs/validation/README.md
     depends_on: [P2-10, GATE-P2]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-03
     title: Sanity, dread and the asylum

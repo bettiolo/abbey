@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Abbey.Core;
 using Abbey.Economy;
@@ -15,7 +16,7 @@ namespace Abbey.Buildings
     /// <see cref="Kind"/>. Function behaviour lives in sibling components attached
     /// by <see cref="Construct"/>: <see cref="Abbey.Light.LightSource"/> (plain or
     /// sacred for Shrine), <see cref="Abbey.Economy.StoragePile"/> or
-    /// <see cref="InfirmaryZone"/>; Gate and BellTower completions flip their
+    /// <see cref="AsylumZone"/>; Gate and BellTower completions flip their
     /// <see cref="AbbeyState"/> flags; the remaining kinds are identified by
     /// <see cref="Kind"/> alone.
     /// [ExecuteAlways] so EditMode tests get OnEnable/OnDisable registration.
@@ -29,10 +30,21 @@ namespace Abbey.Buildings
         /// <summary>Every enabled completed building (placement overlap, debug panel).</summary>
         public static IReadOnlyList<Building> Active => _active;
 
+        /// <summary>
+        /// Raised once for every building finished through <see cref="Construct"/>,
+        /// after its function component and visual are attached. A static,
+        /// GameEventLog-free completion signal so listeners (e.g.
+        /// <see cref="Abbey.Settlement.SeedSlotSystem"/>, which opens child slots)
+        /// react without the per-instance <see cref="ConstructionSite.Completed"/>
+        /// hook and without spamming the event log. Cleared by <see cref="ClearRegistry"/>.
+        /// </summary>
+        public static event Action<Building> Constructed;
+
         /// <summary>Test isolation.</summary>
         public static void ClearRegistry()
         {
             _active.Clear();
+            Constructed = null;
         }
 
         /// <summary>Catalog entry this building was built from (null until Initialize).</summary>
@@ -109,11 +121,12 @@ namespace Abbey.Buildings
                     shrineLight.isLit = true;
                     AbbeyState.MarkShrineLit();
                     break;
-                case FunctionKind.Infirmary:
-                    var zone = go.AddComponent<InfirmaryZone>();
-                    zone.radius = cfg.infirmaryRadius;
-                    zone.healSeconds = cfg.infirmaryHealSeconds;
-                    AbbeyState.MarkInfirmaryBuilt();
+                case FunctionKind.Asylum:
+                    // P3-02 shell: attach the care zone (radius + occupancy only).
+                    // Sanity-recovery behaviour arrives in P3-03; no instant heal.
+                    var zone = go.AddComponent<AsylumZone>();
+                    zone.radius = cfg.asylumRadius;
+                    AbbeyState.MarkAsylumBuilt();
                     break;
                 case FunctionKind.Gate:
                     // The repaired gate blocks the dangerous night path. The
@@ -130,6 +143,9 @@ namespace Abbey.Buildings
             }
 
             AttachVisual(type, go.transform);
+
+            // Completion signal (e.g. SeedSlotSystem opens child slots beside it).
+            Constructed?.Invoke(building);
             return building;
         }
 

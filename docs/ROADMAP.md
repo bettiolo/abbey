@@ -59,8 +59,8 @@ Question: *Does this feel like a living settlement game with emotional stakes?*
 Direction addendum (2026-07-04): future Phase 2 cleanup should bend the existing build
 system toward **seed slots**. Buildings hug existing buildings and light, completed buildings
 open nearby child slots, and roads emerge from villager traffic instead of player road
-placement. The current `infirmary_corner_t1` implementation is legacy naming; the intended
-direction is **Asylum Corner**, with sanity recovery replacing medicine/infirmary healing.
+placement. (P3-02 delivered the seed-slot build system and renamed the legacy sick-corner
+building to **Asylum Corner** (`asylum_corner_t1`); its sanity-recovery behaviour lands in P3-03.)
 
 Excluded: farming, seasons, laws, multiple beasts, multiple maps, final UI.
 

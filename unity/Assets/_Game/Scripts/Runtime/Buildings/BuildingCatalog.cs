@@ -9,11 +9,12 @@ namespace Abbey.Buildings
     /// What a completed building *is* to the simulation. Completion attaches the
     /// matching runtime component: <see cref="Abbey.Light.LightSource"/> for
     /// LightSource, <see cref="Abbey.Economy.StoragePile"/> for Storage, a sacred
-    /// LightSource for Shrine, an <see cref="InfirmaryZone"/> for Infirmary; Gate
+    /// LightSource for Shrine, an <see cref="AsylumZone"/> for Asylum; Gate
     /// and BellTower flip their <see cref="AbbeyState"/> flags (abbey restoration,
     /// P2-04). Shelter, WorkHut and GuardPost are identified by
     /// <see cref="Building.Kind"/> alone. New kinds append at the end (serialized
-    /// enum indices must stay stable).
+    /// enum indices must stay stable — Asylum keeps index 6, the former sick-corner
+    /// slot, renamed in P3-02).
     /// </summary>
     public enum FunctionKind
     {
@@ -23,7 +24,7 @@ namespace Abbey.Buildings
         WorkHut,
         GuardPost,
         Shrine,
-        Infirmary,
+        Asylum,
         Gate,
         BellTower
     }
@@ -144,7 +145,7 @@ namespace Abbey.Buildings
 
         /// <summary>
         /// Coded default catalog: the buildable set of VERTICAL_SLICE_SPEC §5 with
-        /// GAME_DESIGN.md §8 cost flavours (shrine = candles+relic, infirmary =
+        /// GAME_DESIGN.md §8 cost flavours (shrine = candles+relic, asylum corner =
         /// medicine+wood). An asset at Resources/BuildingCatalog overrides all of it.
         /// </summary>
         static List<BuildingType> CreateDefaultBuildings()
@@ -226,8 +227,8 @@ namespace Abbey.Buildings
                 },
                 new BuildingType
                 {
-                    id = "infirmary_corner_t1",
-                    displayName = "Infirmary Corner",
+                    id = "asylum_corner_t1",
+                    displayName = "Asylum Corner",
                     footprint = new Vector2(3f, 3f),
                     cost =
                     {
@@ -235,7 +236,7 @@ namespace Abbey.Buildings
                         new ResourceStack(ResourceType.Medicine, 2),
                     },
                     buildWorkSeconds = 12f,
-                    function = FunctionKind.Infirmary,
+                    function = FunctionKind.Asylum,
                 },
                 // Abbey restoration nodes (GAME_DESIGN.md §8: gate = wood+stone,
                 // bell tower = wood+iron). Fixed pre-placed sites; see RestorationNode.
