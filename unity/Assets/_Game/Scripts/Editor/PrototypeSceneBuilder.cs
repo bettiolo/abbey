@@ -49,6 +49,24 @@ namespace Abbey.EditorTools
         public const string GeneratedAssetFolder = "Assets/Generated/BlenderAssets";
         public const string ThirdPartyAssetFolder = "Assets/ThirdParty";
 
+        static readonly Color MeadowColor = new Color(0.34f, 0.55f, 0.22f);
+        static readonly Color ForestFloorColor = new Color(0.18f, 0.34f, 0.2f);
+        static readonly Color BeachColor = new Color(0.75f, 0.62f, 0.4f);
+        static readonly Color DirtColor = new Color(0.5f, 0.32f, 0.18f);
+        static readonly Color StoneColor = new Color(0.48f, 0.49f, 0.45f);
+        static readonly Color OldStoneColor = new Color(0.56f, 0.55f, 0.48f);
+        static readonly Color DarkWoodColor = new Color(0.18f, 0.1f, 0.05f);
+        static readonly Color WarmWoodColor = new Color(0.56f, 0.29f, 0.13f);
+        static readonly Color RoofColor = new Color(0.72f, 0.28f, 0.12f);
+        static readonly Color CanvasColor = new Color(0.75f, 0.62f, 0.44f);
+        static readonly Color BoneColor = new Color(0.72f, 0.66f, 0.5f);
+        static readonly Color SacredGoldColor = new Color(1f, 0.68f, 0.18f);
+        static readonly Color WaterColor = new Color(0.25f, 0.45f, 0.7f);
+        static readonly Color HoundColor = new Color(0.04f, 0.035f, 0.03f);
+
+        static readonly System.Collections.Generic.Dictionary<string, Material> MaterialCache =
+            new System.Collections.Generic.Dictionary<string, Material>();
+
         // Landmark positions (map layout, not balance — the map is authored here).
         static readonly Vector3 CampCenter = Vector3.zero;
         static readonly Vector3 BeachCenter = new Vector3(-30f, 0f, -30f);
@@ -113,10 +131,29 @@ namespace Abbey.EditorTools
 
         static void BuildGroundAndSun()
         {
-            // Coastal meadow placeholder, 100x100 units.
+            // Coastal meadow map base, 100x100 units.
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Ground";
             ground.transform.localScale = new Vector3(10f, 1f, 10f);
+            AssignRendererMaterial(ground.GetComponent<Renderer>(), "map_meadow", MeadowColor);
+
+            CreateFlatMapPatch("Beach", BeachCenter + new Vector3(0f, 0.012f, 0f),
+                new Vector3(2.7f, 1f, 2.7f), BeachColor);
+            CreateFlatMapPatch("ForestFloor", ForestEdgeCenter + new Vector3(0f, 0.014f, 0f),
+                new Vector3(3.2f, 1f, 2.4f), ForestFloorColor);
+
+            PlaceTerrainAsset("CampPlaza", "paving_patch", CampCenter + new Vector3(0f, 0.035f, 0f),
+                Quaternion.identity, new Vector3(7f, 1f, 7f));
+            PlaceTerrainAsset("AbbeyPlaza", "paving_patch", AbbeyHillCenter + new Vector3(0f, 0.54f, 0f),
+                Quaternion.identity, new Vector3(5f, 1f, 5f));
+            PlaceTerrainAsset("Road_Beach_Camp", "dirt_road_segment", new Vector3(-15f, 0.04f, -15f),
+                Quaternion.Euler(0f, 45f, 0f), new Vector3(3f, 1f, 42f));
+            PlaceTerrainAsset("Road_Camp_Abbey", "dirt_road_segment", new Vector3(14f, 0.04f, 14f),
+                Quaternion.Euler(0f, 45f, 0f), new Vector3(3f, 1f, 38f));
+            PlaceTerrainAsset("Road_Camp_Forest", "dirt_road_segment", new Vector3(-14f, 0.04f, 14f),
+                Quaternion.Euler(0f, -45f, 0f), new Vector3(3f, 1f, 38f));
+            PlaceTerrainAsset("FieldPlot", "field_plot_t1", new Vector3(-7f, 0.04f, 7f),
+                Quaternion.Euler(0f, 18f, 0f), new Vector3(1.8f, 1f, 1.8f));
 
             // Fixed sun matching the camera-relative light rule in ART_BIBLE.md.
             var sunGO = new GameObject("Sun");
@@ -241,6 +278,7 @@ namespace Abbey.EditorTools
             hill.name = "AbbeyHill";
             hill.transform.position = AbbeyHillCenter + new Vector3(0f, 0.25f, 0f);
             hill.transform.localScale = new Vector3(12f, 0.25f, 12f);
+            AssignRendererMaterial(hill.GetComponent<Renderer>(), "map_abbey_hill", StoneColor);
             float hillTop = 0.5f;
 
             var towerPos = AbbeyHillCenter + new Vector3(0f, hillTop, 0f);
@@ -291,11 +329,7 @@ namespace Abbey.EditorTools
             stream.transform.localScale = new Vector3(45f, 0.05f, 2.5f);
             stream.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
             var renderer = stream.GetComponent<Renderer>();
-            if (renderer != null && renderer.sharedMaterial != null)
-            {
-                var mat = new Material(renderer.sharedMaterial) { color = new Color(0.25f, 0.45f, 0.7f) };
-                renderer.sharedMaterial = mat;
-            }
+            AssignRendererMaterial(renderer, "map_stream", WaterColor);
         }
 
         static void BuildVillagers()
@@ -459,6 +493,7 @@ namespace Abbey.EditorTools
                     {
                         instance.name = name;
                         instance.transform.position = groundPos;
+                        NormalizeImportedMaterials(instance, assetId);
                         return instance;
                     }
                 }
@@ -473,7 +508,159 @@ namespace Abbey.EditorTools
             go.name = name;
             go.transform.position = groundPos + new Vector3(0f, primitiveYOffset, 0f);
             go.transform.localScale = fallbackScale;
+            NormalizeImportedMaterials(go, assetId);
             return go;
+        }
+
+        static void CreateFlatMapPatch(string name, Vector3 position, Vector3 scale, Color color)
+        {
+            var patch = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            patch.name = name;
+            patch.transform.position = position;
+            patch.transform.localScale = scale;
+            AssignRendererMaterial(patch.GetComponent<Renderer>(), $"map_{name}", color);
+        }
+
+        static void PlaceTerrainAsset(
+            string name, string assetId, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            var go = InstantiateGenerated(assetId, position, name,
+                PrimitiveType.Cube, new Vector3(1f, 0.04f, 1f), 0.02f);
+            go.transform.rotation = rotation;
+            go.transform.localScale = scale;
+        }
+
+        static void NormalizeImportedMaterials(GameObject root, string assetId)
+        {
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+            {
+                var shared = renderer.sharedMaterials;
+                if (shared == null || shared.Length == 0)
+                {
+                    AssignRendererMaterial(renderer, $"{assetId}_{renderer.name}",
+                        PaletteColor(assetId, renderer.name, null));
+                    continue;
+                }
+
+                bool changed = false;
+                for (int i = 0; i < shared.Length; i++)
+                {
+                    var source = shared[i];
+                    string materialName = source != null ? source.name : renderer.name;
+                    var replacement = BuiltInMaterial(
+                        $"{assetId}_{materialName}_{renderer.name}",
+                        PaletteColor(assetId, materialName, renderer.name),
+                        source != null ? source.mainTexture : null);
+                    if (source != replacement)
+                    {
+                        shared[i] = replacement;
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                {
+                    renderer.sharedMaterials = shared;
+                }
+            }
+        }
+
+        static void AssignRendererMaterial(Renderer renderer, string key, Color color)
+        {
+            if (renderer == null)
+            {
+                return;
+            }
+            renderer.sharedMaterial = BuiltInMaterial(key, color, null);
+        }
+
+        static Material BuiltInMaterial(string key, Color color, Texture texture)
+        {
+            string textureKey = texture != null ? texture.name : "solid";
+            string cacheKey = $"{key}_{textureKey}_{ColorUtility.ToHtmlStringRGBA(color)}";
+            if (MaterialCache.TryGetValue(cacheKey, out var cached) && cached != null)
+            {
+                return cached;
+            }
+
+            var shader = Shader.Find("Standard") ?? Shader.Find("Legacy Shaders/Diffuse");
+            var material = new Material(shader)
+            {
+                name = $"Abbey_{key}",
+                color = texture != null ? Color.white : color,
+                mainTexture = texture,
+            };
+            if (material.HasProperty("_Glossiness"))
+            {
+                material.SetFloat("_Glossiness", 0.12f);
+            }
+            if (material.HasProperty("_Metallic"))
+            {
+                material.SetFloat("_Metallic", 0f);
+            }
+            MaterialCache[cacheKey] = material;
+            return material;
+        }
+
+        static Color PaletteColor(string assetId, string materialName, string rendererName)
+        {
+            string text = $"{assetId} {materialName} {rendererName}".ToLowerInvariant();
+
+            if (text.Contains("water") || text.Contains("stream"))
+            {
+                return WaterColor;
+            }
+            if (text.Contains("foliage") || text.Contains("leaf") || text.Contains("grass") ||
+                text.Contains("tree") || text.Contains("field"))
+            {
+                return MeadowColor;
+            }
+            if (text.Contains("dirt") || text.Contains("path") || text.Contains("soil"))
+            {
+                return DirtColor;
+            }
+            if (text.Contains("roof") || text.Contains("tile"))
+            {
+                return RoofColor;
+            }
+            if (text.Contains("stone") || text.Contains("ash") || text.Contains("wall") ||
+                text.Contains("rock") || text.Contains("paving") || text.Contains("plaza"))
+            {
+                return text.Contains("old") ? OldStoneColor : StoneColor;
+            }
+            if (text.Contains("wood") || text.Contains("bark") || text.Contains("barrel") ||
+                text.Contains("crate") || text.Contains("hull") || text.Contains("plank"))
+            {
+                return text.Contains("dark") || text.Contains("bark") ? DarkWoodColor : WarmWoodColor;
+            }
+            if (text.Contains("canvas") || text.Contains("cloth") || text.Contains("sail") ||
+                text.Contains("thatch") || text.Contains("plaster"))
+            {
+                return CanvasColor;
+            }
+            if (text.Contains("bone") || text.Contains("skin") || text.Contains("pale"))
+            {
+                return BoneColor;
+            }
+            if (text.Contains("gold") || text.Contains("flame") || text.Contains("ember") ||
+                text.Contains("lantern") || text.Contains("moth"))
+            {
+                return SacredGoldColor;
+            }
+            if (text.Contains("black_hound") || text.Contains("hound_chain"))
+            {
+                return HoundColor;
+            }
+            if (text.Contains("bellkeeper"))
+            {
+                return new Color(0.18f, 0.24f, 0.45f);
+            }
+            if (text.Contains("drowned"))
+            {
+                return new Color(0.3f, 0.42f, 0.46f);
+            }
+
+            return OldStoneColor;
         }
 
         static GameObject InstantiateThirdPartyReplacement(
@@ -505,6 +692,7 @@ namespace Abbey.EditorTools
                 instance.name = name;
                 instance.transform.position = groundPos;
                 instance.transform.localScale = ThirdPartyReplacementScaleFor(assetId);
+                NormalizeImportedMaterials(instance, assetId);
                 return instance;
             }
             catch (Exception e)
