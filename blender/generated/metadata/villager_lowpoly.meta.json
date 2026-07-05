@@ -1,6 +1,6 @@
 {
   "id": "villager_lowpoly",
-  "generated_at": "2026-07-02T19:15:48.503695+00:00",
+  "generated_at": "2026-07-05T16:20:30.898608+00:00",
   "spec": {
     "id": "villager_lowpoly",
     "type": "character",
@@ -11,7 +11,7 @@
       "height": 1.75
     },
     "style": {
-      "silhouette": "ordinary survivor: pale-tunic worker with a slight forward stoop, bare head, dark trousers and boots, a heavy canvas bundle hugged under one arm \u2014 soft rounded outline, nothing heroic",
+      "silhouette": "ordinary survivor: rounded pale-tunic worker with a slight forward stoop, bare head, dark trousers and boots, a heavy canvas bundle hugged under one arm; soft human outline, no oversized cube body, nothing heroic",
       "materials": [
         "mat_canvas",
         "mat_bone",
@@ -44,21 +44,21 @@
     "pivot": "center_bottom"
   },
   "dimensions": {
-    "width": 0.8862,
-    "depth": 0.63023,
-    "height": 1.74265,
+    "width": 0.89979,
+    "depth": 0.6721,
+    "height": 1.7267,
     "min": [
-      -0.4431,
-      -0.31512,
+      -0.44989,
+      -0.33605,
       0.0
     ],
     "max": [
-      0.4431,
-      0.31512,
-      1.74265
+      0.44989,
+      0.33605,
+      1.7267
     ]
   },
-  "triangle_count": 180,
+  "triangle_count": 560,
   "material_count": 3,
   "materials": [
     "mat_bone",
@@ -87,7 +87,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/villager_lowpoly.glb (26756 bytes)"
+        "detail": "blender/generated/glb/villager_lowpoly.glb (61004 bytes)"
       },
       {
         "name": "blend_saved",
@@ -107,12 +107,12 @@
       {
         "name": "footprint_fits",
         "passed": true,
-        "detail": "asset 0.886x0.630x1.743 vs footprint 0.9x0.8x1.75"
+        "detail": "asset 0.900x0.672x1.727 vs footprint 0.9x0.8x1.75"
       },
       {
         "name": "triangle_budget",
         "passed": true,
-        "detail": "180/1500 triangles"
+        "detail": "560/1500 triangles"
       },
       {
         "name": "material_budget",

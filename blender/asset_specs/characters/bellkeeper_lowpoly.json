@@ -4,7 +4,7 @@
   "theme": "character",
   "footprint": { "width": 1.1, "depth": 1.2, "height": 2.4 },
   "style": {
-    "silhouette": "the hero: hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell — lantern and bell-arm must read in pure silhouette",
+    "silhouette": "the hero: rounded hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell; avoid blocky cube limbs while preserving lantern and bell-arm silhouette",
     "materials": ["mat_dark_wood", "mat_sacred_gold", "mat_warm_window"]
   },
   "required_parts": ["robe_skirt", "chest", "hood", "lantern_staff", "lantern", "bell_arm", "hand_bell"],

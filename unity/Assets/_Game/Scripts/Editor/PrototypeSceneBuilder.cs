@@ -561,11 +561,15 @@ namespace Abbey.EditorTools
                     var source = shared[i];
                     string materialName = source != null ? source.name : renderer.name;
                     string key = $"{assetId}_{materialName}_{renderer.name}";
+                    Texture texture = PlaceholderAlbedoForKey(key);
+                    if (texture == null && !UsesSolidImportedMaterial(assetId))
+                    {
+                        texture = source != null ? source.mainTexture : null;
+                    }
                     var replacement = BuiltInMaterial(
                         key,
                         PaletteColor(assetId, materialName, renderer.name),
-                        PlaceholderAlbedoForKey(key) ??
-                        (source != null ? source.mainTexture : null),
+                        texture,
                         PlaceholderTextureScaleForKey(key));
                     if (source != replacement)
                     {
@@ -579,6 +583,11 @@ namespace Abbey.EditorTools
                     renderer.sharedMaterials = shared;
                 }
             }
+        }
+
+        static bool UsesSolidImportedMaterial(string assetId)
+        {
+            return assetId == "bellkeeper_lowpoly" || assetId == "villager_lowpoly";
         }
 
         static void AssignRendererMaterial(Renderer renderer, string key, Color color)

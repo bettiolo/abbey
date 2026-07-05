@@ -1,6 +1,6 @@
 {
   "id": "bellkeeper_lowpoly",
-  "generated_at": "2026-07-02T19:16:40.095118+00:00",
+  "generated_at": "2026-07-05T16:18:46.395883+00:00",
   "spec": {
     "id": "bellkeeper_lowpoly",
     "type": "character",
@@ -11,7 +11,7 @@
       "height": 2.4
     },
     "style": {
-      "silhouette": "the hero: hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell \u2014 lantern and bell-arm must read in pure silhouette",
+      "silhouette": "the hero: rounded hooded keeper in a heavy dark robe, one arm thrust out holding the lantern-staff with its warm glass swinging under the crook, the other arm raised high ringing a gold hand-bell; avoid blocky cube limbs while preserving lantern and bell-arm silhouette",
       "materials": [
         "mat_dark_wood",
         "mat_sacred_gold",
@@ -49,21 +49,21 @@
     "pivot": "center_bottom"
   },
   "dimensions": {
-    "width": 1.03689,
-    "depth": 1.145,
+    "width": 1.06891,
+    "depth": 1.15,
     "height": 2.29847,
     "min": [
-      -0.51844,
-      -0.5725,
+      -0.53445,
+      -0.575,
       0.0
     ],
     "max": [
-      0.51844,
-      0.5725,
+      0.53445,
+      0.575,
       2.29847
     ]
   },
-  "triangle_count": 226,
+  "triangle_count": 680,
   "material_count": 3,
   "materials": [
     "mat_dark_wood",
@@ -96,7 +96,7 @@
       {
         "name": "glb_exists",
         "passed": true,
-        "detail": "blender/generated/glb/bellkeeper_lowpoly.glb (30192 bytes)"
+        "detail": "blender/generated/glb/bellkeeper_lowpoly.glb (65256 bytes)"
       },
       {
         "name": "blend_saved",
@@ -116,12 +116,12 @@
       {
         "name": "footprint_fits",
         "passed": true,
-        "detail": "asset 1.037x1.145x2.298 vs footprint 1.1x1.2x2.4"
+        "detail": "asset 1.069x1.150x2.298 vs footprint 1.1x1.2x2.4"
       },
       {
         "name": "triangle_budget",
         "passed": true,
-        "detail": "226/1500 triangles"
+        "detail": "680/1500 triangles"
       },
       {
         "name": "material_budget",

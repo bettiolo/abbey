@@ -108,7 +108,8 @@ Cached but not committed as runtime placeholders:
 - Quaternius Medieval Village crate, wagon proxy, and straight wall modules. These were
   replaced by better Kenney/KayKit placeholders.
 - Quaternius Universal Base Characters. A visual review showed these read as mannequins
-  in the prototype camera and are weaker placeholders than the generated villager.
+  in the prototype camera and are weaker placeholders than the generated Abbey-specific
+  villager; the local cache currently has no stronger medieval humanoid replacement.
 
 ## Prototype Replacement Intent
 
@@ -135,8 +136,11 @@ Safe replacement targets:
 Keep generated for now:
 
 - `villager_lowpoly`, because the staged Quaternius base humanoids read as mannequins
-  in the prototype camera and are weaker placeholders than the generated villager.
-- `bellkeeper_lowpoly`, because the Bellkeeper is an identity character.
+  in the prototype camera and are weaker placeholders than the rounded generated
+  villager. Unity strips source textures from this character so wall/sack pixel
+  textures do not dominate the in-game read.
+- `bellkeeper_lowpoly`, because the Bellkeeper is an identity character; keep the
+  rounded generated lantern/bell silhouette until a designer-authored replacement exists.
 - `black_hound_lowpoly` and `hound_chain`, because the beast bond depends on a custom
   silhouette.
 - `bell_tower_ruined`, because it anchors the abbey silhouette.
