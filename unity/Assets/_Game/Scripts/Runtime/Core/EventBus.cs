@@ -26,6 +26,9 @@ namespace Abbey.Core
         public static event Action<GameObject> AsylumAdmitted;
         public static event Action<GameObject> AsylumReleased;
         public static event Action<GameObject> HouseholdDisturbed;
+        public static event Action<GameObject> HomeWokeForDefense;
+        public static event Action<GameObject> HomeRazed;
+        public static event Action<GameObject> SettlersKilledInHome;
 
         public static void RaisePhaseChanged(DayPhase phase)
         {
@@ -86,6 +89,27 @@ namespace Abbey.Core
             HouseholdDisturbed?.Invoke(villager);
         }
 
+        /// <summary>A sleeping home woke and flared its interior light to defend (P3-05).</summary>
+        public static void RaiseHomeWokeForDefense(GameObject home)
+        {
+            GameEventLog.Append("HomeWokeForDefense", home != null ? home.name : "<null>");
+            HomeWokeForDefense?.Invoke(home);
+        }
+
+        /// <summary>A home's defense was overwhelmed and it was razed (light node lost).</summary>
+        public static void RaiseHomeRazed(GameObject home)
+        {
+            GameEventLog.Append("HomeRazed", home != null ? home.name : "<null>");
+            HomeRazed?.Invoke(home);
+        }
+
+        /// <summary>The settlers inside a razed home were killed (P3-05 anti-turtle loss).</summary>
+        public static void RaiseSettlersKilledInHome(GameObject home)
+        {
+            GameEventLog.Append("SettlersKilledInHome", home != null ? home.name : "<null>");
+            SettlersKilledInHome?.Invoke(home);
+        }
+
         public static void RaiseBellRang(Vector3 position, float radius)
         {
             GameEventLog.Append("BellRang", $"pos={position} radius={radius:F2}");
@@ -133,6 +157,9 @@ namespace Abbey.Core
             AsylumAdmitted = null;
             AsylumReleased = null;
             HouseholdDisturbed = null;
+            HomeWokeForDefense = null;
+            HomeRazed = null;
+            SettlersKilledInHome = null;
         }
     }
 }

@@ -71,6 +71,14 @@ namespace Abbey.Buildings
         [Tooltip("Optional finished-building visual (generated GLB prefab hook). Null = placeholder cube scaled to the footprint.")]
         public GameObject completedVisualPrefab;
 
+        [Tooltip("A home settlers shelter in at night: destructible under the P3-05 night assault "
+                 + "(monsters can raze it, killing the occupants and losing its light node). "
+                 + "Structural property, not balance — the hit-point number lives in CombatConfig.")]
+        public bool destructibleHome;
+
+        [Tooltip("Per-type multiplier on CombatConfig.baseHomeHitPoints (sturdier homes take more to raze). Only used when destructibleHome.")]
+        [Min(0f)] public float homeHitPointMultiplier = 1f;
+
         /// <summary>Occupied ground rect when centered at a world position (XZ plane).</summary>
         public Rect FootprintAt(Vector3 worldPosition)
         {
@@ -180,6 +188,7 @@ namespace Abbey.Buildings
                     cost = { new ResourceStack(ResourceType.Wood, 10) },
                     buildWorkSeconds = 15f,
                     function = FunctionKind.Shelter,
+                    destructibleHome = true,
                 },
                 new BuildingType
                 {

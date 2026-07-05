@@ -3,6 +3,7 @@ using System.IO;
 using Abbey.Beast;
 using Abbey.Buildings;
 using Abbey.CameraRig;
+using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Debugging;
 using Abbey.Economy;
@@ -154,6 +155,13 @@ namespace Abbey.EditorTools
             // EventBus and reads SanityConfig — no wiring; it auto-finds the AsylumZone.
             worldGO.AddComponent<SanitySystem>();
 
+            // Light-band combat + two-tier settler home defense (P3-05). Each night
+            // HomeDefenseSystem keeps occupied destructible homes asleep until a
+            // monster reaches the door, then flares the interior light and fires from
+            // lit windows at a sanity cost; overwhelmed homes are razed. Reads
+            // CombatConfig and the SanitySystem shelter map — no wiring.
+            worldGO.AddComponent<HomeDefenseSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
@@ -212,10 +220,12 @@ namespace Abbey.EditorTools
                 "StoragePile", PrimitiveType.Cube, new Vector3(1.2f, 0.6f, 1.2f), 0.3f);
             storage.AddComponent<StoragePile>();
 
-            InstantiateGenerated("shelter_t1", new Vector3(-4f, 0f, 2f), "Shelter_A",
-                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
-            InstantiateGenerated("shelter_t1", new Vector3(-2f, 0f, 5f), "Shelter_B",
-                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
+            // Shelters are destructible homes (P3-05): they carry a Building bound to
+            // the shelter_t1 catalog entry so HomeDefenseSystem can wake, flare and
+            // (if overwhelmed) raze them. Occupants are assigned at play-start by the
+            // SettlerHomeBootstrap through the SanitySystem shelter map.
+            MakeHome(new Vector3(-4f, 0f, 2f), "Shelter_A");
+            MakeHome(new Vector3(-2f, 0f, 5f), "Shelter_B");
 
             // Lantern post on the camp's dark side, toward the abbey path.
             var lantern = InstantiateGenerated("lantern_post_t1", new Vector3(10f, 0f, 6f),
@@ -363,6 +373,22 @@ namespace Abbey.EditorTools
             CreateVillager("Villager_FarNW", FarVillagerPost, seed: 11);
         }
 
+        /// <summary>
+        /// A destructible-home shelter: the shelter_t1 visual plus a Building bound to
+        /// the catalog entry so P3-05 home defense (wake / flare / raze) drives it.
+        /// </summary>
+        static void MakeHome(Vector3 groundPos, string name)
+        {
+            var go = InstantiateGenerated("shelter_t1", groundPos, name,
+                PrimitiveType.Cube, new Vector3(2f, 1.5f, 2f), 0.75f);
+            var building = go.AddComponent<Building>();
+            var type = BuildingCatalog.LoadOrDefault().Find("shelter_t1");
+            if (type != null)
+            {
+                building.Initialize(type);
+            }
+        }
+
         static void CreateVillager(string name, Vector3 groundPos, int seed)
         {
             // villager_lowpoly GLB when imported, else a small capsule.
@@ -403,6 +429,11 @@ namespace Abbey.EditorTools
 
             var econGO = new GameObject("EconomyBootstrap");
             econGO.AddComponent<SettlementEconomyBootstrap>();
+
+            // Assign settlers to the destructible-home shelters (P3-05 occupancy) via
+            // the SanitySystem shelter map, so homes have someone to defend and lose.
+            var homeGO = new GameObject("SettlerHomeBootstrap");
+            homeGO.AddComponent<SettlerHomeBootstrap>();
         }
 
         static void CreateJobWorkPoint(string name, VillagerJob job, Vector3 groundPos)
@@ -518,6 +549,10 @@ namespace Abbey.EditorTools
             // Sanity overlay (F9, top-left): per-villager sanity/dread bars, asylum
             // roster, tonight's held units.
             panelsGO.AddComponent<SanityDebugPanel>();
+
+            // Combat + home-defense overlay (F6, right): band multipliers, live
+            // monster count, and each destructible home's state + hit-point bar.
+            panelsGO.AddComponent<CombatDebugPanel>();
         }
 
         // ------------------------------------------------------------------

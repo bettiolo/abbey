@@ -217,6 +217,31 @@ namespace Abbey.Sanity
             return villager != null && _homes.TryGetValue(villager, out var home) ? home : null;
         }
 
+        /// <summary>
+        /// Fills <paramref name="buffer"/> with the villagers assigned to a home (the
+        /// shelter map is the occupancy source P3-05 home defense reads). Clears the
+        /// buffer first; skips null villagers.
+        /// </summary>
+        public void CollectHomeOccupants(Building home, List<VillagerAgent> buffer)
+        {
+            if (buffer == null)
+            {
+                return;
+            }
+            buffer.Clear();
+            if (home == null)
+            {
+                return;
+            }
+            foreach (var pair in _homes)
+            {
+                if (pair.Value == home && pair.Key != null)
+                {
+                    buffer.Add(pair.Key);
+                }
+            }
+        }
+
         // ------------------------------------------------------------------
         // Queries (recall / defense participation, downstream aggregation)
         // ------------------------------------------------------------------

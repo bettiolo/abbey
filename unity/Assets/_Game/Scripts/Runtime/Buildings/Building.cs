@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
+using Abbey.Villagers;
 using UnityEngine;
 
 namespace Abbey.Buildings
@@ -63,6 +65,196 @@ namespace Abbey.Buildings
         public void Initialize(BuildingType type)
         {
             Type = type;
+        }
+
+        // ------------------------------------------------------------------
+        // Destructible homes (P3-05): occupancy, interior-light flare, hit points
+        // and the raze path. Balance (hit points) lives in CombatConfig, never here.
+        // ------------------------------------------------------------------
+
+        readonly List<VillagerAgent> _occupants = new List<VillagerAgent>();
+        LightSource _flare;
+        float _maxHitPoints = -1f;
+        float _hitPoints;
+
+        /// <summary>True when this building is a home settlers shelter in and defend at night.</summary>
+        public bool IsDestructibleHome => Type != null && Type.destructibleHome;
+
+        /// <summary>The settlers assigned to this home (source for the raze kill-list).</summary>
+        public IReadOnlyList<VillagerAgent> Occupants => _occupants;
+
+        /// <summary>The interior light that flares while the house is awake (null while asleep/razed).</summary>
+        public LightSource FlareLight => _flare;
+
+        /// <summary>True while the interior light is flared and lit (the door reads Safe).</summary>
+        public bool IsFlaring => _flare != null && _flare.isLit;
+
+        /// <summary>The home has been overwhelmed and razed (light node gone, occupants dead).</summary>
+        public bool IsRazed { get; private set; }
+
+        /// <summary>Structural hit points remaining (destructible homes only).</summary>
+        public float HitPoints
+        {
+            get { EnsureDefenseInit(); return _hitPoints; }
+        }
+
+        /// <summary>Full structural hit points (destructible homes only).</summary>
+        public float MaxHitPoints
+        {
+            get { EnsureDefenseInit(); return _maxHitPoints; }
+        }
+
+        void EnsureDefenseInit()
+        {
+            if (_maxHitPoints >= 0f || !IsDestructibleHome)
+            {
+                return;
+            }
+            InitializeDefense(CombatConfig.LoadOrDefault().HomeHitPointsFor(Type));
+        }
+
+        /// <summary>Sets this home's full/current hit points (HomeDefenseSystem injects its config's value).</summary>
+        public void InitializeDefense(float maxHitPoints)
+        {
+            _maxHitPoints = Mathf.Max(1f, maxHitPoints);
+            _hitPoints = _maxHitPoints;
+        }
+
+        /// <summary>Replaces this home's occupant list (HomeDefenseSystem syncs it from the shelter map).</summary>
+        public void SetOccupants(IReadOnlyList<VillagerAgent> occupants)
+        {
+            _occupants.Clear();
+            if (occupants == null)
+            {
+                return;
+            }
+            for (int i = 0; i < occupants.Count; i++)
+            {
+                if (occupants[i] != null && !_occupants.Contains(occupants[i]))
+                {
+                    _occupants.Add(occupants[i]);
+                }
+            }
+        }
+
+        /// <summary>Registers a single occupant (tests / manual assignment).</summary>
+        public void AddOccupant(VillagerAgent villager)
+        {
+            if (villager != null && !_occupants.Contains(villager))
+            {
+                _occupants.Add(villager);
+            }
+        }
+
+        /// <summary>
+        /// Flares the interior light (wakeup): a small Safe zone at the door that
+        /// debuffs the assaulting monsters. The flare IS a real
+        /// <see cref="LightSource"/>, so <see cref="DarknessEvaluator"/> reclassifies
+        /// the doorstep the moment it lights — and Dark again once it is razed.
+        /// </summary>
+        public void FlareOn(float radius, float strength)
+        {
+            if (IsRazed)
+            {
+                return;
+            }
+            if (_flare == null)
+            {
+                var go = new GameObject("InteriorFlare");
+                go.transform.SetParent(transform, false);
+                go.transform.localPosition = Vector3.zero;
+                _flare = go.AddComponent<LightSource>();
+                _flare.fuelSeconds = -1f; // the defenders keep it burning while they fight
+                _flare.autoTick = false;
+            }
+            _flare.radius = radius;
+            _flare.strength = strength;
+            _flare.Ignite();
+            if (!_flare.isLit)
+            {
+                _flare.isLit = true;
+            }
+        }
+
+        /// <summary>Extinguishes the interior flare (threat passed): the door goes dark again.</summary>
+        public void FlareOff()
+        {
+            if (_flare != null)
+            {
+                _flare.Extinguish();
+            }
+        }
+
+        /// <summary>
+        /// Applies structural damage from a night assault. When hit points reach zero
+        /// the home is razed (<see cref="Raze"/>). No effect on non-home buildings or
+        /// an already-razed home.
+        /// </summary>
+        public void TakeStructuralDamage(float amount)
+        {
+            if (!IsDestructibleHome || IsRazed || amount <= 0f)
+            {
+                return;
+            }
+            EnsureDefenseInit();
+            _hitPoints = Mathf.Max(0f, _hitPoints - amount);
+            GameEventLog.Append("home_damaged", $"{name} hp={_hitPoints:F1}/{_maxHitPoints:F1} -{amount:F1}");
+            if (_hitPoints <= 0f)
+            {
+                Raze();
+            }
+        }
+
+        /// <summary>
+        /// The outer line broke: the home collapses. Its interior light node is
+        /// destroyed (the doorstep reclassifies Dark), every occupant inside is
+        /// killed, and <see cref="EventBus.SettlersKilledInHome"/> /
+        /// <see cref="EventBus.HomeRazed"/> fire so the morning report can mourn the
+        /// loss. Idempotent.
+        /// </summary>
+        public void Raze()
+        {
+            if (IsRazed)
+            {
+                return;
+            }
+            IsRazed = true;
+            _hitPoints = 0f;
+
+            // Lose the light node: extinguish and destroy the flare (unregisters it
+            // from DarknessEvaluator via LightSource.OnDisable).
+            if (_flare != null)
+            {
+                _flare.Extinguish();
+                if (Application.isPlaying)
+                {
+                    Destroy(_flare.gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(_flare.gameObject);
+                }
+                _flare = null;
+            }
+
+            // Kill the settlers inside.
+            int killed = 0;
+            for (int i = 0; i < _occupants.Count; i++)
+            {
+                var v = _occupants[i];
+                if (v == null || v.State == VillagerState.Dead)
+                {
+                    continue;
+                }
+                v.ForceState(VillagerState.Dead);
+                killed++;
+            }
+            GameEventLog.Append("home_razed", $"{name} occupants_killed={killed}");
+            if (killed > 0)
+            {
+                EventBus.RaiseSettlersKilledInHome(gameObject);
+            }
+            EventBus.RaiseHomeRazed(gameObject);
         }
 
         void OnEnable()
