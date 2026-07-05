@@ -44,6 +44,10 @@ export UV_CACHE_DIR="${UV_CACHE_DIR:-$REPO_ROOT/.uv-cache}"
 MCP_CLI_TIMEOUT="${MCP_CLI_TIMEOUT:-180}"
 TEST_POLL_TIMEOUT="${TEST_POLL_TIMEOUT:-60}"
 REPORT_PATH="unity/Build/reports/unity_gate_report.json"
+MUTABLE_PROJECT_SETTINGS=(
+  "unity/ProjectSettings/EditorSettings.asset"
+)
+STATE_SNAPSHOT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/abbey_unity_mcp_gate_state.XXXXXX")"
 
 UV_BASE=(uv run)
 if [ "${UNITY_MCP_UV_OFFLINE:-0}" = "1" ]; then
@@ -51,6 +55,41 @@ if [ "${UNITY_MCP_UV_OFFLINE:-0}" = "1" ]; then
 fi
 MCP_CMD=("${UV_BASE[@]}" --with mcpforunityserver unity-mcp -t "$MCP_CLI_TIMEOUT")
 PY_CMD=(uv run python)
+
+snapshot_mutable_project_settings() {
+  local file snapshot_path
+  for file in "${MUTABLE_PROJECT_SETTINGS[@]}"; do
+    if [ ! -f "$file" ]; then
+      continue
+    fi
+    snapshot_path="$STATE_SNAPSHOT_DIR/$file"
+    mkdir -p "$(dirname "$snapshot_path")"
+    cp -p "$file" "$snapshot_path"
+  done
+}
+
+restore_mutable_project_settings() {
+  local file snapshot_path
+  for file in "${MUTABLE_PROJECT_SETTINGS[@]}"; do
+    snapshot_path="$STATE_SNAPSHOT_DIR/$file"
+    if [ ! -f "$snapshot_path" ]; then
+      continue
+    fi
+    mkdir -p "$(dirname "$file")"
+    cp -p "$snapshot_path" "$file"
+  done
+}
+
+cleanup() {
+  local status="$?"
+  trap - EXIT
+  restore_mutable_project_settings
+  rm -rf "$STATE_SNAPSHOT_DIR"
+  exit "$status"
+}
+
+snapshot_mutable_project_settings
+trap cleanup EXIT
 
 json_get() {
   local expr="$1"
