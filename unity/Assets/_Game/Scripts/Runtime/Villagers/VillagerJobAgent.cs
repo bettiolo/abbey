@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Economy;
@@ -67,6 +68,10 @@ namespace Abbey.Villagers
         bool _buildFetching;
         bool _guardAtPost;
         GameObject _carriedProp;
+        ResourceType _carriedPropType;
+
+        static readonly Dictionary<ResourceType, Material> CarriedPropMaterials =
+            new Dictionary<ResourceType, Material>();
 
         /// <summary>Resource type of the held load (meaningful while CarriedAmount &gt; 0).</summary>
         public ResourceType CarriedType { get; private set; }
@@ -885,9 +890,9 @@ namespace Abbey.Villagers
         }
 
         /// <summary>
-        /// Placeholder carrying visual: a small cube child while a load is held.
-        /// The builder's site-bound leg also shows it — the materials are only
-        /// paid for on arrival, but the haul should read as a haul.
+        /// Placeholder carrying visual: a small rounded bundle child while a load
+        /// is held. The builder's site-bound leg also shows it — the materials are
+        /// only paid for on arrival, but the haul should read as a haul.
         /// </summary>
         void UpdateCarriedProp()
         {
@@ -895,27 +900,168 @@ namespace Abbey.Villagers
                         || (_buildFetching && _builderPhase == BuilderPhase.ToSite);
             if (show && _carriedProp == null)
             {
-                _carriedProp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                _carriedProp.name = "CarriedProp";
-                var collider = _carriedProp.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    if (Application.isPlaying)
-                    {
-                        Destroy(collider);
-                    }
-                    else
-                    {
-                        DestroyImmediate(collider);
-                    }
-                }
-                _carriedProp.transform.SetParent(transform, false);
-                _carriedProp.transform.localPosition = new Vector3(0f, 1.2f, 0.35f);
-                _carriedProp.transform.localScale = Vector3.one * 0.3f;
+                _carriedProp = CreateCarriedProp(CarriedType);
+                _carriedPropType = CarriedType;
+            }
+            else if (show && _carriedPropType != CarriedType)
+            {
+                DestroyCarriedProp();
+                _carriedProp = CreateCarriedProp(CarriedType);
+                _carriedPropType = CarriedType;
             }
             if (_carriedProp != null && _carriedProp.activeSelf != show)
             {
                 _carriedProp.SetActive(show);
+            }
+        }
+
+        GameObject CreateCarriedProp(ResourceType type)
+        {
+            var root = new GameObject("CarriedProp");
+            root.transform.SetParent(transform, false);
+            root.transform.localPosition = new Vector3(-0.24f, 1.04f, 0.26f);
+            root.transform.localRotation = Quaternion.Euler(0f, -20f, -8f);
+            root.transform.localScale = Vector3.one;
+
+            switch (type)
+            {
+                case ResourceType.Wood:
+                    AddCarriedPiece(root.transform, "Log_A", PrimitiveType.Capsule,
+                        new Vector3(0f, 0.05f, 0f), new Vector3(0.08f, 0.26f, 0.08f),
+                        Quaternion.Euler(0f, 0f, 90f), type);
+                    AddCarriedPiece(root.transform, "Log_B", PrimitiveType.Capsule,
+                        new Vector3(0f, -0.02f, 0.06f), new Vector3(0.07f, 0.24f, 0.07f),
+                        Quaternion.Euler(0f, 8f, 90f), type);
+                    AddCarriedPiece(root.transform, "Log_C", PrimitiveType.Capsule,
+                        new Vector3(0f, -0.04f, -0.06f), new Vector3(0.07f, 0.22f, 0.07f),
+                        Quaternion.Euler(0f, -8f, 90f), type);
+                    break;
+                case ResourceType.Stone:
+                case ResourceType.ScrapIron:
+                case ResourceType.RelicFragments:
+                    AddCarriedPiece(root.transform, "Chunk_A", PrimitiveType.Sphere,
+                        new Vector3(-0.08f, 0f, 0f), new Vector3(0.18f, 0.13f, 0.16f),
+                        Quaternion.identity, type);
+                    AddCarriedPiece(root.transform, "Chunk_B", PrimitiveType.Sphere,
+                        new Vector3(0.08f, 0.02f, 0.04f), new Vector3(0.15f, 0.12f, 0.14f),
+                        Quaternion.identity, type);
+                    AddCarriedPiece(root.transform, "Chunk_C", PrimitiveType.Sphere,
+                        new Vector3(0f, 0.08f, -0.05f), new Vector3(0.13f, 0.10f, 0.12f),
+                        Quaternion.identity, type);
+                    break;
+                default:
+                    AddCarriedPiece(root.transform, "Bundle", PrimitiveType.Sphere,
+                        Vector3.zero, new Vector3(0.28f, 0.20f, 0.24f),
+                        Quaternion.identity, type);
+                    AddCarriedPiece(root.transform, "BundleTie", PrimitiveType.Capsule,
+                        new Vector3(0f, 0.08f, 0f), new Vector3(0.035f, 0.16f, 0.035f),
+                        Quaternion.Euler(0f, 0f, 90f), ResourceType.Wood);
+                    break;
+            }
+
+            return root;
+        }
+
+        void AddCarriedPiece(
+            Transform parent, string name, PrimitiveType primitive, Vector3 localPosition,
+            Vector3 localScale, Quaternion localRotation, ResourceType materialType)
+        {
+            var piece = GameObject.CreatePrimitive(primitive);
+            piece.name = name;
+            RemoveCollider(piece);
+            piece.transform.SetParent(parent, false);
+            piece.transform.localPosition = localPosition;
+            piece.transform.localRotation = localRotation;
+            piece.transform.localScale = localScale;
+
+            var renderer = piece.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.sharedMaterial = CarriedMaterial(materialType);
+            }
+        }
+
+        void DestroyCarriedProp()
+        {
+            if (_carriedProp == null)
+            {
+                return;
+            }
+            if (Application.isPlaying)
+            {
+                Destroy(_carriedProp);
+            }
+            else
+            {
+                DestroyImmediate(_carriedProp);
+            }
+            _carriedProp = null;
+        }
+
+        static void RemoveCollider(GameObject go)
+        {
+            var collider = go.GetComponent<Collider>();
+            if (collider == null)
+            {
+                return;
+            }
+            if (Application.isPlaying)
+            {
+                Destroy(collider);
+            }
+            else
+            {
+                DestroyImmediate(collider);
+            }
+        }
+
+        static Material CarriedMaterial(ResourceType type)
+        {
+            if (CarriedPropMaterials.TryGetValue(type, out var cached) && cached != null)
+            {
+                return cached;
+            }
+
+            var shader = Shader.Find("Standard") ?? Shader.Find("Legacy Shaders/Diffuse");
+            var material = new Material(shader)
+            {
+                name = $"Abbey_Carried_{ResourceTypes.Id(type)}",
+                color = CarriedColor(type)
+            };
+            if (material.HasProperty("_Glossiness"))
+            {
+                material.SetFloat("_Glossiness", 0.08f);
+            }
+            if (material.HasProperty("_Metallic"))
+            {
+                material.SetFloat("_Metallic", 0f);
+            }
+            CarriedPropMaterials[type] = material;
+            return material;
+        }
+
+        static Color CarriedColor(ResourceType type)
+        {
+            switch (type)
+            {
+                case ResourceType.Wood:
+                    return new Color(0.42f, 0.22f, 0.10f);
+                case ResourceType.Food:
+                    return new Color(0.60f, 0.46f, 0.22f);
+                case ResourceType.Oil:
+                    return new Color(0.12f, 0.10f, 0.08f);
+                case ResourceType.Candles:
+                    return new Color(0.88f, 0.80f, 0.58f);
+                case ResourceType.Stone:
+                    return new Color(0.47f, 0.48f, 0.44f);
+                case ResourceType.ScrapIron:
+                    return new Color(0.30f, 0.31f, 0.33f);
+                case ResourceType.Medicine:
+                    return new Color(0.28f, 0.47f, 0.34f);
+                case ResourceType.RelicFragments:
+                    return new Color(0.78f, 0.64f, 0.25f);
+                default:
+                    return Color.gray;
             }
         }
     }
