@@ -19,7 +19,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F2;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("How many trailing 'resource' log records to show.")]
         [Min(0)] public int logTailCount = 6;
@@ -42,9 +42,7 @@ namespace Abbey.Debugging
             float x = Screen.width - width - 8f;
             if (!visible)
             {
-                float labelWidth = 220f;
-                float labelX = Mathf.Max(8f, Screen.width - labelWidth - 8f);
-                GUI.Label(new Rect(labelX, 32f, labelWidth, 22f), $"[{toggleKey}] economy panel");
+                GUI.Label(new Rect(8f, 96f, 220f, 22f), $"[{toggleKey}] economy panel");
                 return;
             }
 

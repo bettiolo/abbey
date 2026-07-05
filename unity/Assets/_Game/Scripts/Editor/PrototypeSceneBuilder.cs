@@ -12,6 +12,7 @@ using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
 using Abbey.Session;
+using Abbey.UI;
 using Abbey.Villagers;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -465,6 +466,11 @@ namespace Abbey.EditorTools
             buildingPanel.placementMarker = hero.transform;
             var nightmarePanel = panelsGO.AddComponent<NightmareDebugPanel>();
             nightmarePanel.director = director;
+
+            // Player-facing HUD + minimap. Display-only; F7/F8 toggle them.
+            var hudGO = new GameObject("PlayerHud");
+            hudGO.AddComponent<GameHud>();
+            hudGO.AddComponent<MinimapPanel>();
         }
 
         // ------------------------------------------------------------------

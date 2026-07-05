@@ -20,7 +20,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F4;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("Director to display. Unset = first one found in the scene.")]
         public NightmareDirector director;
@@ -60,7 +60,7 @@ namespace Abbey.Debugging
             float y = Screen.height - height - 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, Screen.height - 30f, width, 22f),
+                GUI.Label(new Rect(8f, 140f, 220f, 22f),
                     $"[{toggleKey}] nightmare panel");
                 return;
             }

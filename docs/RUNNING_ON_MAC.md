@@ -30,6 +30,8 @@ it on a Mac:
    | **H** | Feed the Black Hound (within interact range; costs one carried food). |
    | **Mouse scroll wheel** | Zoom (orthographic size only — the camera never rotates). |
    | **F1** | Toggle the debug overlay: time-of-day + phase progress, per-villager states, hound bond values, monsters, director, lights/resources. |
+   | **F7** | Toggle the player HUD. |
+   | **F8** | Toggle the minimap. |
 
    Light-territory rings (Safe/Edge) draw as gizmos in the Scene view via the
    `LightZoneGizmos` helper on the DebugOverlay object.

@@ -23,7 +23,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F1;
 
         [Tooltip("Start with the overlay visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("Seconds between re-scans for scene singletons (hound, hero, director).")]
         [Min(0.1f)] public float rescanIntervalSeconds = 2f;
@@ -72,7 +72,7 @@ namespace Abbey.Debugging
         {
             if (!visible)
             {
-                GUI.Label(new Rect(8f, 8f, 400f, 22f), $"[{toggleKey}] debug overlay");
+                GUI.Label(new Rect(8f, 74f, 220f, 22f), $"[{toggleKey}] debug overlay");
                 return;
             }
 
