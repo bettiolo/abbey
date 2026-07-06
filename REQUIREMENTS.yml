@@ -576,9 +576,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover seasonal night-length scaling, moon/fog/tempest light modifiers, bell reliability under tempest, and same-seed weather schedule reproducibility
       - Validation guide at docs/validation/P3-01.md per docs/validation/README.md
     depends_on: [P2-10, GATE-P2]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-02
     title: Seed-slot settlement growth + Asylum Corner rename (Phase 2 cleanup)
@@ -611,9 +612,10 @@ tasks:
       - No infirmary_corner / InfirmaryZone references remain outside git history
       - Validation guide at docs/validation/P3-02.md per docs/validation/README.md
     depends_on: [P2-10, GATE-P2]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-03
     title: Sanity, dread and the asylum
@@ -647,9 +649,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover asylum miss-a-night accounting, home-recovery dread spill, sanity-to-work-efficiency scaling, morning health-reset-but-not-sanity, and beast immunity
       - Validation guide at docs/validation/P3-03.md per docs/validation/README.md
     depends_on: [P3-02]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-04
     title: Renewable seasonal economy
@@ -679,9 +682,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover production cycles, seasonal yield modifiers, winter shutdown, and ledger accounting for the new resources
       - Validation guide at docs/validation/P3-04.md per docs/validation/README.md
     depends_on: [P3-01]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-05
     title: Light-band combat and two-tier settler home defense
@@ -711,9 +715,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover band debuff math (incl. beast exemption), lit-window defense wakeups, woken-house sanity loss, and home razing removing the light node and killing occupants
       - Validation guide at docs/validation/P3-05.md per docs/validation/README.md
     depends_on: [P3-01, P3-03]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-06
     title: Warriors, warrior structures with upgrade tree, night escalation
@@ -745,9 +750,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover warrior upgrade effects, night-escalation curve, dark-objective generation each night, and warriors operating in Dark band without settler debuffs beyond the band rules
       - Validation guide at docs/validation/P3-06.md per docs/validation/README.md
     depends_on: [P3-05]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-07
     title: Hound evolution paths and beast status
@@ -774,9 +780,10 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each of the five evolution paths from scripted treatment histories, event-logged transitions, and beast sanity/band immunity
       - Validation guide at docs/validation/P3-07.md per docs/validation/README.md
     depends_on: [P3-05]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: a4e99a6
 
   - id: P3-08
     title: Emergency overdrive actions (Candle Line et al.)
