@@ -229,7 +229,8 @@ namespace Abbey.EditorTools
 
             string absolute = Path.GetFullPath(Path.Combine(ProjectRoot, PrototypeSceneBuilder.ScenePath));
             return File.Exists(absolute) &&
-                   UnityEngine.Object.FindFirstObjectByType<GameClock>() != null;
+                   UnityEngine.Object.FindFirstObjectByType<GameClock>() != null &&
+                   UnityEngine.Object.FindFirstObjectByType<PrototypePhase3Bootstrap>() != null;
         }
 
         static bool WaitForEditorReady(int timeoutSeconds)

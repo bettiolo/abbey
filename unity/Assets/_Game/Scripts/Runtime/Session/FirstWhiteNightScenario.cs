@@ -79,6 +79,11 @@ namespace Abbey.Session
 
         void OnPhaseChanged(DayPhase phase)
         {
+            if (Config.phase3CampaignEnabled)
+            {
+                return;
+            }
+
             switch (phase)
             {
                 case DayPhase.Dusk:
@@ -111,6 +116,13 @@ namespace Abbey.Session
         /// </summary>
         public void ArmWhiteNight()
         {
+            if (Config.phase3CampaignEnabled)
+            {
+                GameEventLog.Append(RecordType,
+                    "white_night_legacy_scenario_skipped reason=phase3_campaign");
+                return;
+            }
+
             if (_armed)
             {
                 return;

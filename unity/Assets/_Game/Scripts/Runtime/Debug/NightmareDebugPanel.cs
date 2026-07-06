@@ -96,7 +96,9 @@ namespace Abbey.Debugging
         void DrawDirector(NightmareDirector dir)
         {
             Header($"Nightmare director   [{toggleKey}] hide");
-            string mode = dir.Config.phase2NightsEnabled ? "phase2" : "legacy(0.1)";
+            string mode = dir.Config.phase3NightsEnabled
+                ? "phase3"
+                : (dir.Config.phase2NightsEnabled ? "phase2" : "legacy(0.1)");
             Line($"mode={mode}  night={dir.NightNumber}  active={dir.NightActive}");
             Line($"timeIntoNight={dir.TimeIntoNight:F1}s  " +
                  $"seed={dir.Config.simulationSeed}");

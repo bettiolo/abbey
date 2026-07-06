@@ -122,6 +122,7 @@ namespace Abbey.EditorTools
             var config = PrototypeConfig.LoadOrDefault();
 
             BuildGroundAndSun();
+            BuildPhase3Mode();
             var director = BuildSimulationCore(config);
             var hero = BuildHero();
             BuildCamera(config, hero.transform);
@@ -227,8 +228,9 @@ namespace Abbey.EditorTools
             // Night escalation + nightly dark objective (P3-06). Turns the night index
             // + season into a wave budget for the director and generates one dark
             // objective per night that only a warrior/hero/beast can solve. Reads the
-            // CombatConfig escalation section — no wiring. Only drives the wave when
-            // PrototypeConfig.phase3NightsEnabled is on (off by default).
+            // CombatConfig escalation section — no wiring. The generated scene enables
+            // it through PrototypePhase3Bootstrap at play start; isolated tests can keep
+            // PrototypeConfig's coded default off.
             worldGO.AddComponent<NightEscalationSystem>();
 
             // Hound evolution (P3-07). Each dawn it scores the five paths (Guardian /
@@ -306,6 +308,12 @@ namespace Abbey.EditorTools
             debugGO.AddComponent<LightZoneGizmos>();
 
             return director;
+        }
+
+        static void BuildPhase3Mode()
+        {
+            var modeGO = new GameObject("Phase3Mode");
+            modeGO.AddComponent<PrototypePhase3Bootstrap>();
         }
 
         static GameObject BuildHero()
@@ -761,7 +769,8 @@ namespace Abbey.EditorTools
             // The Phase 3 campaign close (P3-14): the spring-ship scenario tracks the
             // three-part manifest and, at the launch window, sails the ship (latching the
             // win on GameSession). It reads the ship reconstruction site placed at the
-            // wreck below. Inert unless phase3CampaignEnabled is set in GameSessionConfig.
+            // wreck below. The generated scene enables campaign mode through
+            // PrototypePhase3Bootstrap at play start.
             var shipSite = BuildSpringShipSite();
             var springShipGO = new GameObject("SpringShipScenario");
             var springShip = springShipGO.AddComponent<SpringShipScenario>();
