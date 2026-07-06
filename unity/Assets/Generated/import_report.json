@@ -1,7 +1,7 @@
 {
-    "generatedAt": "2026-07-05T18:08:35.4817830Z",
-    "totalAssets": 43,
-    "passed": 43,
+    "generatedAt": "2026-07-06T08:52:00.0351040Z",
+    "totalAssets": 48,
+    "passed": 48,
     "failed": 0,
     "message": "",
     "results": [
@@ -110,6 +110,14 @@
             "message": "ok (2 anchor(s) present)"
         },
         {
+            "id": "chain_hound_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
             "id": "charcoal_kiln_t1",
             "imported": true,
             "passed": true,
@@ -127,6 +135,14 @@
         },
         {
             "id": "drowned_sailor_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "faceless_saint_lowpoly",
             "imported": true,
             "passed": true,
             "anchorsChecked": 1,
@@ -158,6 +174,14 @@
             "message": "ok (0 anchor(s) present)"
         },
         {
+            "id": "grave_crawler_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
             "id": "grave_marker",
             "imported": true,
             "passed": true,
@@ -175,6 +199,14 @@
         },
         {
             "id": "hound_chain",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "hunger_wight_lowpoly",
             "imported": true,
             "passed": true,
             "anchorsChecked": 1,
@@ -292,6 +324,14 @@
             "anchorsChecked": 1,
             "missingAnchors": [],
             "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "spring_ship_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 4,
+            "missingAnchors": [],
+            "message": "ok (4 anchor(s) present)"
         },
         {
             "id": "storage_pile_t1",

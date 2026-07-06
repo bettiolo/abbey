@@ -144,6 +144,7 @@ namespace Abbey.Tests.EditMode
         ArrivalSystem MakeArrivals(float trust)
         {
             var island = ScriptableObject.CreateInstance<IslandConfig>();
+            island.passiveArrivalIntervalDays = 0;
             island.stayMinTier = TrustTier.Wary;
             island.volunteerMinTier = TrustTier.Trusting;
             _assets.Add(island);

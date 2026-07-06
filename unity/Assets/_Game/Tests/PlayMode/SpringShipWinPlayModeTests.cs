@@ -150,6 +150,7 @@ namespace Abbey.Tests.PlayMode
         ArrivalSystem MakeArrivals()
         {
             var island = ScriptableObject.CreateInstance<IslandConfig>();
+            island.passiveArrivalIntervalDays = 0;
             island.stayMinTier = TrustTier.Wary;
             island.volunteerMinTier = TrustTier.Trusting;
             _assets.Add(island);

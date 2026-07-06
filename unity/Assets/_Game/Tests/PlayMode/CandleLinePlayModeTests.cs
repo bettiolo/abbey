@@ -316,8 +316,7 @@ namespace Abbey.Tests.PlayMode
             int baselineCount = baseline.SpawnedMonsters.Count;
             Assert.Greater(baselineCount, 0, "the season wave spawned monsters");
             baseline.EndNight();
-            Object.DestroyImmediate(baseline.gameObject);
-            _spawned.Remove(baseline.gameObject);
+            baseline.enabled = false;
             yield return null;
 
             // An earlier night's Abbey Rite booked a heavy nightmare debt.
