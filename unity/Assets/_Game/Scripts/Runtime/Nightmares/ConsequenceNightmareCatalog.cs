@@ -22,10 +22,13 @@ namespace Abbey.Nightmares
         public readonly float Sanctity;
         public readonly bool BrokenForm;
         public readonly bool AnyVillagerDeath;
+        public readonly float ForestDebt;
+        public readonly bool BellTowerRepaired;
         readonly HashSet<string> _logTags;
 
         public ConsequenceContext(string[] activeTags, float hunger, float oldFaith,
-            float sanctity, bool brokenForm, bool anyVillagerDeath, HashSet<string> logTags)
+            float sanctity, bool brokenForm, bool anyVillagerDeath, HashSet<string> logTags,
+            float forestDebt = 0f, bool bellTowerRepaired = false)
         {
             ActiveTags = activeTags ?? System.Array.Empty<string>();
             Hunger = hunger;
@@ -34,6 +37,8 @@ namespace Abbey.Nightmares
             BrokenForm = brokenForm;
             AnyVillagerDeath = anyVillagerDeath;
             _logTags = logTags;
+            ForestDebt = forestDebt;
+            BellTowerRepaired = bellTowerRepaired;
         }
 
         public bool HasActiveTag(string tag)
@@ -59,7 +64,7 @@ namespace Abbey.Nightmares
     }
 
     /// <summary>
-    /// The five consequence nightmares (P3-11): pure trigger evaluation over a
+    /// The consequence-nightmare set: pure trigger evaluation over a
     /// <see cref="ConsequenceContext"/> using the data-driven thresholds in
     /// <see cref="ThreatConfig"/>. Each species arms under exactly one documented condition:
     ///
@@ -68,6 +73,8 @@ namespace Abbey.Nightmares
     ///  * Grave Crawler — a Mass Graves / Use the Dead per-death grave tag in the log.
     ///  * Chain Hound  — Chained hound law OR a Broken abbey.
     ///  * Faceless Saint — pagan rites forbidden AND (Old-faith ≥ threshold OR Sanctity ≤ threshold).
+    ///  * Root Walker / Bell Mimic / Antler Wraith / Hollow Deer / Charcoal Dead —
+    ///    forest-debt and restraint tags promoted into Map 1's systems-test map.
     ///
     /// Static + deterministic so EditMode tests exercise it with no scene. The
     /// <see cref="NightmareDirector"/> only evaluates when a <see cref="LawSystem"/> exists
@@ -79,7 +86,11 @@ namespace Abbey.Nightmares
         static readonly string[] TrackedLogTags =
         {
             LawTags.GraveMass, LawTags.GraveUsed, LawTags.GraveFullRites,
-            LawTags.OfferingMade, LawTags.SecretRite
+            LawTags.OfferingMade, LawTags.SecretRite,
+            "old_growth_cutting", "overhunting", "grove_intrusion",
+            "night_burning", "forced_forest_labour", "false_bell_lure",
+            "replanting", "grove_shrine", "deer_protected", "tree_burial",
+            "forest_restraint"
         };
 
         /// <summary>
@@ -114,6 +125,7 @@ namespace Abbey.Nightmares
                 {
                     continue;
                 }
+                TrackResourceAliases(rec.Data, logTags);
                 for (int t = 0; t < TrackedLogTags.Length; t++)
                 {
                     if (rec.Data.Contains(TrackedLogTags[t]))
@@ -123,7 +135,31 @@ namespace Abbey.Nightmares
                 }
             }
 
-            return new ConsequenceContext(tags, hunger, oldFaith, sanctity, broken, anyDeath, logTags);
+            var threat = ThreatSourceSystem.Instance;
+            float forestDebt = threat != null ? threat.PressureFor(ThreatSourceType.Forest) : 0f;
+
+            return new ConsequenceContext(tags, hunger, oldFaith, sanctity, broken, anyDeath,
+                logTags, forestDebt, AbbeyState.BellTowerRepaired);
+        }
+
+        static void TrackResourceAliases(string data, HashSet<string> logTags)
+        {
+            if (logTags == null || string.IsNullOrEmpty(data))
+            {
+                return;
+            }
+            if (data.Contains("old_wood +"))
+            {
+                logTags.Add("old_growth_cutting");
+            }
+            if (data.Contains("venison +"))
+            {
+                logTags.Add("overhunting");
+            }
+            if (data.Contains("charcoal +"))
+            {
+                logTags.Add("night_burning");
+            }
         }
 
         /// <summary>All rules whose species is armed under the given context, in config order.</summary>
@@ -176,11 +212,39 @@ namespace Abbey.Nightmares
                     }
                     bool oldFaithHigh = rule.oldFaithAtLeast >= 0f && ctx.OldFaith >= rule.oldFaithAtLeast;
                     bool sanctityLow = rule.sanctityAtMost <= 1f && ctx.Sanctity <= rule.sanctityAtMost;
-                    return oldFaithHigh || sanctityLow;
+                    return (oldFaithHigh || sanctityLow) && !AnyBlockedTag(rule, ctx);
+
+                case NightmareType.RootWalker:
+                    return ForestDebtEnough(rule, ctx)
+                           || (AnyLogTag(rule, ctx) && !AnyBlockedTag(rule, ctx));
+
+                case NightmareType.BellMimic:
+                    if (rule.requiresBellTowerRepaired && !ctx.BellTowerRepaired)
+                    {
+                        return false;
+                    }
+                    return (ForestDebtEnough(rule, ctx) || AnyLogTag(rule, ctx))
+                           && !AnyBlockedTag(rule, ctx);
+
+                case NightmareType.AntlerWraith:
+                    return (ForestDebtEnough(rule, ctx) || AnyLogTag(rule, ctx))
+                           && !AnyBlockedTag(rule, ctx);
+
+                case NightmareType.HollowDeer:
+                    return AnyLogTag(rule, ctx) && !AnyBlockedTag(rule, ctx);
+
+                case NightmareType.CharcoalDead:
+                    return (ForestDebtEnough(rule, ctx) || AnyLogTag(rule, ctx))
+                           && !AnyBlockedTag(rule, ctx);
 
                 default:
                     return false;
             }
+        }
+
+        static bool ForestDebtEnough(ConsequenceTriggerRule rule, ConsequenceContext ctx)
+        {
+            return rule.forestDebtAtLeast >= 0f && ctx.ForestDebt >= rule.forestDebtAtLeast;
         }
 
         static bool AnyActiveTag(ConsequenceTriggerRule rule, ConsequenceContext ctx)
@@ -208,6 +272,22 @@ namespace Abbey.Nightmares
             for (int i = 0; i < rule.logTagAny.Length; i++)
             {
                 if (ctx.HasLogTag(rule.logTagAny[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        static bool AnyBlockedTag(ConsequenceTriggerRule rule, ConsequenceContext ctx)
+        {
+            if (rule.blockedByLogTagAny == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < rule.blockedByLogTagAny.Length; i++)
+            {
+                if (ctx.HasLogTag(rule.blockedByLogTagAny[i]))
                 {
                     return true;
                 }

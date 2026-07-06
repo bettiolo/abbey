@@ -333,6 +333,128 @@ namespace Abbey.Buildings
                     buildWorkSeconds = 14f,
                     function = FunctionKind.Production,
                 },
+                // Forest systems-test / Map 2 building vocabulary. These entries are
+                // intentionally prototype-simple: their mechanical behaviour is expressed
+                // through existing function kinds and EconomyConfig recipes so Map 1 can
+                // exercise the whole option set before bespoke Map 2 art/UI arrives.
+                new BuildingType
+                {
+                    id = "forester_hut_t1",
+                    displayName = "Forester Hut",
+                    footprint = new Vector2(3f, 3f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 6),
+                        new ResourceStack(ResourceType.Tools, 1),
+                    },
+                    buildWorkSeconds = 12f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "herbalist_hut_t1",
+                    displayName = "Herbalist Hut",
+                    footprint = new Vector2(2.5f, 2.5f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 4),
+                        new ResourceStack(ResourceType.Stone, 2),
+                    },
+                    buildWorkSeconds = 10f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "orchard_plot_t1",
+                    displayName = "Orchard Plot",
+                    footprint = new Vector2(4f, 4f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 4),
+                        new ResourceStack(ResourceType.SacredSeeds, 1),
+                    },
+                    buildWorkSeconds = 10f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "hunter_blind_t1",
+                    displayName = "Hunter Blind",
+                    footprint = new Vector2(2f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 3),
+                        new ResourceStack(ResourceType.Resin, 1),
+                    },
+                    buildWorkSeconds = 8f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "grove_shrine_t1",
+                    displayName = "Grove Shrine",
+                    footprint = new Vector2(2f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.SacredSeeds, 2),
+                        new ResourceStack(ResourceType.Candles, 2),
+                    },
+                    buildWorkSeconds = 12f,
+                    function = FunctionKind.Shrine,
+                },
+                new BuildingType
+                {
+                    id = "root_bridge_t1",
+                    displayName = "Root Bridge",
+                    footprint = new Vector2(4f, 2f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 6),
+                        new ResourceStack(ResourceType.Resin, 2),
+                    },
+                    buildWorkSeconds = 14f,
+                    function = FunctionKind.WorkHut,
+                },
+                new BuildingType
+                {
+                    id = "stag_garden_t1",
+                    displayName = "Stag Garden",
+                    footprint = new Vector2(4f, 4f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 4),
+                        new ResourceStack(ResourceType.Apples, 2),
+                    },
+                    buildWorkSeconds = 14f,
+                    function = FunctionKind.Production,
+                },
+                new BuildingType
+                {
+                    id = "forest_watchpost_t1",
+                    displayName = "Forest Watchpost",
+                    footprint = new Vector2(2.5f, 2.5f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 6),
+                        new ResourceStack(ResourceType.Resin, 2),
+                    },
+                    buildWorkSeconds = 14f,
+                    function = FunctionKind.Watchtower,
+                },
+                new BuildingType
+                {
+                    id = "abbey_cloister_repair",
+                    displayName = "Abbey Cloister Repair",
+                    footprint = new Vector2(4f, 3f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Stone, 6),
+                        new ResourceStack(ResourceType.OldWood, 2),
+                        new ResourceStack(ResourceType.SacredSeeds, 1),
+                    },
+                    buildWorkSeconds = 20f,
+                    function = FunctionKind.Asylum,
+                },
                 // Warrior tier (P3-06). The lodge recruits/houses/upgrades warriors;
                 // the watchtower adds ranged support and the vision that arms the
                 // nightly dark objective. Warrior stats + upgrade costs live in

@@ -144,6 +144,9 @@ multiplayer, art polish.
 
 Question: *Can the game generate a new moral survival story with a new beast?*
 
+- **Prototype01 / Map 1 systems-test map** now carries the Phase 4 forest resource,
+  building, Forest Debt, and misdirection mechanics so the whole game loop can be
+  playtested end to end before a curated first map is split out.
 - **Map 2: The Abbey of Antlers** - dense, beautiful, confusing forest (sacred grove,
   orchard, deep forest, stream, charcoal camp, deer paths, stone circle, hidden graves,
   corrupted logging camp).

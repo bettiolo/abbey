@@ -31,7 +31,7 @@ namespace Abbey.Tests.EditMode
         static ConsequenceContext Ctx(
             string[] activeTags = null, float hunger = 0f, float oldFaith = 0f,
             float sanctity = 0.5f, bool broken = false, bool anyDeath = false,
-            string[] logTags = null)
+            string[] logTags = null, float forestDebt = 0f, bool bellTowerRepaired = false)
         {
             var set = new HashSet<string>();
             if (logTags != null)
@@ -42,7 +42,8 @@ namespace Abbey.Tests.EditMode
                 }
             }
             return new ConsequenceContext(activeTags ?? System.Array.Empty<string>(),
-                hunger, oldFaith, sanctity, broken, anyDeath, set);
+                hunger, oldFaith, sanctity, broken, anyDeath, set,
+                forestDebt, bellTowerRepaired);
         }
 
         bool Armed(NightmareType type, ConsequenceContext ctx)
@@ -155,6 +156,35 @@ namespace Abbey.Tests.EditMode
                 "forbidden rites while sanctity collapses summons the Saints");
             Assert.IsFalse(Armed(NightmareType.FacelessSaint, Ctx(oldFaith: 0.9f)),
                 "high old faith without the forbidding law does not");
+        }
+
+        // ---- Forest misdirection -----------------------------------------
+
+        [Test]
+        public void ForestDebt_ArmsRootWalkerBellMimicAndAntlerWraith()
+        {
+            var ctx = Ctx(forestDebt: 1.3f);
+
+            Assert.IsTrue(Armed(NightmareType.RootWalker, ctx));
+            Assert.IsTrue(Armed(NightmareType.BellMimic, ctx));
+            Assert.IsTrue(Armed(NightmareType.AntlerWraith, ctx));
+        }
+
+        [Test]
+        public void Overhunting_ArmsHollowDeer_UnlessDeerProtected()
+        {
+            Assert.IsTrue(Armed(NightmareType.HollowDeer,
+                Ctx(logTags: new[] { "overhunting" })));
+            Assert.IsFalse(Armed(NightmareType.HollowDeer,
+                Ctx(logTags: new[] { "overhunting", "deer_protected" })),
+                "deer protection is the restraint counter to Hollow Deer");
+        }
+
+        [Test]
+        public void NightBurning_ArmsCharcoalDead()
+        {
+            Assert.IsTrue(Armed(NightmareType.CharcoalDead,
+                Ctx(logTags: new[] { "night_burning" })));
         }
     }
 }

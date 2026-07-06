@@ -50,6 +50,13 @@ namespace Abbey.Light
         /// </summary>
         public static float LightEffectivenessMultiplier { get; set; } = 1f;
 
+        /// <summary>
+        /// Forest-misdirection fog multiplier (default 1). Unlike weather, it only
+        /// scales non-sacred lights: false guidance can hide lantern edges, but it
+        /// does not shrink the abbey flame or shrines.
+        /// </summary>
+        public static float MisdirectionLightMultiplier { get; set; } = 1f;
+
         public static IReadOnlyList<LightSource> Sources => _sources;
 
         /// <summary>A source's effective radius after the global weather multiplier.</summary>
@@ -59,7 +66,10 @@ namespace Abbey.Light
             {
                 return 0f;
             }
-            return source.EffectiveRadius * Mathf.Max(0f, LightEffectivenessMultiplier);
+            float misdirection = source.sacred ? 1f : MisdirectionLightMultiplier;
+            return source.EffectiveRadius
+                   * Mathf.Max(0f, LightEffectivenessMultiplier)
+                   * Mathf.Max(0f, misdirection);
         }
 
         public static void Register(LightSource source)
@@ -81,6 +91,7 @@ namespace Abbey.Light
             _sources.Clear();
             _config = null;
             LightEffectivenessMultiplier = 1f;
+            MisdirectionLightMultiplier = 1f;
         }
 
         public static LightZone Classify(Vector3 worldPos)

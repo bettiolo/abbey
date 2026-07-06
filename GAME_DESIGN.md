@@ -148,6 +148,11 @@ Hound** - each with distinct behaviour and visual identity.
 
 ### Map 2 - The Stag Beneath the Abbey (restraint, debt, cost of expansion)
 
+Prototype note: `Prototype01` / Map 1 is temporarily the all-mechanics systems-test map.
+It includes the forest resource set, buildings, Forest Debt, and misdirection-night
+mechanics below so we can playtest end to end. A later curated first map should introduce
+only a subset.
+
 Values: `trust, patience, wound, wildness, covenant`. The Stag is indirect: follow it,
 respect territory, interpret appearances, leave offerings, avoid taboos. It does not obey
 the Bellkeeper - it *permits* the Bellkeeper. Central pressure: **Forest Debt** (rises with
@@ -230,10 +235,10 @@ Phase 3 renewables: grain, meat, wool, tools, herbs, coal (+ sanctity, old faith
 as pressures). `herbs` are foraged along the light edge and spent as a covenant/old-rite
 ingredient - offerings, dread-spill dampening, dusk-steadying, beast care - **not** as
 medicine; they never speed health or sanity recovery (foraging and guardrail in §5).
-Map 2: old_wood, green_wood, apples, venison, herbs, resin, sacred_seeds, charcoal -
-renewable but over-usable; extractive vs restorative buildings make the settlement layout
-a moral map. Never Factorio complexity: the economy always feeds the question *"can we keep
-the light alive through winter?"*
+Map 1 systems-test / Map 2: old_wood, green_wood, apples, venison, herbs, resin,
+sacred_seeds, charcoal - renewable but over-usable; extractive vs restorative buildings
+make the settlement layout a moral map. Never Factorio complexity: the economy always
+feeds the question *"can we keep the light alive through winter?"*
 
 ### Food and hunger
 
@@ -307,8 +312,9 @@ burn, stronger recall, safer path segments, or more production.
 Phase 3 abbey: Kitchen Hall, Asylum, Crypt, Watch Wall, Scriptorium, Kennel Yard,
 Winter Hearth (+ moral visual variants, see ART_BIBLE).
 
-Map 2: Forester Hut, Herbalist Hut, Orchard Plot, Hunter Blind, Grove Shrine, Root Bridge,
-Charcoal Kiln, Stag Garden, Forest Watchpost, Abbey Cloister Repair.
+Map 1 systems-test / Map 2: Forester Hut, Herbalist Hut, Orchard Plot, Hunter Blind,
+Grove Shrine, Root Bridge, Charcoal Kiln, Stag Garden, Forest Watchpost, Abbey Cloister
+Repair.
 
 ## 9. Nightmares
 
@@ -355,12 +361,12 @@ what sleeps there:
 This makes the map itself remember exploitation. The player can still cut wood, draw water,
 mine, salvage, and quarry, but overuse changes where monsters come from and what they want.
 Restraint, offerings, repairs, light, proper burial, and old-rite bargains can slow pressure
-or redirect it. Map 2's Forest Debt is the first focused version of this larger source
-pressure rule.
+or redirect it. Forest Debt is now the focused forest version of this larger source
+pressure rule and should exist on any map with forest exploitation, tuned per map.
 
-Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates the abbey bell - the
-**True Bell vs False Bell** mechanic), Antler Wraith, Hollow Deer, Charcoal Dead. Paths
-shift, fog hides lanterns, villagers walk toward false lights.
+Map 1 systems-test / Map 2 (misdirection, not siege): Root Walker, Bell Mimic (imitates
+the abbey bell - the **True Bell vs False Bell** mechanic), Antler Wraith, Hollow Deer,
+Charcoal Dead. Paths shift, fog hides lanterns, villagers walk toward false lights.
 
 ### Emergency overdrive actions
 

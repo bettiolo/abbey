@@ -28,7 +28,7 @@ namespace Abbey.Nightmares
     /// tests and CI never need an asset; an optional asset at Resources/ThreatConfig overrides
     /// the coded defaults.
     ///
-    /// Holds the five consequence-nightmare trigger rules (their tag / pressure conditions,
+    /// Holds the consequence-nightmare trigger rules (their tag / pressure conditions,
     /// spawn counts, preferred source and per-type monster stats), the event→source
     /// exploitation-pressure map the <see cref="ThreatSourceSystem"/> folds, and the source
     /// decay / mitigation / spawn-weighting tunables.
@@ -65,6 +65,22 @@ namespace Abbey.Nightmares
 
         [Tooltip("Extra weight a source gets when it matches the arming trigger's preferred source.")]
         [Min(0f)] public float preferredSourceBonus = 0.75f;
+
+        [Header("Forest misdirection / false guidance")]
+        [Tooltip("Forest Debt at or above this starts the map-shift/fog layer for the night.")]
+        [Min(0f)] public float forestMisdirectionDebtThreshold = 0.6f;
+
+        [Tooltip("Non-sacred lantern radius multiplier while forest misdirection fog is active.")]
+        [Range(0f, 1f)] public float misdirectionLanternMultiplier = 0.78f;
+
+        [Tooltip("Bell Mimic false-bell radius: villagers inside this hear the wrong bell.")]
+        [Min(0f)] public float falseBellRadius = 18f;
+
+        [Tooltip("How far beyond the mimic the false light is projected.")]
+        [Min(0f)] public float falseLightDistance = 10f;
+
+        [Tooltip("Fear added to villagers who follow a false bell/light.")]
+        [Range(0f, 1f)] public float falseGuidanceFear = 0.18f;
 
         // ------------------------------------------------------------------
         // Lookups
@@ -153,6 +169,58 @@ namespace Abbey.Nightmares
                     healthScale = 1.5f,
                     stunnedByBell = false,
                 },
+                // Forest misdirection set (Map 1 systems-test / Map 2 vocabulary).
+                new ConsequenceTriggerRule
+                {
+                    type = NightmareType.RootWalker,
+                    logTagAny = new[] { "old_growth_cutting", "grove_intrusion" },
+                    forestDebtAtLeast = 0.6f,
+                    spawnCount = 1,
+                    preferredSource = ThreatSourceType.Forest,
+                    healthScale = 0.9f,
+                    stunnedByBell = true,
+                },
+                new ConsequenceTriggerRule
+                {
+                    type = NightmareType.BellMimic,
+                    logTagAny = new[] { "false_bell_lure" },
+                    forestDebtAtLeast = 0.8f,
+                    requiresBellTowerRepaired = false,
+                    spawnCount = 1,
+                    preferredSource = ThreatSourceType.Forest,
+                    healthScale = 0.8f,
+                    stunnedByBell = true,
+                },
+                new ConsequenceTriggerRule
+                {
+                    type = NightmareType.AntlerWraith,
+                    logTagAny = new[] { "overhunting", "old_growth_cutting" },
+                    forestDebtAtLeast = 1.2f,
+                    spawnCount = 1,
+                    preferredSource = ThreatSourceType.Forest,
+                    healthScale = 1.2f,
+                    stunnedByBell = false,
+                },
+                new ConsequenceTriggerRule
+                {
+                    type = NightmareType.HollowDeer,
+                    logTagAny = new[] { "overhunting" },
+                    blockedByLogTagAny = new[] { "deer_protected" },
+                    spawnCount = 1,
+                    preferredSource = ThreatSourceType.Forest,
+                    healthScale = 0.7f,
+                    stunnedByBell = true,
+                },
+                new ConsequenceTriggerRule
+                {
+                    type = NightmareType.CharcoalDead,
+                    logTagAny = new[] { "night_burning" },
+                    forestDebtAtLeast = 0.9f,
+                    spawnCount = 1,
+                    preferredSource = ThreatSourceType.Forest,
+                    healthScale = 1.0f,
+                    stunnedByBell = false,
+                },
             };
         }
 
@@ -162,9 +230,25 @@ namespace Abbey.Nightmares
             {
                 // Resource ledger records read "wood +N (reason)", "coal +N", etc.
                 Map("wood +", true, ThreatSourceType.Forest, 0.10f),
+                Map("green_wood +", true, ThreatSourceType.Forest, 0.06f),
+                Map("old_wood +", true, ThreatSourceType.Forest, 0.22f),
+                Map("venison +", true, ThreatSourceType.Forest, 0.16f),
+                Map("resin +", true, ThreatSourceType.Forest, 0.08f),
+                Map("charcoal +", true, ThreatSourceType.Forest, 0.14f),
                 Map("stone +", true, ThreatSourceType.Mountain, 0.12f),
                 Map("coal +", true, ThreatSourceType.Cave, 0.14f),
                 Map("scrap_iron +", true, ThreatSourceType.Shore, 0.12f),
+                // Explicit forest-debt actions. Positive = exploit, negative = restraint.
+                Map("old_growth_cutting", true, ThreatSourceType.Forest, 0.28f),
+                Map("overhunting", true, ThreatSourceType.Forest, 0.22f),
+                Map("grove_intrusion", true, ThreatSourceType.Forest, 0.25f),
+                Map("night_burning", true, ThreatSourceType.Forest, 0.24f),
+                Map("forced_forest_labour", true, ThreatSourceType.Forest, 0.20f),
+                Map("replanting", true, ThreatSourceType.Forest, -0.24f),
+                Map("grove_shrine", true, ThreatSourceType.Forest, -0.22f),
+                Map("deer_protected", true, ThreatSourceType.Forest, -0.18f),
+                Map("tree_burial", true, ThreatSourceType.Forest, -0.20f),
+                Map("forest_restraint", true, ThreatSourceType.Forest, -0.16f),
                 // Shipwreck salvage stage advances.
                 Map("salvage", false, ThreatSourceType.Shore, 0.10f),
                 // Grave handling — every burial disturbs the crypt.
@@ -229,6 +313,9 @@ namespace Abbey.Nightmares
         [Tooltip("Armed when any of these tags appears in the event log (e.g. per-death grave tags).")]
         public string[] logTagAny = Array.Empty<string>();
 
+        [Tooltip("Disarmed when any of these tags appears in the event log (restraint/protection counters).")]
+        public string[] blockedByLogTagAny = Array.Empty<string>();
+
         [Tooltip("Hunger pressure at/above this arms the rule (negative = ignore).")]
         public float hungerAtLeast = -1f;
 
@@ -240,6 +327,12 @@ namespace Abbey.Nightmares
 
         [Tooltip("Armed when the abbey has transformed to Broken.")]
         public bool armOnBrokenForm;
+
+        [Tooltip("Forest Debt at/above this arms the rule (negative = ignore).")]
+        public float forestDebtAtLeast = -1f;
+
+        [Tooltip("Only arms when the True Bell is reliable enough to have a mimic: repaired tower.")]
+        public bool requiresBellTowerRepaired;
 
         [Tooltip("Requires a villager death in the log (with the active tag) — Dead Workers.")]
         public bool requireVillagerDeath;

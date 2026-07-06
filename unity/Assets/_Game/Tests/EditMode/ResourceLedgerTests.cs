@@ -232,7 +232,15 @@ namespace Abbey.Tests.EditMode
             Assert.AreEqual("herbs", ResourceTypes.Id(ResourceType.Herbs));
             Assert.AreEqual("tools", ResourceTypes.Id(ResourceType.Tools));
             Assert.AreEqual("coal", ResourceTypes.Id(ResourceType.Coal));
-            Assert.AreEqual(14, ResourceTypes.Count);
+            // Forest systems-test / Map 2 resource vocabulary.
+            Assert.AreEqual("old_wood", ResourceTypes.Id(ResourceType.OldWood));
+            Assert.AreEqual("green_wood", ResourceTypes.Id(ResourceType.GreenWood));
+            Assert.AreEqual("apples", ResourceTypes.Id(ResourceType.Apples));
+            Assert.AreEqual("venison", ResourceTypes.Id(ResourceType.Venison));
+            Assert.AreEqual("resin", ResourceTypes.Id(ResourceType.Resin));
+            Assert.AreEqual("sacred_seeds", ResourceTypes.Id(ResourceType.SacredSeeds));
+            Assert.AreEqual("charcoal", ResourceTypes.Id(ResourceType.Charcoal));
+            Assert.AreEqual(21, ResourceTypes.Count);
         }
     }
 }

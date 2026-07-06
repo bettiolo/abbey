@@ -214,7 +214,7 @@ namespace Abbey.Economy
                     workersRequired = 1,
                     cycleDays = 1f,
                     inputs = { new ResourceStack(ResourceType.Wood, 2) },
-                    outputs = { new ResourceStack(ResourceType.Coal, 1) },
+                    outputs = { new ResourceStack(ResourceType.Charcoal, 1) },
                 },
                 new ProductionRecipe
                 {
@@ -225,9 +225,62 @@ namespace Abbey.Economy
                     inputs =
                     {
                         new ResourceStack(ResourceType.ScrapIron, 1),
-                        new ResourceStack(ResourceType.Coal, 1),
+                        new ResourceStack(ResourceType.Charcoal, 1),
                     },
                     outputs = { new ResourceStack(ResourceType.Tools, 1) },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "forester_hut_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    outputs =
+                    {
+                        new ResourceStack(ResourceType.GreenWood, 3),
+                        new ResourceStack(ResourceType.OldWood, 1),
+                        new ResourceStack(ResourceType.Resin, 1),
+                    },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "herbalist_hut_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    outputs =
+                    {
+                        new ResourceStack(ResourceType.Herbs, 2),
+                        new ResourceStack(ResourceType.Resin, 1),
+                    },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "orchard_plot_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 3f,
+                    outputs = { new ResourceStack(ResourceType.Apples, 4) },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "hunter_blind_t1",
+                    seasonal = false,
+                    workersRequired = 1,
+                    cycleDays = 2f,
+                    outputs = { new ResourceStack(ResourceType.Venison, 2) },
+                },
+                new ProductionRecipe
+                {
+                    buildingId = "stag_garden_t1",
+                    seasonal = true,
+                    workersRequired = 1,
+                    cycleDays = 4f,
+                    outputs =
+                    {
+                        new ResourceStack(ResourceType.SacredSeeds, 1),
+                        new ResourceStack(ResourceType.Apples, 1),
+                    },
                 },
             };
         }

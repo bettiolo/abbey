@@ -5,7 +5,8 @@ namespace Abbey.Economy
 {
     /// <summary>
     /// Settlement resources. Indices 0..7 are the Phase 2 salvage economy (exactly
-    /// per GAME_DESIGN.md §7); 8..13 are the Phase 3 renewable economy (P3-04). New
+    /// per GAME_DESIGN.md §7); 8..13 are the Phase 3 renewable economy (P3-04);
+    /// 14..20 are the forest systems-test set (Map 1 exercising Map 2 mechanics). New
     /// values append at the end — serialized indices must stay stable.
     ///
     /// Grain vs Food: <see cref="Food"/> stays the eat-ledger (what hunger consumes,
@@ -30,7 +31,15 @@ namespace Abbey.Economy
         Wool,
         Herbs,
         Tools,
-        Coal
+        Coal,
+        // Forest systems-test resources (Map 1 now carries the full Map 2 vocabulary).
+        OldWood,
+        GreenWood,
+        Apples,
+        Venison,
+        Resin,
+        SacredSeeds,
+        Charcoal
     }
 
     /// <summary>Enum helpers shared by ledger, sites and the event log.</summary>
@@ -58,6 +67,13 @@ namespace Abbey.Economy
                 case ResourceType.Herbs: return "herbs";
                 case ResourceType.Tools: return "tools";
                 case ResourceType.Coal: return "coal";
+                case ResourceType.OldWood: return "old_wood";
+                case ResourceType.GreenWood: return "green_wood";
+                case ResourceType.Apples: return "apples";
+                case ResourceType.Venison: return "venison";
+                case ResourceType.Resin: return "resin";
+                case ResourceType.SacredSeeds: return "sacred_seeds";
+                case ResourceType.Charcoal: return "charcoal";
                 default: return type.ToString().ToLowerInvariant();
             }
         }

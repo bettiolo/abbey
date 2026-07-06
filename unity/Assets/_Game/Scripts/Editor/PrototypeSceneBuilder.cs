@@ -283,6 +283,12 @@ namespace Abbey.EditorTools
             threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Cave, new Vector3(34f, 0f, 8f));
             threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Mountain, new Vector3(40f, 0f, 34f));
 
+            // Forest misdirection / True Bell vs False Bell (Map 1 systems-test
+            // promotion of the Map 2 design). This reads Forest Debt from the
+            // ThreatSourceSystem, applies fog to non-sacred lanterns, and lets a Bell
+            // Mimic lure villagers toward false lights until the True Bell cuts through.
+            worldGO.AddComponent<Abbey.Nightmares.FalseGuidanceSystem>();
+
             // Island exploration + arrivals + dilemmas (P3-13). ExplorationSystem sends
             // parties to hidden POIs (authored in BuildIslandPois); a survey reveals the POI
             // and lands its reward (resources, unlocked seed slots, people, shrine/well threat
@@ -653,32 +659,91 @@ namespace Abbey.EditorTools
         }
 
         /// <summary>
-        /// The renewable seasonal economy (P3-04): a starter Grain Field and Charcoal
-        /// Kiln standing near camp as completed <see cref="ProductionBuilding"/>s, plus
-        /// an authored field seed-slot for the player to raise more. Assign a Farmer /
-        /// Charcoaler to them (jobs debug flow) and fast-forward days: the field's grain
-        /// ticks up on harvest days and stops in Winter, while the kiln converts wood to
-        /// coal year-round. Recipes/yields all live in EconomyConfig. Watch it on the F2
-        /// economy panel alongside the F7 season panel.
+        /// The renewable + forest systems-test economy: Map 1 now carries the full
+        /// Map 2 resource/building vocabulary so we can playtest mechanics end to end.
+        /// The production buildings are manually staffed in the generated test scene
+        /// (before bespoke forest job UI/roles), while every building also exists in
+        /// the catalog for placement tests. Watch resources and Forest Debt on F2/F4.
         /// </summary>
         static void BuildStarterProduction()
         {
-            var field = InstantiateGenerated("field_plot_t1", new Vector3(-8f, 0f, 4f),
-                "GrainField", PrimitiveType.Cube, new Vector3(2f, 0.4f, 2f), 0.2f);
-            var fieldProduction = field.AddComponent<ProductionBuilding>();
-            fieldProduction.Initialize("field_plot_t1");
+            MakeProductionBuilding("field_plot_t1", "GrainField", new Vector3(-8f, 0f, 4f),
+                new Vector3(2f, 0.4f, 2f), 0.2f, staff: 1);
+            MakeProductionBuilding("charcoal_kiln_t1", "CharcoalKiln", new Vector3(-9f, 0f, 1f),
+                new Vector3(2f, 1.4f, 2f), 0.7f, staff: 1);
+            MakeProductionBuilding("forester_hut_t1", "ForesterHut", ForestEdgeCenter + new Vector3(-7f, 0f, -3f),
+                new Vector3(2.5f, 1.6f, 2.5f), 0.8f, staff: 1);
+            MakeProductionBuilding("herbalist_hut_t1", "HerbalistHut", ForestEdgeCenter + new Vector3(-2f, 0f, -5f),
+                new Vector3(2.2f, 1.4f, 2.2f), 0.7f, staff: 1);
+            MakeProductionBuilding("orchard_plot_t1", "OrchardPlot", ForestEdgeCenter + new Vector3(4f, 0f, -5f),
+                new Vector3(3.5f, 0.5f, 3.5f), 0.25f, staff: 1);
+            MakeProductionBuilding("hunter_blind_t1", "HunterBlind", ForestEdgeCenter + new Vector3(8f, 0f, 0f),
+                new Vector3(1.6f, 1.8f, 1.6f), 0.9f, staff: 1);
+            MakeProductionBuilding("stag_garden_t1", "StagGarden", ForestEdgeCenter + new Vector3(6f, 0f, 6f),
+                new Vector3(3.5f, 0.5f, 3.5f), 0.25f, staff: 1);
 
-            var kiln = InstantiateGenerated("charcoal_kiln_t1", new Vector3(-9f, 0f, 1f),
-                "CharcoalKiln", PrimitiveType.Cube, new Vector3(2f, 1.4f, 2f), 0.7f);
-            var kilnProduction = kiln.AddComponent<ProductionBuilding>();
-            kilnProduction.Initialize("charcoal_kiln_t1");
+            MakeForestStructure("grove_shrine_t1", "GroveShrine", ForestEdgeCenter + new Vector3(-7f, 0f, 6f),
+                new Vector3(1.8f, 2f, 1.8f), 1f, addSacredLight: true);
+            MakeForestStructure("root_bridge_t1", "RootBridge", ForestEdgeCenter + new Vector3(0f, 0f, 8f),
+                new Vector3(4f, 0.35f, 1.5f), 0.18f);
+            MakeForestStructure("forest_watchpost_t1", "ForestWatchpost", ForestEdgeCenter + new Vector3(9f, 0f, 4f),
+                new Vector3(1.6f, 3f, 1.6f), 1.5f, watchtower: true);
+            MakeForestStructure("abbey_cloister_repair", "AbbeyCloisterRepair",
+                AbbeyHillCenter + new Vector3(5f, 0.5f, -1f),
+                new Vector3(3.6f, 1.2f, 2.6f), 0.6f, asylum: true);
 
             // A starter field plot the player can build (seed-slot gated, P3-02).
             var slots = UnityEngine.Object.FindFirstObjectByType<SeedSlotSystem>();
             if (slots != null)
             {
                 slots.AddAuthoredSlot(new Vector3(-10f, 0f, 4f), SlotSizeClass.Medium);
+                slots.AddAuthoredSlot(ForestEdgeCenter + new Vector3(-10f, 0f, -2f), SlotSizeClass.Medium);
+                slots.AddAuthoredSlot(ForestEdgeCenter + new Vector3(10f, 0f, 7f), SlotSizeClass.Medium);
+                slots.AddAuthoredSlot(ForestEdgeCenter + new Vector3(2f, 0f, 11f), SlotSizeClass.Large);
             }
+        }
+
+        static ProductionBuilding MakeProductionBuilding(
+            string id, string name, Vector3 groundPos, Vector3 fallbackScale,
+            float primitiveYOffset, int staff)
+        {
+            var go = InstantiateGenerated(id, groundPos, name,
+                PrimitiveType.Cube, fallbackScale, primitiveYOffset);
+            TagPrototypeBuilding(go, id);
+            var production = go.AddComponent<ProductionBuilding>();
+            production.Initialize(id);
+            production.SetStaff(staff);
+            return production;
+        }
+
+        static GameObject MakeForestStructure(string id, string name, Vector3 groundPos,
+            Vector3 fallbackScale, float primitiveYOffset, bool addSacredLight = false,
+            bool watchtower = false, bool asylum = false)
+        {
+            var go = InstantiateGenerated(id, groundPos, name,
+                PrimitiveType.Cube, fallbackScale, primitiveYOffset);
+            TagPrototypeBuilding(go, id);
+            if (addSacredLight)
+            {
+                var light = go.AddComponent<LightSource>();
+                var cfg = PrototypeConfig.LoadOrDefault();
+                light.radius = cfg.sacredFlameRadius * 0.65f;
+                light.strength = cfg.sacredFlameStrength;
+                light.fuelSeconds = -1f;
+                light.sacred = true;
+                light.isLit = true;
+            }
+            if (watchtower)
+            {
+                var tower = go.AddComponent<WarriorStructure>();
+                tower.role = WarriorStructureRole.Watchtower;
+            }
+            if (asylum)
+            {
+                var zone = go.AddComponent<AsylumZone>();
+                zone.radius = PrototypeConfig.LoadOrDefault().asylumRadius;
+            }
+            return go;
         }
 
         /// <summary>

@@ -59,6 +59,7 @@ namespace Abbey.Villagers
         bool _bellBoosted;
         float _recallDelay;
         Transform _escort;
+        Vector3? _falseGuidanceTarget;
 
         // Fear / darkness.
         float _timeInDark;
@@ -122,6 +123,10 @@ namespace Abbey.Villagers
         public bool IsEscorted => _escort != null;
 
         public bool IsRecallOrdered => _recallOrdered;
+
+        public bool IsFollowingFalseGuidance => _falseGuidanceTarget.HasValue;
+
+        public Vector3 FalseGuidanceTarget => _falseGuidanceTarget ?? transform.position;
 
         public LightZone CurrentZone => DarknessEvaluator.Classify(transform.position);
 
@@ -216,6 +221,16 @@ namespace Abbey.Villagers
             {
                 return; // pressed into overdrive night service: it does not recall
             }
+            if (bellBoosted && _falseGuidanceTarget.HasValue)
+            {
+                GameEventLog.Append("villager_false_guidance_broken", name);
+                _falseGuidanceTarget = null;
+                Fear = Mathf.Max(0f, Fear - Config.bellCalmAmount);
+                _bellBoosted = true;
+                _recallOrdered = false;
+                SetState(VillagerState.ReturningToLight);
+                return;
+            }
             switch (State)
             {
                 case VillagerState.Missing:
@@ -258,6 +273,30 @@ namespace Abbey.Villagers
             {
                 EnterReturningToLight();
             }
+        }
+
+        /// <summary>
+        /// False Bell / false-light lure: divert the villager toward a dark target.
+        /// A later true bell (bellBoosted recall) clears this target.
+        /// </summary>
+        public void FollowFalseGuidance(Vector3 target, float fearAdd)
+        {
+            switch (State)
+            {
+                case VillagerState.Missing:
+                case VillagerState.Dead:
+                case VillagerState.Injured:
+                case VillagerState.Resting:
+                    return;
+            }
+            _escort = null;
+            _recallOrdered = false;
+            _bellBoosted = false;
+            _falseGuidanceTarget = target;
+            Fear = Mathf.Clamp01(Fear + Mathf.Max(0f, fearAdd));
+            GameEventLog.Append("villager_following_false_light",
+                $"{name} target=({target.x:F1},{target.z:F1})");
+            SetState(VillagerState.ReturningToLight);
         }
 
         /// <summary>
@@ -545,6 +584,18 @@ namespace Abbey.Villagers
                     transform.position = PlanarMotion.StepAroundBuildings(
                         transform.position, _escort.position, speed, dt,
                         cfg.rescueFollowDistance, cfg.movementObstaclePadding, out _);
+                }
+                return;
+            }
+
+            if (_falseGuidanceTarget.HasValue)
+            {
+                if (StepTowards(_falseGuidanceTarget.Value, speed, dt))
+                {
+                    GameEventLog.Append("villager_reached_false_light", name);
+                    _falseGuidanceTarget = null;
+                    Fear = Mathf.Max(Fear, cfg.villagerPanicFearThreshold);
+                    SetState(VillagerState.Panicking);
                 }
                 return;
             }

@@ -198,7 +198,7 @@ namespace Abbey.Nightmares
                             continue;
                         }
                         bool hit = map.matchData
-                            ? rec.Data != null && rec.Data.Contains(map.signal)
+                            ? DataMatchesSignal(rec.Data, map.signal)
                             : rec.Type == map.signal;
                         if (hit)
                         {
@@ -232,6 +232,29 @@ namespace Abbey.Nightmares
             }
             return string.IsNullOrEmpty(cfg.dayMarkerDataContains)
                    || (rec.Data != null && rec.Data.Contains(cfg.dayMarkerDataContains));
+        }
+
+        static bool DataMatchesSignal(string data, string signal)
+        {
+            if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(signal))
+            {
+                return false;
+            }
+            int at = data.IndexOf(signal, System.StringComparison.Ordinal);
+            while (at >= 0)
+            {
+                if (at == 0 || !IsIdentifierChar(data[at - 1]))
+                {
+                    return true;
+                }
+                at = data.IndexOf(signal, at + 1, System.StringComparison.Ordinal);
+            }
+            return false;
+        }
+
+        static bool IsIdentifierChar(char c)
+        {
+            return char.IsLetterOrDigit(c) || c == '_';
         }
 
         void ApplyDecayStep(ThreatConfig cfg)

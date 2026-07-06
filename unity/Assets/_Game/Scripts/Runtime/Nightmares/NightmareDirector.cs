@@ -594,6 +594,11 @@ namespace Abbey.Nightmares
                 case NightmareType.GraveCrawler:
                 case NightmareType.ChainHound:
                 case NightmareType.FacelessSaint:
+                case NightmareType.RootWalker:
+                case NightmareType.BellMimic:
+                case NightmareType.AntlerWraith:
+                case NightmareType.HollowDeer:
+                case NightmareType.CharcoalDead:
                     // P3-11 consequence nightmares: one shared controller, species + stats
                     // injected from ThreatConfig before Configure resets health.
                     var consequence = go.AddComponent<ConsequenceMonsterController>();
@@ -616,6 +621,10 @@ namespace Abbey.Nightmares
             GameEventLog.Append("nightmare",
                 $"spawn type={type} name={name} pos=({position.x:F1},{position.z:F1})");
             EventBus.RaiseMonsterSpawned(go);
+            if (FalseGuidanceSystem.Instance != null)
+            {
+                FalseGuidanceSystem.Instance.RecordNightmareSpawn(type, position, transform.position);
+            }
             return monster;
         }
 

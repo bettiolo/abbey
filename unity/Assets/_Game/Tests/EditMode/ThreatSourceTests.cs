@@ -89,6 +89,29 @@ namespace Abbey.Tests.EditMode
             Assert.Greater(sys.PressureFor(ThreatSourceType.Crypt), 0f, "grave handling pressures the crypt");
         }
 
+        [Test]
+        public void ForestDebt_RisesFromExtraction_AndFallsFromRestoration()
+        {
+            var sys = MakeSystem();
+            GameEventLog.Append("resource", "old_wood +1 (forester_hut_t1)");
+            GameEventLog.Append("resource", "green_wood +3 (forester_hut_t1)");
+            GameEventLog.Append("resource", "venison +2 (hunter_blind_t1)");
+            GameEventLog.Append("resource", "charcoal +1 (charcoal_kiln_t1)");
+            sys.RecomputeFromLog();
+
+            float exploited = sys.PressureFor(ThreatSourceType.Forest);
+            Assert.Greater(exploited, 0.4f, "forest extraction creates visible Forest Debt");
+
+            GameEventLog.Append("forest_action", "replanting");
+            GameEventLog.Append("forest_action", "deer_protected");
+            GameEventLog.Append("forest_action", "tree_burial");
+            GameEventLog.Append("forest_action", "forest_restraint");
+            sys.RecomputeFromLog();
+
+            Assert.Less(sys.PressureFor(ThreatSourceType.Forest), exploited,
+                "restorative forest actions reduce Forest Debt in the same fold");
+        }
+
         // ---- Decay --------------------------------------------------------
 
         [Test]

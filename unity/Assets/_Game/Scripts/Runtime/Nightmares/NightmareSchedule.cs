@@ -6,8 +6,10 @@ namespace Abbey.Nightmares
 {
     /// <summary>
     /// The nightmare species. The first three are the Phase 2 scripted-night species
-    /// (GAME_DESIGN.md §9); the last five are the Phase 3 consequence nightmares (P3-11),
-    /// armed by moral state (law tags + pressures) rather than the fixed night script.
+    /// (GAME_DESIGN.md §9); the next five are the Phase 3 consequence nightmares (P3-11),
+    /// armed by moral state (law tags + pressures) rather than the fixed night script;
+    /// the final five are the forest-misdirection systems-test set promoted from the
+    /// Map 2 design into Map 1's all-mechanics test map.
     /// </summary>
     public enum NightmareType
     {
@@ -20,7 +22,14 @@ namespace Abbey.Nightmares
         DeadWorker,    // deaths under forced night labour
         GraveCrawler,  // Mass Graves / Use the Dead grave tags
         ChainHound,    // Chained hound doctrine / Broken abbey
-        FacelessSaint  // Forbidden pagan rites + high Old-faith / low Sanctity
+        FacelessSaint, // Forbidden pagan rites + high Old-faith / low Sanctity
+
+        // ---- Forest misdirection nightmares (Map 1 systems test / Map 2 vocabulary) ----
+        RootWalker,    // Forest Debt / old-growth cutting / grove intrusion
+        BellMimic,     // False Bell: imitates the abbey bell and lures villagers
+        AntlerWraith,  // Overhunting / old covenant debt
+        HollowDeer,    // Overhunting without deer protection
+        CharcoalDead   // Night burning / charcoal exploitation
     }
 
     /// <summary>Everything the Phase 2 night script can fire at a scheduled moment.</summary>

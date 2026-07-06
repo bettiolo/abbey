@@ -86,6 +86,7 @@ namespace Abbey.Debugging
                 DrawMonsters(dir);
             }
             DrawThreatSources();
+            DrawFalseGuidance();
             DrawArmedTriggers();
             DrawLogTail();
 
@@ -162,12 +163,13 @@ namespace Abbey.Debugging
         void DrawThreatSources()
         {
             var threat = ThreatSourceSystem.Instance;
-            Header("Threat sources (exploitation pressure)");
+            Header("Threat sources / debt");
             if (threat == null)
             {
                 Line("no ThreatSourceSystem in scene");
                 return;
             }
+            Line($"Forest Debt = {threat.PressureFor(ThreatSourceType.Forest):F2}");
             float max = Mathf.Max(0.01f, threat.Config.maxSourcePressure);
             var sources = threat.Sources;
             var seen = new HashSet<ThreatSourceType>();
@@ -185,6 +187,21 @@ namespace Abbey.Debugging
             {
                 Line("(no source locations registered)");
             }
+        }
+
+        void DrawFalseGuidance()
+        {
+            Header("False guidance");
+            var guidance = FalseGuidanceSystem.Instance;
+            if (guidance == null)
+            {
+                Line("no FalseGuidanceSystem in scene");
+                return;
+            }
+            Line($"fog={guidance.FogActive}  lantern x{Abbey.Light.DarknessEvaluator.MisdirectionLightMultiplier:F2}");
+            Line($"false bells={guidance.FalseBellCount}  orders={guidance.FalseGuidanceOrders}");
+            Line($"path shifts={guidance.PathShiftCount}  " +
+                 $"lastTarget=({guidance.LastFalseLightTarget.x:F1},{guidance.LastFalseLightTarget.z:F1})");
         }
 
         void DrawArmedTriggers()
