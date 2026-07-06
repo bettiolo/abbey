@@ -50,6 +50,7 @@ namespace Abbey.Sanity
             new Dictionary<VillagerAgent, SanityRecord>();
         readonly Dictionary<VillagerAgent, Building> _homes =
             new Dictionary<VillagerAgent, Building>();
+        readonly HashSet<Building> _homeScratch = new HashSet<Building>();
 
         /// <summary>Every tracked villager's live sanity record (debug overlay / downstream).</summary>
         public IReadOnlyList<SanityRecord> Records => _records;
@@ -274,6 +275,84 @@ namespace Abbey.Sanity
                 sum += _records[i].Sanity;
             }
             return sum / _records.Count;
+        }
+
+        /// <summary>
+        /// Mean sanity of the villagers assigned to a home (1 when the home is empty /
+        /// untracked). The household aggregate P3-10 folds into the abbey-transformation
+        /// Broken score.
+        /// </summary>
+        public float HouseholdSanity(Building home)
+        {
+            if (home == null)
+            {
+                return 1f;
+            }
+            float sum = 0f;
+            int count = 0;
+            foreach (var pair in _homes)
+            {
+                if (pair.Value != home || pair.Key == null)
+                {
+                    continue;
+                }
+                if (_byVillager.TryGetValue(pair.Key, out var record))
+                {
+                    sum += record.Sanity;
+                    count++;
+                }
+            }
+            return count == 0 ? 1f : sum / count;
+        }
+
+        /// <summary>Lowest sanity in a home (1 when empty) — the most-broken housemate.</summary>
+        public float HouseholdMinSanity(Building home)
+        {
+            if (home == null)
+            {
+                return 1f;
+            }
+            float min = 1f;
+            bool any = false;
+            foreach (var pair in _homes)
+            {
+                if (pair.Value != home || pair.Key == null)
+                {
+                    continue;
+                }
+                if (_byVillager.TryGetValue(pair.Key, out var record))
+                {
+                    any = true;
+                    if (record.Sanity < min)
+                    {
+                        min = record.Sanity;
+                    }
+                }
+            }
+            return any ? min : 1f;
+        }
+
+        /// <summary>
+        /// Mean of each household's mean sanity across all assigned homes (P3-10
+        /// transformation input). Falls back to <see cref="AverageSanity"/> when no homes are
+        /// assigned so a home-less test world still reports a sensible aggregate.
+        /// </summary>
+        public float AverageHouseholdSanity()
+        {
+            float sum = 0f;
+            int homes = 0;
+            _homeScratch.Clear();
+            foreach (var pair in _homes)
+            {
+                if (pair.Value == null || _homeScratch.Contains(pair.Value))
+                {
+                    continue;
+                }
+                _homeScratch.Add(pair.Value);
+                sum += HouseholdSanity(pair.Value);
+                homes++;
+            }
+            return homes == 0 ? AverageSanity() : sum / homes;
         }
 
         // ------------------------------------------------------------------

@@ -949,11 +949,18 @@ namespace Abbey.Villagers
             return DarknessEvaluator.NearestSafePoint(from);
         }
 
-        /// <summary>Moves the villager on a job errand leg. Returns true on arrival.</summary>
+        /// <summary>
+        /// Moves the villager on a job errand leg. Returns true on arrival. Job errands
+        /// route around active building/construction footprints (main) AND wear desire
+        /// paths while reading their speed bonus (P3-12) via
+        /// <see cref="PlanarMotion.StepWornAroundBuildings"/>; identical to
+        /// <see cref="PlanarMotion.Step"/> when no footprints and no
+        /// TrafficGrid/DesirePathSystem are present.
+        /// </summary>
         bool StepSelf(VillagerAgent v, Vector3 target, float dt)
         {
             float speed = v.Config.villagerWalkSpeed * Config.SpeedMultiplier(job);
-            transform.position = PlanarMotion.StepAroundBuildings(
+            transform.position = PlanarMotion.StepWornAroundBuildings(
                 transform.position, target, speed, dt, v.Config.arrivalRadius,
                 v.Config.movementObstaclePadding, out bool arrived);
             return arrived;

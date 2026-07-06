@@ -813,7 +813,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover per-action cost application, Candle Line mobile light zones enabling night work, Lantern Overburn fuel burn, and deferred nightmare-debt consumption on a later night
       - Validation guide at docs/validation/P3-08.md per docs/validation/README.md
     depends_on: [P3-03, P3-05]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-09
     title: Laws and decrees
@@ -844,7 +846,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each law group's mechanical effect (food split, night-labour gate, burial tags, hound doctrine, old-rite tags) and law-change event logging
       - Validation guide at docs/validation/P3-09.md per docs/validation/README.md
     depends_on: [P3-04, P3-07, P3-08]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-10
     title: Moral pressures, household sanity and abbey transformation
@@ -874,7 +878,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover pressure updates from scripted event sequences, trust-threshold gates, household sanity aggregation, and each abbey transformation state's trigger + modifiers
       - Validation guide at docs/validation/P3-10.md per docs/validation/README.md
     depends_on: [P3-03, P3-09]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-11
     title: Consequence nightmares and threat-source pressure
@@ -910,7 +916,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each nightmare's trigger condition, threat-source pressure accumulation from economy actions, source-weighted spawn selection under a fixed seed, and mitigation reducing pressure
       - Validation guide at docs/validation/P3-11.md per docs/validation/README.md
     depends_on: [P3-04, P3-10]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-12
     title: Desire paths and ground scars
@@ -940,7 +948,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover desire-path emergence from traffic, path speed bonus, lantern fuel debt on lit paths at night, ground-scar stamping at dawn, day fade, and winter snow-cover branch
       - Validation guide at docs/validation/P3-12.md per docs/validation/README.md
     depends_on: [P3-01, P3-02]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-13
     title: Island exploration, arrivals and dilemmas
@@ -973,7 +983,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover exploration unlocks (incl. new seed slots), refugee arrival + trust-gated staying, shipwreck rescue events with drowned-nightmare risk, warrior recruitment, and each dilemma's choice consequences
       - Validation guide at docs/validation/P3-13.md per docs/validation/README.md
     depends_on: [P3-02, P3-10]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   - id: P3-14
     title: Spring-ship win, four chapters and end summary
@@ -1008,7 +1020,9 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover chapter transitions, manifest completion accounting, spring-ship launch win, failure when a manifest part is missing at spring, who-sails/who-stays outcome recording, and end-summary accuracy against a scripted event log
       - Validation guide at docs/validation/P3-14.md per docs/validation/README.md
     depends_on: [P3-04, P3-11, P3-13]
-    status: todo
+    status: in_review
+    assigned_to: agent
+    branch: claude/next-game-phases-rwywit
 
   # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
   - id: P4-EPIC

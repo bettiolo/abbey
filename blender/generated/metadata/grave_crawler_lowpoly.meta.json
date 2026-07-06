@@ -1,0 +1,139 @@
+{
+  "id": "grave_crawler_lowpoly",
+  "generated_at": "2026-07-05T19:13:43.480986+00:00",
+  "spec": {
+    "id": "grave_crawler_lowpoly",
+    "type": "character",
+    "theme": "beast",
+    "footprint": {
+      "width": 1.6,
+      "depth": 2.0,
+      "height": 1.0
+    },
+    "style": {
+      "silhouette": "what claws out of a mass grave: a low, long, earth-caked thing dragging itself flat along the ground on too many splayed clawing limbs, grave-dirt matted over a broken back, a split lolling head low between the shoulders, pale bone spurs breaking through the soil-black hide",
+      "materials": [
+        "mat_dirt",
+        "mat_nightmare_black",
+        "mat_bone"
+      ]
+    },
+    "required_parts": [
+      "low_body",
+      "clawing_limbs",
+      "claw_hands",
+      "dragged_hindquarters",
+      "split_head",
+      "bone_spurs"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "mouth",
+        "type": "interaction"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 1.24209,
+    "depth": 1.94711,
+    "height": 0.61829,
+    "min": [
+      -0.62104,
+      -0.97356,
+      -0.0
+    ],
+    "max": [
+      0.62104,
+      0.97356,
+      0.61829
+    ]
+  },
+  "triangle_count": 210,
+  "material_count": 3,
+  "materials": [
+    "mat_bone",
+    "mat_dirt",
+    "mat_nightmare_black"
+  ],
+  "anchors": [
+    {
+      "name": "mouth",
+      "type": "interaction"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/grave_crawler_lowpoly.glb",
+    "blend": "blender/generated/blend/grave_crawler_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/grave_crawler_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/grave_crawler_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/grave_crawler_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/grave_crawler_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/grave_crawler_lowpoly.glb (31936 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/grave_crawler_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=-0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 1.242x1.947x0.618 vs footprint 1.6x2.0x1.0"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "210/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_bone', 'mat_dirt', 'mat_nightmare_black']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['mouth'] present=['mouth']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "grave_crawler_lowpoly_collision present"
+      }
+    ]
+  }
+}

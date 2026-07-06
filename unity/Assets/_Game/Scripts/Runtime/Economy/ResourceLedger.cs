@@ -167,6 +167,27 @@ namespace Abbey.Economy
             return true;
         }
 
+        /// <summary>
+        /// Issues up to <paramref name="amount"/> units of a resource, drawing only what is
+        /// in stock (the rationing hook P3-09 laws use for the daily upkeep pass). Unlike
+        /// <see cref="TryConsume(ResourceType,int,string)"/> this is not all-or-nothing: a
+        /// short stock hands out what remains and returns the units actually issued.
+        /// </summary>
+        public static int IssueRation(ResourceType type, int amount, string reason)
+        {
+            if (amount <= 0)
+            {
+                return 0;
+            }
+            int available = _stock[(int)type];
+            int issued = Mathf.Min(available, amount);
+            if (issued > 0)
+            {
+                TryConsume(type, issued, reason);
+            }
+            return issued;
+        }
+
         public static void RegisterStorage(StoragePile pile)
         {
             if (pile != null && !_piles.Contains(pile))

@@ -1,0 +1,17 @@
+{
+  "id": "hunger_wight_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 1.3, "depth": 1.0, "height": 2.1 },
+  "style": {
+    "silhouette": "the starved dead: a tall emaciated figure, ash-grey and hollow, ribs jutting from a caved-in chest above a swollen distended belly, spindle limbs, a lolling sunken head with two black pits for eyes, both arms reaching forward for food that never comes",
+    "materials": ["mat_ash", "mat_bone", "mat_nightmare_black"]
+  },
+  "required_parts": ["spindle_legs", "distended_belly", "caved_chest", "ribs", "hollow_head", "reaching_arms"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "mouth", "type": "interaction" }
+  ],
+  "pivot": "center_bottom"
+}

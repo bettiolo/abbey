@@ -36,7 +36,24 @@ namespace Abbey.Light
         /// <summary>Territory radius after strength scaling; 0 when unlit.</summary>
         public float EffectiveRadius => isLit ? radius * Mathf.Clamp01(strength) : 0f;
 
+        /// <summary>
+        /// Fuel-burn multiplier applied on top of the base rate (P3-12). The
+        /// <see cref="Abbey.Settlement.DesirePathSystem"/> raises it above 1 at dusk on
+        /// a lantern that covers an important desire path, so keeping a road lit through
+        /// the night burns extra fuel (fuel debt); it is restored to 1 at dawn. Default
+        /// 1 means no debt — an off-path lantern is untouched.
+        /// </summary>
+        [Min(0f)] public float PathFuelMultiplier = 1f;
+
         public bool HasInfiniteFuel => fuelSeconds < 0f;
+
+        // ---- P3-08 overdrive: temporary "burn brighter, burn faster" mode ----
+        bool _overburning;
+        float _baseRadius;
+        float _baseFuelRate;
+
+        /// <summary>True while an overdrive Lantern Overburn is boosting this light.</summary>
+        public bool IsOverburning => _overburning;
 
         void OnEnable()
         {
@@ -65,7 +82,7 @@ namespace Abbey.Light
                 return;
             }
 
-            fuelSeconds -= fuelConsumptionPerSecond * dt;
+            fuelSeconds -= fuelConsumptionPerSecond * Mathf.Max(0f, PathFuelMultiplier) * dt;
             if (fuelSeconds <= 0f)
             {
                 fuelSeconds = 0f;
@@ -105,6 +122,40 @@ namespace Abbey.Light
             }
             isLit = true;
             GameEventLog.Append("LightIgnited", $"{name} sacred={sacred}");
+        }
+
+        /// <summary>
+        /// Lantern Overburn (P3-08): the light burns brighter — radius scaled up — at a
+        /// multiplied fuel-consumption rate, so it eats its fuel faster and may gutter out
+        /// mid-night. Idempotent: re-applying restores from the original values first, so
+        /// the multipliers never stack. Multipliers below 1 are clamped to 1 (overburn
+        /// only ever brightens/burns faster).
+        /// </summary>
+        public void ApplyOverburn(float radiusMultiplier, float fuelRateMultiplier)
+        {
+            if (!_overburning)
+            {
+                _baseRadius = radius;
+                _baseFuelRate = fuelConsumptionPerSecond;
+                _overburning = true;
+            }
+            radius = _baseRadius * Mathf.Max(1f, radiusMultiplier);
+            fuelConsumptionPerSecond = _baseFuelRate * Mathf.Max(1f, fuelRateMultiplier);
+            GameEventLog.Append("light_overburn",
+                $"{name} radius={radius:F1} fuelRate={fuelConsumptionPerSecond:F2}");
+        }
+
+        /// <summary>Ends overburn, restoring the pre-overburn radius and fuel rate. No-op when not overburning.</summary>
+        public void ClearOverburn()
+        {
+            if (!_overburning)
+            {
+                return;
+            }
+            _overburning = false;
+            radius = _baseRadius;
+            fuelConsumptionPerSecond = _baseFuelRate;
+            GameEventLog.Append("light_overburn", $"{name} cleared radius={radius:F1}");
         }
 
         void OnDrawGizmosSelected()

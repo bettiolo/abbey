@@ -1,0 +1,17 @@
+{
+  "id": "faceless_saint_lowpoly",
+  "type": "character",
+  "theme": "beast",
+  "footprint": { "width": 1.5, "depth": 1.2, "height": 2.7 },
+  "style": {
+    "silhouette": "the old faith's answer to forbidden rites: an unnaturally tall robed figure standing dead straight in a heavy pale column of a robe, wide draped sleeves, a smooth blank golden oval where a face should be, a thin gold halo hovering behind the head, the dark void of the hood swallowing everything above the collar",
+    "materials": ["mat_canvas", "mat_sacred_gold", "mat_nightmare_black"]
+  },
+  "required_parts": ["robe_column", "wide_sleeves", "faceless_head", "halo", "hidden_hands", "hem"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "blessing", "type": "interaction" }
+  ],
+  "pivot": "center_bottom"
+}

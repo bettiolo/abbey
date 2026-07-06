@@ -4,6 +4,7 @@ using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Reports;
 using Abbey.Villagers;
+using Abbey.World;
 using UnityEngine;
 
 namespace Abbey.Session
@@ -23,7 +24,15 @@ namespace Abbey.Session
         /// neither the clean Win (&gt;= threshold) nor any of the three hard Losses.
         /// Appended last so the serialized Win/Loss indices stay stable.
         /// </summary>
-        SurvivedBittersweet
+        SurvivedBittersweet,
+
+        /// <summary>
+        /// The Phase 3 campaign win (P3-14): the spring-ship manifest was complete at the
+        /// launch window and the ship sailed. A distinct terminal, latched by
+        /// <see cref="GameSession.ReportShipSailed"/> from <see cref="SpringShipScenario"/>.
+        /// Appended last so the serialized indices stay stable.
+        /// </summary>
+        ShipSailed
     }
 
     /// <summary>Why the settlement fell (VERTICAL_SLICE_SPEC §11 loss list).</summary>
@@ -32,7 +41,13 @@ namespace Abbey.Session
         None,
         BellkeeperDead,
         AbbeyFireOut,
-        VillagersLost
+        VillagersLost,
+
+        /// <summary>
+        /// Phase 3 campaign (P3-14): the settlement was wiped in winter, before the spring
+        /// tide could carry the ship out. Appended last so serialized indices stay stable.
+        /// </summary>
+        WinterCollapse
     }
 
     /// <summary>
@@ -76,6 +91,13 @@ namespace Abbey.Session
 
         /// <summary>The night's storybook facts, reused so the report and end screen agree.</summary>
         public MorningReportData Report;
+
+        /// <summary>
+        /// The Phase 3 campaign carryover (P3-14), non-null only for the
+        /// <see cref="GameOutcome.ShipSailed"/> win — the end screen renders its chronicle
+        /// and roster. Null for the Phase 2 outcomes.
+        /// </summary>
+        public CampaignOutcome Campaign;
     }
 
     /// <summary>
@@ -136,6 +158,7 @@ namespace Abbey.Session
         int _nightsBegun;
         bool _abbeyFlameEverLit;
         bool _villagersEverPresent;
+        CampaignOutcome _campaign;
 
         public GameOutcome Outcome { get; private set; } = GameOutcome.Undecided;
 
@@ -293,13 +316,26 @@ namespace Abbey.Session
             }
             else if (_villagersEverPresent && alive == 0)
             {
-                reason = LossReason.VillagersLost;
+                // In the Phase 3 campaign, a winter wipe before the spring tide is its own
+                // named loss (WinterCollapse); otherwise it is the Phase 2 VillagersLost.
+                reason = (Config.phase3CampaignEnabled && IsWinter())
+                    ? LossReason.WinterCollapse
+                    : LossReason.VillagersLost;
             }
 
             if (reason != LossReason.None)
             {
                 Decide(GameOutcome.Loss, reason);
                 return Outcome;
+            }
+
+            // ---- Phase 3 campaign: the White Night is chapter 4's climax, NOT the
+            // campaign end. Surviving it does not latch a win here; the campaign win
+            // (ShipSailed) is latched by SpringShipScenario via ReportShipSailed. Losses
+            // above still apply. So in campaign mode we stop after the loss checks.
+            if (Config.phase3CampaignEnabled)
+            {
+                return GameOutcome.Undecided;
             }
 
             // ---- Win / Bittersweet Survival (both terminal survivals) -----
@@ -320,6 +356,28 @@ namespace Abbey.Session
             }
 
             return GameOutcome.Undecided;
+        }
+
+        static bool IsWinter()
+        {
+            return SeasonSystem.Instance != null
+                   && SeasonSystem.Instance.CurrentSeason == Season.Winter;
+        }
+
+        /// <summary>
+        /// Latches the Phase 3 campaign win (P3-14): the ship sailed. Called by
+        /// <see cref="SpringShipScenario"/> once the manifest is complete at the launch
+        /// window. Carries the <see cref="CampaignOutcome"/> into the end screen. Idempotent
+        /// — the first verdict wins.
+        /// </summary>
+        public void ReportShipSailed(CampaignOutcome campaign)
+        {
+            if (IsDecided)
+            {
+                return;
+            }
+            _campaign = campaign;
+            Decide(GameOutcome.ShipSailed, LossReason.None);
         }
 
         void Decide(GameOutcome outcome, LossReason reason)
@@ -374,6 +432,7 @@ namespace Abbey.Session
                 MissingVillager = missing > 0 || report.Missing > 0,
 
                 Report = report,
+                Campaign = _campaign,
             };
         }
 
@@ -421,6 +480,7 @@ namespace Abbey.Session
             _nightsBegun = 0;
             _abbeyFlameEverLit = false;
             _villagersEverPresent = false;
+            _campaign = null;
         }
     }
 }

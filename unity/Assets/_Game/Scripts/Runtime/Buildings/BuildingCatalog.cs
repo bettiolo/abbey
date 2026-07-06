@@ -29,7 +29,14 @@ namespace Abbey.Buildings
         BellTower,
         Production,
         WarriorLodge,
-        Watchtower
+        Watchtower,
+
+        /// <summary>
+        /// The spring-ship reconstruction (P3-14): the staged hull/rigging whose completion
+        /// satisfies the manifest's hull part. Purely structural — no runtime component; the
+        /// SpringShipScenario reads the site's completion.
+        /// </summary>
+        Ship
     }
 
     /// <summary>
@@ -357,6 +364,25 @@ namespace Abbey.Buildings
                     },
                     buildWorkSeconds = 16f,
                     function = FunctionKind.Watchtower,
+                },
+                // Spring-ship reconstruction (P3-14). The staged hull rebuilt at the wreck:
+                // wood for the keel/hull, tools for the rigging, and WOOL woven into
+                // sailcloth (the sailcloth acquisition route lives in the wool economy,
+                // P3-04). Completion satisfies the manifest's hull/rigging part. The build
+                // cost IS the "staging": each haul raises the ship's greybox visual.
+                new BuildingType
+                {
+                    id = "spring_ship_t1",
+                    displayName = "Spring Ship",
+                    footprint = new Vector2(6f, 3f),
+                    cost =
+                    {
+                        new ResourceStack(ResourceType.Wood, 20),
+                        new ResourceStack(ResourceType.Tools, 4),
+                        new ResourceStack(ResourceType.Wool, 8),
+                    },
+                    buildWorkSeconds = 30f,
+                    function = FunctionKind.Ship,
                 },
             };
         }

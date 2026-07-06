@@ -127,6 +127,7 @@ namespace Abbey.EditorTools
             BuildCamera(config, hero.transform);
             BuildCamp(config);
             BuildSeedSlots();
+            BuildIslandPois();
             var abbeyFlame = BuildAbbeyHill(config);
             var wreckAnchor = BuildBeach();
             director.shipwreckAnchor = wreckAnchor;
@@ -186,12 +187,29 @@ namespace Abbey.EditorTools
             // Both observe the clock via EventBus and read SeasonConfig — no wiring.
             var worldGO = new GameObject("WorldSystems");
             worldGO.AddComponent<SeasonSystem>();
+            // Four narrative chapters keyed to the calendar (P3-14). Harmless in the
+            // Phase 2 slice; only logs transitions when phase3CampaignEnabled is set.
+            worldGO.AddComponent<Abbey.Session.ChapterSystem>();
             worldGO.AddComponent<WeatherSystem>();
 
             // Seed-slot settlement growth (P3-02). Authored slots are added later
             // (BuildSeedSlots, once the camp lights exist so the hug rule can read
             // lit ground); completing a building opens child slots beside it.
             worldGO.AddComponent<SeedSlotSystem>();
+
+            // Desire paths + ground scars (P3-12). The TrafficGrid accumulates villager
+            // foot traffic into a wear field (sized to the map bounds); DesirePathSystem
+            // turns wear into path tiers -> a walk-speed bonus (wired through
+            // PlanarMotion, so every villager participates with no per-agent code), decays
+            // untrodden paths each day, and at dusk makes lanterns over important paths
+            // burn extra fuel while unlit important paths add to the P3-02 light debt.
+            // GroundScarSystem stamps the night's razed homes at dawn as scars that fade
+            // before dusk (or persist snow-covered in Winter). Read PathsConfig; the grid
+            // heatmap toggles on the SettlementDebugPanel (key K) — no other wiring.
+            var trafficGrid = worldGO.AddComponent<TrafficGrid>();
+            trafficGrid.ConfigureBounds(new Vector2(-48f, -48f), new Vector2(48f, 48f));
+            worldGO.AddComponent<DesirePathSystem>();
+            worldGO.AddComponent<GroundScarSystem>();
 
             // Sanity / dread / asylum (P3-03). Tracks each villager's persistent
             // sanity track, turns dark-exposure into dread and insanity, drives asylum
@@ -221,12 +239,67 @@ namespace Abbey.EditorTools
             // HoundEvolutionConfig; auto-finds the hound — no wiring.
             worldGO.AddComponent<HoundEvolutionSystem>();
 
+            // Emergency overdrive levers (P3-08). The player's panic buttons — Forced
+            // Night Work, Candle Line, Lantern Overburn, Bell Toll, Abbey Rite, Hound
+            // Hunt, Volunteer Watch — each solve tonight at an immediate cost (resources,
+            // sanity, trust, beast status) plus a deferred nightmare debt the director
+            // cashes in on later nights. Reads OverdriveConfig and reuses the ledger /
+            // sanity / light systems — no wiring.
+            worldGO.AddComponent<Abbey.Decrees.OverdriveSystem>();
+
+            // Standing laws (P3-09). Five policy groups (Food, Night labour, Burial,
+            // Hound, Old rites), one active option each, changed by a cooldown-gated
+            // decree. Food drives the dawn ration pass through the ResourceLedger, Night
+            // labour gates the overdrive levers via OverdriveSystem.PermissionProvider,
+            // Burial pays per-death costs/refunds + grave tags, Hound writes the P3-07
+            // doctrine, Old rites drives daily sanctity / old-faith pressure. Reads
+            // LawsConfig; defaults are the humane set (Equal / Paid Risk / Full Rites /
+            // Family / Forbid Pagan Rites) — no wiring.
+            worldGO.AddComponent<Abbey.Decrees.LawSystem>();
+
+            // Moral pressures (P3-10): a deterministic fold over the event log + law tags
+            // into Trust / Sanctity / Mercy / Fear / Reason / Hunger / Old-faith, recomputed
+            // each dawn. The abbey transformation then derives the settlement's form
+            // (Sanctuary / Fortress / Famine / Cult / Broken) and pushes its modifiers onto
+            // AbbeyState. Reads PressuresConfig; coded defaults — no wiring.
+            worldGO.AddComponent<Abbey.Morale.PressureSystem>();
+            worldGO.AddComponent<Abbey.Morale.AbbeyTransformationSystem>();
+
+            // Threat sources + consequence nightmares (P3-11). ThreatSourceSystem folds
+            // exploitation pressure (woodcutting→forest, coal→cave, salvage→shore, grave
+            // handling→crypt, the daily draw→well, hauling→old road) from the event log and
+            // weights the director's spawn placement; the director arms consequence nightmares
+            // (Hunger Wights / Dead Workers / Grave Crawlers / Chain Hounds / Faceless Saints)
+            // off the law tags + pressures. Reads ThreatConfig; the source LOCATIONS are the
+            // map layout authored just below — no other wiring.
+            var threat = worldGO.AddComponent<Abbey.Nightmares.ThreatSourceSystem>();
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Forest, ForestEdgeCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Shore, BeachCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Crypt, AbbeyHillCenter);
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Well, CampCenter + new Vector3(4f, 0f, 4f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.OldRoad, new Vector3(-14f, 0f, 14f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Cave, new Vector3(34f, 0f, 8f));
+            threat.RegisterSource(Abbey.Nightmares.ThreatSourceType.Mountain, new Vector3(40f, 0f, 34f));
+
+            // Island exploration + arrivals + dilemmas (P3-13). ExplorationSystem sends
+            // parties to hidden POIs (authored in BuildIslandPois); a survey reveals the POI
+            // and lands its reward (resources, unlocked seed slots, people, shrine/well threat
+            // sources). ArrivalSystem grows the population — passive dawn walk-ins, expedition
+            // finds, and storm shipwreck crews — integrated by the P3-10 trust tier, arming the
+            // director's drowned-nightmare window on a wet rescue. DilemmaSystem queues the
+            // data-driven choice cards. All read IslandConfig; the island panel is on key I —
+            // worldGO sits at CampCenter (origin) so parties muster/return to the lit camp.
+            worldGO.AddComponent<Abbey.Island.ExplorationSystem>();
+            var arrivals = worldGO.AddComponent<Abbey.Island.ArrivalSystem>();
+            worldGO.AddComponent<Abbey.Island.DilemmaSystem>();
+
             // Villagers register with the static DuskRecallSystem in OnEnable —
             // no scene object needed for it.
 
             var directorGO = new GameObject("NightmareDirector");
             directorGO.transform.position = CampCenter; // spawn ring measured from camp
             var director = directorGO.AddComponent<NightmareDirector>();
+            arrivals.director = director; // drowned-risk window on shipwreck rescues
 
             var debugGO = new GameObject("DebugOverlay");
             debugGO.AddComponent<DebugOverlay>();
@@ -367,6 +440,28 @@ namespace Abbey.EditorTools
             }
             var building = go.GetComponent<Building>() ?? go.AddComponent<Building>();
             building.Initialize(type);
+        }
+
+        /// <summary>
+        /// Authors the hidden island points of interest (P3-13): wreckage on the far shore,
+        /// old-road ends, forest-depth shrines, wells, boundary stones, a survivor camp and a
+        /// resource cache — all out beyond the settled camp, revealed only when an expedition
+        /// reaches them. The system itself was created in BuildSimulationCore.
+        /// </summary>
+        static void BuildIslandPois()
+        {
+            var system = UnityEngine.Object.FindFirstObjectByType<Abbey.Island.ExplorationSystem>();
+            if (system == null)
+            {
+                return;
+            }
+            system.AddPoi(Abbey.Island.PoiType.Wreckage, new Vector3(-44f, 0f, -40f));
+            system.AddPoi(Abbey.Island.PoiType.OldRoad, new Vector3(-44f, 0f, 20f));
+            system.AddPoi(Abbey.Island.PoiType.Shrine, new Vector3(-40f, 0f, 44f));
+            system.AddPoi(Abbey.Island.PoiType.Well, new Vector3(22f, 0f, -42f));
+            system.AddPoi(Abbey.Island.PoiType.BoundaryStone, new Vector3(46f, 0f, -8f));
+            system.AddPoi(Abbey.Island.PoiType.SurvivorCamp, new Vector3(44f, 0f, 44f));
+            system.AddPoi(Abbey.Island.PoiType.ResourceCache, new Vector3(-8f, 0f, 46f));
         }
 
         /// <summary>
@@ -596,6 +691,39 @@ namespace Abbey.EditorTools
                 basePos + new Vector3(-3.5f, 0f, 3.5f));
         }
 
+        /// <summary>
+        /// The spring-ship reconstruction site (P3-14), pre-placed at the wreck on the
+        /// beach. A normal <see cref="ConstructionSite"/> initialized straight from the
+        /// catalog (spring_ship_t1) so Builders serve it through the usual delivery economy;
+        /// its greybox visual grows through the build as materials/work arrive. Returns null
+        /// when the catalog lacks the entry.
+        /// </summary>
+        static ConstructionSite BuildSpringShipSite()
+        {
+            var type = BuildingPlacer.Catalog.Find("spring_ship_t1");
+            if (type == null)
+            {
+                GameEventLog.Append("spring_ship", "site rejected (no catalog entry)");
+                return null;
+            }
+
+            var position = BeachCenter + new Vector3(-2f, 0.3f, -4f);
+            var go = new GameObject("SpringShipSite");
+            go.transform.position = position;
+
+            var visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            visual.name = "SpringShipGreybox";
+            visual.transform.SetParent(go.transform, false);
+            visual.transform.localScale = new Vector3(type.footprint.x, 1.6f, type.footprint.y);
+
+            var site = go.AddComponent<ConstructionSite>();
+            site.visualRoot = visual.transform;
+            site.Initialize(type);
+            GameEventLog.Append("spring_ship",
+                $"site placed at ({position.x:F1}, {position.z:F1})");
+            return site;
+        }
+
         // ------------------------------------------------------------------
         // Session, reports, and debug panels
         // ------------------------------------------------------------------
@@ -630,6 +758,16 @@ namespace Abbey.EditorTools
             session.abbeyFlame = abbeyFlame;
             sessionGO.AddComponent<GameOutcomePanel>();
 
+            // The Phase 3 campaign close (P3-14): the spring-ship scenario tracks the
+            // three-part manifest and, at the launch window, sails the ship (latching the
+            // win on GameSession). It reads the ship reconstruction site placed at the
+            // wreck below. Inert unless phase3CampaignEnabled is set in GameSessionConfig.
+            var shipSite = BuildSpringShipSite();
+            var springShipGO = new GameObject("SpringShipScenario");
+            var springShip = springShipGO.AddComponent<SpringShipScenario>();
+            springShip.session = session;
+            springShip.shipSite = shipSite;
+
             // Debug overlays for every hidden system (AGENTS.md): F2 economy, F3
             // buildings, F4 nightmare (F1 DebugOverlay is built in BuildSimulationCore).
             var panelsGO = new GameObject("DebugPanels");
@@ -660,6 +798,30 @@ namespace Abbey.EditorTools
             // Combat + home-defense overlay (F6, right): band multipliers, live
             // monster count, and each destructible home's state + hit-point bar.
             panelsGO.AddComponent<CombatDebugPanel>();
+
+            // Overdrive overlay + trigger (F12, right): the seven emergency levers with
+            // their permitted/affordable state, the levers active tonight, and the booked
+            // + pending nightmare debt. Number keys 1-7 fire a lever while it is open.
+            panelsGO.AddComponent<OverdriveDebugPanel>();
+
+            // Laws overlay + decree surface (L, left of the overdrive stack): each group's
+            // active option, its decree cooldown, today's ration math and the accrued tags
+            // + P3-10 pressures. The F-key row is full (F1-F12), so laws take the mnemonic
+            // key L; Shift+1..5 decrees a group while the panel is open.
+            panelsGO.AddComponent<LawsDebugPanel>();
+
+            // Moral-pressures + abbey-form overlay (M, bottom-left): every pressure with its
+            // trust tier, beast status + household sanity, the current abbey form + modifier
+            // line, and each candidate form's score vs its activation threshold (the "why").
+            panelsGO.AddComponent<PressureDebugPanel>();
+
+            // Island exploration / arrivals / dilemmas overlay (key I, bottom-left): the POI
+            // list + discovered state, live expeditions, the arrival forecast/history + spring
+            // departures, and the pending dilemma. While open: 1-3 resolve the dilemma, O
+            // launches an expedition to the nearest hidden POI, U triggers a storm shipwreck,
+            // Y raises the next dilemma card.
+            panelsGO.AddComponent<IslandDebugPanel>();
+
             // Player-facing HUD + minimap (from main). Display-only; F7/F8 toggle them.
             var hudGO = new GameObject("PlayerHud");
             hudGO.AddComponent<GameHud>();

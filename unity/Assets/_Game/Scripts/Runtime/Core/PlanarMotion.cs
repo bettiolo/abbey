@@ -13,6 +13,30 @@ namespace Abbey.Core
         const float Epsilon = 0.0001f;
         const float CornerEpsilon = 0.05f;
 
+        /// <summary>
+        /// Optional traffic sink (P3-12): set by <see cref="Abbey.Settlement.TrafficGrid"/>
+        /// while it is enabled. <see cref="StepWorn"/> reports the segment it just
+        /// travelled here so villager traffic wears desire paths, with no per-agent
+        /// wiring. Null by default, so any walker that calls the plain <see cref="Step"/>
+        /// (monsters, hound) never wears paths and existing tests are unchanged.
+        /// </summary>
+        public static System.Action<Vector3, Vector3> TrafficReporter;
+
+        /// <summary>
+        /// Optional path-speed provider (P3-12): set by
+        /// <see cref="Abbey.Settlement.DesirePathSystem"/>. <see cref="StepWorn"/>
+        /// multiplies its speed by the value returned for the current position, so a
+        /// worn road grants a speed bonus. Null by default (multiplier 1).
+        /// </summary>
+        public static System.Func<Vector3, float> PathSpeedProvider;
+
+        /// <summary>Clears the P3-12 movement hooks (test isolation).</summary>
+        public static void ResetHooks()
+        {
+            TrafficReporter = null;
+            PathSpeedProvider = null;
+        }
+
         /// <summary>Distance between two points ignoring Y.</summary>
         public static float Distance(Vector3 a, Vector3 b)
         {
@@ -47,6 +71,55 @@ namespace Abbey.Core
             Vector3 next = position + Direction(position, target) * travel;
             next.y = position.y;
             arrived = Distance(next, target) <= arrivalRadius;
+            return next;
+        }
+
+        /// <summary>
+        /// Path-wearing variant of <see cref="Step"/> (P3-12) for walkers that leave
+        /// desire paths (villagers). It scales the speed by the
+        /// <see cref="PathSpeedProvider"/> at the current position (a worn road is
+        /// faster) and reports the travelled segment to the <see cref="TrafficReporter"/>
+        /// so the ground remembers the traffic. With both hooks null it is identical to
+        /// <see cref="Step"/>, so agents keep their behaviour until a grid exists.
+        /// </summary>
+        public static Vector3 StepWorn(
+            Vector3 position, Vector3 target, float speed, float dt,
+            float arrivalRadius, out bool arrived)
+        {
+            float mult = PathSpeedProvider != null
+                ? Mathf.Max(0.01f, PathSpeedProvider(position))
+                : 1f;
+            Vector3 next = Step(position, target, speed * mult, dt, arrivalRadius, out arrived);
+            if (TrafficReporter != null && next != position)
+            {
+                TrafficReporter(position, next);
+            }
+            return next;
+        }
+
+        /// <summary>
+        /// Path-wearing variant of <see cref="StepAroundBuildings"/> that composes
+        /// main's building-footprint routing with P3-12's desire-path wear: it scales
+        /// the speed by the <see cref="PathSpeedProvider"/> at the current position (a
+        /// worn road is faster), routes around active building/construction footprints,
+        /// then reports the segment actually travelled to the
+        /// <see cref="TrafficReporter"/> so worn paths reflect the real routed motion
+        /// (not the straight line through a building). With both hooks null it behaves
+        /// exactly like <see cref="StepAroundBuildings"/>.
+        /// </summary>
+        public static Vector3 StepWornAroundBuildings(
+            Vector3 position, Vector3 target, float speed, float dt,
+            float arrivalRadius, float obstaclePadding, out bool arrived)
+        {
+            float mult = PathSpeedProvider != null
+                ? Mathf.Max(0.01f, PathSpeedProvider(position))
+                : 1f;
+            Vector3 next = StepAroundBuildings(
+                position, target, speed * mult, dt, arrivalRadius, obstaclePadding, out arrived);
+            if (TrafficReporter != null && next != position)
+            {
+                TrafficReporter(position, next);
+            }
             return next;
         }
 

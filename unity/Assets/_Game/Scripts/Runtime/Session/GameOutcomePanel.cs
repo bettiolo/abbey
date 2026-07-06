@@ -80,12 +80,21 @@ namespace Abbey.Session
 
             GUILayout.BeginArea(new Rect(x, y, width, height), GUI.skin.box);
 
-            GUILayout.Label("— The First White Night —", _titleStyle);
+            bool campaign = _summary.Campaign != null
+                            || _summary.Outcome == GameOutcome.ShipSailed
+                            || _summary.Reason == LossReason.WinterCollapse;
+            GUILayout.Label(campaign ? "— The Abbey at World's End —" : "— The First White Night —",
+                _titleStyle);
             GUILayout.Space(10f);
 
             GUILayout.Label(Headline(_summary), _verdictStyle);
             GUILayout.Space(14f);
 
+            if (_summary.Campaign != null)
+            {
+                GUILayout.Label(CampaignBlock(_summary.Campaign), _bodyStyle);
+                GUILayout.Space(8f);
+            }
             GUILayout.Label(SpectrumBlock(_summary), _bodyStyle);
 
             GUILayout.FlexibleSpace();
@@ -95,6 +104,16 @@ namespace Abbey.Session
 
         static string Headline(SessionSummary s)
         {
+            if (s.Outcome == GameOutcome.ShipSailed)
+            {
+                return "The ship sailed on the spring tide. The abbey at world's end has "
+                       + "launched its answer to the sea.";
+            }
+            if (s.Reason == LossReason.WinterCollapse)
+            {
+                return "Winter closed its hand, and the settlement did not live to see the "
+                       + "spring tide. The ship never sailed.";
+            }
             if (s.Outcome == GameOutcome.Win)
             {
                 return "The settlement survived its first White Night.";
@@ -116,6 +135,20 @@ namespace Abbey.Session
                     return "The settlement did not survive the White Night.";
             }
         }
+
+        static string CampaignBlock(CampaignOutcome c)
+        {
+            return
+                $"{c.chapterReached} — year {c.year}.\n" +
+                $"manifest: settlers {Mark(c.settlersReady)} ({c.willingSailors}/{c.settlersRequired})   " +
+                $"provisions {Mark(c.provisionsReady)}   hull {Mark(c.hullReady)}\n" +
+                $"roster: {c.sailedCount} sailed, {c.stayedBehindCount} stayed  " +
+                $"(volunteers {c.volunteeredCount}, departures {c.leftCount})\n" +
+                $"hound: {c.houndPath}   abbey: {c.abbeyForm}   trust: {c.trustTier}\n\n" +
+                c.chronicle;
+        }
+
+        static string Mark(bool ready) => ready ? "✓" : "✗";
 
         static string SpectrumBlock(SessionSummary s)
         {
