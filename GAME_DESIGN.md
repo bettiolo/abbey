@@ -169,10 +169,39 @@ beast reactions, shrine outcomes, nightmare triggers, villager petitions, and ex
 finds. A few useful examples:
 
 - Moon rites: full moon, new moon, blood moon, and White Night change light and beast rules.
-- Offerings: candles, food, salt, blood, relic fragments, carved wood, hair.
+- Offerings: candles, food, salt, blood, relic fragments, carved wood, hair, herbs, roots.
 - Taboos: do not cut the marked tree, do not leave dead unburied, do not ring during a
   tempest, do not chain the hound under a full moon.
 - Covenant sites: wells, stones, groves, cairns, crypt thresholds, shore shrines.
+
+### Foraging and herb-lore
+
+Gathering herbs, roots, and other growing things along the light edge is a deliberate
+part of the daytime fantasy: a forager walks the twilight margin, reads the season, and
+brings back bundles that *mean* something. It is also the first low-risk reason to work the
+Edge band, which teaches distance-from-light before the night charges for it.
+
+**Design guardrail - herbs are covenant ingredients, not medicine.** The recovery clocks are
+protected by design (§18, "the day forgives the body but not the mind"): health already
+resets for free each morning, and sanity is *meant* to be a slow, costly debt paid in the
+Asylum over a full cycle. Herbs must not shortcut either clock - a stockpile that buys minds
+back out of the dark would defuse the horror co-pillar. Instead, herb-lore is a **boost
+resource aimed everywhere except health and sanity recovery**:
+
+- **Offerings and thresholds** - herb/root bundles left at doors or covenant sites lift Abbey
+  sanctity, or slow a threat source's exploitation pressure (§9). Leans on food-at-thresholds
+  (already canon above).
+- **Dampen the un-Asylumed household** - without an Asylum, a broken settler spills dread into
+  the home (§18). A hung herb bundle **softens the spill** for a night - a stopgap that eases
+  the *social* problem without touching the settler's own sanity timer.
+- **Steady the day** - a consumable that shaves dusk panic or steadies one worker through one
+  task, at a real gathering cost. Fits the Candle Line desperation family (§9) in tone.
+- **Beast care** - herbs in the existing heal interaction (pain down, trust up, §5), never a
+  sanity effect - the beast is sanity-immune by design.
+
+Mechanically this stays tag-and-choice first (like the rest of old-rite belief): herbs are a
+renewable resource (§7) plus a small set of offering/steadying uses, not a crafting tree or a
+production chain. Map 2's **Herbalist Hut** (§8) is the natural home for the deeper version.
 
 ## 6. Villagers
 
@@ -198,7 +227,9 @@ visible in the world: salvage is hauled, construction piles grow, lantern routes
 and households turn stockpiles into safety at night.
 
 Phase 3 renewables: grain, meat, wool, tools, herbs, coal (+ sanctity, old faith, and fear
-as pressures).
+as pressures). `herbs` are foraged along the light edge and spent as a covenant/old-rite
+ingredient - offerings, dread-spill dampening, dusk-steadying, beast care - **not** as
+medicine; they never speed health or sanity recovery (foraging and guardrail in §5).
 Map 2: old_wood, green_wood, apples, venison, herbs, resin, sacred_seeds, charcoal -
 renewable but over-usable; extractive vs restorative buildings make the settlement layout
 a moral map. Never Factorio complexity: the economy always feeds the question *"can we keep
