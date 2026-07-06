@@ -17,6 +17,13 @@ Real 3D assets, art-directed like a 2D strategy diorama.
 - 2D UI overlay only.
 - Shader-driven desaturation for night, fear, winter, and nightmare zones.
 - Every asset must remain readable in a grayscale preview — this is a hard validation check.
+- **Seasonal day-mood arc.** The daytime landscape is a shrinking gift (GAME_DESIGN.md §7,
+  Food and hunger): spring/summer read **lush and rich** — saturated greens, flower meadows,
+  berry bushes and forageable growth, a genuinely *happy* bucolic day. Autumn desaturates and
+  thins that abundance (turning colour, bare beds, emptied larder); winter reaches the full
+  desaturated cold above, where the free landscape is gone and only the built settlement
+  carries the eye. The day should visibly *degrade across the seasons*, so winter feels earned
+  rather than merely stated.
 
 ## Shape language
 
