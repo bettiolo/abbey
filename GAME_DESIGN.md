@@ -235,6 +235,55 @@ renewable but over-usable; extractive vs restorative buildings make the settleme
 a moral map. Never Factorio complexity: the economy always feeds the question *"can we keep
 the light alive through winter?"*
 
+### Food and hunger
+
+Food is the daytime provisioning promise - the mirror of fuel. Fuel is the promise you make
+to the *light*; food is the promise you make to the *people*. Both are communal stocks spent
+at a fixed cadence, and both **weaken the night when you underprovide**. Food is deliberately
+*not* a per-villager survival bar ticking in real time - that individual-debt lane belongs to
+sanity (§18) - it is a settlement-level question resolved once a day.
+
+**The dusk meal.** Settlers eat once per day, at the **dusk dinner**, folded into the recall
+ritual (§3) - the bucolic handoff from day-work to night. The `Food` stock is drawn against
+the settlement at that moment (the morning report already reads `FoodConsumed` vs
+`FoodGained`). This keeps eating a *scene* - families at the table as the windows light - not
+a background drain.
+
+**Hunger is a soft tax, until it is chronic.** A hungry settler still works; hunger never
+hard-stops labour the way insanity does (§18). It is a **gradient** - the hungrier the
+settler, the slower and less steady the work and the earlier the dusk panic. The horror
+begins only when hunger persists: settlers who go to **bed hungry night after night** suffer
+**accelerated sanity loss**, and, like an un-Asylumed break (§18), it **spills into the
+household** - a home of hungry sleepers dreads harder and drags its residents down together.
+A single lean day is survivable bucolic hardship; a lean *week* is how the dark gets in
+through the stomach.
+
+**The beast eats from the same table.** Food allocated to the beast speeds its strength and
+**evolution** (§5) - a well-fed hound becomes your dark-band striker faster. But feeding is
+psychological on both sides. *For the beast:* the pattern of feeding shapes temperament and
+which evolution path it walks - generous, steady feeding builds trust and the Guardian / War
+lines; neglect drives hunger, aggression, and the Starved / Broken lines. *For the
+settlement:* meat given to the beast while people go hungry is read as a moral choice (the
+**Beast Share** law, §10) and moves Mercy / Fear / Hunger pressure and Bellkeeper trust
+(§11). Every haunch is either loyalty bought or a family's dinner taken.
+
+**The season is a shrinking gift.** Spring and summer are lush and forgiving: the daytime
+landscape is rich - berry bushes, foraged roots and greens, easy grazing - and settlers are
+genuinely *happy*, with free food to gather before the built economy has to carry anyone
+(this day-lushness is also an art-direction target; see ART_BIBLE). **Autumn** thins the free
+larder and turns work toward **preserving** the surplus into salted and smoked **stores**
+(salt is already an old-rite item, §5) that survive the cold. **Winter** is the test: the
+free resources are gone, and only the economy you built and the stores you banked stand
+between the settlement and famine - while every ration banked for winter or the spring voyage
+(§21) is a ration not eaten tonight. Food is the season's central spend-to-survive-vs-save-
+to-escape squeeze, and **famine** (not routine daily hunger) is where it finally costs bodies
+and seeds Hunger Wights (§9).
+
+**Sources stay shallow and world-visible** (never Factorio, above): salvage crates early,
+forest-edge foraging and berry bushes, a grain / garden plot, hunting for meat and venison,
+coast fishing, and livestock - each hauled and visible, none more than one conversion step
+(the Kitchen Hall, §8) from the pot.
+
 ## 8. Buildings
 
 Phase 2 direction set: Campfire, Storage Pile, Shelter, Woodcutter Hut, Lantern Post,
