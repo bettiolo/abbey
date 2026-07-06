@@ -533,7 +533,7 @@ tasks:
     title: Seasons, laws, moral pressures, hound evolution, consequence nightmares, abbey transformation, dilemmas
     phase: phase-3
     depends_on: [P2-10, GATE-P2]
-    status: in_progress
+    status: done
     assigned_to: orchestrator # parent epic; child tasks P3-01..P3-14 carry the build work
     branch: claude/next-game-phases-rwywit # phase-3 planning/integration branch
     description: >
@@ -813,7 +813,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover per-action cost application, Candle Line mobile light zones enabling night work, Lantern Overburn fuel burn, and deferred nightmare-debt consumption on a later night
       - Validation guide at docs/validation/P3-08.md per docs/validation/README.md
     depends_on: [P3-03, P3-05]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -846,7 +846,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each law group's mechanical effect (food split, night-labour gate, burial tags, hound doctrine, old-rite tags) and law-change event logging
       - Validation guide at docs/validation/P3-09.md per docs/validation/README.md
     depends_on: [P3-04, P3-07, P3-08]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -878,7 +878,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover pressure updates from scripted event sequences, trust-threshold gates, household sanity aggregation, and each abbey transformation state's trigger + modifiers
       - Validation guide at docs/validation/P3-10.md per docs/validation/README.md
     depends_on: [P3-03, P3-09]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -916,7 +916,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover each nightmare's trigger condition, threat-source pressure accumulation from economy actions, source-weighted spawn selection under a fixed seed, and mitigation reducing pressure
       - Validation guide at docs/validation/P3-11.md per docs/validation/README.md
     depends_on: [P3-04, P3-10]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -948,7 +948,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover desire-path emergence from traffic, path speed bonus, lantern fuel debt on lit paths at night, ground-scar stamping at dawn, day fade, and winter snow-cover branch
       - Validation guide at docs/validation/P3-12.md per docs/validation/README.md
     depends_on: [P3-01, P3-02]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -983,7 +983,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover exploration unlocks (incl. new seed slots), refugee arrival + trust-gated staying, shipwreck rescue events with drowned-nightmare risk, warrior recruitment, and each dilemma's choice consequences
       - Validation guide at docs/validation/P3-13.md per docs/validation/README.md
     depends_on: [P3-02, P3-10]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -1020,7 +1020,7 @@ tasks:
       - EditMode/PlayMode tests build their world programmatically and cover chapter transitions, manifest completion accounting, spring-ship launch win, failure when a manifest part is missing at spring, who-sails/who-stays outcome recording, and end-summary accuracy against a scripted event log
       - Validation guide at docs/validation/P3-14.md per docs/validation/README.md
     depends_on: [P3-04, P3-11, P3-13]
-    status: in_review
+    status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
 
@@ -1063,4 +1063,18 @@ gates:
   - id: GATE-P3
     kind: human_review
     question: Does the way you survive visibly change settlement, beast, abbey, nightmares?
-    status: pending
+    status: approved
+    verdict: >
+      Repo owner authorized landing Phase 3 on main (2026-07-06, "Merge", then "Ok" to sign
+      off this gate). As with GATE-P2, this is the go-ahead to integrate and unblock Phase 4
+      planning — NOT a full hands-on playtest sign-off. The local MCP gate
+      (tools/run_unity_mcp_gate.sh) is the compile/test authority on this repo (Unity
+      Personal, no GameCI license secrets — CI never runs Unity), and it has not yet been run
+      against the merged tree.
+    ready: true # all 14 Phase 3 tasks (P3-01..P3-14) merged to main 2026-07-06 via PR #1 and #2
+    evidence: >
+      P3-01..P3-14 merged to main; each ships docs/validation/P3-XX.md with technical + visual
+      checks for an MCP-driven editor. ./tools/check_all.sh green (design + Blender asset
+      validation; Unity steps SKIP headlessly). Expected local gate totals ~354 EditMode /
+      69 PlayMode. NOTE: no local Unity compiler in the agent container — run the MCP gate on
+      the Mac to confirm the merged tree compiles before Phase 4 builds on it.
