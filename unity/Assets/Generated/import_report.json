@@ -1,7 +1,7 @@
 {
-    "generatedAt": "2026-07-05T13:18:09.8226490Z",
-    "totalAssets": 38,
-    "passed": 38,
+    "generatedAt": "2026-07-05T18:08:35.4817830Z",
+    "totalAssets": 43,
+    "passed": 43,
     "failed": 0,
     "message": "",
     "results": [
@@ -54,6 +54,14 @@
             "message": "ok (0 anchor(s) present)"
         },
         {
+            "id": "asylum_corner_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
             "id": "bell_tower_ruined",
             "imported": true,
             "passed": true,
@@ -100,6 +108,14 @@
             "anchorsChecked": 2,
             "missingAnchors": [],
             "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "charcoal_kiln_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
         },
         {
             "id": "dirt_road_segment",
@@ -166,14 +182,6 @@
             "message": "ok (1 anchor(s) present)"
         },
         {
-            "id": "infirmary_corner_t1",
-            "imported": true,
-            "passed": true,
-            "anchorsChecked": 2,
-            "missingAnchors": [],
-            "message": "ok (2 anchor(s) present)"
-        },
-        {
             "id": "lantern_moth_lowpoly",
             "imported": true,
             "passed": true,
@@ -191,6 +199,14 @@
         },
         {
             "id": "pale_hound_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "pasture_t1",
             "imported": true,
             "passed": true,
             "anchorsChecked": 1,
@@ -270,6 +286,14 @@
             "message": "ok (4 anchor(s) present)"
         },
         {
+            "id": "smithy_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 1,
+            "missingAnchors": [],
+            "message": "ok (1 anchor(s) present)"
+        },
+        {
             "id": "storage_pile_t1",
             "imported": true,
             "passed": true,
@@ -292,6 +316,22 @@
             "anchorsChecked": 1,
             "missingAnchors": [],
             "message": "ok (1 anchor(s) present)"
+        },
+        {
+            "id": "warrior_lodge_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
+        },
+        {
+            "id": "watchtower_t1",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 2,
+            "missingAnchors": [],
+            "message": "ok (2 anchor(s) present)"
         },
         {
             "id": "well_t1",

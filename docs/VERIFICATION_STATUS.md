@@ -8,30 +8,32 @@ secrets.**
 
 ## Current verified path
 
-Runtime-affecting validation baseline: commit `63df7e2` was verified on 2026-07-05
-using macOS with Unity `6000.5.2f1` through MCP for Unity. Later commits such as
-`94d4e3e` and `815671f` only update validation/support docs and do not change Unity
-runtime code, tests, assets, editor tools, or workflows. Do not bump this section only
-to record another docs-only validation pass; update it when runtime/tooling/test inputs
-or validation evidence change.
+Runtime-affecting validation baseline: current `main` commit `a4e99a6` was verified
+on 2026-07-06 using macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline
+covers Phase 3 tasks `P3-01` through `P3-07`, the building-footprint movement update,
+and the Unity generated imports for the Phase 3 building assets. Do not bump this
+section only to record another docs-only validation pass; update it when runtime/tooling,
+test inputs, generated Unity imports, or validation evidence change.
 
 - `tools/restart_unity_mcp.sh` starts the pinned Unity editor and MCP bridge.
 - `tools/run_unity_mcp_gate.sh --no-restart` runs the Unity gate, EditMode tests,
   PlayMode tests, and a final console check through MCP.
 - Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-05T14:09:44Z`)
+    `2026-07-06T08:15:34Z`)
   - Scene build: passed
   - Generated asset import validation: passed
-  - EditMode tests: 180/180 passed
-  - PlayMode tests: 39/39 passed
+  - EditMode tests: 269/269 passed
+  - PlayMode tests: 59/59 passed
   - Console errors after the Unity gate: 0
   - Canonical screenshots written to `unity/Build/screenshots/`
 - `./tools/check_all.sh` result on the same runtime tree: OK
   - design validation: 7/7 passed
-  - asset validation: 258 passed, 8 skipped
+  - asset validation: 293 passed, 8 skipped
   - Blender changed-asset verification: passed, no changed asset specs or builders
   - Unity batch steps: skipped because the editor was open; covered by the MCP gate above
+  - Verified tracker impact: `P3-01` through `P3-07` are marked `done`;
+    `P3-08` through `P3-14` remain unvalidated/todo.
 
 Use this command when the editor/MCP bridge is not already running:
 
@@ -60,11 +62,10 @@ The workflow is kept (rather than deleted) so that the door stays open: if licen
 changes — GameCI does document a manual-activation path that can produce a `.ulf` for
 Personal licenses, should we ever want to try it — adding the three secrets flips the job
 on with no other changes.
-Latest observed GitHub "Unity tests" workflow was for runtime commit `63df7e2`:
-[#28743459269](https://github.com/bettiolo/abbey/actions/runs/28743459269) →
+Latest observed GitHub "Unity tests" workflow on `main` was for commit `a4e99a6`:
+[#28750309715](https://github.com/bettiolo/abbey/actions/runs/28750309715) →
 `license-check` = success, `Unity … tests` = **skipped**. The "Blender assets" workflow,
-by contrast, genuinely runs and passes when triggered. No GitHub Actions run was created
-for docs-only validation-record commits `94d4e3e` or `815671f`.
+by contrast, genuinely runs and passes when triggered.
 
 ## What this means
 
@@ -78,8 +79,9 @@ for docs-only validation-record commits `94d4e3e` or `815671f`.
 - `./tools/check_all.sh` still skips Unity steps while the Unity editor is open because
   batchmode cannot take the project lock. In that situation, run
   `tools/run_unity_mcp_gate.sh --no-restart` for the Unity side.
-- The Phase 2 runtime is no longer "authored but unverified"; it is **locally verified
-  through MCP**. CI verification is out of scope.
+- The Phase 2 runtime and merged Phase 3 `P3-01` through `P3-07` runtime are no longer
+  "authored but unverified"; they are **locally verified through MCP**. CI verification
+  is out of scope.
 
 ## How to actually run / verify it
 

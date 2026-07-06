@@ -51,9 +51,10 @@ namespace Abbey.Nightmares
             {
                 return; // a world with no light has nothing to dread-line toward
             }
-            Vector3 next = PlanarMotion.Step(
+            Vector3 next = PlanarMotion.StepAroundBuildings(
                 transform.position, beacon.transform.position,
-                cfg.drownedSailorMoveSpeed, dt, cfg.arrivalRadius, out _);
+                cfg.drownedSailorMoveSpeed, dt, cfg.arrivalRadius,
+                cfg.movementObstaclePadding, out _);
             TryMoveTo(next, cfg);
         }
 
@@ -108,9 +109,11 @@ namespace Abbey.Nightmares
                 GameEventLog.Append("nightmare",
                     $"sacred_repel name={name} light={repelling.name}");
             }
-            transform.position += PlanarMotion.Direction(
-                                      repelling.transform.position, transform.position)
-                                  * cfg.drownedSailorMoveSpeed * dt;
+            transform.position = PlanarMotion.MoveAroundBuildings(
+                transform.position,
+                PlanarMotion.Direction(repelling.transform.position, transform.position)
+                * cfg.drownedSailorMoveSpeed * dt,
+                cfg.movementObstaclePadding);
             return true;
         }
 

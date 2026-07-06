@@ -370,9 +370,9 @@ namespace Abbey.Hero
             }
             else if (_moveTarget.HasValue)
             {
-                transform.position = PlanarMotion.Step(
+                transform.position = PlanarMotion.StepAroundBuildings(
                     transform.position, _moveTarget.Value, cfg.bellkeeperMoveSpeed, dt,
-                    cfg.arrivalRadius, out bool arrived);
+                    cfg.arrivalRadius, cfg.movementObstaclePadding, out bool arrived);
                 if (arrived)
                 {
                     _moveTarget = null;
@@ -413,7 +413,8 @@ namespace Abbey.Hero
             float speed = cfg.bellkeeperMoveSpeed *
                           (sprint ? cfg.bellkeeperSprintMultiplier : 1f);
             Vector3 delta = (right * x + forward * z).normalized * speed * dt;
-            transform.position += delta;
+            transform.position = PlanarMotion.MoveAroundBuildings(
+                transform.position, delta, cfg.movementObstaclePadding);
         }
     }
 }

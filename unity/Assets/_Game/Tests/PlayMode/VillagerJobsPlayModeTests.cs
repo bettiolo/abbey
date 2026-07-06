@@ -58,7 +58,7 @@ namespace Abbey.Tests.PlayMode
             }
             _spawned.Clear();
             foreach (var building in Object.FindObjectsByType<Building>(
-                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+                         FindObjectsInactive.Include))
             {
                 Object.DestroyImmediate(building.gameObject); // spawned by Construct
             }
@@ -267,12 +267,15 @@ namespace Abbey.Tests.PlayMode
 
             float maxDistanceFromStorage = 0f;
             bool sawVisibleHaul = false;
+            bool enteredSiteFootprint = false;
             for (int i = 0; i < 3000 && Building.Active.Count == 0; i++)
             {
                 villager.Tick(Dt);
                 agent.Tick(Dt);
                 maxDistanceFromStorage = Mathf.Max(maxDistanceFromStorage,
                     PlanarMotion.Distance(villager.transform.position, Vector3.zero));
+                enteredSiteFootprint |= PlanarMotion.IsInsideBuildingFootprint(
+                    villager.transform.position, proto.movementObstaclePadding);
                 sawVisibleHaul |= agent.CarriedPropInstance != null
                                   && agent.CarriedPropInstance.activeInHierarchy;
                 if (i % 25 == 0)
@@ -286,8 +289,11 @@ namespace Abbey.Tests.PlayMode
             Assert.AreEqual("small_hut", Building.Active[0].Id);
             Assert.AreEqual(4, ResourceLedger.Get(ResourceType.Wood),
                 "exactly the 6-wood cost was consumed, paid at delivery time");
-            Assert.Greater(maxDistanceFromStorage, 5f,
-                "the builder visibly travelled to the site");
+            Assert.Greater(maxDistanceFromStorage,
+                site.Footprint.yMin - proto.movementObstaclePadding - proto.arrivalRadius - 0.05f,
+                "the builder visibly travelled to the reachable site edge");
+            Assert.IsFalse(enteredSiteFootprint,
+                "the builder must not walk through the construction footprint");
             Assert.IsTrue(sawVisibleHaul, "the haul must be visible via the carried prop");
             Assert.IsTrue(LogContains("job", "delivered wood x4 -> small_hut"));
             Assert.IsTrue(LogContains("job", "delivered wood x2 -> small_hut"));
