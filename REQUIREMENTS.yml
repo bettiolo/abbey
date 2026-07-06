@@ -816,6 +816,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-09
     title: Laws and decrees
@@ -849,6 +850,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-10
     title: Moral pressures, household sanity and abbey transformation
@@ -881,6 +883,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-11
     title: Consequence nightmares and threat-source pressure
@@ -919,6 +922,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-12
     title: Desire paths and ground scars
@@ -951,6 +955,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-13
     title: Island exploration, arrivals and dilemmas
@@ -986,6 +991,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   - id: P3-14
     title: Spring-ship win, four chapters and end summary
@@ -1023,6 +1029,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: claude/next-game-phases-rwywit
+    validated_commit: 86ad1d3
 
   # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
   - id: P4-EPIC
@@ -1069,12 +1076,13 @@ gates:
       off this gate). As with GATE-P2, this is the go-ahead to integrate and unblock Phase 4
       planning — NOT a full hands-on playtest sign-off. The local MCP gate
       (tools/run_unity_mcp_gate.sh) is the compile/test authority on this repo (Unity
-      Personal, no GameCI license secrets — CI never runs Unity), and it has not yet been run
-      against the merged tree.
+      Personal, no GameCI license secrets — CI never runs Unity), and the merged Phase 3
+      runtime has now passed that gate at validated commit 86ad1d3.
     ready: true # all 14 Phase 3 tasks (P3-01..P3-14) merged to main 2026-07-06 via PR #1 and #2
     evidence: >
       P3-01..P3-14 merged to main; each ships docs/validation/P3-XX.md with technical + visual
-      checks for an MCP-driven editor. ./tools/check_all.sh green (design + Blender asset
-      validation; Unity steps SKIP headlessly). Expected local gate totals ~354 EditMode /
-      69 PlayMode. NOTE: no local Unity compiler in the agent container — run the MCP gate on
-      the Mac to confirm the merged tree compiles before Phase 4 builds on it.
+      checks for an MCP-driven editor. Validated on macOS Unity 6000.5.2f1 through MCP at
+      commit 86ad1d3: Unity gate/import/screenshots passed, EditMode 373/373, PlayMode 69/69,
+      console errors 0. ./tools/check_all.sh also passed (design 7/7, asset validation
+      328 passed / 8 skipped; Unity batch steps skipped because the editor was open and
+      covered by the MCP gate).

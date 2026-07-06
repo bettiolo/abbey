@@ -6,6 +6,18 @@ Every Phase 3 task ships a validation guide in this directory, named after the t
 code on this repo (see [VERIFICATION_STATUS.md](../VERIFICATION_STATUS.md)); the local
 MCP gate is the compile/test authority.
 
+## Latest merged-tree validation
+
+Phase 3 `P3-01` through `P3-14` are locally verified at commit `86ad1d3`
+(2026-07-06, Unity `6000.5.2f1`, MCP for Unity):
+
+- `UNITY_MCP_UV_OFFLINE=1 MCP_CLI_TIMEOUT=300 TEST_POLL_TIMEOUT=180 tools/run_unity_mcp_gate.sh --no-restart`
+  passed: Unity gate/import/screenshots, EditMode 373/373, PlayMode 69/69,
+  console errors 0.
+- `./tools/check_all.sh` passed: design 7/7, asset validation 328 passed /
+  8 skipped, Blender changed-asset verify passed; Unity batch steps skipped
+  because the editor was open and are covered by the MCP gate.
+
 Each guide must let a fresh session with Unity-MCP access verify the task with no other
 context. Required sections:
 
