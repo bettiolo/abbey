@@ -1,0 +1,156 @@
+{
+  "id": "stag_beneath_abbey_lowpoly",
+  "generated_at": "2026-07-09T23:08:30.535196+00:00",
+  "spec": {
+    "id": "stag_beneath_abbey_lowpoly",
+    "type": "beast",
+    "theme": "beast",
+    "footprint": {
+      "width": 3.0,
+      "depth": 1.5,
+      "height": 3.8
+    },
+    "style": {
+      "silhouette": "a tall wounded forest stag that watches rather than obeys: narrow dark body on implausibly long legs, upright listening neck, high head and a wide pale antler crown branching like winter trees, one old bone-pale flank wound and two restrained golden eyes",
+      "materials": [
+        "mat_dark_wood",
+        "mat_bone",
+        "mat_sacred_gold"
+      ]
+    },
+    "required_parts": [
+      "torso",
+      "stilt_legs",
+      "neck",
+      "head",
+      "antler_crown",
+      "old_wound",
+      "golden_eyes"
+    ],
+    "variants": [
+      "day",
+      "night",
+      "winter"
+    ],
+    "limits": {
+      "max_triangles": 1500,
+      "max_materials": 3
+    },
+    "anchors": [
+      {
+        "name": "offering",
+        "type": "interaction"
+      },
+      {
+        "name": "wound",
+        "type": "interaction"
+      },
+      {
+        "name": "gaze",
+        "type": "look"
+      }
+    ],
+    "pivot": "center_bottom"
+  },
+  "dimensions": {
+    "width": 2.43758,
+    "depth": 1.31275,
+    "height": 3.80081,
+    "min": [
+      -1.21879,
+      -0.65638,
+      0.0
+    ],
+    "max": [
+      1.21879,
+      0.65638,
+      3.80081
+    ]
+  },
+  "triangle_count": 372,
+  "material_count": 3,
+  "materials": [
+    "mat_bone",
+    "mat_dark_wood",
+    "mat_sacred_gold"
+  ],
+  "anchors": [
+    {
+      "name": "wound",
+      "type": "interaction"
+    },
+    {
+      "name": "offering",
+      "type": "interaction"
+    },
+    {
+      "name": "gaze",
+      "type": "look"
+    }
+  ],
+  "files": {
+    "glb": "blender/generated/glb/stag_beneath_abbey_lowpoly.glb",
+    "blend": "blender/generated/blend/stag_beneath_abbey_lowpoly.blend",
+    "previews": {
+      "day": "blender/generated/previews/stag_beneath_abbey_lowpoly_preview_day.png",
+      "night": "blender/generated/previews/stag_beneath_abbey_lowpoly_preview_night.png",
+      "winter": "blender/generated/previews/stag_beneath_abbey_lowpoly_preview_winter.png",
+      "grayscale": "blender/generated/previews/stag_beneath_abbey_lowpoly_preview_grayscale.png"
+    }
+  },
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "glb_exists",
+        "passed": true,
+        "detail": "blender/generated/glb/stag_beneath_abbey_lowpoly.glb (53100 bytes)"
+      },
+      {
+        "name": "blend_saved",
+        "passed": true,
+        "detail": "blender/generated/blend/stag_beneath_abbey_lowpoly.blend"
+      },
+      {
+        "name": "previews_exist",
+        "passed": true,
+        "detail": "all 4 previews rendered"
+      },
+      {
+        "name": "pivot_center_bottom",
+        "passed": true,
+        "detail": "minZ=0.0000 centerXY=(0.0000, 0.0000)"
+      },
+      {
+        "name": "footprint_fits",
+        "passed": true,
+        "detail": "asset 2.438x1.313x3.801 vs footprint 3.0x1.5x3.8"
+      },
+      {
+        "name": "triangle_budget",
+        "passed": true,
+        "detail": "372/1500 triangles"
+      },
+      {
+        "name": "material_budget",
+        "passed": true,
+        "detail": "3/3 materials: ['mat_bone', 'mat_dark_wood', 'mat_sacred_gold']"
+      },
+      {
+        "name": "materials_in_library",
+        "passed": true,
+        "detail": "all in closed library"
+      },
+      {
+        "name": "anchors_present",
+        "passed": true,
+        "detail": "required=['offering', 'wound', 'gaze'] present=['gaze', 'offering', 'wound']"
+      },
+      {
+        "name": "collision_proxy",
+        "passed": true,
+        "detail": "stag_beneath_abbey_lowpoly_collision present"
+      }
+    ]
+  }
+}

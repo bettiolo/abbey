@@ -396,6 +396,150 @@ namespace Abbey.Island
                         },
                     },
                 },
+                // Map 2 — The Old Tree: restraint, careful harvest, or a clean cut.
+                new DilemmaCard
+                {
+                    id = "old_tree",
+                    promptKey = "dilemma.old_tree.prompt",
+                    options = new List<DilemmaOption>
+                    {
+                        new DilemmaOption
+                        {
+                            id = "mark_sacred", labelKey = "dilemma.old_tree.mark_sacred",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Tag("forest_restraint"), Tag("grove_shrine"),
+                                Pressure(PressureId.OldFaith, 0.05f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "take_deadfall", labelKey = "dilemma.old_tree.take_deadfall",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.GreenWood, 4), Tag("replanting"),
+                                Pressure(PressureId.Reason, 0.03f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "fell_it", labelKey = "dilemma.old_tree.fell_it",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.OldWood, 8), Tag("old_growth_cutting"),
+                                Pressure(PressureId.Fear, 0.04f),
+                            },
+                        },
+                    },
+                },
+                // Map 2 — The Starving Deer: share, hunt, or guard the herd.
+                new DilemmaCard
+                {
+                    id = "starving_deer",
+                    promptKey = "dilemma.starving_deer.prompt",
+                    options = new List<DilemmaOption>
+                    {
+                        new DilemmaOption
+                        {
+                            id = "share_apples", labelKey = "dilemma.starving_deer.share_apples",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.Apples, -3), Tag("deer_protected"),
+                                Pressure(PressureId.Mercy, 0.06f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "hunt_herd", labelKey = "dilemma.starving_deer.hunt_herd",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.Venison, 6), Tag("overhunting"),
+                                Pressure(PressureId.Hunger, -0.04f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "close_blind", labelKey = "dilemma.starving_deer.close_blind",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Tag("deer_protected"), Tag("forest_restraint"),
+                                Pressure(PressureId.Trust, 0.03f),
+                            },
+                        },
+                    },
+                },
+                // Map 2 — Lost Woodcutters: rescue, compel, or abandon.
+                new DilemmaCard
+                {
+                    id = "lost_woodcutters",
+                    promptKey = "dilemma.lost_woodcutters.prompt",
+                    options = new List<DilemmaOption>
+                    {
+                        new DilemmaOption
+                        {
+                            id = "search_with_bell", labelKey = "dilemma.lost_woodcutters.search",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Tag("forest_restraint"), Pressure(PressureId.Mercy, 0.05f),
+                                Pressure(PressureId.Trust, 0.04f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "force_return", labelKey = "dilemma.lost_woodcutters.force",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.OldWood, 5), Tag("forced_forest_labour"),
+                                Pressure(PressureId.Fear, 0.06f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "leave_markers", labelKey = "dilemma.lost_woodcutters.markers",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.Resin, -1), Tag("follow_deer_path"),
+                                Pressure(PressureId.Reason, 0.04f),
+                            },
+                        },
+                    },
+                },
+                // Map 2 — The Charcoal Camp: close it, exploit it, or reconsecrate it.
+                new DilemmaCard
+                {
+                    id = "charcoal_camp",
+                    promptKey = "dilemma.charcoal_camp.prompt",
+                    options = new List<DilemmaOption>
+                    {
+                        new DilemmaOption
+                        {
+                            id = "shut_kilns", labelKey = "dilemma.charcoal_camp.shut",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Tag("replanting"), Tag("forest_restraint"),
+                                Pressure(PressureId.Sanctity, 0.04f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "burn_all_night", labelKey = "dilemma.charcoal_camp.burn",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.Charcoal, 8), Tag("night_burning"),
+                                Pressure(PressureId.Reason, 0.04f),
+                            },
+                        },
+                        new DilemmaOption
+                        {
+                            id = "consecrate_ashes", labelKey = "dilemma.charcoal_camp.consecrate",
+                            effects = new List<DilemmaEffect>
+                            {
+                                Resource(ResourceType.Herbs, -2), Tag("grove_shrine"),
+                                Pressure(PressureId.OldFaith, 0.06f),
+                            },
+                        },
+                    },
+                },
             };
         }
 

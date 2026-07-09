@@ -1,5 +1,6 @@
 using Abbey.Core;
 using Abbey.Light;
+using Abbey.Map2;
 using Abbey.Villagers;
 using UnityEngine;
 
@@ -157,7 +158,10 @@ namespace Abbey.Nightmares
                 {
                     continue;
                 }
-                v.FollowFalseGuidance(target, cfg.falseGuidanceFear);
+                float carryoverFear = CampaignCarryoverSystem.Instance != null
+                    ? CampaignCarryoverSystem.Instance.FalseGuidanceFearMultiplier
+                    : 1f;
+                v.FollowFalseGuidance(target, cfg.falseGuidanceFear * carryoverFear);
                 affected++;
             }
 

@@ -1,7 +1,7 @@
 {
-    "generatedAt": "2026-07-06T08:52:00.0351040Z",
-    "totalAssets": 48,
-    "passed": 48,
+    "generatedAt": "2026-07-09T23:20:29.3500730Z",
+    "totalAssets": 49,
+    "passed": 49,
     "failed": 0,
     "message": "",
     "results": [
@@ -332,6 +332,14 @@
             "anchorsChecked": 4,
             "missingAnchors": [],
             "message": "ok (4 anchor(s) present)"
+        },
+        {
+            "id": "stag_beneath_abbey_lowpoly",
+            "imported": true,
+            "passed": true,
+            "anchorsChecked": 3,
+            "missingAnchors": [],
+            "message": "ok (3 anchor(s) present)"
         },
         {
             "id": "storage_pile_t1",

@@ -93,3 +93,6 @@ InitTestScene*.unity*
 # Repo-generated prototype scene. Source of truth is PrototypeSceneBuilder.cs.
 /Assets/_Game/Scenes/Prototype01.unity
 /Assets/_Game/Scenes/Prototype01.unity.meta
+/Assets/_Game/Scenes/Map2Prototype.unity
+/Assets/_Game/Scenes/Map2Prototype.unity.meta
+/Assets/_Game/Scenes/Prototype01.unity.meta

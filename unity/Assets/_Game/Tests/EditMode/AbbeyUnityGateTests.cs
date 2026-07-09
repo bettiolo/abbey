@@ -15,6 +15,7 @@ namespace Abbey.Tests.EditMode
             Assert.AreEqual("2026-07-05T00:00:00.0000000Z", report.generatedAt);
             Assert.AreEqual("6000.5.2f1", report.unityVersion);
             Assert.IsFalse(report.sceneBuilt);
+            Assert.IsFalse(report.map2SceneBuilt);
             Assert.AreEqual("not_run", report.assetImportValidation);
             Assert.IsNotNull(report.canonicalScreenshots);
             Assert.IsNotNull(report.errors);
@@ -26,6 +27,7 @@ namespace Abbey.Tests.EditMode
         {
             var report = AbbeyUnityGate.CreateReport("now", "unity");
             report.sceneBuilt = true;
+            report.map2SceneBuilt = true;
             report.assetImportValidation = "pass";
             report.canonicalScreenshots = new List<string>
             {
@@ -33,6 +35,10 @@ namespace Abbey.Tests.EditMode
                 "dusk_recall.png",
                 "night_attack.png",
                 "morning_after.png",
+            };
+            report.map2Screenshots = new List<string>
+            {
+                "map2_grove_day.png", "map2_false_bell_night.png",
             };
 
             AbbeyUnityGate.FinalizeReport(report);
@@ -45,6 +51,7 @@ namespace Abbey.Tests.EditMode
         {
             var report = AbbeyUnityGate.CreateReport("now", "unity");
             report.sceneBuilt = true;
+            report.map2SceneBuilt = true;
             report.assetImportValidation = "pass";
             report.canonicalScreenshots = new List<string>
             {
@@ -52,6 +59,10 @@ namespace Abbey.Tests.EditMode
                 "dusk_recall.png",
                 "night_attack.png",
                 "morning_after.png",
+            };
+            report.map2Screenshots = new List<string>
+            {
+                "map2_grove_day.png", "map2_false_bell_night.png",
             };
 
             AbbeyUnityGate.AddError(report, "compileAndConsoleCheck: compiler error");

@@ -142,6 +142,10 @@ multiplayer, art polish.
 
 ## Phase 4 - Second map, second beast (replayability proof)
 
+Implementation status (2026-07-10): the complete placeholder-art Phase 4 candidate is
+implemented and locally MCP-validated. `GATE-P4` remains pending human play/replay review;
+do not advance into the parked maps below without that verdict.
+
 Question: *Can the game generate a new moral survival story with a new beast?*
 
 - **Prototype01 / Map 1 systems-test map** now carries the Phase 4 forest resource,

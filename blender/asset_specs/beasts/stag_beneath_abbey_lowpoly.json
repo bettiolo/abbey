@@ -1,0 +1,19 @@
+{
+  "id": "stag_beneath_abbey_lowpoly",
+  "type": "beast",
+  "theme": "beast",
+  "footprint": { "width": 3.0, "depth": 1.5, "height": 3.8 },
+  "style": {
+    "silhouette": "a tall wounded forest stag that watches rather than obeys: narrow dark body on implausibly long legs, upright listening neck, high head and a wide pale antler crown branching like winter trees, one old bone-pale flank wound and two restrained golden eyes",
+    "materials": ["mat_dark_wood", "mat_bone", "mat_sacred_gold"]
+  },
+  "required_parts": ["torso", "stilt_legs", "neck", "head", "antler_crown", "old_wound", "golden_eyes"],
+  "variants": ["day", "night", "winter"],
+  "limits": { "max_triangles": 1500, "max_materials": 3 },
+  "anchors": [
+    { "name": "offering", "type": "interaction" },
+    { "name": "wound", "type": "interaction" },
+    { "name": "gaze", "type": "look" }
+  ],
+  "pivot": "center_bottom"
+}

@@ -65,9 +65,22 @@ namespace Abbey.EditorTools
                 }
             }
 
+            string map2Absolute = Path.GetFullPath(Path.Combine(
+                Application.dataPath, "..", Map2SceneBuilder.ScenePath));
+            if (!File.Exists(map2Absolute))
+            {
+                Debug.Log("[Abbey] Map2Prototype.unity missing — bootstrapping it first.");
+                Map2SceneBuilder.BuildMap2Scene();
+                if (!File.Exists(map2Absolute))
+                {
+                    Debug.LogError($"Map 2 bootstrap did not produce {Map2SceneBuilder.ScenePath}.");
+                    return false;
+                }
+            }
+
             var options = new BuildPlayerOptions
             {
-                scenes = new[] { PrototypeSceneBuilder.ScenePath },
+                scenes = new[] { PrototypeSceneBuilder.ScenePath, Map2SceneBuilder.ScenePath },
                 locationPathName = MacOutputPath, // relative to the project root (unity/)
                 target = BuildTarget.StandaloneOSX,
                 options = BuildOptions.None,

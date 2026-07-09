@@ -4,6 +4,7 @@ using Abbey.Beast;
 using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Island;
+using Abbey.Map2;
 using Abbey.Morale;
 using Abbey.Reports;
 using Abbey.World;
@@ -40,7 +41,7 @@ namespace Abbey.Session
         public const string FileName = "campaign_outcome.json";
 
         [Tooltip("Serialized schema version so Phase 4 can migrate.")]
-        public int schemaVersion = 1;
+        public int schemaVersion = 2;
 
         // ---- Result --------------------------------------------------------
         public string result = CampaignResult.InProgress.ToString();
@@ -75,6 +76,9 @@ namespace Abbey.Session
         public string[] lawsEnacted = Array.Empty<string>();
         public int villagerDeaths;
         public int poisDiscovered;
+
+        // ---- Phase 4 carryover -------------------------------------------
+        public string bellkeeperTrait = BellkeeperTrait.None.ToString();
 
         // ---- Chronicle -----------------------------------------------------
         [TextArea] public string chronicle = string.Empty;
@@ -153,6 +157,7 @@ namespace Abbey.Session
             outcome.lawsEnacted = summary.LawsEnacted.ToArray();
             outcome.villagerDeaths = summary.Deaths;
             outcome.chronicle = EndSummary.Compose(summary);
+            outcome.bellkeeperTrait = CampaignCarryoverSystem.DeriveTrait(outcome).ToString();
             return outcome;
         }
 
@@ -165,7 +170,15 @@ namespace Abbey.Session
         /// <summary>Parses a CampaignOutcome from JSON (round-trips <see cref="ToJson"/>).</summary>
         public static CampaignOutcome FromJson(string json)
         {
-            return string.IsNullOrEmpty(json) ? null : JsonUtility.FromJson<CampaignOutcome>(json);
+            if (string.IsNullOrEmpty(json)) return null;
+            var outcome = JsonUtility.FromJson<CampaignOutcome>(json);
+            if (outcome == null) return null;
+            if (outcome.schemaVersion < 2 || string.IsNullOrEmpty(outcome.bellkeeperTrait))
+            {
+                outcome.bellkeeperTrait = CampaignCarryoverSystem.DeriveTrait(outcome).ToString();
+                outcome.schemaVersion = 2;
+            }
+            return outcome;
         }
 
         /// <summary>Default carryover path under the persistent data directory.</summary>

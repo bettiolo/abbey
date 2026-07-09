@@ -294,6 +294,8 @@ namespace Abbey.EditorTools
             }
         }
 
+        public static void ApplyLightingForPhase(DayPhase phase) => ApplyPhaseLighting(phase);
+
         static void SetSun(UnityEngine.Light sun, float pitch, float intensity, Color color)
         {
             if (sun == null)
@@ -343,5 +345,8 @@ namespace Abbey.EditorTools
                 UnityEngine.Object.DestroyImmediate(rt);
             }
         }
+
+        public static void CaptureCameraTo(Camera camera, string dir, string fileName) =>
+            CaptureTo(camera, dir, fileName);
     }
 }

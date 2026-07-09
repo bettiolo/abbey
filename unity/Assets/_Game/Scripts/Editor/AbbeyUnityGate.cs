@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using Abbey.Core;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -22,8 +21,6 @@ namespace Abbey.EditorTools
         const string Pass = "pass";
         const string Fail = "fail";
         const string NotRun = "not_run";
-        const int EditorReadyTimeoutSeconds = 60;
-
         static string ProjectRoot => Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
         static string AbsoluteReportPath => Path.Combine(ProjectRoot, ReportPath);
 
@@ -107,12 +104,15 @@ namespace Abbey.EditorTools
 
                 RunStep(report, "compileAndConsoleCheck", () =>
                 {
-                    AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-                    if (!WaitForEditorReady(EditorReadyTimeoutSeconds))
-                    {
-                        throw new TimeoutException(
-                            $"Unity stayed busy compiling/updating for {EditorReadyTimeoutSeconds}s.");
-                    }
+                    // The MCP caller waits for a ready editor before invoking this menu.
+                    // Forcing a script Refresh here can request a domain reload, while
+                    // synchronously spinning on the editor's main thread prevents that
+                    // reload from ever completing. Generated-asset sync above already uses
+                    // synchronous imports, so this step only asserts readiness; compiler
+                    // diagnostics are collected by the log/console checks below.
+                    if (EditorApplication.isCompiling)
+                        throw new InvalidOperationException(
+                            "Unity gate was invoked while the editor was compiling; retry when ready.");
                 });
 
                 if (report.sceneBuilt)
@@ -130,6 +130,32 @@ namespace Abbey.EditorTools
                 else
                 {
                     AddError(report, "canonicalScreenshots skipped because scene build failed.");
+                }
+
+                RunStep(report, "map2Scene", () =>
+                {
+                    Map2SceneBuilder.BuildMap2Scene();
+                    report.map2SceneBuilt = ValidateMap2Scene();
+                    if (!report.map2SceneBuilt)
+                    {
+                        throw new InvalidOperationException(
+                            "Map 2 scene did not contain its Stag, scenario, and generated landmarks.");
+                    }
+                });
+
+                if (report.map2SceneBuilt)
+                {
+                    RunStep(report, "map2Screenshots", () =>
+                    {
+                        report.map2Screenshots =
+                            new List<string>(Map2ScreenshotCapture.CaptureForGate());
+                        if (report.map2Screenshots.Count < Map2ScreenshotCapture.ShotNames.Length)
+                            throw new InvalidOperationException("Map 2 proof screenshots were not captured.");
+                    });
+                }
+                else
+                {
+                    AddError(report, "map2Screenshots skipped because Map 2 scene build failed.");
                 }
             }
             finally
@@ -175,6 +201,7 @@ namespace Abbey.EditorTools
                 unityVersion = unityVersion,
                 assetImportValidation = NotRun,
                 canonicalScreenshots = new List<string>(),
+                map2Screenshots = new List<string>(),
                 errors = new List<string>(),
             };
         }
@@ -199,10 +226,13 @@ namespace Abbey.EditorTools
             }
 
             report.passed = report.sceneBuilt &&
+                            report.map2SceneBuilt &&
                             report.assetImportValidation == Pass &&
                             report.canonicalScreenshots != null &&
                             report.canonicalScreenshots.Count >=
                             ScreenshotCapture.CanonicalShotNames.Length &&
+                            report.map2Screenshots != null &&
+                            report.map2Screenshots.Count >= Map2ScreenshotCapture.ShotNames.Length &&
                             report.errors != null &&
                             report.errors.Count == 0;
         }
@@ -234,17 +264,24 @@ namespace Abbey.EditorTools
                    UnityEngine.Object.FindFirstObjectByType<Abbey.Nightmares.FalseGuidanceSystem>() != null;
         }
 
-        static bool WaitForEditorReady(int timeoutSeconds)
+        public static bool ValidateMap2Scene()
         {
-            double start = EditorApplication.timeSinceStartup;
-            while (EditorApplication.isCompiling || EditorApplication.isUpdating)
+            var scene = EditorSceneManager.GetActiveScene();
+            if (!scene.IsValid()) return false;
+            string absolute = Path.GetFullPath(Path.Combine(ProjectRoot, Map2SceneBuilder.ScenePath));
+            string[] landmarks =
             {
-                if (EditorApplication.timeSinceStartup - start > timeoutSeconds)
-                {
-                    return false;
-                }
-                Thread.Sleep(100);
-            }
+                "Map2_SacredGrove", "Map2_Orchard", "Map2_DeepForest", "Map2_Stream",
+                "Map2_CharcoalCamp", "Map2_DeerPaths", "Map2_StoneCircle",
+                "Map2_HiddenGraves", "Map2_CorruptedLoggingCamp", "Map2_AbbeyOfAntlers",
+            };
+            if (!File.Exists(absolute)
+                || UnityEngine.Object.FindFirstObjectByType<Abbey.Map2.Map2Scenario>() == null
+                || UnityEngine.Object.FindFirstObjectByType<Abbey.Map2.StagCovenantSystem>() == null
+                || GameObject.Find("StagBeneathAbbey") == null)
+                return false;
+            for (int i = 0; i < landmarks.Length; i++)
+                if (GameObject.Find(landmarks[i]) == null) return false;
             return true;
         }
 
@@ -301,9 +338,11 @@ namespace Abbey.EditorTools
             public string generatedAt;
             public string unityVersion;
             public bool sceneBuilt;
+            public bool map2SceneBuilt;
             public string assetImportValidation;
             public int consoleErrorCount;
             public List<string> canonicalScreenshots;
+            public List<string> map2Screenshots;
             public List<string> errors;
             public bool passed;
         }

@@ -46,6 +46,7 @@ TEST_POLL_TIMEOUT="${TEST_POLL_TIMEOUT:-60}"
 REPORT_PATH="unity/Build/reports/unity_gate_report.json"
 MUTABLE_PROJECT_SETTINGS=(
   "unity/ProjectSettings/EditorSettings.asset"
+  "unity/ProjectSettings/EditorBuildSettings.asset"
 )
 STATE_SNAPSHOT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/abbey_unity_mcp_gate_state.XXXXXX")"
 

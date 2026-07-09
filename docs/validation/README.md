@@ -40,3 +40,7 @@ context. Required sections:
 Keep guides short and imperative. If a task changes balance data, name the
 ScriptableObject (Resources path) so the verifier can inspect values instead of
 hunting through MonoBehaviours.
+
+Phase 4's integrated Map 2 candidate is covered by
+[P4-02-through-P4-05.md](P4-02-through-P4-05.md); the earlier Map 1 mechanics promotion
+remains in [P4-01-map1-systems-test.md](P4-01-map1-systems-test.md).

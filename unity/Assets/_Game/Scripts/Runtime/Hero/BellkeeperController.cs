@@ -59,6 +59,12 @@ namespace Abbey.Hero
         /// </summary>
         public float BellReliabilityMultiplier { get; set; } = 1f;
 
+        /// <summary>
+        /// Campaign-trait multiplier applied after weather reliability. Map 2's
+        /// Commanding Voice sets it from Map2Config; default 1 preserves prior maps.
+        /// </summary>
+        public float BellRadiusTraitMultiplier { get; set; } = 1f;
+
         public PrototypeConfig Config
         {
             get
@@ -136,7 +142,9 @@ namespace Abbey.Hero
                 return false;
             }
             _bellCooldown = Config.bellCooldownSeconds;
-            float radius = Config.bellRadius * Mathf.Max(0f, BellReliabilityMultiplier);
+            float radius = Config.bellRadius
+                           * Mathf.Max(0f, BellReliabilityMultiplier)
+                           * Mathf.Max(0f, BellRadiusTraitMultiplier);
             GameEventLog.Append("hero_rang_bell",
                 $"pos={transform.position} radius={radius:F2} reliability={BellReliabilityMultiplier:F2}");
             EventBus.RaiseBellRang(transform.position, radius);

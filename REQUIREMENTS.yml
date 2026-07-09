@@ -1031,13 +1031,78 @@ tasks:
     branch: claude/next-game-phases-rwywit
     validated_commit: 86ad1d3
 
-  # ---------------------------------------------------------------- Phase 4 (epic; break down at phase start)
+  # ---------------------------------------------------------------- Phase 4
   - id: P4-EPIC
     title: Map 2 (Abbey of Antlers), the Stag, Forest Debt, false bells, campaign carryover
     phase: phase-4
     depends_on: [P3-EPIC, GATE-P3]
-    status: todo
-    notes: Decompose per docs/ROADMAP.md Phase 4 brief when unblocked.
+    status: done
+    assigned_to: agent
+    branch: task/P4-EPIC
+    notes: Decomposed after GATE-P3 approval; GATE-P4 remains human-owned.
+
+  - id: P4-01
+    title: Promote Map 1 to the all-mechanics systems-test map
+    phase: phase-4
+    description: >
+      Exercise the forest resource/building vocabulary, Forest Debt, forest nightmares,
+      and True Bell vs False Bell on Prototype01 before splitting out the curated map.
+    depends_on: [P3-EPIC, GATE-P3]
+    status: done
+    assigned_to: agent
+    branch: main
+    merged_commit: 0785510
+
+  - id: P4-02
+    title: Curated Abbey of Antlers map and Stag asset
+    phase: phase-4
+    description: >
+      Generate the Stag silhouette through the Blender pipeline and generate a second,
+      dense forest scene from editor code with the sacred grove, orchard, deep forest,
+      stream, charcoal camp, deer paths, stone circle, hidden graves, and logging camp.
+    depends_on: [P4-01]
+    status: done
+    assigned_to: agent
+    branch: task/P4-EPIC
+
+  - id: P4-03
+    title: Stag covenant, Forest Debt choices, and Map 2 dilemmas
+    phase: phase-4
+    description: >
+      Data-driven trust/patience/wound/wildness/covenant state, indirect interactions,
+      restorative/extractive routes, the four forest dilemmas, and Horned Accuser break.
+    depends_on: [P4-02]
+    status: done
+    assigned_to: agent
+    branch: task/P4-EPIC
+
+  - id: P4-04
+    title: Map 2 outcomes, campaign trait carryover, and false-guidance integration
+    phase: phase-4
+    description: >
+      Apply one Bellkeeper trait from Map 1, make both covenant and exploitative routes
+      winnable, enforce village/Bellkeeper/broken-covenant losses, and integrate the full
+      forest nightmare/True Bell loop with debug visibility.
+    depends_on: [P4-03]
+    status: done
+    assigned_to: agent
+    branch: task/P4-EPIC
+
+  - id: P4-05
+    title: Phase 4 integration, screenshots, and authoritative validation
+    phase: phase-4
+    description: >
+      Build both generated scenes, validate generated imports and the Stag asset, run
+      EditMode/PlayMode suites through local MCP, capture Map 2 day/night proof, and
+      document the replayability review gate.
+    depends_on: [P4-04]
+    status: done
+    assigned_to: agent
+    branch: task/P4-EPIC
+    validation: >
+      Local Unity 6000.5.2f1 MCP gate passed both generated scenes and 49/49 imports;
+      EditMode 388/388, PlayMode 70/70, console errors 0. Asset validation 335 passed / 8
+      skipped and all 49 assets matched a clean Blender verification rebuild.
 
 gates:
   - id: GATE-0.1
@@ -1086,3 +1151,12 @@ gates:
       console errors 0. ./tools/check_all.sh also passed (design 7/7, asset validation
       328 passed / 8 skipped; Unity batch steps skipped because the editor was open and
       covered by the MCP gate).
+  - id: GATE-P4
+    kind: human_review
+    question: Can the second map generate a distinct, replayable moral survival story?
+    status: pending
+    ready: true
+    evidence: >
+      Phase 4 implementation and automated/local-editor validation are complete. Day and
+      false-bell-night proofs are in unity/Build/screenshots; the human must still replay
+      both covenant and exploitative victories before approving this gate.

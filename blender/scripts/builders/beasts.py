@@ -131,3 +131,103 @@ def build_black_hound(spec: dict) -> list[bpy.types.Object]:
     objects.append(add_anchor("collar", (0.52, 0.0, 1.20), anchor_type="attach"))
     objects.append(add_anchor("saddle_point", (-0.16, 0.0, 1.17), anchor_type="mount"))
     return objects
+
+
+@register_builder("stag_beneath_abbey_lowpoly")
+def build_stag_beneath_abbey(spec: dict) -> list[bpy.types.Object]:
+    """The Map-2 beast: tall, watchful, wounded, and never domesticated.
+
+    The outline does the storytelling: narrow body, implausibly long legs, a high
+    listening head, and an antler crown whose branching shape reads at isometric
+    distance.  It faces +X like the hound so interaction anchors are consistent.
+    """
+    objects: list[bpy.types.Object] = []
+    hide = "mat_dark_wood"
+    antler = "mat_bone"
+    gold = "mat_sacred_gold"
+
+    # --- torso + shoulders: lean rather than powerful --------------------------
+    objects.append(
+        add_box("torso", hide, size=(1.15, 0.48, 0.55),
+                location=(-0.10, 0.0, 1.70), rotation=(0.0, math.radians(-3.0), 0.0))
+    )
+    objects.append(
+        add_box("shoulders", hide, size=(0.48, 0.56, 0.72),
+                location=(0.38, 0.0, 1.72), rotation=(0.0, math.radians(8.0), 0.0))
+    )
+    objects.append(
+        add_box("haunches", hide, size=(0.52, 0.54, 0.64),
+                location=(-0.56, 0.0, 1.67), rotation=(0.0, math.radians(-7.0), 0.0))
+    )
+
+    # --- stilt_legs: four fine legs, split at the hock --------------------------
+    for i, (x, sy) in enumerate(((0.30, 1), (0.30, -1), (-0.52, 1), (-0.52, -1))):
+        objects.append(
+            add_box(f"stilt_legs_upper_{i}", hide, size=(0.13, 0.13, 0.82),
+                    location=(x, sy * 0.19, 1.05),
+                    rotation=(sy * math.radians(2.0), math.radians(-4.0 if x < 0 else 3.0), 0.0))
+        )
+        objects.append(
+            add_box(f"stilt_legs_lower_{i}", hide, size=(0.09, 0.10, 0.78),
+                    location=(x + (-0.06 if x < 0 else 0.04), sy * 0.19, 0.36),
+                    rotation=(sy * math.radians(-2.0), math.radians(4.0 if x < 0 else -3.0), 0.0))
+        )
+        objects.append(
+            add_box(f"hoof_{i}", antler, size=(0.18, 0.13, 0.10),
+                    location=(x + (-0.08 if x < 0 else 0.07), sy * 0.19, 0.05))
+        )
+
+    # --- upright neck + watchful head ------------------------------------------
+    objects.append(
+        add_box("neck", hide, size=(0.30, 0.34, 1.05),
+                location=(0.67, 0.0, 2.20), rotation=(0.0, math.radians(-18.0), 0.0))
+    )
+    objects.append(
+        add_box("head", hide, size=(0.45, 0.34, 0.32),
+                location=(0.86, 0.0, 2.70), rotation=(0.0, math.radians(7.0), 0.0))
+    )
+    objects.append(
+        add_box("muzzle", hide, size=(0.36, 0.24, 0.18),
+                location=(1.16, 0.0, 2.63), rotation=(0.0, math.radians(8.0), 0.0))
+    )
+    for i, sy in enumerate((1, -1)):
+        objects.append(
+            add_cone(f"ear_{i}", hide, radius=0.10, depth=0.36, vertices=4,
+                     location=(0.76, sy * 0.21, 2.88),
+                     rotation=(sy * math.radians(42.0), math.radians(-12.0), 0.0))
+        )
+        objects.append(
+            add_box(f"golden_eyes_{i}", gold, size=(0.04, 0.04, 0.04),
+                    location=(1.00, sy * 0.17, 2.74))
+        )
+
+    # --- antler crown: pale forked branches, asymmetric like old trees ---------
+    for side, sy in enumerate((1, -1)):
+        objects.append(
+            add_box(f"antler_crown_beam_{side}", antler, size=(0.10, 0.12, 0.92),
+                    location=(0.70, sy * 0.14, 3.27),
+                    rotation=(sy * math.radians(5.0), math.radians(-14.0), sy * math.radians(7.0)))
+        )
+        for tine in range(3):
+            z = 3.08 + tine * 0.25
+            objects.append(
+                add_box(f"antler_crown_tine_{side}_{tine}", antler,
+                        size=(0.10, 0.10, 0.48 - tine * 0.05),
+                        location=(0.54 - tine * 0.07, sy * (0.30 + tine * 0.10), z),
+                        rotation=(sy * math.radians(38.0), math.radians(-28.0 + tine * 5.0), 0.0))
+            )
+
+    # --- covenant marks: the old wound is bone-pale, not bloody ----------------
+    objects.append(
+        add_box("old_wound", antler, size=(0.42, 0.035, 0.08),
+                location=(-0.22, 0.258, 1.82), rotation=(0.0, math.radians(-18.0), 0.0))
+    )
+    objects.append(
+        add_box("tail", hide, size=(0.48, 0.10, 0.12), location=(-0.90, 0.0, 1.72),
+                rotation=(0.0, math.radians(-55.0), 0.0))
+    )
+
+    objects.append(add_anchor("offering", (1.36, 0.0, 2.55), anchor_type="interaction"))
+    objects.append(add_anchor("wound", (-0.22, 0.28, 1.82), anchor_type="interaction"))
+    objects.append(add_anchor("gaze", (1.01, 0.0, 2.74), anchor_type="look"))
+    return objects

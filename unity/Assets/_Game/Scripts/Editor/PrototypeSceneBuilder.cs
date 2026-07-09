@@ -320,6 +320,7 @@ namespace Abbey.EditorTools
         {
             var modeGO = new GameObject("Phase3Mode");
             modeGO.AddComponent<PrototypePhase3Bootstrap>();
+            modeGO.AddComponent<CampaignFlowController>();
         }
 
         static GameObject BuildHero()
@@ -972,7 +973,7 @@ namespace Abbey.EditorTools
             go.transform.localScale = scale;
         }
 
-        static void NormalizeImportedMaterials(GameObject root, string assetId)
+        public static void NormalizeImportedMaterials(GameObject root, string assetId)
         {
             foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
             {
