@@ -1039,6 +1039,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: task/P4-EPIC
+    validated_commit: 13957fb
     notes: Decomposed after GATE-P3 approval; GATE-P4 remains human-owned.
 
   - id: P4-01
@@ -1064,6 +1065,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: task/P4-EPIC
+    validated_commit: 13957fb
 
   - id: P4-03
     title: Stag covenant, Forest Debt choices, and Map 2 dilemmas
@@ -1075,6 +1077,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: task/P4-EPIC
+    validated_commit: 13957fb
 
   - id: P4-04
     title: Map 2 outcomes, campaign trait carryover, and false-guidance integration
@@ -1087,6 +1090,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: task/P4-EPIC
+    validated_commit: 13957fb
 
   - id: P4-05
     title: Phase 4 integration, screenshots, and authoritative validation
@@ -1099,6 +1103,7 @@ tasks:
     status: done
     assigned_to: agent
     branch: task/P4-EPIC
+    validated_commit: 13957fb
     validation: >
       Local Unity 6000.5.2f1 MCP gate passed both generated scenes and 49/49 imports;
       EditMode 388/388, PlayMode 70/70, console errors 0. Asset validation 335 passed / 8

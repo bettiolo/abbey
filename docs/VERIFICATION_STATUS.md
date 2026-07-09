@@ -8,10 +8,11 @@ secrets.**
 
 ## Current verified path
 
-Runtime-affecting validation baseline: `main` commit `86ad1d3` was verified on
-2026-07-06 using macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline
-covers Phase 3 tasks `P3-01` through `P3-14`, the building-footprint movement update,
-and the committed Unity generated imports for all Phase 3 generated assets. Do not
+Runtime-affecting validation baseline: `task/P4-EPIC` commit `13957fb` was verified on
+2026-07-10 using macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline
+covers the Phase 2/3 game plus Phase 4 tasks `P4-01` through `P4-05`: both generated maps,
+the Stag/covenant and forest story systems, campaign carryover/transition, and the committed
+Unity import for the Stag asset. `GATE-P4` remains pending human replay review. Do not
 bump this section only to record another docs-only validation pass; update it when
 runtime/tooling, test inputs, generated Unity imports, or validation evidence change.
 
@@ -20,20 +21,20 @@ runtime/tooling, test inputs, generated Unity imports, or validation evidence ch
   PlayMode tests, and a final console check through MCP.
 - Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-06T08:57:30Z`)
-  - Scene build: passed
-  - Generated asset import validation: passed, 48/48 imported assets
-  - EditMode tests: 373/373 passed
-  - PlayMode tests: 69/69 passed
+    `2026-07-09T23:36:27Z`)
+  - Scene builds: passed for Prototype01 and Map2Prototype
+  - Generated asset import validation: passed, 49/49 imported assets
+  - EditMode tests: 388/388 passed
+  - PlayMode tests: 70/70 passed
   - Console errors after the Unity gate: 0
-  - Canonical screenshots written to `unity/Build/screenshots/`
+  - Four Map 1 and two Map 2 screenshots written to `unity/Build/screenshots/`
 - `./tools/check_all.sh` result on the same runtime tree: OK
   - design validation: 7/7 passed
-  - asset validation: 328 passed, 8 skipped
-  - Blender changed-asset verification: passed, no changed asset specs or builders
+  - asset validation: 335 passed, 8 skipped
+  - Blender changed-asset verification: all 49 assets matched a clean rebuild
   - Unity batch steps: skipped because the editor was open; covered by the MCP gate above
-  - Verified tracker impact: `P3-01` through `P3-14` are marked `done`; `P3-08`
-    through `P3-14` carry `validated_commit: 86ad1d3`.
+  - Verified tracker impact: `P4-01` through `P4-05` are `done`; P4-02 through P4-05
+    and the epic carry `validated_commit: 13957fb`; `GATE-P4` is ready but pending.
 
 Use this command when the editor/MCP bridge is not already running:
 
@@ -78,9 +79,9 @@ Observed GitHub "Unity tests" workflows on `main` continue to be non-authoritati
 - `./tools/check_all.sh` still skips Unity steps while the Unity editor is open because
   batchmode cannot take the project lock. In that situation, run
   `tools/run_unity_mcp_gate.sh --no-restart` for the Unity side.
-- The Phase 2 runtime and merged Phase 3 `P3-01` through `P3-14` runtime are no longer
-  "authored but unverified"; they are **locally verified through MCP**. CI verification
-  is out of scope.
+- The Phase 2/3 runtime and Phase 4 implementation candidate are **locally verified
+  through MCP**. Phase 4 still needs the separate human replayability verdict; CI
+  verification is out of scope.
 
 ## How to actually run / verify it
 
