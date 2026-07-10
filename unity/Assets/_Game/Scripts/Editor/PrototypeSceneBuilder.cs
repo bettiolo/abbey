@@ -8,6 +8,7 @@ using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Debugging;
 using Abbey.Economy;
+using Abbey.Editor;
 using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
@@ -126,7 +127,8 @@ namespace Abbey.EditorTools
             BuildPhase3Mode();
             var director = BuildSimulationCore(config);
             var hero = BuildHero();
-            BuildCamera(config, hero.transform);
+            var camera = BuildCamera(config, hero.transform);
+            var spriteProjection = BuildSpriteProjection(camera);
             BuildCamp(config);
             BuildSeedSlots();
             BuildIslandPois();
@@ -139,6 +141,7 @@ namespace Abbey.EditorTools
             BuildStarterProduction();
             BuildRestorationNodes();
             BuildSessionReportsAndPanels(hero, director, abbeyFlame);
+            spriteProjection.ApplyAllTagged();
         }
 
         // ------------------------------------------------------------------
@@ -154,6 +157,7 @@ namespace Abbey.EditorTools
             ground.name = "Ground";
             ground.transform.localScale = new Vector3(8.5f, 1f, 8.5f);
             AssignRendererMaterial(ground.GetComponent<Renderer>(), "map_meadow", MeadowColor);
+            RegisterSpriteRole(ground, "map_meadow");
 
             CreateFlatMapPatch("Beach", BeachCenter + new Vector3(0f, 0.012f, 0f),
                 new Vector3(2.9f, 1f, 2.9f), BeachColor);
@@ -447,7 +451,7 @@ namespace Abbey.EditorTools
             return hero;
         }
 
-        static void BuildCamera(PrototypeConfig config, Transform followTarget)
+        static Camera BuildCamera(PrototypeConfig config, Transform followTarget)
         {
             var camGO = new GameObject("IsoCamera");
             camGO.tag = "MainCamera";
@@ -460,6 +464,39 @@ namespace Abbey.EditorTools
             rig.SetWorldBounds(new Vector2(-50f, -50f), new Vector2(50f, 50f));
             rig.FocusOn(CampCenter);
             rig.SetFollowTarget(followTarget);
+            return cam;
+        }
+
+        static SpriteProjectionBootstrap BuildSpriteProjection(Camera targetCamera)
+        {
+            var projectionGO = new GameObject("SpriteProjection");
+            var projection = projectionGO.AddComponent<SpriteProjectionBootstrap>();
+            var catalog = AssetDatabase.LoadAssetAtPath<SpriteProjectionCatalog>(
+                MiniWorldSpriteImporter.CatalogAssetPath);
+            var style = AssetDatabase.LoadAssetAtPath<SpriteProjectionStyle>(
+                SpriteProjectionStyle.AssetPath);
+            if (style == null)
+            {
+                style = ScriptableObject.CreateInstance<SpriteProjectionStyle>();
+                AssetDatabase.CreateAsset(style, SpriteProjectionStyle.AssetPath);
+            }
+            var projectionConfig = AssetDatabase.LoadAssetAtPath<SpriteProjectionConfig>(
+                SpriteProjectionConfig.AssetPath);
+            if (projectionConfig == null)
+            {
+                projectionConfig = ScriptableObject.CreateInstance<SpriteProjectionConfig>();
+                projectionConfig.style = style;
+                AssetDatabase.CreateAsset(projectionConfig, SpriteProjectionConfig.AssetPath);
+            }
+            else if (projectionConfig.style == null)
+            {
+                projectionConfig.style = style;
+                EditorUtility.SetDirty(projectionConfig);
+            }
+            AssetDatabase.SaveAssets();
+            projection.Configure(catalog, targetCamera, style, projectionConfig);
+            projection.ApplyAllTagged();
+            return projection;
         }
 
         static void BuildCamp(PrototypeConfig config)
@@ -650,6 +687,7 @@ namespace Abbey.EditorTools
             hill.transform.position = AbbeyHillCenter + new Vector3(0f, 0.25f, 0f);
             hill.transform.localScale = new Vector3(9f, 0.25f, 9f);
             AssignRendererMaterial(hill.GetComponent<Renderer>(), "map_abbey_hill", StoneColor);
+            RegisterSpriteRole(hill, "map_abbey_hill");
             float hillTop = 0.5f;
 
             var towerPos = AbbeyHillCenter + new Vector3(0f, hillTop, 0f);
@@ -1091,7 +1129,7 @@ namespace Abbey.EditorTools
             var placeholder = InstantiateGenericPlaceholder(assetId, groundPos, name);
             if (placeholder != null)
             {
-                return placeholder;
+                return RegisterSpriteRole(placeholder, assetId);
             }
 
             try
@@ -1106,7 +1144,7 @@ namespace Abbey.EditorTools
                         instance.name = name;
                         instance.transform.position = groundPos;
                         NormalizeImportedMaterials(instance, assetId);
-                        return instance;
+                        return RegisterSpriteRole(instance, assetId);
                     }
                 }
             }
@@ -1121,7 +1159,26 @@ namespace Abbey.EditorTools
             go.transform.position = groundPos + new Vector3(0f, primitiveYOffset, 0f);
             go.transform.localScale = fallbackScale;
             NormalizeImportedMaterials(go, assetId);
-            return go;
+            return RegisterSpriteRole(go, assetId);
+        }
+
+        static GameObject RegisterSpriteRole(GameObject root, string assetId, string role = null)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+
+            var tag = root.GetComponent<SpriteRoleTag>() ?? root.AddComponent<SpriteRoleTag>();
+            tag.Configure(assetId, role, root.name);
+
+            var projection = UnityEngine.Object.FindFirstObjectByType<SpriteProjectionBootstrap>(
+                FindObjectsInactive.Include);
+            if (projection != null)
+            {
+                projection.Apply(tag);
+            }
+            return root;
         }
 
         static void CreateFlatMapPatch(string name, Vector3 position, Vector3 scale, Color color)
@@ -1130,7 +1187,9 @@ namespace Abbey.EditorTools
             patch.name = name;
             patch.transform.position = position;
             patch.transform.localScale = scale;
-            AssignRendererMaterial(patch.GetComponent<Renderer>(), $"map_{name}", color);
+            string assetId = $"map_{name}";
+            AssignRendererMaterial(patch.GetComponent<Renderer>(), assetId, color);
+            RegisterSpriteRole(patch, assetId);
         }
 
         static void PlaceTerrainAsset(
@@ -1171,6 +1230,7 @@ namespace Abbey.EditorTools
                 bank.transform.localScale = new Vector3(2.7f, 0.025f, length + 0.65f);
                 AssignRendererMaterial(bank.GetComponent<Renderer>(), "map_riverbank", DirtColor);
                 UnityEngine.Object.DestroyImmediate(bank.GetComponent<Collider>());
+                RegisterSpriteRole(bank, "map_riverbank");
 
                 var water = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 water.name = $"StreamWater_{i:D2}";
@@ -1179,6 +1239,7 @@ namespace Abbey.EditorTools
                 water.transform.localScale = new Vector3(1.55f, 0.035f, length + 0.7f);
                 AssignRendererMaterial(water.GetComponent<Renderer>(), "map_stream", WaterColor);
                 UnityEngine.Object.DestroyImmediate(water.GetComponent<Collider>());
+                RegisterSpriteRole(water, "map_stream");
             }
         }
 
@@ -1194,19 +1255,67 @@ namespace Abbey.EditorTools
 
         static void AddWorldObstacleFromVisibleBounds(GameObject go)
         {
-            if (go == null || !TryGetVisibleRendererBounds(go, out var bounds))
+            if (go == null)
             {
                 return;
             }
 
             var obstacle = go.GetComponent<WorldObstacle>() ?? go.AddComponent<WorldObstacle>();
-            obstacle.Initialize(bounds);
+            bool hasLegacy = TryGetLegacyRendererBounds(go, out var legacyBounds);
+            if (hasLegacy && TryGetAuthoredObstacleFootprint(go, out var footprint))
+            {
+                var state = go.GetComponent<SpriteProjectionObstacleState>() ??
+                            go.AddComponent<SpriteProjectionObstacleState>();
+                state.Configure(obstacle, BoundsFootprint(legacyBounds), footprint);
+                var projection = UnityEngine.Object.FindFirstObjectByType<SpriteProjectionBootstrap>(
+                    FindObjectsInactive.Include);
+                state.Apply(projection == null || projection.ProjectionEnabled);
+            }
+            else if (hasLegacy)
+            {
+                obstacle.Initialize(legacyBounds);
+            }
+        }
+
+        static Rect BoundsFootprint(Bounds bounds) => new Rect(
+            bounds.min.x, bounds.min.z, bounds.size.x, bounds.size.z);
+
+        static bool TryGetAuthoredObstacleFootprint(GameObject root, out Rect footprint)
+        {
+            footprint = default;
+            var tag = root != null ? root.GetComponent<SpriteRoleTag>() : null;
+            var catalog = AssetDatabase.LoadAssetAtPath<SpriteProjectionCatalog>(
+                MiniWorldSpriteImporter.CatalogAssetPath);
+            if (tag == null || catalog == null ||
+                !catalog.TryGet(tag, out var entry) ||
+                entry.authoredFootprint.x <= 0f || entry.authoredFootprint.y <= 0f)
+            {
+                return false;
+            }
+
+            Vector3 footprintX = root.transform.rotation *
+                new Vector3(entry.authoredFootprint.x, 0f, 0f);
+            Vector3 footprintZ = root.transform.rotation *
+                new Vector3(0f, 0f, entry.authoredFootprint.y);
+            var worldSize = new Vector2(
+                Mathf.Abs(footprintX.x) + Mathf.Abs(footprintZ.x),
+                Mathf.Abs(footprintX.z) + Mathf.Abs(footprintZ.z));
+            footprint = new Rect(
+                root.transform.position.x - worldSize.x * 0.5f,
+                root.transform.position.z - worldSize.y * 0.5f,
+                worldSize.x,
+                worldSize.y);
+            return true;
         }
 
         public static void NormalizeImportedMaterials(GameObject root, string assetId)
         {
             foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
             {
+                if (renderer is SpriteRenderer)
+                {
+                    continue;
+                }
                 if (IsCollisionVisual(renderer.gameObject))
                 {
                     renderer.enabled = false;
@@ -1725,6 +1834,35 @@ namespace Abbey.EditorTools
                 }
             }
 
+            return hasBounds;
+        }
+
+        static bool TryGetLegacyRendererBounds(GameObject root, out Bounds bounds)
+        {
+            bounds = new Bounds(Vector3.zero, Vector3.zero);
+            if (root == null)
+            {
+                return false;
+            }
+
+            bool hasBounds = false;
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer == null || renderer is SpriteRenderer ||
+                    IsCollisionVisual(renderer.gameObject))
+                {
+                    continue;
+                }
+                if (!hasBounds)
+                {
+                    bounds = renderer.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
+            }
             return hasBounds;
         }
 

@@ -8,12 +8,13 @@ secrets.**
 
 ## Current verified path
 
-Runtime-affecting validation baseline: commit `43f5faf` was verified on 2026-07-10 using
+Runtime-affecting validation baseline: commit `6ff7030` was verified on 2026-07-10 using
 macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline covers the Phase 2/3
 game, Phase 4 tasks `P4-01` through `P4-05`, and the URP 17.5 migration: both generated
 maps, the Stag/covenant and forest story systems, campaign carryover/transition, 49
-generated imports, committed URP settings, and shared URP material creation. `GATE-P4`
-remains pending human replay review. Do not bump this section only to record another
+generated imports, committed URP settings, shared URP material creation, and the draft
+reversible Mini World sprite-projection candidate. `GATE-P4` and `GATE-P2D-ART` remain
+pending human review. Do not bump this section only to record another
 docs-only validation pass; update it when runtime/tooling, test inputs, generated Unity
 imports, renderer configuration, or validation evidence change.
 
@@ -22,21 +23,23 @@ imports, renderer configuration, or validation evidence change.
   PlayMode tests, and a final console check through MCP.
 - Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-10T00:25:25Z`)
+    `2026-07-10T21:42:21Z`)
   - Scene builds: passed for Prototype01 and Map2Prototype
   - Generated asset import validation: passed, 49/49 imported assets
-  - EditMode tests: 391/391 passed
-  - PlayMode tests: 70/70 passed
+  - Mini World sprite manifest/import/catalog validation: passed, 32 selected sheets,
+    341 slices, and 61 mapped roles
+  - EditMode tests: 418/418 passed
+  - PlayMode tests: 72/72 passed
   - Console errors after the Unity gate: 0
-  - MCP graphics inspection: Universal Render Pipeline active with the committed Abbey
-    pipeline asset; all six proof screenshots visually inspected without error materials
+  - MCP graphics inspection: all six sprite candidate proof screenshots visually inspected;
+    XZ terrain tiling, phase tint, and reversible mapped actors/buildings are visible
 - `./tools/check_all.sh` result on the same runtime tree: OK
   - design validation: 7/7 passed
-  - asset validation: 335 passed, 8 skipped
+  - asset validation: 355 passed, 8 skipped
   - Blender changed-asset verification: all 49 assets matched a clean rebuild
   - Unity batch steps: skipped because the editor was open; covered by the MCP gate above
-  - Verified tracker impact: `P4-01` through `P4-05` are `done`; P4-02 through P4-05
-    and the epic carry `validated_commit: 13957fb`; `GATE-P4` is ready but pending.
+  - Sprite candidate caveat: 23 roles are explicitly unresolved by the pinned CC0 pack,
+    so their identity-preserving 3D fallbacks keep `P2D-07` and `GATE-P2D-ART` pending
 
 Use this command when the editor/MCP bridge is not already running:
 

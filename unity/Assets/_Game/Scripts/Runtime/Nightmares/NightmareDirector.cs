@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Light;
+using Abbey.Rendering;
 using Abbey.Villagers;
 using Abbey.World;
 using UnityEngine;
@@ -618,6 +619,8 @@ namespace Abbey.Nightmares
             monster.Configure(cfg);
             monster.autoTick = monstersAutoTick;
             _spawned.Add(monster);
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, SpriteAssetIdFor(type), "actor.nightmare", $"nightmare:{name}");
             GameEventLog.Append("nightmare",
                 $"spawn type={type} name={name} pos=({position.x:F1},{position.z:F1})");
             EventBus.RaiseMonsterSpawned(go);
@@ -626,6 +629,17 @@ namespace Abbey.Nightmares
                 FalseGuidanceSystem.Instance.RecordNightmareSpawn(type, position, transform.position);
             }
             return monster;
+        }
+
+        static string SpriteAssetIdFor(NightmareType type)
+        {
+            switch (type)
+            {
+                case NightmareType.GraveCrawler: return "nightmare_grave_crawler";
+                case NightmareType.HungerWight: return "nightmare_hunger_wight";
+                case NightmareType.AntlerWraith: return "nightmare_antler_wraith";
+                default: return type.ToString();
+            }
         }
 
         void EmitWhisper(int seed, PrototypeConfig cfg)

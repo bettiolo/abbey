@@ -1109,6 +1109,96 @@ tasks:
       EditMode 388/388, PlayMode 70/70, console errors 0. Asset validation 335 passed / 8
       skipped and all 49 assets matched a clean Blender verification rebuild.
 
+  # -------------------------------------------------------- Sprite projection experiment
+  - id: P2D-EPIC
+    title: Reversible 2.5D sprite projection using Mini World Sprites
+    phase: sprite-projection
+    description: >
+      Replace the visible prototype presentation with a deterministic sprite layer while
+      preserving the existing XZ simulation, locked camera, collision footprints, and
+      complete 3D rollback path. Execution contract: docs/SPRITE_PROJECTION_AFK_PLAN.md.
+    depends_on: [P4-EPIC]
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
+    notes: GATE-P2D-ART is human-owned and does not alter GATE-P4.
+
+  - id: P2D-01
+    title: Audit and curate the Merchant Shade CC0 sprite source
+    phase: sprite-projection
+    depends_on: [P4-EPIC]
+    status: merged
+    assigned_to: sprite-assets
+    branch: codex/sprite-assets
+    merged_commit: bd9f2cf
+    deliverables:
+      - tools/acquire_merchant_shade_miniworld.py
+      - tools/validate_merchant_shade_miniworld.py
+      - unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/
+
+  - id: P2D-02
+    title: Reversible runtime sprite projection foundation
+    phase: sprite-projection
+    depends_on: [P4-EPIC]
+    status: merged
+    assigned_to: sprite-runtime
+    branch: codex/sprite-runtime
+    merged_commit: 3b9132a
+    deliverables:
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionCatalog.cs
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionFactory.cs
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionBootstrap.cs
+
+  - id: P2D-03
+    title: Deterministic Unity sprite importer and catalog validation
+    phase: sprite-projection
+    depends_on: [P2D-01, P2D-02]
+    status: merged
+    assigned_to: sprite-importer
+    branch: codex/sprite-importer
+    merged_commit: d08589c
+
+  - id: P2D-04
+    title: Convert the generated Map 1 presentation
+    phase: sprite-projection
+    depends_on: [P2D-03]
+    status: merged
+    assigned_to: sprite-map1
+    branch: codex/sprite-projection
+    merged_commit: 8570b73
+
+  - id: P2D-05
+    title: Cover runtime-spawned actors, buildings, and carried props
+    phase: sprite-projection
+    depends_on: [P2D-03]
+    status: merged
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
+    merged_commit: 8ca0913
+
+  - id: P2D-06
+    title: Convert the generated Map 2 presentation
+    phase: sprite-projection
+    depends_on: [P2D-04, P2D-05]
+    status: merged
+    assigned_to: sprite-map2
+    branch: codex/sprite-projection
+    merged_commit: ee12487
+
+  - id: P2D-07
+    title: Sprite polish, Unity gate, screenshots, and validation evidence
+    phase: sprite-projection
+    depends_on: [P2D-06]
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
+    validation: >
+      Technical candidate passed the local Unity 6000.5.2f1 MCP gate at runtime commit
+      6ff7030: both scenes, deterministic sprite import/catalog validation, EditMode
+      418/418, PlayMode 72/72, console errors 0, and six inspected screenshots. The
+      Merchant Shade pack has 23 explicitly unresolved roles, so the no-mixed-fallback
+      acceptance criterion and human art gate are not yet satisfied.
+
 gates:
   - id: GATE-0.1
     kind: human_review
@@ -1165,3 +1255,14 @@ gates:
       Phase 4 implementation and automated/local-editor validation are complete. Day and
       false-bell-night proofs are in unity/Build/screenshots; the human must still replay
       both covenant and exploitative victories before approving this gate.
+  - id: GATE-P2D-ART
+    kind: human_review
+    question: Does the sprite projection have the right camera, scale, palette, and readable building/character kit?
+    status: pending
+    ready: false
+    evidence: >
+      A technically validated draft candidate and six canonical screenshots exist on
+      codex/sprite-projection. The curated pack honestly lacks 23 roles, including the
+      Bellkeeper, Black Hound, Stag, ruined bell tower, campfire, and several nightmares;
+      those retain reversible 3D identity fallbacks. Resolve or explicitly accept that
+      art debt before asking the repository owner for camera/scale/palette approval.

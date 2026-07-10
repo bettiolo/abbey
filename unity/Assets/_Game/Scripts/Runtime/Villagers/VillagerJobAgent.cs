@@ -1112,6 +1112,11 @@ namespace Abbey.Villagers
                     break;
             }
 
+            SpriteProjectionBootstrap.RegisterGlobal(
+                root,
+                "carried_resource",
+                "dynamic.carriedResource",
+                $"carried:{name}:{type}");
             return root;
         }
 

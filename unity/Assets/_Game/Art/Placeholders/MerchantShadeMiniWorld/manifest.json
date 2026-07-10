@@ -1,0 +1,6035 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "packName": "Free 16x16 Mini World Sprites",
+    "sourcePage": "https://merchant-shade.itch.io/16x16-mini-world-sprites",
+    "authors": [
+      "Shade",
+      "octoshrimpy"
+    ],
+    "license": "CC0-1.0",
+    "cc0Url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "itchGameId": 703908,
+    "itchUploadId": 7054436,
+    "downloadDate": "2026-07-10",
+    "archiveName": "MiniWorldSprites.zip",
+    "archiveSize": 2084074,
+    "archiveSha256": "79eb000cfd3f64fee8ac8307f02bb867dc8b4fd7ce5a150119c51dedfa563f1f",
+    "guide": {
+      "name": "MiniworldGuide.docx",
+      "itchUploadId": 3504147,
+      "size": 98156,
+      "sha256": "b641b33348d44e9c2daadb6f898e0c738f77ce049176351dfc36128ad04f7afe"
+    },
+    "creatorRequest": "Do not sell the pack as a standalone asset collection; it is intended to remain free."
+  },
+  "rectOrigin": "bottom-left",
+  "files": [
+    {
+      "fileId": "terrain_grass",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/Grass.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_grass.png",
+      "sourceSha256": "741b421dba48a116ce6acaf2db534ce7bbb6854cfe907116660e72ad0fa16938",
+      "sha256": "741b421dba48a116ce6acaf2db534ce7bbb6854cfe907116660e72ad0fa16938",
+      "dimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_grass_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_grass_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_grass_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_grass_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_grass_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_textured_grass",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/TexturedGrass.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_textured_grass.png",
+      "sourceSha256": "16e201c70d3e27b968b988cde82d3f6791d6b68efdb110ee1ba13da48f9339df",
+      "sha256": "16e201c70d3e27b968b988cde82d3f6791d6b68efdb110ee1ba13da48f9339df",
+      "dimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_textured_grass_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_textured_grass_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_textured_grass_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_textured_grass_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_textured_grass_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_textured_grass_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_dead_grass",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/DeadGrass.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_dead_grass.png",
+      "sourceSha256": "7accbfeb8df0ad939137150027620839d8d293147eedb1c093a37e943dbc0b08",
+      "sha256": "7accbfeb8df0ad939137150027620839d8d293147eedb1c093a37e943dbc0b08",
+      "dimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_dead_grass_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_dead_grass_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_dead_grass_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_dead_grass_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_dead_grass_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_dead_grass_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_shore",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/Shore.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_shore.png",
+      "sourceSha256": "72cda8195fbddd86a628ae033781a2119fd9f6620829a4c2c9ea2044b342fee7",
+      "sha256": "72cda8195fbddd86a628ae033781a2119fd9f6620829a4c2c9ea2044b342fee7",
+      "dimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_shore_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_shore_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_shore_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_shore_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_shore_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_winter",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/Winter.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_winter.png",
+      "sourceSha256": "04428fe04351fa790738a6ba689f1e40582794c200c90a1f36f2896156bb96f6",
+      "sha256": "04428fe04351fa790738a6ba689f1e40582794c200c90a1f36f2896156bb96f6",
+      "dimensions": {
+        "width": 128,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 128,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_winter_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c05",
+          "rect": {
+            "x": 80,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c06",
+          "rect": {
+            "x": 96,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_winter_r00_c07",
+          "rect": {
+            "x": 112,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_cliff",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/Cliff.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_cliff.png",
+      "sourceSha256": "84b98090e28ed5c7e4be1503e91c9e8b27f491569c3d34c2e7f90aafcdb6fad2",
+      "sha256": "84b98090e28ed5c7e4be1503e91c9e8b27f491569c3d34c2e7f90aafcdb6fad2",
+      "dimensions": {
+        "width": 112,
+        "height": 144
+      },
+      "expectedDimensions": {
+        "width": 112,
+        "height": 144
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_cliff_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r04_c04",
+          "rect": {
+            "x": 64,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r05_c04",
+          "rect": {
+            "x": 64,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r06_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r07_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r07_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r08_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_r08_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "terrain_cliff_water",
+      "category": "terrain",
+      "sourcePath": "MiniWorldSprites/Ground/Cliff-Water.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Terrain/abbey_placeholder_miniworld_cliff_water.png",
+      "sourceSha256": "4a82ce556f127c358000d082f6c6659eddc175bda70cb5ab83d018783cb3b6bc",
+      "sha256": "4a82ce556f127c358000d082f6c6659eddc175bda70cb5ab83d018783cb3b6bc",
+      "dimensions": {
+        "width": 80,
+        "height": 96
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 96
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "xzTile",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "terrain_cliff_water_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r04_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r04_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "terrain_cliff_water_r05_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_huts",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Huts.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_huts.png",
+      "sourceSha256": "4a19b24743ba416645d95fd6be5b92d524002916f9ba081da01799fcd319072b",
+      "sha256": "4a19b24743ba416645d95fd6be5b92d524002916f9ba081da01799fcd319072b",
+      "dimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_huts_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_huts_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_huts_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_huts_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_huts_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_houses",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Houses.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_houses.png",
+      "sourceSha256": "c5a50e1712c9d47d021523fc226452fd7f26806ab75ba96177da647888c91402",
+      "sha256": "c5a50e1712c9d47d021523fc226452fd7f26806ab75ba96177da647888c91402",
+      "dimensions": {
+        "width": 48,
+        "height": 64
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 64
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_houses_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_houses_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_resources",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Resources.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_resources.png",
+      "sourceSha256": "0fb29de3c2833450e87f004347f5bdecad3d2902b174a09f6dd4dd268623da26",
+      "sha256": "0fb29de3c2833450e87f004347f5bdecad3d2902b174a09f6dd4dd268623da26",
+      "dimensions": {
+        "width": 48,
+        "height": 80
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 80
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_resources_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r04_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r04_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_resources_r04_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_workshops",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Workshops.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_workshops.png",
+      "sourceSha256": "3ce445eb36dde4facad16bb3f4e96375f218e6980c8e3fea62029ba50be09ca2",
+      "sha256": "3ce445eb36dde4facad16bb3f4e96375f218e6980c8e3fea62029ba50be09ca2",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_workshops_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_workshops_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_barracks",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Barracks.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_barracks.png",
+      "sourceSha256": "c08ada0541510d58279624966b149c4592096e165eb73de5db42d3bc90eb80c4",
+      "sha256": "c08ada0541510d58279624966b149c4592096e165eb73de5db42d3bc90eb80c4",
+      "dimensions": {
+        "width": 64,
+        "height": 80
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 80
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_barracks_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r04_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r04_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r04_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_barracks_r04_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_chapels",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Chapels.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_chapels.png",
+      "sourceSha256": "14e650c37e4c8fdd9e64ff2aa5e7812bd11cbdb8bde53ea5014df9da33e87075",
+      "sha256": "14e650c37e4c8fdd9e64ff2aa5e7812bd11cbdb8bde53ea5014df9da33e87075",
+      "dimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_chapels_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_chapels_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_chapels_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_chapels_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_chapels_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_chapels_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "building_tower",
+      "category": "building",
+      "sourcePath": "MiniWorldSprites/Buildings/Wood/Tower.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Buildings/abbey_placeholder_miniworld_wood_tower.png",
+      "sourceSha256": "eb0142dc538586a14860dd1b2ed41945b2f8c9879597c3e158d436d9d5939cb3",
+      "sha256": "eb0142dc538586a14860dd1b2ed41945b2f8c9879597c3e158d436d9d5939cb3",
+      "dimensions": {
+        "width": 48,
+        "height": 96
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 96
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "building_tower_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r04_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r04_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r04_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r05_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r05_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "building_tower_r05_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "character_worker",
+      "category": "character",
+      "sourcePath": "MiniWorldSprites/Characters/Workers/FarmerTemplate.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Characters/abbey_placeholder_miniworld_worker.png",
+      "sourceSha256": "79298d1b8a06070e7219972b55f9eb2c84fd3dde7468bbc6c09858d0f5c76f54",
+      "sha256": "79298d1b8a06070e7219972b55f9eb2c84fd3dde7468bbc6c09858d0f5c76f54",
+      "dimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "character_worker_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r02_c04",
+          "rect": {
+            "x": 64,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_worker_r03_c04",
+          "rect": {
+            "x": 64,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "character_swordsman",
+      "category": "character",
+      "sourcePath": "MiniWorldSprites/Characters/Soldiers/Melee/SwordsmanTemplate.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Characters/abbey_placeholder_miniworld_swordsman.png",
+      "sourceSha256": "e3dbde1853c3871f5854f8b3fde81bba5163e1f25e254a70e926f610f5042c2f",
+      "sha256": "e3dbde1853c3871f5854f8b3fde81bba5163e1f25e254a70e926f610f5042c2f",
+      "dimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "character_swordsman_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r02_c04",
+          "rect": {
+            "x": 64,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_swordsman_r03_c04",
+          "rect": {
+            "x": 64,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "character_skeleton",
+      "category": "character",
+      "sourcePath": "MiniWorldSprites/Characters/Monsters/Undead/Skeleton-Soldier.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Characters/abbey_placeholder_miniworld_skeleton.png",
+      "sourceSha256": "9040b30c3d44d1b1468d7af1a94e40809e65ab9df0ba613deeb25732ddd5ee3d",
+      "sha256": "9040b30c3d44d1b1468d7af1a94e40809e65ab9df0ba613deeb25732ddd5ee3d",
+      "dimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 192
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "character_skeleton_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 176,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 160,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r02_c04",
+          "rect": {
+            "x": 64,
+            "y": 144,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_skeleton_r03_c04",
+          "rect": {
+            "x": 64,
+            "y": 128,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "character_necromancer",
+      "category": "character",
+      "sourcePath": "MiniWorldSprites/Characters/Monsters/Undead/Necromancer.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Characters/abbey_placeholder_miniworld_necromancer.png",
+      "sourceSha256": "adb05ab6590049b917f8822d1e1fcd498496912182485113fdb0444ae679c3d3",
+      "sha256": "adb05ab6590049b917f8822d1e1fcd498496912182485113fdb0444ae679c3d3",
+      "dimensions": {
+        "width": 96,
+        "height": 128
+      },
+      "expectedDimensions": {
+        "width": 96,
+        "height": 128
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "character_necromancer_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r02_c04",
+          "rect": {
+            "x": 64,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_necromancer_r03_c04",
+          "rect": {
+            "x": 64,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "character_wendigo",
+      "category": "character",
+      "sourcePath": "MiniWorldSprites/Characters/Monsters/Frostborn/Wendigo.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Characters/abbey_placeholder_miniworld_wendigo.png",
+      "sourceSha256": "e412a912dc2ed7da409a4c19229169e715f51b7b59deb1ecba1082626abc2195",
+      "sha256": "e412a912dc2ed7da409a4c19229169e715f51b7b59deb1ecba1082626abc2195",
+      "dimensions": {
+        "width": 96,
+        "height": 128
+      },
+      "expectedDimensions": {
+        "width": 96,
+        "height": 128
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "character_wendigo_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 112,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 96,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 80,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "character_wendigo_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 64,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_trees",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/Trees.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_trees.png",
+      "sourceSha256": "5b2839ec295c72575c5fd1df373b75ba4d3464478edab8e1489ec683dcecf634",
+      "sha256": "5b2839ec295c72575c5fd1df373b75ba4d3464478edab8e1489ec683dcecf634",
+      "dimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_trees_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_trees_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_trees_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_trees_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_pines",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/PineTrees.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_pines.png",
+      "sourceSha256": "5ab0bde8cb1904ba8c54cb93415c0257cf3f13ce6b470834dee840789dfe60bd",
+      "sha256": "5ab0bde8cb1904ba8c54cb93415c0257cf3f13ce6b470834dee840789dfe60bd",
+      "dimensions": {
+        "width": 48,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_pines_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_pines_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_pines_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_dead_trees",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/DeadTrees.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_dead_trees.png",
+      "sourceSha256": "46430bd9e45312f608d4aacb3d3b15a4177c1ce274e1399f07dc6e80cded46ab",
+      "sha256": "46430bd9e45312f608d4aacb3d3b15a4177c1ce274e1399f07dc6e80cded46ab",
+      "dimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_dead_trees_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_dead_trees_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_dead_trees_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_dead_trees_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_rocks",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/Rocks.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_rocks.png",
+      "sourceSha256": "aca2db4406062190fa5d8f1622451e17cf3c9e9178d82db4b22df72c3e54efe4",
+      "sha256": "aca2db4406062190fa5d8f1622451e17cf3c9e9178d82db4b22df72c3e54efe4",
+      "dimensions": {
+        "width": 48,
+        "height": 64
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 64
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_rocks_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_rocks_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_wheatfield",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/Wheatfield.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_wheatfield.png",
+      "sourceSha256": "e7868d240da663e9a61a8424a84fe61495ada17a8df2a56c0a91e5b07f24640f",
+      "sha256": "e7868d240da663e9a61a8424a84fe61495ada17a8df2a56c0a91e5b07f24640f",
+      "dimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_wheatfield_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_wheatfield_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_wheatfield_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_wheatfield_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "nature_winter_trees",
+      "category": "nature",
+      "sourcePath": "MiniWorldSprites/Nature/WinterTrees.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Nature/abbey_placeholder_miniworld_winter_trees.png",
+      "sourceSha256": "3c398c237be2d212aa9f382c89e1663080ecb9a9eb1fab42ef36837c06b758be",
+      "sha256": "3c398c237be2d212aa9f382c89e1663080ecb9a9eb1fab42ef36837c06b758be",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "nature_winter_trees_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "nature_winter_trees_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_bridge",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Miscellaneous/Bridge.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_bridge.png",
+      "sourceSha256": "f91e2fcc9d019e4acd6c6b011bc6fca89adebca159e02ee8ae6990430c447108",
+      "sha256": "f91e2fcc9d019e4acd6c6b011bc6fca89adebca159e02ee8ae6990430c447108",
+      "dimensions": {
+        "width": 80,
+        "height": 48
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 48
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_bridge_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_bridge_r02_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_chests",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Miscellaneous/Chests.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_chests.png",
+      "sourceSha256": "392948a72121d411be3e85f50549359634c23f46553ea84f02b44ff00451b959",
+      "sha256": "392948a72121d411be3e85f50549359634c23f46553ea84f02b44ff00451b959",
+      "dimensions": {
+        "width": 32,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 32,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_chests_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_chests_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_tombstones",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Miscellaneous/Tombstones.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_tombstones.png",
+      "sourceSha256": "9d297b4cdabdb1f6071d2bef89db1d613a73a6b6ffcc4546419ac2f761dfb6eb",
+      "sha256": "9d297b4cdabdb1f6071d2bef89db1d613a73a6b6ffcc4546419ac2f761dfb6eb",
+      "dimensions": {
+        "width": 64,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_tombstones_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_tombstones_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_well",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Miscellaneous/Well.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_well.png",
+      "sourceSha256": "f65295588c25f3c318cfae6f80685d594a2a06d0a88ad3116e760e25f1a896c1",
+      "sha256": "f65295588c25f3c318cfae6f80685d594a2a06d0a88ad3116e760e25f1a896c1",
+      "dimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 48,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_well_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_well_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_well_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_well_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_well_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_well_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_transport_ship",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Miscellaneous/TransportShip.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_transport_ship.png",
+      "sourceSha256": "c3d3ec3b295137cf7cd907189dcdc066f3fd1b79c84ea6aab03a86bec42e7b5e",
+      "sha256": "c3d3ec3b295137cf7cd907189dcdc066f3fd1b79c84ea6aab03a86bec42e7b5e",
+      "dimensions": {
+        "width": 96,
+        "height": 32
+      },
+      "expectedDimensions": {
+        "width": 96,
+        "height": 32
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_transport_ship_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r00_c05",
+          "rect": {
+            "x": 80,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_transport_ship_r01_c05",
+          "rect": {
+            "x": 80,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "prop_sheep",
+      "category": "prop",
+      "sourcePath": "MiniWorldSprites/Animals/Sheep.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/Props/abbey_placeholder_miniworld_sheep.png",
+      "sourceSha256": "601f7519fc525859797421dd94a091fe6ef4bb203eb02f839444f3408d330a00",
+      "sha256": "601f7519fc525859797421dd94a091fe6ef4bb203eb02f839444f3408d330a00",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "expectedDimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "cameraFacingXZ",
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "slices": [
+        {
+          "name": "prop_sheep_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 48,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r01_c00",
+          "rect": {
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r01_c01",
+          "rect": {
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r01_c02",
+          "rect": {
+            "x": 32,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r01_c03",
+          "rect": {
+            "x": 48,
+            "y": 32,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r02_c00",
+          "rect": {
+            "x": 0,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r02_c01",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r02_c02",
+          "rect": {
+            "x": 32,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r02_c03",
+          "rect": {
+            "x": 48,
+            "y": 16,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r03_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r03_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r03_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "prop_sheep_r03_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    },
+    {
+      "fileId": "ui_highlights",
+      "category": "ui",
+      "sourcePath": "MiniWorldSprites/User Interface/Highlighted-Boxes.png",
+      "abbeyPath": "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/UI/abbey_placeholder_miniworld_highlights.png",
+      "sourceSha256": "491406a4f6bc7d5dfe7329d0d13a7bdd51a1bae7c90bdc043a6ba0d03dd1382d",
+      "sha256": "491406a4f6bc7d5dfe7329d0d13a7bdd51a1bae7c90bdc043a6ba0d03dd1382d",
+      "dimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "expectedDimensions": {
+        "width": 80,
+        "height": 16
+      },
+      "sheetCellSize": {
+        "width": 16,
+        "height": 16
+      },
+      "importMode": "multiple",
+      "pixelsPerUnit": 16,
+      "orientation": "screen",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "slices": [
+        {
+          "name": "ui_highlights_r00_c00",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "ui_highlights_r00_c01",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "ui_highlights_r00_c02",
+          "rect": {
+            "x": 32,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "ui_highlights_r00_c03",
+          "rect": {
+            "x": 48,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        },
+        {
+          "name": "ui_highlights_r00_c04",
+          "rect": {
+            "x": 64,
+            "y": 0,
+            "width": 16,
+            "height": 16
+          }
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "stableRoleId": "role.terrain.meadow",
+      "assetId": "map_meadow",
+      "roles": [
+        "terrain.meadow"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_grass:terrain_grass_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -100,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.forest_floor",
+      "assetId": "map_ForestFloor",
+      "roles": [
+        "terrain.forestFloor"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_textured_grass:terrain_textured_grass_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -100,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.beach",
+      "assetId": "map_Beach",
+      "roles": [
+        "terrain.beach"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_shore:terrain_shore_r00_c02",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -99,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.stream",
+      "assetId": "map_stream",
+      "roles": [
+        "terrain.stream"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_grass:terrain_grass_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -98,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.riverbank",
+      "assetId": "map_riverbank",
+      "roles": [
+        "terrain.riverbank"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_shore:terrain_shore_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -97,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.path",
+      "assetId": "dirt_road_segment",
+      "roles": [
+        "terrain.path"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_grass:terrain_grass_r00_c02",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -96,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.paving",
+      "assetId": "paving_patch",
+      "roles": [
+        "terrain.paving"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_textured_grass:terrain_textured_grass_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -95,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Closest available neutral textured tile; visual review required."
+    },
+    {
+      "stableRoleId": "role.terrain.abbey_hill",
+      "assetId": "map_abbey_hill",
+      "roles": [
+        "terrain.abbeyHill"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_cliff:terrain_cliff_r04_c04",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -94,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.hill",
+      "assetId": "terrain_hill",
+      "roles": [
+        "terrain.hill"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_cliff:terrain_cliff_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -93,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.mountain",
+      "assetId": "terrain_mountain",
+      "roles": [
+        "terrain.mountain"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_cliff:terrain_cliff_r06_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -92,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.terrain.winter",
+      "assetId": "map_winter",
+      "roles": [
+        "terrain.winter"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "terrain_winter:terrain_winter_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": -91,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.storage",
+      "assetId": "storage_pile_t1",
+      "roles": [
+        "building.storage"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_resources:building_resources_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Resource-building proxy; not a loose pile."
+    },
+    {
+      "stableRoleId": "role.building.shelter",
+      "assetId": "shelter_t1",
+      "roles": [
+        "building.shelter"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_huts:building_huts_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        3,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.woodcutter",
+      "assetId": "woodcutter_t1",
+      "roles": [
+        "building.woodcutter"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_resources:building_resources_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        3,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.guard_post",
+      "assetId": "guard_post_t1",
+      "roles": [
+        "building.guardPost"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_tower:building_tower_r01_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 15,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.candle_shrine",
+      "assetId": "candle_shrine_t1",
+      "roles": [
+        "building.candleShrine"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_chapels:building_chapels_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 12,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic chapel proxy lacks Abbey flame language."
+    },
+    {
+      "stableRoleId": "role.building.asylum",
+      "assetId": "asylum_corner_t1",
+      "roles": [
+        "building.asylum"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_houses:building_houses_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        3,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.abbey_gate",
+      "assetId": "abbey_gate_repair",
+      "roles": [
+        "building.abbeyGate"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_tower:building_tower_r02_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 14,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic fortified gate proxy."
+    },
+    {
+      "stableRoleId": "role.building.bell_tower_repair",
+      "assetId": "bell_tower_repair",
+      "roles": [
+        "building.bellTowerRepair"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_tower:building_tower_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 16,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic tower proxy; repaired Bell Tower identity remains a human art gate."
+    },
+    {
+      "stableRoleId": "role.building.field",
+      "assetId": "field_plot_t1",
+      "roles": [
+        "building.field"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_wheatfield:nature_wheatfield_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 2,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.pasture",
+      "assetId": "pasture_t1",
+      "roles": [
+        "building.pasture"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_sheep:prop_sheep_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 5,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        4
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Animal marker for pasture; fencing is not present in this pack subset."
+    },
+    {
+      "stableRoleId": "role.building.smithy",
+      "assetId": "smithy_t1",
+      "roles": [
+        "building.smithy"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_workshops:building_workshops_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        3,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.forester",
+      "assetId": "forester_hut_t1",
+      "roles": [
+        "building.forester"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_huts:building_huts_r00_c02",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        3,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.herbalist",
+      "assetId": "herbalist_hut_t1",
+      "roles": [
+        "building.herbalist"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_huts:building_huts_r00_c03",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2.5,
+        2.5
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.orchard",
+      "assetId": "orchard_plot_t1",
+      "roles": [
+        "building.orchard"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_trees:nature_trees_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 5,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        4
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Tree marker; the scene builder must arrange the orchard cluster."
+    },
+    {
+      "stableRoleId": "role.building.hunter",
+      "assetId": "hunter_blind_t1",
+      "roles": [
+        "building.hunterBlind"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_huts:building_huts_r00_c04",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 10,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.grove_shrine",
+      "assetId": "grove_shrine_t1",
+      "roles": [
+        "building.groveShrine"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_chapels:building_chapels_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 12,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic chapel proxy, not an identity-approved grove shrine."
+    },
+    {
+      "stableRoleId": "role.building.root_bridge",
+      "assetId": "root_bridge_t1",
+      "roles": [
+        "building.rootBridge"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_bridge:prop_bridge_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 4,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        2
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Wooden bridge proxy; no root silhouette."
+    },
+    {
+      "stableRoleId": "role.building.stag_garden",
+      "assetId": "stag_garden_t1",
+      "roles": [
+        "building.stagGarden"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_trees:nature_trees_r00_c02",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 5,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        4
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Garden tree marker; Stag remains unresolved."
+    },
+    {
+      "stableRoleId": "role.building.forest_watchpost",
+      "assetId": "forest_watchpost_t1",
+      "roles": [
+        "building.forestWatchpost"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_tower:building_tower_r01_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 15,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2.5,
+        2.5
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.warrior_lodge",
+      "assetId": "warrior_lodge_t1",
+      "roles": [
+        "building.warriorLodge"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_barracks:building_barracks_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 12,
+      "phaseTint": true,
+      "authoredFootprint": [
+        4,
+        4
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.watchtower",
+      "assetId": "watchtower_t1",
+      "roles": [
+        "building.watchtower"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "building_tower:building_tower_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 16,
+      "phaseTint": true,
+      "authoredFootprint": [
+        2.5,
+        2.5
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.building.spring_ship",
+      "assetId": "spring_ship_t1",
+      "roles": [
+        "building.springShip"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_transport_ship:prop_transport_ship_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 3,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 8,
+      "phaseTint": true,
+      "authoredFootprint": [
+        6,
+        3
+      ],
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Intact transport-ship proxy for staged reconstruction."
+    },
+    {
+      "stableRoleId": "role.prop.well",
+      "assetId": "well_t1",
+      "roles": [
+        "prop.well"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_well:prop_well_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1.8,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 6,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.prop.chest",
+      "assetId": "shipwreck_crate_closed",
+      "roles": [
+        "prop.chest"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_chests:prop_chests_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1.2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 6,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.prop.grave",
+      "assetId": "grave_marker",
+      "roles": [
+        "prop.grave"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_tombstones:prop_tombstones_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 6,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.prop.bridge",
+      "assetId": "stream_bridge",
+      "roles": [
+        "prop.bridge"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "prop_bridge:prop_bridge_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.5,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 4,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.nature.tree.deciduous",
+      "assetId": "forest_tree_02",
+      "roles": [
+        "nature.tree.deciduous"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_trees:nature_trees_r00_c02",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.6,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 7,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.nature.tree.pine",
+      "assetId": "forest_tree_01",
+      "roles": [
+        "nature.tree.pine"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_pines:nature_pines_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.8,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 7,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.nature.tree.dead",
+      "assetId": "forest_tree_dead",
+      "roles": [
+        "nature.tree.dead"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_dead_trees:nature_dead_trees_r00_c01",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2.6,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 7,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.nature.rocks",
+      "assetId": "rock_cluster_01",
+      "roles": [
+        "nature.rocks"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "nature_rocks:nature_rocks_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 2,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 3,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.ui.selection",
+      "assetId": "selection_highlight",
+      "roles": [
+        "ui.selection"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "ui_highlights:ui_highlights_r00_c00",
+      "directionalSprites": {},
+      "walkAnimation": null,
+      "visualScale": 1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 100,
+      "phaseTint": false,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.villager",
+      "assetId": "villager_lowpoly",
+      "roles": [
+        "actor.villager"
+      ],
+      "componentTypeNames": [
+        "Abbey.Villagers.VillagerAgent"
+      ],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.female_b",
+      "assetId": "settler_female_b",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.male_a",
+      "assetId": "settler_male_a",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.female_d",
+      "assetId": "settler_female_d",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.male_b",
+      "assetId": "settler_male_b",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.female_f",
+      "assetId": "settler_female_f",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.settler.male_d",
+      "assetId": "settler_male_d",
+      "roles": [
+        "actor.villagerVariant"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_worker:character_worker_r00_c00",
+      "directionalSprites": {
+        "south": "character_worker:character_worker_r00_c00",
+        "north": "character_worker:character_worker_r01_c00",
+        "east": "character_worker:character_worker_r02_c00",
+        "west": "character_worker:character_worker_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_worker:character_worker_r00_c00",
+            "character_worker:character_worker_r00_c01",
+            "character_worker:character_worker_r00_c02",
+            "character_worker:character_worker_r00_c03",
+            "character_worker:character_worker_r00_c04"
+          ],
+          "north": [
+            "character_worker:character_worker_r01_c00",
+            "character_worker:character_worker_r01_c01",
+            "character_worker:character_worker_r01_c02",
+            "character_worker:character_worker_r01_c03",
+            "character_worker:character_worker_r01_c04"
+          ],
+          "east": [
+            "character_worker:character_worker_r02_c00",
+            "character_worker:character_worker_r02_c01",
+            "character_worker:character_worker_r02_c02",
+            "character_worker:character_worker_r02_c03",
+            "character_worker:character_worker_r02_c04"
+          ],
+          "west": [
+            "character_worker:character_worker_r03_c00",
+            "character_worker:character_worker_r03_c01",
+            "character_worker:character_worker_r03_c02",
+            "character_worker:character_worker_r03_c03",
+            "character_worker:character_worker_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.7,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 20,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.warrior",
+      "assetId": "warrior",
+      "roles": [
+        "actor.warrior"
+      ],
+      "componentTypeNames": [
+        "Abbey.Combat.WarriorAgent"
+      ],
+      "defaultSprite": "character_swordsman:character_swordsman_r00_c00",
+      "directionalSprites": {
+        "south": "character_swordsman:character_swordsman_r00_c00",
+        "north": "character_swordsman:character_swordsman_r01_c00",
+        "east": "character_swordsman:character_swordsman_r02_c00",
+        "west": "character_swordsman:character_swordsman_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_swordsman:character_swordsman_r00_c00",
+            "character_swordsman:character_swordsman_r00_c01",
+            "character_swordsman:character_swordsman_r00_c02",
+            "character_swordsman:character_swordsman_r00_c03",
+            "character_swordsman:character_swordsman_r00_c04"
+          ],
+          "north": [
+            "character_swordsman:character_swordsman_r01_c00",
+            "character_swordsman:character_swordsman_r01_c01",
+            "character_swordsman:character_swordsman_r01_c02",
+            "character_swordsman:character_swordsman_r01_c03",
+            "character_swordsman:character_swordsman_r01_c04"
+          ],
+          "east": [
+            "character_swordsman:character_swordsman_r02_c00",
+            "character_swordsman:character_swordsman_r02_c01",
+            "character_swordsman:character_swordsman_r02_c02",
+            "character_swordsman:character_swordsman_r02_c03",
+            "character_swordsman:character_swordsman_r02_c04"
+          ],
+          "west": [
+            "character_swordsman:character_swordsman_r03_c00",
+            "character_swordsman:character_swordsman_r03_c01",
+            "character_swordsman:character_swordsman_r03_c02",
+            "character_swordsman:character_swordsman_r03_c03",
+            "character_swordsman:character_swordsman_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.8,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 22,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "role.actor.grave_crawler",
+      "assetId": "nightmare_grave_crawler",
+      "roles": [
+        "actor.nightmare.graveCrawler"
+      ],
+      "componentTypeNames": [
+        "Abbey.Nightmares.ConsequenceMonsterController"
+      ],
+      "defaultSprite": "character_skeleton:character_skeleton_r00_c00",
+      "directionalSprites": {
+        "south": "character_skeleton:character_skeleton_r00_c00",
+        "north": "character_skeleton:character_skeleton_r01_c00",
+        "east": "character_skeleton:character_skeleton_r02_c00",
+        "west": "character_skeleton:character_skeleton_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_skeleton:character_skeleton_r00_c00",
+            "character_skeleton:character_skeleton_r00_c01",
+            "character_skeleton:character_skeleton_r00_c02",
+            "character_skeleton:character_skeleton_r00_c03",
+            "character_skeleton:character_skeleton_r00_c04"
+          ],
+          "north": [
+            "character_skeleton:character_skeleton_r01_c00",
+            "character_skeleton:character_skeleton_r01_c01",
+            "character_skeleton:character_skeleton_r01_c02",
+            "character_skeleton:character_skeleton_r01_c03",
+            "character_skeleton:character_skeleton_r01_c04"
+          ],
+          "east": [
+            "character_skeleton:character_skeleton_r02_c00",
+            "character_skeleton:character_skeleton_r02_c01",
+            "character_skeleton:character_skeleton_r02_c02",
+            "character_skeleton:character_skeleton_r02_c03",
+            "character_skeleton:character_skeleton_r02_c04"
+          ],
+          "west": [
+            "character_skeleton:character_skeleton_r03_c00",
+            "character_skeleton:character_skeleton_r03_c01",
+            "character_skeleton:character_skeleton_r03_c02",
+            "character_skeleton:character_skeleton_r03_c03",
+            "character_skeleton:character_skeleton_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.9,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 25,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic skeleton is a temporary grave-monster proxy."
+    },
+    {
+      "stableRoleId": "role.actor.hunger_wight",
+      "assetId": "nightmare_hunger_wight",
+      "roles": [
+        "actor.nightmare.hungerWight"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_necromancer:character_necromancer_r00_c00",
+      "directionalSprites": {
+        "south": "character_necromancer:character_necromancer_r00_c00",
+        "north": "character_necromancer:character_necromancer_r01_c00",
+        "east": "character_necromancer:character_necromancer_r02_c00",
+        "west": "character_necromancer:character_necromancer_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_necromancer:character_necromancer_r00_c00",
+            "character_necromancer:character_necromancer_r00_c01",
+            "character_necromancer:character_necromancer_r00_c02",
+            "character_necromancer:character_necromancer_r00_c03",
+            "character_necromancer:character_necromancer_r00_c04"
+          ],
+          "north": [
+            "character_necromancer:character_necromancer_r01_c00",
+            "character_necromancer:character_necromancer_r01_c01",
+            "character_necromancer:character_necromancer_r01_c02",
+            "character_necromancer:character_necromancer_r01_c03",
+            "character_necromancer:character_necromancer_r01_c04"
+          ],
+          "east": [
+            "character_necromancer:character_necromancer_r02_c00",
+            "character_necromancer:character_necromancer_r02_c01",
+            "character_necromancer:character_necromancer_r02_c02",
+            "character_necromancer:character_necromancer_r02_c03",
+            "character_necromancer:character_necromancer_r02_c04"
+          ],
+          "west": [
+            "character_necromancer:character_necromancer_r03_c00",
+            "character_necromancer:character_necromancer_r03_c01",
+            "character_necromancer:character_necromancer_r03_c02",
+            "character_necromancer:character_necromancer_r03_c03",
+            "character_necromancer:character_necromancer_r03_c04"
+          ]
+        }
+      },
+      "visualScale": 1.9,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 25,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Generic robed undead is a temporary wight proxy."
+    },
+    {
+      "stableRoleId": "role.actor.antler_wraith",
+      "assetId": "nightmare_antler_wraith",
+      "roles": [
+        "actor.nightmare.antlerWraith"
+      ],
+      "componentTypeNames": [],
+      "defaultSprite": "character_wendigo:character_wendigo_r00_c00",
+      "directionalSprites": {
+        "south": "character_wendigo:character_wendigo_r00_c00",
+        "north": "character_wendigo:character_wendigo_r01_c00",
+        "east": "character_wendigo:character_wendigo_r02_c00",
+        "west": "character_wendigo:character_wendigo_r03_c00"
+      },
+      "walkAnimation": {
+        "frameSeconds": 0.2,
+        "directions": {
+          "south": [
+            "character_wendigo:character_wendigo_r00_c00",
+            "character_wendigo:character_wendigo_r00_c01",
+            "character_wendigo:character_wendigo_r00_c02",
+            "character_wendigo:character_wendigo_r00_c03"
+          ],
+          "north": [
+            "character_wendigo:character_wendigo_r01_c00",
+            "character_wendigo:character_wendigo_r01_c01",
+            "character_wendigo:character_wendigo_r01_c02",
+            "character_wendigo:character_wendigo_r01_c03"
+          ],
+          "east": [
+            "character_wendigo:character_wendigo_r02_c00",
+            "character_wendigo:character_wendigo_r02_c01",
+            "character_wendigo:character_wendigo_r02_c02",
+            "character_wendigo:character_wendigo_r02_c03"
+          ],
+          "west": [
+            "character_wendigo:character_wendigo_r03_c00",
+            "character_wendigo:character_wendigo_r03_c01",
+            "character_wendigo:character_wendigo_r03_c02",
+            "character_wendigo:character_wendigo_r03_c03"
+          ]
+        }
+      },
+      "visualScale": 2.1,
+      "anchorOffset": [
+        0.0,
+        0.0
+      ],
+      "roleSortOffset": 26,
+      "phaseTint": true,
+      "authoredFootprint": null,
+      "fallbackPolicy": "reversible3D",
+      "temporaryIdentityProxy": true,
+      "notes": "Antlered frost monster is a temporary antler-wraith proxy."
+    },
+    {
+        "stableRoleId": "role.building.abbey_wall",
+        "assetId": "abbey_wall_broken",
+        "roles": [
+          "building.abbeyWall"
+        ],
+        "componentTypeNames": [],
+        "defaultSprite": "building_tower:building_tower_r02_c00",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 2.5,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 14,
+        "phaseTint": true,
+        "authoredFootprint": [
+          5,
+          1
+        ],
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "Generic fortified wall segment; exact broken-stone identity remains unapproved."
+      },
+      {
+        "stableRoleId": "role.nature.forest_cluster_01",
+        "assetId": "forest_cluster_01",
+        "roles": [
+          "nature.forestCluster"
+        ],
+        "componentTypeNames": [],
+        "defaultSprite": "nature_trees:nature_trees_r00_c01",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 2.8,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 7,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "The scene builder must compose a deterministic cluster from catalog variants."
+      },
+      {
+        "stableRoleId": "role.nature.forest_cluster_02",
+        "assetId": "forest_cluster_02",
+        "roles": [
+          "nature.forestCluster"
+        ],
+        "componentTypeNames": [],
+        "defaultSprite": "nature_pines:nature_pines_r00_c01",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 2.8,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 7,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "The scene builder must compose a deterministic cluster from catalog variants."
+      },
+      {
+        "stableRoleId": "role.dynamic.carried_resource",
+        "assetId": "carried_resource",
+        "roles": [
+          "dynamic.carriedResource"
+        ],
+        "componentTypeNames": [],
+        "defaultSprite": "prop_chests:prop_chests_r00_c00",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 0.7,
+        "anchorOffset": [
+          0.3,
+          0.8
+        ],
+        "roleSortOffset": 30,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "Generic carried-goods proxy; runtime role selects it independently from the carrier."
+      },
+      {
+        "stableRoleId": "role.dynamic.construction_site",
+        "assetId": "construction_site",
+        "roles": [
+          "dynamic.constructionSite"
+        ],
+        "componentTypeNames": [
+          "Abbey.Buildings.ConstructionSite"
+        ],
+        "defaultSprite": "building_huts:building_huts_r00_c00",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 1.8,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 9,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "Early-stage shelter frame; final building role replaces it on completion."
+      },
+      {
+        "stableRoleId": "role.dynamic.salvage_site",
+        "assetId": "salvage_site",
+        "roles": [
+          "dynamic.salvageSite"
+        ],
+        "componentTypeNames": [
+          "Abbey.Economy.SalvageSite"
+        ],
+        "defaultSprite": "prop_chests:prop_chests_r00_c01",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 1.1,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 6,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": false
+      },
+      {
+        "stableRoleId": "role.dynamic.restoration_node",
+        "assetId": "restoration_node",
+        "roles": [
+          "dynamic.restorationNode"
+        ],
+        "componentTypeNames": [
+          "Abbey.Buildings.RestorationNode"
+        ],
+        "defaultSprite": "building_tower:building_tower_r02_c00",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 2.2,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 13,
+        "phaseTint": true,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": true,
+        "notes": "Generic repair marker; the completed identity asset remains role-specific."
+      },
+      {
+        "stableRoleId": "role.dynamic.night_objective",
+        "assetId": "night_objective",
+        "roles": [
+          "dynamic.nightObjective"
+        ],
+        "componentTypeNames": [],
+        "defaultSprite": "ui_highlights:ui_highlights_r00_c04",
+        "directionalSprites": {},
+        "walkAnimation": null,
+        "visualScale": 1,
+        "anchorOffset": [
+          0,
+          0
+        ],
+        "roleSortOffset": 90,
+        "phaseTint": false,
+        "authoredFootprint": null,
+        "fallbackPolicy": "reversible3D",
+        "temporaryIdentityProxy": false
+      }
+  ],
+  "unresolvedRoles": [
+    {
+      "stableRoleId": "unresolved.actor.bellkeeper",
+      "role": "actor.bellkeeper",
+      "assetId": "bellkeeper_lowpoly",
+      "signatureRole": true,
+      "reason": "No bell/lantern-bearing human in the archive; champion sprites change the signature silhouette.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.blackHound",
+      "role": "actor.blackHound",
+      "assetId": "black_hound_lowpoly",
+      "signatureRole": true,
+      "reason": "No dog or hound sprite; farm animals are not an honest proxy.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.stag",
+      "role": "actor.stag",
+      "assetId": "stag_beneath_abbey_lowpoly",
+      "signatureRole": true,
+      "reason": "No deer or stag sprite; horned sheep is not an honest proxy.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.ruinedBellTower",
+      "role": "building.ruinedBellTower",
+      "assetId": "bell_tower_ruined",
+      "signatureRole": true,
+      "reason": "Generic tower cannot represent the ruined Abbey identity silhouette.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.abbeyCloister",
+      "role": "building.abbeyCloister",
+      "assetId": "abbey_cloister_t1",
+      "signatureRole": true,
+      "reason": "Generic chapel cannot represent the Abbey of Antlers identity.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.abbeyCloisterRepair",
+      "role": "building.abbeyCloisterRepair",
+      "assetId": "abbey_cloister_repair",
+      "signatureRole": true,
+      "reason": "Generic chapel cannot represent the restored cloister identity.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.campfire",
+      "role": "building.campfire",
+      "assetId": "campfire_t1",
+      "signatureRole": false,
+      "reason": "Archive contains no campfire sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.lanternPost",
+      "role": "building.lanternPost",
+      "assetId": "lantern_post_t1",
+      "signatureRole": false,
+      "reason": "Archive contains no lantern-post sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.building.charcoalKiln",
+      "role": "building.charcoalKiln",
+      "assetId": "charcoal_kiln_t1",
+      "signatureRole": false,
+      "reason": "Archive contains no charcoal-kiln sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.prop.shipwreckHull",
+      "role": "prop.shipwreckHull",
+      "assetId": "shipwreck_hull",
+      "signatureRole": false,
+      "reason": "Available ships are intact and not an honest wreck proxy.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.prop.shipwreckBarrel",
+      "role": "prop.shipwreckBarrel",
+      "assetId": "shipwreck_barrel",
+      "signatureRole": false,
+      "reason": "Archive contains no barrel sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.prop.houndChain",
+      "role": "prop.houndChain",
+      "assetId": "hound_chain",
+      "signatureRole": true,
+      "reason": "Archive contains no chain sprite suitable for the bond scene.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.paleHound",
+      "role": "actor.nightmare.paleHound",
+      "assetId": "PaleHound",
+      "signatureRole": true,
+      "reason": "No canine sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.drownedSailor",
+      "role": "actor.nightmare.drownedSailor",
+      "assetId": "DrownedSailor",
+      "signatureRole": true,
+      "reason": "Pirates are living; skeleton is not recognisably drowned or nautical.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.lanternMoth",
+      "role": "actor.nightmare.lanternMoth",
+      "assetId": "LanternMoth",
+      "signatureRole": true,
+      "reason": "No moth sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.deadWorker",
+      "role": "actor.nightmare.deadWorker",
+      "assetId": "DeadWorker",
+      "signatureRole": true,
+      "reason": "Generic skeleton loses the worker identity.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.chainHound",
+      "role": "actor.nightmare.chainHound",
+      "assetId": "ChainHound",
+      "signatureRole": true,
+      "reason": "No canine sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.facelessSaint",
+      "role": "actor.nightmare.facelessSaint",
+      "assetId": "FacelessSaint",
+      "signatureRole": true,
+      "reason": "No faceless sacred humanoid sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.rootWalker",
+      "role": "actor.nightmare.rootWalker",
+      "assetId": "RootWalker",
+      "signatureRole": true,
+      "reason": "No root-bodied monster sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.bellMimic",
+      "role": "actor.nightmare.bellMimic",
+      "assetId": "BellMimic",
+      "signatureRole": true,
+      "reason": "No bell mimic sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.hollowDeer",
+      "role": "actor.nightmare.hollowDeer",
+      "assetId": "HollowDeer",
+      "signatureRole": true,
+      "reason": "No deer sprite.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.actor.nightmare.charcoalDead",
+      "role": "actor.nightmare.charcoalDead",
+      "assetId": "CharcoalDead",
+      "signatureRole": true,
+      "reason": "Generic skeleton lacks charcoal/burnt identity.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    },
+    {
+      "stableRoleId": "unresolved.prop.sacredFlame",
+      "role": "prop.sacredFlame",
+      "assetId": "AbbeyFlame",
+      "signatureRole": true,
+      "reason": "No flame sprite with the Abbey sacred-light language.",
+      "fallbackPolicy": "reversible3DInfrastructureOnly",
+      "temporaryIdentityProxy": false
+    }
+  ],
+  "reports": {
+    "inventory": "inventory.md",
+    "contactSheet": {
+      "path": "contact-sheet.png",
+      "sha256": "98cf0d4886f79ba520bf94bf61fa9a98a49d4496e92f6540f57e558247497470",
+      "dimensions": {
+        "width": 1152,
+        "height": 7224
+      }
+    }
+  },
+  "finalVisualGateBlocked": true,
+  "finalVisualGateBlockReason": "Signature roles and required runtime roles listed in unresolvedRoles have no honest proxy in the pinned pack."
+}

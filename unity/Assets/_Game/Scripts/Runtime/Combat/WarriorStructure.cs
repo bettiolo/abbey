@@ -3,6 +3,7 @@ using Abbey.Core;
 using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Villagers;
+using Abbey.Rendering;
 using UnityEngine;
 
 namespace Abbey.Combat
@@ -184,6 +185,8 @@ namespace Abbey.Combat
             warrior.SetTier(_appliedTierCount);
             warrior.SetSource(source);
             _roster.Add(warrior);
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, "warrior", "actor.warrior", $"warrior:{name}:{_roster.Count - 1}");
 
             GameEventLog.Append("warrior_recruited",
                 $"lodge={name} warrior={go.name} from={(source != null ? source.name : "levy")} tier={_appliedTierCount}");

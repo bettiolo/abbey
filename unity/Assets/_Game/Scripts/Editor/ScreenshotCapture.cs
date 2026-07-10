@@ -3,6 +3,7 @@ using System.IO;
 using Abbey.CameraRig;
 using Abbey.Core;
 using Abbey.Nightmares;
+using Abbey.Rendering;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -295,6 +296,12 @@ namespace Abbey.EditorTools
                     RenderSettings.ambientLight = new Color(0.08f, 0.1f, 0.16f);
                     break;
             }
+
+            // EditMode screenshot capture does not run LateUpdate. Reapply the
+            // presentation so phase-owned sprite tints are visible in proof images.
+            var projection = UnityEngine.Object.FindFirstObjectByType<SpriteProjectionBootstrap>(
+                FindObjectsInactive.Include);
+            projection?.ApplyAllTagged();
         }
 
         public static void ApplyLightingForPhase(DayPhase phase) => ApplyPhaseLighting(phase);

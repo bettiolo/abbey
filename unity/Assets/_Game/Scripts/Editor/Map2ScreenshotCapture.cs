@@ -55,6 +55,8 @@ namespace Abbey.EditorTools
                 var cold = new Color(0.35f, 0.55f, 1f);
                 var material = AbbeyMaterialFactory.CreateUnlit("Abbey_FalseLightProof", cold);
                 falseLight.GetComponent<Renderer>().sharedMaterial = material;
+                SpriteProjectionBootstrap.RegisterGlobal(
+                    falseLight, "selection_highlight", "ui.selection", falseLight.name);
                 var point = falseLight.AddComponent<UnityEngine.Light>();
                 point.type = LightType.Point;
                 point.color = cold;
@@ -62,6 +64,14 @@ namespace Abbey.EditorTools
                 point.intensity = 2.2f;
             }
 
+            var clock = UnityEngine.Object.FindFirstObjectByType<GameClock>();
+            if (clock != null)
+            {
+                while (clock.Phase != DayPhase.Night)
+                {
+                    clock.Tick(clock.GetPhaseDuration(clock.Phase) + 0.01f);
+                }
+            }
             ScreenshotCapture.ApplyLightingForPhase(DayPhase.Night);
             RenderSettings.ambientLight = new Color(0.16f, 0.20f, 0.28f);
             var proofSun = GameObject.Find("Sun")?.GetComponent<UnityEngine.Light>();

@@ -1,0 +1,1329 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a995f5bfa3dd6433b8f6c934326f2009, type: 3}
+  m_Name: MiniWorldSpriteProjectionCatalog
+  m_EditorClassIdentifier: Abbey.Runtime::Abbey.Rendering.SpriteProjectionCatalog
+  entries:
+  - assetId: map_meadow
+    role: terrain.meadow
+    sprite: {fileID: 5603104895943418731, guid: 6b95e534f178f4dfeaa928fc2b438318, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -100
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_ForestFloor
+    role: terrain.forestFloor
+    sprite: {fileID: 163436732869872293, guid: 871af30bad38d418182400fb69f3de8f, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -100
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_Beach
+    role: terrain.beach
+    sprite: {fileID: -8302608538887608152, guid: 95de09bc3387f4fd4b3355a3a7b303bf, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -99
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_stream
+    role: terrain.stream
+    sprite: {fileID: -3712452316163214004, guid: 6b95e534f178f4dfeaa928fc2b438318, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -98
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_riverbank
+    role: terrain.riverbank
+    sprite: {fileID: -6959249185740040257, guid: 95de09bc3387f4fd4b3355a3a7b303bf, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -97
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: dirt_road_segment
+    role: terrain.path
+    sprite: {fileID: -6582823670919171600, guid: 6b95e534f178f4dfeaa928fc2b438318, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -96
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: paving_patch
+    role: terrain.paving
+    sprite: {fileID: -3212451713055100001, guid: 871af30bad38d418182400fb69f3de8f, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -95
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_abbey_hill
+    role: terrain.abbeyHill
+    sprite: {fileID: 6140638804437574557, guid: 105ba2e0f91e54140821e3b78554abc4, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -94
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: terrain_hill
+    role: terrain.hill
+    sprite: {fileID: -1701878444071833564, guid: 105ba2e0f91e54140821e3b78554abc4, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -93
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: terrain_mountain
+    role: terrain.mountain
+    sprite: {fileID: -8350805596349602732, guid: 105ba2e0f91e54140821e3b78554abc4, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -92
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: map_winter
+    role: terrain.winter
+    sprite: {fileID: -674439301686254828, guid: 18cf39e629ba7446598dbe70d59a05bc, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 1
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: -91
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: storage_pile_t1
+    role: building.storage
+    sprite: {fileID: 3115232459815397712, guid: abc01512589c74267851b5a07a06442c, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: shelter_t1
+    role: building.shelter
+    sprite: {fileID: -7113862876722859918, guid: f3ea215ee950544ba8be11ffeb2268f7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 3, y: 3}
+  - assetId: woodcutter_t1
+    role: building.woodcutter
+    sprite: {fileID: 7456521916424447209, guid: abc01512589c74267851b5a07a06442c, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 3, y: 3}
+  - assetId: guard_post_t1
+    role: building.guardPost
+    sprite: {fileID: -6742954093392993122, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 15
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: candle_shrine_t1
+    role: building.candleShrine
+    sprite: {fileID: -5555417287776865249, guid: 75db8bd953a054d33a6fcb994af83dbb, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 12
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: asylum_corner_t1
+    role: building.asylum
+    sprite: {fileID: 1653832971269873097, guid: fc2ed1168b6c7457db6c1707351bf306, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 3, y: 3}
+  - assetId: abbey_gate_repair
+    role: building.abbeyGate
+    sprite: {fileID: 1711556164876638695, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 14
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 2}
+  - assetId: bell_tower_repair
+    role: building.bellTowerRepair
+    sprite: {fileID: 6092585912760259487, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 16
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: field_plot_t1
+    role: building.field
+    sprite: {fileID: 5753737986838282133, guid: 6d127e7a7a7c1475da7e672996e0aa7d, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 2
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: pasture_t1
+    role: building.pasture
+    sprite: {fileID: 2522889371775927956, guid: ab209686c0da148f5b33ccc127276c89, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 5
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 4}
+  - assetId: smithy_t1
+    role: building.smithy
+    sprite: {fileID: 4513812695871626084, guid: 79f27a3b3296a42a9ac4cc5c07493435, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 3, y: 3}
+  - assetId: forester_hut_t1
+    role: building.forester
+    sprite: {fileID: 8333431143881626990, guid: f3ea215ee950544ba8be11ffeb2268f7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 3, y: 3}
+  - assetId: herbalist_hut_t1
+    role: building.herbalist
+    sprite: {fileID: 853024205412567234, guid: f3ea215ee950544ba8be11ffeb2268f7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2.5, y: 2.5}
+  - assetId: orchard_plot_t1
+    role: building.orchard
+    sprite: {fileID: -3790871328027051468, guid: ab232a534396f45159ce556b33a80b35, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 5
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 4}
+  - assetId: hunter_blind_t1
+    role: building.hunterBlind
+    sprite: {fileID: 2582566264870873510, guid: f3ea215ee950544ba8be11ffeb2268f7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 10
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: grove_shrine_t1
+    role: building.groveShrine
+    sprite: {fileID: 2678408314095512063, guid: 75db8bd953a054d33a6fcb994af83dbb, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 12
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2, y: 2}
+  - assetId: root_bridge_t1
+    role: building.rootBridge
+    sprite: {fileID: -6163487396676700254, guid: 1eecd328b318b4f3da87f6fe5c0b0272, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 4
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 2}
+  - assetId: stag_garden_t1
+    role: building.stagGarden
+    sprite: {fileID: 3620786629031202598, guid: ab232a534396f45159ce556b33a80b35, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 5
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 4}
+  - assetId: forest_watchpost_t1
+    role: building.forestWatchpost
+    sprite: {fileID: -6742954093392993122, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 15
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2.5, y: 2.5}
+  - assetId: warrior_lodge_t1
+    role: building.warriorLodge
+    sprite: {fileID: -2168502891244660687, guid: d6a8de9da1df4477dbcd8797ef502014, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 12
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 4, y: 4}
+  - assetId: watchtower_t1
+    role: building.watchtower
+    sprite: {fileID: 6092585912760259487, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 16
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 2.5, y: 2.5}
+  - assetId: spring_ship_t1
+    role: building.springShip
+    sprite: {fileID: -1132821561489449202, guid: 98495520230894c978975448fe9ac33e, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 3
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 8
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 6, y: 3}
+  - assetId: well_t1
+    role: prop.well
+    sprite: {fileID: 8903799525585476684, guid: 2aaea98e687ad466295f167c55c597b2, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 6
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: shipwreck_crate_closed
+    role: prop.chest
+    sprite: {fileID: -4235122908582415903, guid: a0acdeb02ed8e46f89dcf6505f0c2faf, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 6
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: grave_marker
+    role: prop.grave
+    sprite: {fileID: 8373891090642649498, guid: 2b647583b828e44d593140fbd93049a7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 6
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: stream_bridge
+    role: prop.bridge
+    sprite: {fileID: -6163487396676700254, guid: 1eecd328b318b4f3da87f6fe5c0b0272, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 4
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: forest_tree_02
+    role: nature.tree.deciduous
+    sprite: {fileID: 3620786629031202598, guid: ab232a534396f45159ce556b33a80b35, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.6
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 7
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: forest_tree_01
+    role: nature.tree.pine
+    sprite: {fileID: 4497153901307254347, guid: eff14887dbb3c485b92b52fa8e66d19f, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 7
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: forest_tree_dead
+    role: nature.tree.dead
+    sprite: {fileID: -7080985178613101951, guid: a3420a67e276a4833af605199a047b44, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.6
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 7
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: rock_cluster_01
+    role: nature.rocks
+    sprite: {fileID: 1394288306593027659, guid: 19928a071fffd4bd7b8922d000d73fc4, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 3
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: selection_highlight
+    role: ui.selection
+    sprite: {fileID: -2810524196225642641, guid: 35e66db148af34251837903dd9b72eae, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 100
+    participatesInPhaseTint: 0
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: villager_lowpoly
+    role: actor.villager
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_female_b
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_male_a
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_female_d
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_male_b
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_female_f
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: settler_male_d
+    role: actor.villagerVariant
+    sprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southSprite: {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northSprite: {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastSprite: {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westSprite: {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    southWalk:
+    - {fileID: -8474843975776323145, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5501882449776147581, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5307831909663153384, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5475754379793816253, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -8594997622253035706, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    northWalk:
+    - {fileID: 2929415966152235235, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8126348268580730471, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 3585382601924852246, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -7137988655437337303, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -927477985601152287, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    eastWalk:
+    - {fileID: -6800144099484253431, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -1203677819208170008, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3191000321368764648, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3267656963582004359, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5646040121992576337, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    westWalk:
+    - {fileID: 1240780410896578140, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -5364805234751551395, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 8951177396387128386, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: 5584484304524048248, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    - {fileID: -3526554210516587992, guid: 6927c7ff12e754dfd99f5998992e90be, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.7
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 20
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: warrior
+    role: actor.warrior
+    sprite: {fileID: -5613647993845453674, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    southSprite: {fileID: -5613647993845453674, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    northSprite: {fileID: -747999695913888179, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    eastSprite: {fileID: 9003249589941318593, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    westSprite: {fileID: -5392207868453492434, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    southWalk:
+    - {fileID: -5613647993845453674, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 6043446457998500671, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 5514463245354756347, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -8002078459798142320, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 4077285869553615138, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    northWalk:
+    - {fileID: -747999695913888179, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 7551924648904123285, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 6658965620863009018, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -3909761954856867190, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -4871598511574957063, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    eastWalk:
+    - {fileID: 9003249589941318593, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 3560439658064940145, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 758888223975031117, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -5098392349164562392, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -3475797764646333729, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    westWalk:
+    - {fileID: -5392207868453492434, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -8195036676229541766, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: -6521570493789855774, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 8755301322627612805, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    - {fileID: 4919221024379418128, guid: dcbf105e79aca457da4f3fbd1534e3e5, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 22
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: nightmare_grave_crawler
+    role: actor.nightmare.graveCrawler
+    sprite: {fileID: -5789979401577567947, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    southSprite: {fileID: -5789979401577567947, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    northSprite: {fileID: 3378352474776058838, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    eastSprite: {fileID: 3211744824325696064, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    westSprite: {fileID: 7284553514192203176, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    southWalk:
+    - {fileID: -5789979401577567947, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: 2950632056250377604, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: 5761763083591114128, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -7221897505237716116, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -7187935157775920516, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    northWalk:
+    - {fileID: 3378352474776058838, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: 4388938531139097356, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -1586082327467508253, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: 5692341974933103419, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: 4804820297297622695, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    eastWalk:
+    - {fileID: 3211744824325696064, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -7373700076850947989, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -6311009214322226848, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -5300758859270936468, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -6210647621883392043, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    westWalk:
+    - {fileID: 7284553514192203176, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -4788556591045404233, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -3233460742706882892, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -519650655606709383, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    - {fileID: -4801219241569596090, guid: 3f9530bc27d0c446ebb00de7b309576a, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.9
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 25
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: nightmare_hunger_wight
+    role: actor.nightmare.hungerWight
+    sprite: {fileID: 1939863308754941727, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    southSprite: {fileID: 1939863308754941727, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    northSprite: {fileID: -574193935134943985, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    eastSprite: {fileID: -8871244792060595415, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    westSprite: {fileID: -6402221262910048946, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    southWalk:
+    - {fileID: 1939863308754941727, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 8975809696368539929, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 7740562561417436694, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 8495969293880017436, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -3287872390969302459, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    northWalk:
+    - {fileID: -574193935134943985, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 3773858965556817775, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -7110247218779180433, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -571410555320697494, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 7387146983761450526, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    eastWalk:
+    - {fileID: -8871244792060595415, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -7180449723717069287, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 1753375845981154955, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -2891092872356327900, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 2619605092612564851, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    westWalk:
+    - {fileID: -6402221262910048946, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 598303430451279279, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -2948353729941468083, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: -8844511020586039283, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    - {fileID: 2694125138693182352, guid: b80db685a6a444f96b6bddfdc528d99e, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.9
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 25
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: nightmare_antler_wraith
+    role: actor.nightmare.antlerWraith
+    sprite: {fileID: 89939320712729523, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    southSprite: {fileID: 89939320712729523, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    northSprite: {fileID: -7646703975910398519, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    eastSprite: {fileID: 5425117393664163961, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    westSprite: {fileID: -9102953565709390227, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    southWalk:
+    - {fileID: 89939320712729523, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -2154353631593833064, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -4687036730904323328, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -1929857295671637077, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    northWalk:
+    - {fileID: -7646703975910398519, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -1434937344942711846, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: 8165931457456403057, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: 4638862604925552860, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    eastWalk:
+    - {fileID: 5425117393664163961, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: 767999244717606314, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -331794965442354749, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -7799087707987704464, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    westWalk:
+    - {fileID: -9102953565709390227, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -4548725081085379956, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: 7228917003871839322, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    - {fileID: -9149571789121599275, guid: 8c9891cd749f04a068c07f45f00f28aa, type: 3}
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 26
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: abbey_wall_broken
+    role: building.abbeyWall
+    sprite: {fileID: 1711556164876638695, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.5
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 14
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 5, y: 1}
+  - assetId: forest_cluster_01
+    role: nature.forestCluster
+    sprite: {fileID: -3790871328027051468, guid: ab232a534396f45159ce556b33a80b35, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 7
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: forest_cluster_02
+    role: nature.forestCluster
+    sprite: {fileID: 4497153901307254347, guid: eff14887dbb3c485b92b52fa8e66d19f, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 7
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: carried_resource
+    role: dynamic.carriedResource
+    sprite: {fileID: -4235122908582415903, guid: a0acdeb02ed8e46f89dcf6505f0c2faf, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 0.7
+    anchorOffset: {x: 0.3, y: 0.8, z: 0}
+    sortingOffset: 30
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: construction_site
+    role: dynamic.constructionSite
+    sprite: {fileID: -4916169806206920061, guid: f3ea215ee950544ba8be11ffeb2268f7, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.8
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 9
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: salvage_site
+    role: dynamic.salvageSite
+    sprite: {fileID: -6841611000969365399, guid: a0acdeb02ed8e46f89dcf6505f0c2faf, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1.1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 6
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: restoration_node
+    role: dynamic.restorationNode
+    sprite: {fileID: 1711556164876638695, guid: 10a9457f3fb3640eeb1cee7ab6aca870, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 2.2
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 13
+    participatesInPhaseTint: 1
+    authoredFootprint: {x: 0, y: 0}
+  - assetId: night_objective
+    role: dynamic.nightObjective
+    sprite: {fileID: -1809722535551971440, guid: 35e66db148af34251837903dd9b72eae, type: 3}
+    southSprite: {fileID: 0}
+    northSprite: {fileID: 0}
+    eastSprite: {fileID: 0}
+    westSprite: {fileID: 0}
+    southWalk: []
+    northWalk: []
+    eastWalk: []
+    westWalk: []
+    walkFrameSeconds: 0.2
+    layout: 0
+    visualScale: 1
+    anchorOffset: {x: 0, y: 0, z: 0}
+    sortingOffset: 90
+    participatesInPhaseTint: 0
+    authoredFootprint: {x: 0, y: 0}
