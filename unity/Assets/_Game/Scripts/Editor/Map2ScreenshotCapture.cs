@@ -55,6 +55,8 @@ namespace Abbey.EditorTools
                 var cold = new Color(0.35f, 0.55f, 1f);
                 var material = AbbeyMaterialFactory.CreateUnlit("Abbey_FalseLightProof", cold);
                 falseLight.GetComponent<Renderer>().sharedMaterial = material;
+                SpriteProjectionBootstrap.RegisterGlobal(
+                    falseLight, "selection_highlight", "ui.selection", falseLight.name);
                 var point = falseLight.AddComponent<UnityEngine.Light>();
                 point.type = LightType.Point;
                 point.color = cold;

@@ -34,6 +34,12 @@ namespace Abbey.EditorTools
             RemoveMap1OnlyObjects();
             BuildForestIdentity();
             WireMap2Systems();
+            // Map 2 is generated on top of Map 1. Reuse Map 1's single projection
+            // authority after every Map-2-only root has received a stable role tag.
+            // Unresolved identity art (currently the Stag and cloister) deliberately
+            // remains on the reversible 3D fallback path.
+            var projection = UnityEngine.Object.FindFirstObjectByType<SpriteProjectionBootstrap>();
+            projection?.ApplyAllTagged();
 
             var scene = EditorSceneManager.GetActiveScene();
             string absolute = Path.GetFullPath(Path.Combine(Application.dataPath, "..", ScenePath));
@@ -95,6 +101,7 @@ namespace Abbey.EditorTools
             floor.transform.position = new Vector3(0f, 0.026f, 0f);
             floor.transform.localScale = new Vector3(9.5f, 1f, 9.5f);
             Colorize(floor, "forest_floor", new Color(0.12f, 0.25f, 0.13f));
+            TagForProjection(floor, "map_ForestFloor", "terrain.forestFloor");
 
             Landmark("Map2_SacredGrove", SacredGroveCenter);
             PlaceGenerated("candle_shrine_t1", SacredGroveCenter, "GroveShrine_Map2",
@@ -112,6 +119,7 @@ namespace Abbey.EditorTools
             stream.transform.localScale = new Vector3(55f, 0.08f, 3f);
             stream.transform.rotation = Quaternion.Euler(0f, -24f, 0f);
             Colorize(stream, "stream", new Color(0.16f, 0.34f, 0.48f));
+            TagForProjection(stream, "map_stream", "terrain.stream");
 
             Landmark("Map2_CharcoalCamp", new Vector3(-28f, 0f, 24f));
             PlaceGenerated("charcoal_kiln_t1", new Vector3(-28f, 0f, 24f), "CharcoalCamp_Map2",
@@ -226,13 +234,22 @@ namespace Abbey.EditorTools
             }
             go.name = name;
             go.transform.rotation = rotation ?? Quaternion.identity;
+            TagForProjection(go, id, null);
             return go;
+        }
+
+        static void TagForProjection(GameObject root, string assetId, string role)
+        {
+            if (root == null) return;
+            var tag = root.GetComponent<SpriteRoleTag>();
+            if (tag == null) tag = root.AddComponent<SpriteRoleTag>();
+            tag.Configure(assetId, role, root.name);
         }
 
         static void Colorize(GameObject go, string key, Color color)
         {
             var renderer = go != null ? go.GetComponent<Renderer>() : null;
-            if (renderer == null) return;
+            if (renderer == null || renderer is SpriteRenderer) return;
             if (!Materials.TryGetValue(key, out var material) || material == null)
             {
                 material = AbbeyMaterialFactory.CreateLit($"Map2_{key}", color);
