@@ -8,26 +8,28 @@ secrets.**
 
 ## Current verified path
 
-Runtime-affecting validation baseline: `task/P4-EPIC` commit `13957fb` was verified on
-2026-07-10 using macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline
-covers the Phase 2/3 game plus Phase 4 tasks `P4-01` through `P4-05`: both generated maps,
-the Stag/covenant and forest story systems, campaign carryover/transition, and the committed
-Unity import for the Stag asset. `GATE-P4` remains pending human replay review. Do not
-bump this section only to record another docs-only validation pass; update it when
-runtime/tooling, test inputs, generated Unity imports, or validation evidence change.
+Runtime-affecting validation baseline: commit `43f5faf` was verified on 2026-07-10 using
+macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline covers the Phase 2/3
+game, Phase 4 tasks `P4-01` through `P4-05`, and the URP 17.5 migration: both generated
+maps, the Stag/covenant and forest story systems, campaign carryover/transition, 49
+generated imports, committed URP settings, and shared URP material creation. `GATE-P4`
+remains pending human replay review. Do not bump this section only to record another
+docs-only validation pass; update it when runtime/tooling, test inputs, generated Unity
+imports, renderer configuration, or validation evidence change.
 
 - `tools/restart_unity_mcp.sh` starts the pinned Unity editor and MCP bridge.
 - `tools/run_unity_mcp_gate.sh --no-restart` runs the Unity gate, EditMode tests,
   PlayMode tests, and a final console check through MCP.
 - Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-09T23:36:27Z`)
+    `2026-07-10T00:25:25Z`)
   - Scene builds: passed for Prototype01 and Map2Prototype
   - Generated asset import validation: passed, 49/49 imported assets
-  - EditMode tests: 388/388 passed
+  - EditMode tests: 391/391 passed
   - PlayMode tests: 70/70 passed
   - Console errors after the Unity gate: 0
-  - Four Map 1 and two Map 2 screenshots written to `unity/Build/screenshots/`
+  - MCP graphics inspection: Universal Render Pipeline active with the committed Abbey
+    pipeline asset; all six proof screenshots visually inspected without error materials
 - `./tools/check_all.sh` result on the same runtime tree: OK
   - design validation: 7/7 passed
   - asset validation: 335 passed, 8 skipped
@@ -79,7 +81,7 @@ Observed GitHub "Unity tests" workflows on `main` continue to be non-authoritati
 - `./tools/check_all.sh` still skips Unity steps while the Unity editor is open because
   batchmode cannot take the project lock. In that situation, run
   `tools/run_unity_mcp_gate.sh --no-restart` for the Unity side.
-- The Phase 2/3 runtime and Phase 4 implementation candidate are **locally verified
+- The Phase 2/3 runtime, Phase 4 implementation, and URP migration are **locally verified
   through MCP**. Phase 4 still needs the separate human replayability verdict; CI
   verification is out of scope.
 
