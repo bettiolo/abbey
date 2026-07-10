@@ -1139,9 +1139,10 @@ tasks:
     title: Reversible runtime sprite projection foundation
     phase: sprite-projection
     depends_on: [P4-EPIC]
-    status: in_progress
+    status: merged
     assigned_to: sprite-runtime
     branch: codex/sprite-runtime
+    merged_commit: 3b9132a
     deliverables:
       - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionCatalog.cs
       - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionFactory.cs
