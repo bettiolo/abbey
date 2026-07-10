@@ -173,6 +173,7 @@ namespace Abbey.Editor
                     visualScale = source.visualScale,
                     anchorOffset = source.AnchorOffset,
                     sortingOffset = source.roleSortOffset,
+                    participatesInPhaseTint = source.phaseTint,
                     authoredFootprint = source.AuthoredFootprint
                 });
             }
@@ -333,6 +334,7 @@ namespace Abbey.Editor
         public float visualScale;
         public float[] anchorOffset;
         public int roleSortOffset;
+        public bool phaseTint;
         public float[] authoredFootprint;
 
         public Vector3 AnchorOffset => anchorOffset != null && anchorOffset.Length == 2

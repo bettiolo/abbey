@@ -1153,25 +1153,26 @@ tasks:
     title: Deterministic Unity sprite importer and catalog validation
     phase: sprite-projection
     depends_on: [P2D-01, P2D-02]
-    status: in_progress
+    status: merged
     assigned_to: sprite-importer
     branch: codex/sprite-importer
+    merged_commit: d08589c
 
   - id: P2D-04
     title: Convert the generated Map 1 presentation
     phase: sprite-projection
     depends_on: [P2D-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
 
   - id: P2D-05
     title: Cover runtime-spawned actors, buildings, and carried props
     phase: sprite-projection
     depends_on: [P2D-03]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
 
   - id: P2D-06
     title: Convert the generated Map 2 presentation

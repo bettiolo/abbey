@@ -362,6 +362,7 @@ namespace Abbey.Editor
                     || !Mathf.Approximately(actual.visualScale, expected.visualScale)
                     || actual.anchorOffset != expected.AnchorOffset
                     || actual.sortingOffset != expected.roleSortOffset
+                    || actual.participatesInPhaseTint != expected.phaseTint
                     || actual.authoredFootprint != expected.AuthoredFootprint)
                 {
                     errors.Add($"Catalog mapping drift at index {i} ({expected.assetId}).");

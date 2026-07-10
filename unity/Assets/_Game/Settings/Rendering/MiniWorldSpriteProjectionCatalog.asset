@@ -19,6 +19,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -100
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_ForestFloor
     role: terrain.forestFloor
@@ -26,6 +27,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -100
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_Beach
     role: terrain.beach
@@ -33,6 +35,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -99
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_stream
     role: terrain.stream
@@ -40,6 +43,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -98
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_riverbank
     role: terrain.riverbank
@@ -47,6 +51,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -97
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: dirt_road_segment
     role: terrain.path
@@ -54,6 +59,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -96
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: paving_patch
     role: terrain.paving
@@ -61,6 +67,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -95
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_abbey_hill
     role: terrain.abbeyHill
@@ -68,6 +75,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -94
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: terrain_hill
     role: terrain.hill
@@ -75,6 +83,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -93
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: terrain_mountain
     role: terrain.mountain
@@ -82,6 +91,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -92
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: map_winter
     role: terrain.winter
@@ -89,6 +99,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: -91
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: storage_pile_t1
     role: building.storage
@@ -96,6 +107,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: shelter_t1
     role: building.shelter
@@ -103,6 +115,7 @@ MonoBehaviour:
     visualScale: 2.2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 3, y: 3}
   - assetId: woodcutter_t1
     role: building.woodcutter
@@ -110,6 +123,7 @@ MonoBehaviour:
     visualScale: 2.3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 3, y: 3}
   - assetId: guard_post_t1
     role: building.guardPost
@@ -117,6 +131,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 15
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: candle_shrine_t1
     role: building.candleShrine
@@ -124,6 +139,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 12
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: asylum_corner_t1
     role: building.asylum
@@ -131,6 +147,7 @@ MonoBehaviour:
     visualScale: 2.3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 3, y: 3}
   - assetId: abbey_gate_repair
     role: building.abbeyGate
@@ -138,6 +155,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 14
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 2}
   - assetId: bell_tower_repair
     role: building.bellTowerRepair
@@ -145,6 +163,7 @@ MonoBehaviour:
     visualScale: 3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 16
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: field_plot_t1
     role: building.field
@@ -152,6 +171,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 2
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: pasture_t1
     role: building.pasture
@@ -159,6 +179,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 5
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 4}
   - assetId: smithy_t1
     role: building.smithy
@@ -166,6 +187,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 3, y: 3}
   - assetId: forester_hut_t1
     role: building.forester
@@ -173,6 +195,7 @@ MonoBehaviour:
     visualScale: 2.3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 3, y: 3}
   - assetId: herbalist_hut_t1
     role: building.herbalist
@@ -180,6 +203,7 @@ MonoBehaviour:
     visualScale: 2.1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2.5, y: 2.5}
   - assetId: orchard_plot_t1
     role: building.orchard
@@ -187,6 +211,7 @@ MonoBehaviour:
     visualScale: 2.2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 5
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 4}
   - assetId: hunter_blind_t1
     role: building.hunterBlind
@@ -194,6 +219,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 10
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: grove_shrine_t1
     role: building.groveShrine
@@ -201,6 +227,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 12
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2, y: 2}
   - assetId: root_bridge_t1
     role: building.rootBridge
@@ -208,6 +235,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 4
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 2}
   - assetId: stag_garden_t1
     role: building.stagGarden
@@ -215,6 +243,7 @@ MonoBehaviour:
     visualScale: 2.2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 5
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 4}
   - assetId: forest_watchpost_t1
     role: building.forestWatchpost
@@ -222,6 +251,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 15
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2.5, y: 2.5}
   - assetId: warrior_lodge_t1
     role: building.warriorLodge
@@ -229,6 +259,7 @@ MonoBehaviour:
     visualScale: 3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 12
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 4, y: 4}
   - assetId: watchtower_t1
     role: building.watchtower
@@ -236,6 +267,7 @@ MonoBehaviour:
     visualScale: 3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 16
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 2.5, y: 2.5}
   - assetId: spring_ship_t1
     role: building.springShip
@@ -243,6 +275,7 @@ MonoBehaviour:
     visualScale: 3
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 8
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 6, y: 3}
   - assetId: well_t1
     role: prop.well
@@ -250,6 +283,7 @@ MonoBehaviour:
     visualScale: 1.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 6
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: shipwreck_crate_closed
     role: prop.chest
@@ -257,6 +291,7 @@ MonoBehaviour:
     visualScale: 1.2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 6
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: grave_marker
     role: prop.grave
@@ -264,6 +299,7 @@ MonoBehaviour:
     visualScale: 1.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 6
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: stream_bridge
     role: prop.bridge
@@ -271,6 +307,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 4
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: forest_tree_02
     role: nature.tree.deciduous
@@ -278,6 +315,7 @@ MonoBehaviour:
     visualScale: 2.6
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 7
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: forest_tree_01
     role: nature.tree.pine
@@ -285,6 +323,7 @@ MonoBehaviour:
     visualScale: 2.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 7
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: forest_tree_dead
     role: nature.tree.dead
@@ -292,6 +331,7 @@ MonoBehaviour:
     visualScale: 2.6
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 7
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: rock_cluster_01
     role: nature.rocks
@@ -299,6 +339,7 @@ MonoBehaviour:
     visualScale: 2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 3
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: selection_highlight
     role: ui.selection
@@ -306,6 +347,7 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 100
+    participatesInPhaseTint: 0
     authoredFootprint: {x: 0, y: 0}
   - assetId: villager_lowpoly
     role: actor.villager
@@ -313,6 +355,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_female_b
     role: actor.villagerVariant
@@ -320,6 +363,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_male_a
     role: actor.villagerVariant
@@ -327,6 +371,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_female_d
     role: actor.villagerVariant
@@ -334,6 +379,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_male_b
     role: actor.villagerVariant
@@ -341,6 +387,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_female_f
     role: actor.villagerVariant
@@ -348,6 +395,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: settler_male_d
     role: actor.villagerVariant
@@ -355,6 +403,7 @@ MonoBehaviour:
     visualScale: 1.7
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 20
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: warrior
     role: actor.warrior
@@ -362,6 +411,7 @@ MonoBehaviour:
     visualScale: 1.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 22
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: nightmare_grave_crawler
     role: actor.nightmare.graveCrawler
@@ -369,6 +419,7 @@ MonoBehaviour:
     visualScale: 1.9
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 25
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: nightmare_hunger_wight
     role: actor.nightmare.hungerWight
@@ -376,6 +427,7 @@ MonoBehaviour:
     visualScale: 1.9
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 25
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: nightmare_antler_wraith
     role: actor.nightmare.antlerWraith
@@ -383,6 +435,7 @@ MonoBehaviour:
     visualScale: 2.1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 26
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: abbey_wall_broken
     role: building.abbeyWall
@@ -390,6 +443,7 @@ MonoBehaviour:
     visualScale: 2.5
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 14
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 5, y: 1}
   - assetId: forest_cluster_01
     role: nature.forestCluster
@@ -397,6 +451,7 @@ MonoBehaviour:
     visualScale: 2.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 7
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: forest_cluster_02
     role: nature.forestCluster
@@ -404,6 +459,7 @@ MonoBehaviour:
     visualScale: 2.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 7
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: carried_resource
     role: dynamic.carriedResource
@@ -411,6 +467,7 @@ MonoBehaviour:
     visualScale: 0.7
     anchorOffset: {x: 0.3, y: 0.8, z: 0}
     sortingOffset: 30
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: construction_site
     role: dynamic.constructionSite
@@ -418,6 +475,7 @@ MonoBehaviour:
     visualScale: 1.8
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 9
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: salvage_site
     role: dynamic.salvageSite
@@ -425,6 +483,7 @@ MonoBehaviour:
     visualScale: 1.1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 6
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: restoration_node
     role: dynamic.restorationNode
@@ -432,6 +491,7 @@ MonoBehaviour:
     visualScale: 2.2
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 13
+    participatesInPhaseTint: 1
     authoredFootprint: {x: 0, y: 0}
   - assetId: night_objective
     role: dynamic.nightObjective
@@ -439,4 +499,5 @@ MonoBehaviour:
     visualScale: 1
     anchorOffset: {x: 0, y: 0, z: 0}
     sortingOffset: 90
+    participatesInPhaseTint: 0
     authoredFootprint: {x: 0, y: 0}
