@@ -1127,9 +1127,10 @@ tasks:
     title: Audit and curate the Merchant Shade CC0 sprite source
     phase: sprite-projection
     depends_on: [P4-EPIC]
-    status: in_progress
+    status: merged
     assigned_to: sprite-assets
     branch: codex/sprite-assets
+    merged_commit: bd9f2cf
     deliverables:
       - tools/acquire_merchant_shade_miniworld.py
       - tools/validate_merchant_shade_miniworld.py
@@ -1152,9 +1153,9 @@ tasks:
     title: Deterministic Unity sprite importer and catalog validation
     phase: sprite-projection
     depends_on: [P2D-01, P2D-02]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: sprite-importer
+    branch: codex/sprite-importer
 
   - id: P2D-04
     title: Convert the generated Map 1 presentation
