@@ -20,6 +20,9 @@ namespace Abbey.Rendering
         public Vector3 anchorOffset;
         public int sortingOffset;
 
+        [Tooltip("Whether the shared day/dusk/night grade affects this sprite.")]
+        public bool participatesInPhaseTint = true;
+
         [Tooltip("Optional authored XZ obstacle size; sprite bounds must never define gameplay collision.")]
         public Vector2 authoredFootprint;
     }

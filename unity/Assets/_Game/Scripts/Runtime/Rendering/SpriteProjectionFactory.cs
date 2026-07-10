@@ -1,3 +1,4 @@
+using Abbey.Core;
 using UnityEngine;
 
 namespace Abbey.Rendering
@@ -15,6 +16,15 @@ namespace Abbey.Rendering
             SpriteProjectionCatalog catalog,
             Camera targetCamera)
         {
+            return Enable(gameplayRoot, catalog, targetCamera, null);
+        }
+
+        public static bool Enable(
+            GameObject gameplayRoot,
+            SpriteProjectionCatalog catalog,
+            Camera targetCamera,
+            SpriteProjectionStyle style)
+        {
             if (gameplayRoot == null || catalog == null)
             {
                 return false;
@@ -26,7 +36,7 @@ namespace Abbey.Rendering
                 Disable(gameplayRoot);
                 return false;
             }
-            return Enable(gameplayRoot, entry, targetCamera);
+            return Enable(gameplayRoot, entry, targetCamera, style);
         }
 
         public static bool Enable(
@@ -34,8 +44,18 @@ namespace Abbey.Rendering
             SpriteProjectionEntry entry,
             Camera targetCamera)
         {
+            return Enable(gameplayRoot, entry, targetCamera, null);
+        }
+
+        public static bool Enable(
+            GameObject gameplayRoot,
+            SpriteProjectionEntry entry,
+            Camera targetCamera,
+            SpriteProjectionStyle style)
+        {
             if (gameplayRoot == null || entry == null || entry.sprite == null)
             {
+                Disable(gameplayRoot);
                 return false;
             }
 
@@ -56,7 +76,9 @@ namespace Abbey.Rendering
             }
 
             visual.gameObject.SetActive(true);
-            visual.Configure(gameplayRoot.transform, targetCamera, entry);
+            SpriteRoleTag tag = gameplayRoot.GetComponent<SpriteRoleTag>();
+            int stableSortKey = tag != null ? tag.StableSortKey : 0;
+            visual.Configure(gameplayRoot.transform, targetCamera, entry, style, stableSortKey);
             return true;
         }
 
@@ -97,28 +119,50 @@ namespace Abbey.Rendering
     [RequireComponent(typeof(SpriteRenderer))]
     sealed class SpriteProjectionVisual : MonoBehaviour
     {
-        Transform _gameplayRoot;
-        Camera _targetCamera;
-        Vector3 _anchorOffset;
-        SpriteRenderer _spriteRenderer;
+        [SerializeField] Transform gameplayRoot;
+        [SerializeField] Camera targetCamera;
+        [SerializeField] Vector3 anchorOffset;
+        [SerializeField] int sortingOffset;
+        [SerializeField] int stableSortKey;
+        [SerializeField] bool participatesInPhaseTint = true;
+        [SerializeField] SpriteProjectionStyle style;
+        [SerializeField, Min(0.01f)] float targetWorldScale = 1f;
+        SpriteRenderer spriteRenderer;
 
         public void Configure(
             Transform gameplayRoot,
             Camera targetCamera,
-            SpriteProjectionEntry entry)
+            SpriteProjectionEntry entry,
+            SpriteProjectionStyle projectionStyle,
+            int newStableSortKey)
         {
-            _gameplayRoot = gameplayRoot;
-            _targetCamera = targetCamera;
-            _anchorOffset = entry.anchorOffset;
-            if (_spriteRenderer == null)
+            this.gameplayRoot = gameplayRoot;
+            this.targetCamera = targetCamera;
+            anchorOffset = entry.anchorOffset;
+            sortingOffset = entry.sortingOffset;
+            stableSortKey = newStableSortKey;
+            participatesInPhaseTint = entry.participatesInPhaseTint;
+            style = projectionStyle != null ? projectionStyle : SpriteProjectionStyle.LoadOrDefault();
+            if (spriteRenderer == null)
             {
-                _spriteRenderer = GetComponent<SpriteRenderer>();
+                spriteRenderer = GetComponent<SpriteRenderer>();
             }
-            _spriteRenderer.sprite = entry.sprite;
-            _spriteRenderer.sortingOrder = entry.sortingOffset;
-            float scale = Mathf.Max(0.01f, entry.visualScale);
-            transform.localScale = new Vector3(scale, scale, 1f);
+            spriteRenderer.sprite = entry.sprite;
+            targetWorldScale = Mathf.Max(0.01f, entry.visualScale);
             RefreshTransform();
+        }
+
+        void Awake()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            if (gameplayRoot == null)
+            {
+                gameplayRoot = transform.parent;
+            }
+            if (style == null)
+            {
+                style = SpriteProjectionStyle.LoadOrDefault();
+            }
         }
 
         void LateUpdate()
@@ -128,13 +172,51 @@ namespace Abbey.Rendering
 
         void RefreshTransform()
         {
-            if (_gameplayRoot != null)
+            if (gameplayRoot != null)
             {
-                transform.position = _gameplayRoot.position + _anchorOffset;
+                transform.position = gameplayRoot.position + anchorOffset;
             }
-            if (_targetCamera != null)
+            if (targetCamera == null)
             {
-                transform.rotation = _targetCamera.transform.rotation;
+                targetCamera = Camera.main;
+            }
+            if (targetCamera != null)
+            {
+                transform.rotation = targetCamera.transform.rotation;
+            }
+            SetWorldScale();
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            }
+            if (spriteRenderer != null && style != null && gameplayRoot != null)
+            {
+                float depth = targetCamera != null
+                    ? targetCamera.transform.InverseTransformPoint(gameplayRoot.position).z
+                    : gameplayRoot.position.x + gameplayRoot.position.z;
+                int tie = (stableSortKey & int.MaxValue) % Mathf.Max(1, style.stableTieBreakRange);
+                spriteRenderer.sortingOrder = sortingOffset
+                    - Mathf.RoundToInt(depth * Mathf.Max(0.01f, style.depthSortingScale)) + tie;
+                DayPhase phase = GameClock.Instance != null ? GameClock.Instance.Phase : DayPhase.Day;
+                spriteRenderer.color = participatesInPhaseTint ? style.TintFor(phase) : Color.white;
+            }
+        }
+
+        void SetWorldScale()
+        {
+            if (gameplayRoot == null)
+            {
+                transform.localScale = new Vector3(targetWorldScale, targetWorldScale, 1f);
+                return;
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                Vector3 current = transform.lossyScale;
+                Vector3 local = transform.localScale;
+                transform.localScale = new Vector3(
+                    local.x * targetWorldScale / Mathf.Max(0.0001f, Mathf.Abs(current.x)),
+                    local.y * targetWorldScale / Mathf.Max(0.0001f, Mathf.Abs(current.y)),
+                    local.z / Mathf.Max(0.0001f, Mathf.Abs(current.z)));
             }
         }
     }
@@ -142,62 +224,62 @@ namespace Abbey.Rendering
     [DisallowMultipleComponent]
     sealed class SpriteLegacyRendererState : MonoBehaviour
     {
-        Renderer[] _renderers;
-        bool[] _enabledStates;
+        [SerializeField] Renderer[] renderers;
+        [SerializeField] bool[] enabledStates;
 
         public void CaptureIfNeeded(GameObject root)
         {
-            if (_renderers != null)
+            if (renderers != null)
             {
                 return;
             }
 
             MeshRenderer[] meshes = root.GetComponentsInChildren<MeshRenderer>(true);
             SkinnedMeshRenderer[] skinned = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-            _renderers = new Renderer[meshes.Length + skinned.Length];
-            _enabledStates = new bool[_renderers.Length];
+            renderers = new Renderer[meshes.Length + skinned.Length];
+            enabledStates = new bool[renderers.Length];
 
             int target = 0;
             for (int i = 0; i < meshes.Length; i++)
             {
-                _renderers[target++] = meshes[i];
+                renderers[target++] = meshes[i];
             }
             for (int i = 0; i < skinned.Length; i++)
             {
-                _renderers[target++] = skinned[i];
+                renderers[target++] = skinned[i];
             }
-            for (int i = 0; i < _renderers.Length; i++)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                _enabledStates[i] = _renderers[i] != null && _renderers[i].enabled;
+                enabledStates[i] = renderers[i] != null && renderers[i].enabled;
             }
         }
 
         public void Hide()
         {
-            if (_renderers == null)
+            if (renderers == null)
             {
                 return;
             }
-            for (int i = 0; i < _renderers.Length; i++)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                if (_renderers[i] != null)
+                if (renderers[i] != null)
                 {
-                    _renderers[i].enabled = false;
+                    renderers[i].enabled = false;
                 }
             }
         }
 
         public void Restore()
         {
-            if (_renderers == null)
+            if (renderers == null)
             {
                 return;
             }
-            for (int i = 0; i < _renderers.Length; i++)
+            for (int i = 0; i < renderers.Length; i++)
             {
-                if (_renderers[i] != null)
+                if (renderers[i] != null)
                 {
-                    _renderers[i].enabled = _enabledStates[i];
+                    renderers[i].enabled = enabledStates[i];
                 }
             }
         }

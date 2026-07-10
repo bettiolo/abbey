@@ -83,6 +83,8 @@ namespace Abbey.Tests.EditMode
             Assert.AreSame(sprite, renderer.sprite);
             Assert.Less(Quaternion.Angle(camera.transform.rotation, renderer.transform.rotation), 0.01f);
             Assert.AreEqual(position + entry.anchorOffset, renderer.transform.position);
+            Assert.AreEqual(entry.visualScale, renderer.transform.lossyScale.x, 0.05f);
+            Assert.AreEqual(entry.visualScale, renderer.transform.lossyScale.y, 0.05f);
 
             SpriteProjectionFactory.Disable(root);
             Assert.IsFalse(renderer.gameObject.activeSelf);
@@ -91,6 +93,80 @@ namespace Abbey.Tests.EditMode
             Assert.AreEqual(position, root.transform.position);
             Assert.AreEqual(rotation, root.transform.rotation);
             Assert.AreEqual(scale, root.transform.localScale);
+        }
+
+        [Test]
+        public void InvalidEntry_RestoresLegacyRendererAndHidesStaleSprite()
+        {
+            var root = Track(new GameObject("Root"));
+            MeshRenderer mesh = root.AddComponent<MeshRenderer>();
+            var cameraObject = Track(new GameObject("Camera"));
+            Camera camera = cameraObject.AddComponent<Camera>();
+            Texture2D texture = Track(new Texture2D(2, 2));
+            Sprite sprite = Track(Sprite.Create(
+                texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0f), 16f));
+
+            Assert.IsTrue(SpriteProjectionFactory.Enable(
+                root, new SpriteProjectionEntry { sprite = sprite }, camera));
+            Assert.IsFalse(mesh.enabled);
+            SpriteRenderer renderer = SpriteProjectionFactory.GetSpriteRenderer(root);
+            Assert.IsTrue(renderer.gameObject.activeSelf);
+
+            Assert.IsFalse(SpriteProjectionFactory.Enable(
+                root, new SpriteProjectionEntry { sprite = null }, camera));
+            Assert.IsTrue(mesh.enabled);
+            Assert.IsFalse(renderer.gameObject.activeSelf);
+        }
+
+        [Test]
+        public void Bootstrap_RegistersTaggedRoot_AndProjectionCanBeReversed()
+        {
+            SpriteProjectionCatalog catalog = Track(
+                ScriptableObject.CreateInstance<SpriteProjectionCatalog>());
+            Texture2D texture = Track(new Texture2D(2, 2));
+            Sprite sprite = Track(Sprite.Create(
+                texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0f), 16f));
+            catalog.entries.Add(new SpriteProjectionEntry { assetId = "villager", sprite = sprite });
+
+            var cameraObject = Track(new GameObject("Camera"));
+            Camera camera = cameraObject.AddComponent<Camera>();
+            var bootstrapObject = Track(new GameObject("SpriteProjection"));
+            SpriteProjectionBootstrap bootstrap = bootstrapObject.AddComponent<SpriteProjectionBootstrap>();
+            bootstrap.Configure(catalog, camera);
+
+            var root = Track(new GameObject("Villager"));
+            MeshRenderer mesh = root.AddComponent<MeshRenderer>();
+            Assert.IsTrue(bootstrap.Register(root, "villager", stableId: "villager-01"));
+            Assert.IsFalse(mesh.enabled);
+            Assert.IsNotNull(SpriteProjectionFactory.GetSpriteRenderer(root));
+
+            bootstrap.SetProjectionEnabled(false);
+            Assert.IsTrue(mesh.enabled);
+            Assert.IsFalse(SpriteProjectionFactory.GetSpriteRenderer(root).gameObject.activeSelf);
+        }
+
+        [Test]
+        public void ProjectedDepth_SortsNearRootInFrontOfFarRoot()
+        {
+            var cameraObject = Track(new GameObject("Camera"));
+            Camera camera = cameraObject.AddComponent<Camera>();
+            camera.transform.position = new Vector3(0f, 10f, -10f);
+            camera.transform.rotation = Quaternion.Euler(30f, 0f, 0f);
+            Texture2D texture = Track(new Texture2D(2, 2));
+            Sprite sprite = Track(Sprite.Create(
+                texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0f), 16f));
+            var entry = new SpriteProjectionEntry { sprite = sprite };
+
+            var near = Track(new GameObject("Near"));
+            near.transform.position = Vector3.zero;
+            var far = Track(new GameObject("Far"));
+            far.transform.position = new Vector3(0f, 0f, 8f);
+            SpriteProjectionFactory.Enable(near, entry, camera);
+            SpriteProjectionFactory.Enable(far, entry, camera);
+
+            Assert.Greater(
+                SpriteProjectionFactory.GetSpriteRenderer(near).sortingOrder,
+                SpriteProjectionFactory.GetSpriteRenderer(far).sortingOrder);
         }
 
         T Track<T>(T value) where T : Object

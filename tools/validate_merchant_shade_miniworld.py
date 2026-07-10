@@ -64,6 +64,16 @@ def load_manifest(curated_root: Path) -> dict:
     return value
 
 
+def resolve_under(root: Path, relative: str | Path, label: str) -> Path:
+    root = root.resolve()
+    candidate = (root / Path(relative)).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise ValidationError(f"unsafe {label}: {relative}") from exc
+    return candidate
+
+
 def iter_sprite_refs(entry: dict) -> list[str]:
     refs: list[str] = []
     default = entry.get("defaultSprite")
@@ -186,7 +196,11 @@ def validate(curated_root: Path, cache_root: Path | None = None) -> dict:
             rects.add(values)
         if cache_root is not None:
             source_path = record.get("sourcePath")
-            source_file = cache_root / str(source_path)
+            try:
+                source_file = resolve_under(cache_root, str(source_path), "sourcePath")
+            except ValidationError as exc:
+                errors.append(f"{file_id}: {exc}")
+                continue
             if not source_file.is_file():
                 errors.append(f"{file_id}: cached source missing: {source_path}")
             elif sha256(source_file) != record.get("sourceSha256"):
@@ -326,8 +340,12 @@ def write_contact_sheet(curated_root: Path, manifest: dict) -> None:
     tiles: list[tuple[str, object]] = []
     for record in manifest["files"]:
         # abbeyPath includes category subfolder; resolve from the curated root.
-        relative = record["abbeyPath"].split("MerchantShadeMiniWorld/", 1)[1]
-        image = Image.open(curated_root / relative).convert("RGBA")
+        parts = record["abbeyPath"].split("MerchantShadeMiniWorld/", 1)
+        if len(parts) != 2:
+            raise ValidationError(f"invalid report abbeyPath: {record['abbeyPath']}")
+        relative = parts[1]
+        image_path = resolve_under(curated_root, relative, "report abbeyPath")
+        image = Image.open(image_path).convert("RGBA")
         height = record["dimensions"]["height"]
         for sprite_slice in record["slices"]:
             rect = sprite_slice["rect"]
@@ -362,16 +380,16 @@ def main() -> int:
     curated_root = repo_root / CURATED_RELATIVE
     try:
         manifest = load_manifest(curated_root)
-        if args.write_reports:
-            write_inventory(curated_root, manifest)
-            write_contact_sheet(curated_root, manifest)
-            print("Wrote inventory.md and contact-sheet.png")
         cache_root = None
         if args.with_cache:
             cache_root = repo_root / (
                 "third_party_cache/MerchantShade/MiniWorldSprites/extracted"
             )
         result = validate(curated_root, cache_root)
+        if args.write_reports:
+            write_inventory(curated_root, manifest)
+            write_contact_sheet(curated_root, manifest)
+            print("Wrote inventory.md and contact-sheet.png")
     except ValidationError as exc:
         print(f"ERROR:\n{exc}")
         return 1

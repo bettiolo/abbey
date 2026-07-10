@@ -72,6 +72,12 @@ def test_validator_rejects_non_positive_authored_footprint(tmp_path: Path) -> No
         validator.validate(curated)
 
 
+def test_contact_sheet_rejects_manifest_path_traversal(tmp_path: Path) -> None:
+    curated = copy_curated(tmp_path)
+    with pytest.raises(validator.ValidationError, match="unsafe report abbeyPath"):
+        validator.resolve_under(curated, "../../outside.png", "report abbeyPath")
+
+
 def test_unresolved_signature_roles_are_explicit_and_block_final_gate() -> None:
     manifest = validator.load_manifest(CURATED)
     assert manifest["finalVisualGateBlocked"] is True
