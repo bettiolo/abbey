@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Abbey.Core;
+using Abbey.Rendering;
 using UnityEngine;
 
 namespace Abbey.Buildings
@@ -131,6 +132,11 @@ namespace Abbey.Buildings
             var node = go.AddComponent<RestorationNode>();
             node.kind = kind;
             site.Completed += node.OnSiteCompleted;
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go,
+                "restoration_node",
+                "dynamic.restorationNode",
+                $"restoration:{Id(kind)}");
             GameEventLog.Append("abbey",
                 $"{Id(kind)} node placed at ({position.x:F1}, {position.z:F1})");
             return node;

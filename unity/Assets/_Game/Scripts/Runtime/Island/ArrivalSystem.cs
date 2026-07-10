@@ -4,6 +4,7 @@ using Abbey.Economy;
 using Abbey.Morale;
 using Abbey.Nightmares;
 using Abbey.Villagers;
+using Abbey.Rendering;
 using UnityEngine;
 
 namespace Abbey.Island
@@ -307,6 +308,8 @@ namespace Abbey.Island
                 // Specialist job-efficiency bonus (JobsConfig hook): a faster work loop.
                 agent.WorkSpeedMultiplier = Mathf.Max(0f, Config.specialistWorkSpeedMultiplier);
             }
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, "villager_lowpoly", "actor.newcomer", $"newcomer:{cls}:{_spawnCounter}");
             return agent;
         }
 

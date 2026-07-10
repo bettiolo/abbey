@@ -4,6 +4,7 @@ using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
+using Abbey.Rendering;
 using Abbey.Villagers;
 using UnityEngine;
 
@@ -352,6 +353,8 @@ namespace Abbey.Buildings
             }
 
             AttachVisual(type, go.transform);
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, type.id, "building.dynamic", $"building:{type.id}:{position.x:F2}:{position.z:F2}");
 
             // Completion signal (e.g. SeedSlotSystem opens child slots beside it).
             Constructed?.Invoke(building);

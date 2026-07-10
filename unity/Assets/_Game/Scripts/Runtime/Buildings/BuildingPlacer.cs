@@ -1,6 +1,7 @@
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Settlement;
+using Abbey.Rendering;
 using UnityEngine;
 
 namespace Abbey.Buildings
@@ -139,6 +140,9 @@ namespace Abbey.Buildings
             go.transform.position = position;
             var site = go.AddComponent<ConstructionSite>();
             site.Initialize(type);
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, "construction_site", "dynamic.constructionSite",
+                $"construction:{type.id}:{position.x:F2}:{position.z:F2}");
 
             // Occupy the seed slot this placement landed on (P3-02), if any.
             var slots = SeedSlotSystem.Instance;
