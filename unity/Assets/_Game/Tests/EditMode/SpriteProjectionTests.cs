@@ -1,0 +1,102 @@
+using System.Collections.Generic;
+using Abbey.Rendering;
+using NUnit.Framework;
+using UnityEngine;
+
+namespace Abbey.Tests.EditMode
+{
+    public class SpriteProjectionTests
+    {
+        readonly List<Object> _created = new List<Object>();
+
+        [TearDown]
+        public void TearDown()
+        {
+            for (int i = _created.Count - 1; i >= 0; i--)
+            {
+                if (_created[i] != null)
+                {
+                    Object.DestroyImmediate(_created[i]);
+                }
+            }
+            _created.Clear();
+        }
+
+        [Test]
+        public void CatalogLookup_PrefersAssetId_ThenFallsBackToRole()
+        {
+            SpriteProjectionCatalog catalog = Track(ScriptableObject.CreateInstance<SpriteProjectionCatalog>());
+            var byAsset = new SpriteProjectionEntry { assetId = "villager_lowpoly", role = "actor" };
+            var byRole = new SpriteProjectionEntry { assetId = "other", role = "actor" };
+            catalog.entries.Add(byRole);
+            catalog.entries.Add(byAsset);
+
+            Assert.IsTrue(catalog.TryGet("villager_lowpoly", "actor", out SpriteProjectionEntry exact));
+            Assert.AreSame(byAsset, exact);
+            Assert.IsTrue(catalog.TryGet("missing", "actor", out SpriteProjectionEntry fallback));
+            Assert.AreSame(byRole, fallback);
+            Assert.IsFalse(catalog.TryGet("missing", "missing", out _));
+        }
+
+        [Test]
+        public void EnableAndDisable_PreserveRootAndRestoreExactLegacyRendererStates()
+        {
+            var root = Track(new GameObject("GameplayRoot"));
+            root.transform.position = new Vector3(4f, 0f, -7f);
+            root.transform.rotation = Quaternion.Euler(0f, 23f, 0f);
+            root.transform.localScale = new Vector3(1.5f, 2f, 0.75f);
+
+            MeshRenderer enabledMesh = root.AddComponent<MeshRenderer>();
+            var disabledChild = Track(new GameObject("DisabledLegacy"));
+            disabledChild.transform.SetParent(root.transform, false);
+            MeshRenderer disabledMesh = disabledChild.AddComponent<MeshRenderer>();
+            disabledMesh.enabled = false;
+
+            var cameraObject = Track(new GameObject("Camera"));
+            Camera camera = cameraObject.AddComponent<Camera>();
+            camera.transform.rotation = Quaternion.Euler(30f, 45f, 0f);
+
+            Texture2D texture = Track(new Texture2D(2, 2));
+            Sprite sprite = Track(Sprite.Create(texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0f), 16f));
+            var entry = new SpriteProjectionEntry
+            {
+                assetId = "villager_lowpoly",
+                sprite = sprite,
+                anchorOffset = new Vector3(0f, 0.25f, 0f),
+                visualScale = 1.25f,
+                sortingOffset = 3
+            };
+
+            Vector3 position = root.transform.position;
+            Quaternion rotation = root.transform.rotation;
+            Vector3 scale = root.transform.localScale;
+
+            Assert.IsTrue(SpriteProjectionFactory.Enable(root, entry, camera));
+            Assert.AreEqual(position, root.transform.position);
+            Assert.AreEqual(rotation, root.transform.rotation);
+            Assert.AreEqual(scale, root.transform.localScale);
+            Assert.IsFalse(enabledMesh.enabled);
+            Assert.IsFalse(disabledMesh.enabled);
+
+            SpriteRenderer renderer = SpriteProjectionFactory.GetSpriteRenderer(root);
+            Assert.IsNotNull(renderer);
+            Assert.AreSame(sprite, renderer.sprite);
+            Assert.Less(Quaternion.Angle(camera.transform.rotation, renderer.transform.rotation), 0.01f);
+            Assert.AreEqual(position + entry.anchorOffset, renderer.transform.position);
+
+            SpriteProjectionFactory.Disable(root);
+            Assert.IsFalse(renderer.gameObject.activeSelf);
+            Assert.IsTrue(enabledMesh.enabled);
+            Assert.IsFalse(disabledMesh.enabled, "a legacy renderer that began disabled must stay disabled");
+            Assert.AreEqual(position, root.transform.position);
+            Assert.AreEqual(rotation, root.transform.rotation);
+            Assert.AreEqual(scale, root.transform.localScale);
+        }
+
+        T Track<T>(T value) where T : Object
+        {
+            _created.Add(value);
+            return value;
+        }
+    }
+}
