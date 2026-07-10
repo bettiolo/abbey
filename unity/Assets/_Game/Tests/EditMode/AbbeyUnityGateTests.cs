@@ -17,6 +17,7 @@ namespace Abbey.Tests.EditMode
             Assert.IsFalse(report.sceneBuilt);
             Assert.IsFalse(report.map2SceneBuilt);
             Assert.AreEqual("not_run", report.assetImportValidation);
+            Assert.AreEqual("not_run", report.spriteProjectionValidation);
             Assert.IsNotNull(report.canonicalScreenshots);
             Assert.IsNotNull(report.errors);
             Assert.IsFalse(report.passed);
@@ -29,6 +30,7 @@ namespace Abbey.Tests.EditMode
             report.sceneBuilt = true;
             report.map2SceneBuilt = true;
             report.assetImportValidation = "pass";
+            report.spriteProjectionValidation = "pass";
             report.canonicalScreenshots = new List<string>
             {
                 "day_camp.png",
@@ -53,6 +55,7 @@ namespace Abbey.Tests.EditMode
             report.sceneBuilt = true;
             report.map2SceneBuilt = true;
             report.assetImportValidation = "pass";
+            report.spriteProjectionValidation = "pass";
             report.canonicalScreenshots = new List<string>
             {
                 "day_camp.png",

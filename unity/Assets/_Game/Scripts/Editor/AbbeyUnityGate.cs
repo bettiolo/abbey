@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Abbey.Core;
+using Abbey.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -100,6 +101,14 @@ namespace Abbey.EditorTools
                             $"Generated asset validation failed: {importReport.failed}/" +
                             $"{importReport.totalAssets} failed. {importReport.message}");
                     }
+                });
+
+                RunStep(report, "spriteProjectionValidation", () =>
+                {
+                    MiniWorldManifest manifest = MiniWorldSpriteImporter.LoadManifest();
+                    MiniWorldProjectionValidator.ThrowIfManifestInvalid(manifest);
+                    MiniWorldProjectionValidator.ThrowIfProjectInvalid(manifest);
+                    report.spriteProjectionValidation = Pass;
                 });
 
                 RunStep(report, "compileAndConsoleCheck", () =>
@@ -200,6 +209,7 @@ namespace Abbey.EditorTools
                 generatedAt = generatedAt,
                 unityVersion = unityVersion,
                 assetImportValidation = NotRun,
+                spriteProjectionValidation = NotRun,
                 canonicalScreenshots = new List<string>(),
                 map2Screenshots = new List<string>(),
                 errors = new List<string>(),
@@ -228,6 +238,7 @@ namespace Abbey.EditorTools
             report.passed = report.sceneBuilt &&
                             report.map2SceneBuilt &&
                             report.assetImportValidation == Pass &&
+                            report.spriteProjectionValidation == Pass &&
                             report.canonicalScreenshots != null &&
                             report.canonicalScreenshots.Count >=
                             ScreenshotCapture.CanonicalShotNames.Length &&
@@ -340,6 +351,7 @@ namespace Abbey.EditorTools
             public bool sceneBuilt;
             public bool map2SceneBuilt;
             public string assetImportValidation;
+            public string spriteProjectionValidation;
             public int consoleErrorCount;
             public List<string> canonicalScreenshots;
             public List<string> map2Screenshots;
