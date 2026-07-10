@@ -1162,33 +1162,42 @@ tasks:
     title: Convert the generated Map 1 presentation
     phase: sprite-projection
     depends_on: [P2D-03]
-    status: in_progress
-    assigned_to: orchestrator
+    status: merged
+    assigned_to: sprite-map1
     branch: codex/sprite-projection
+    merged_commit: 8570b73
 
   - id: P2D-05
     title: Cover runtime-spawned actors, buildings, and carried props
     phase: sprite-projection
     depends_on: [P2D-03]
-    status: in_progress
+    status: merged
     assigned_to: orchestrator
     branch: codex/sprite-projection
+    merged_commit: 8ca0913
 
   - id: P2D-06
     title: Convert the generated Map 2 presentation
     phase: sprite-projection
     depends_on: [P2D-04, P2D-05]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: merged
+    assigned_to: sprite-map2
+    branch: codex/sprite-projection
+    merged_commit: ee12487
 
   - id: P2D-07
     title: Sprite polish, Unity gate, screenshots, and validation evidence
     phase: sprite-projection
     depends_on: [P2D-06]
-    status: todo
-    assigned_to: null
-    branch: null
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
+    validation: >
+      Technical candidate passed the local Unity 6000.5.2f1 MCP gate at runtime commit
+      63bda64: both scenes, deterministic sprite import/catalog validation, EditMode
+      415/415, PlayMode 70/70, console errors 0, and six inspected screenshots. The
+      Merchant Shade pack has 23 explicitly unresolved roles, so the no-mixed-fallback
+      acceptance criterion and human art gate are not yet satisfied.
 
 gates:
   - id: GATE-0.1
@@ -1252,5 +1261,8 @@ gates:
     status: pending
     ready: false
     evidence: >
-      The AFK implementation may produce and validate the candidate branch and canonical
-      screenshots, but only the repository owner can approve promotion to main.
+      A technically validated draft candidate and six canonical screenshots exist on
+      codex/sprite-projection. The curated pack honestly lacks 23 roles, including the
+      Bellkeeper, Black Hound, Stag, ruined bell tower, campfire, and several nightmares;
+      those retain reversible 3D identity fallbacks. Resolve or explicitly accept that
+      art debt before asking the repository owner for camera/scale/palette approval.
