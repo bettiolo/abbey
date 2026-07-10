@@ -1,6 +1,6 @@
 # P2D reversible sprite-projection candidate
 
-Validated locally on 2026-07-10 at runtime commit `79cc45b` with Unity `6000.5.2f1`.
+Validated locally on 2026-07-10 at runtime commit `6ff7030` with Unity `6000.5.2f1`.
 
 ## Implemented candidate
 
@@ -26,7 +26,7 @@ Validated locally on 2026-07-10 at runtime commit `79cc45b` with Unity `6000.5.2
 - Unity MCP gate: passed; Prototype01 and Map2Prototype built.
 - Sprite manifest/import/catalog validation: passed.
 - EditMode: 418/418 passed.
-- PlayMode: 71/71 passed.
+- PlayMode: 72/72 passed.
 - Unity console errors: 0.
 - Canonical images inspected: `day_camp`, `dusk_recall`, `night_attack`, `morning_after`,
   `map2_grove_day`, and `map2_false_bell_night`.

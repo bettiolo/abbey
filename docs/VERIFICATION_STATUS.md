@@ -8,7 +8,7 @@ secrets.**
 
 ## Current verified path
 
-Runtime-affecting validation baseline: commit `79cc45b` was verified on 2026-07-10 using
+Runtime-affecting validation baseline: commit `6ff7030` was verified on 2026-07-10 using
 macOS with Unity `6000.5.2f1` through MCP for Unity. This baseline covers the Phase 2/3
 game, Phase 4 tasks `P4-01` through `P4-05`, and the URP 17.5 migration: both generated
 maps, the Stag/covenant and forest story systems, campaign carryover/transition, 49
@@ -23,13 +23,13 @@ imports, renderer configuration, or validation evidence change.
   PlayMode tests, and a final console check through MCP.
 - Local MCP result for the validated runtime baseline:
   - Unity gate: passed (`unity/Build/reports/unity_gate_report.json`, generated
-    `2026-07-10T21:37:46Z`)
+    `2026-07-10T21:42:21Z`)
   - Scene builds: passed for Prototype01 and Map2Prototype
   - Generated asset import validation: passed, 49/49 imported assets
   - Mini World sprite manifest/import/catalog validation: passed, 32 selected sheets,
     341 slices, and 61 mapped roles
   - EditMode tests: 418/418 passed
-  - PlayMode tests: 71/71 passed
+  - PlayMode tests: 72/72 passed
   - Console errors after the Unity gate: 0
   - MCP graphics inspection: all six sprite candidate proof screenshots visually inspected;
     XZ terrain tiling, phase tint, and reversible mapped actors/buildings are visible
