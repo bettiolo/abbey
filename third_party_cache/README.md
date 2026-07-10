@@ -23,6 +23,7 @@ Expected local layout when the cache is populated:
 - `ambientCG/Materials/`
 - `ambientCG/HDRIs/`
 - `ambientCG/Models/`
+- `MerchantShade/MiniWorldSprites/`
 
 The cache is allowed to contain full extracted packs, source licenses, and exploratory
 files that are not yet committed as runtime placeholders.
@@ -38,6 +39,7 @@ Current source references:
 - Quaternius Universal Base Characters: https://quaternius.itch.io/universal-base-characters
 - Poly Haven: https://polyhaven.com/
 - ambientCG: https://ambientcg.com/
+- Merchant Shade Mini World Sprites: https://merchant-shade.itch.io/16x16-mini-world-sprites
 
 Current selected texture/material cache entries:
 
@@ -54,3 +56,11 @@ Re-download packs from the source pages above if local cache contents are missin
 stale. `Quaternius/UltimateModularRuins/` may be partial if Google Drive blocks one of
 the public file links during scripted download; Unity runtime placeholders do not
 reference that cache directly.
+
+Merchant Shade's cache is acquired only through itch.io's public first-party download
+flow by `tools/acquire_merchant_shade_miniworld.py`. The tool pins itch game `703908`,
+upload `7054436`, archive size `2,084,074`, and SHA-256
+`79eb000cfd3f64fee8ac8307f02bb867dc8b4fd7ce5a150119c51dedfa563f1f`; it rejects
+source/license drift, HTML responses, and unsafe ZIP members. The ZIP, guide, extracted
+pack, and acquisition audit remain ignored. Only the reviewed CC0 subset recorded by
+`unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/manifest.json` is committed.
