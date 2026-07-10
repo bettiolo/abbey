@@ -1109,6 +1109,84 @@ tasks:
       EditMode 388/388, PlayMode 70/70, console errors 0. Asset validation 335 passed / 8
       skipped and all 49 assets matched a clean Blender verification rebuild.
 
+  # -------------------------------------------------------- Sprite projection experiment
+  - id: P2D-EPIC
+    title: Reversible 2.5D sprite projection using Mini World Sprites
+    phase: sprite-projection
+    description: >
+      Replace the visible prototype presentation with a deterministic sprite layer while
+      preserving the existing XZ simulation, locked camera, collision footprints, and
+      complete 3D rollback path. Execution contract: docs/SPRITE_PROJECTION_AFK_PLAN.md.
+    depends_on: [P4-EPIC]
+    status: in_progress
+    assigned_to: orchestrator
+    branch: codex/sprite-projection
+    notes: GATE-P2D-ART is human-owned and does not alter GATE-P4.
+
+  - id: P2D-01
+    title: Audit and curate the Merchant Shade CC0 sprite source
+    phase: sprite-projection
+    depends_on: [P4-EPIC]
+    status: in_progress
+    assigned_to: sprite-assets
+    branch: codex/sprite-assets
+    deliverables:
+      - tools/acquire_merchant_shade_miniworld.py
+      - tools/validate_merchant_shade_miniworld.py
+      - unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/
+
+  - id: P2D-02
+    title: Reversible runtime sprite projection foundation
+    phase: sprite-projection
+    depends_on: [P4-EPIC]
+    status: in_progress
+    assigned_to: sprite-runtime
+    branch: codex/sprite-runtime
+    deliverables:
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionCatalog.cs
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionFactory.cs
+      - unity/Assets/_Game/Scripts/Runtime/Rendering/SpriteProjectionBootstrap.cs
+
+  - id: P2D-03
+    title: Deterministic Unity sprite importer and catalog validation
+    phase: sprite-projection
+    depends_on: [P2D-01, P2D-02]
+    status: todo
+    assigned_to: null
+    branch: null
+
+  - id: P2D-04
+    title: Convert the generated Map 1 presentation
+    phase: sprite-projection
+    depends_on: [P2D-03]
+    status: todo
+    assigned_to: null
+    branch: null
+
+  - id: P2D-05
+    title: Cover runtime-spawned actors, buildings, and carried props
+    phase: sprite-projection
+    depends_on: [P2D-03]
+    status: todo
+    assigned_to: null
+    branch: null
+
+  - id: P2D-06
+    title: Convert the generated Map 2 presentation
+    phase: sprite-projection
+    depends_on: [P2D-04, P2D-05]
+    status: todo
+    assigned_to: null
+    branch: null
+
+  - id: P2D-07
+    title: Sprite polish, Unity gate, screenshots, and validation evidence
+    phase: sprite-projection
+    depends_on: [P2D-06]
+    status: todo
+    assigned_to: null
+    branch: null
+
 gates:
   - id: GATE-0.1
     kind: human_review
@@ -1165,3 +1243,11 @@ gates:
       Phase 4 implementation and automated/local-editor validation are complete. Day and
       false-bell-night proofs are in unity/Build/screenshots; the human must still replay
       both covenant and exploitative victories before approving this gate.
+  - id: GATE-P2D-ART
+    kind: human_review
+    question: Does the sprite projection have the right camera, scale, palette, and readable building/character kit?
+    status: pending
+    ready: false
+    evidence: >
+      The AFK implementation may produce and validate the candidate branch and canonical
+      screenshots, but only the repository owner can approve promotion to main.
