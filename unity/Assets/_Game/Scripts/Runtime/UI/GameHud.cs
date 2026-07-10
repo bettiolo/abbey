@@ -91,8 +91,7 @@ namespace Abbey.UI
         {
             if (!visible)
             {
-                GUI.Label(new Rect(Mathf.Max(8f, Screen.width * 0.5f - 40f), 8f, 200f, 22f),
-                    $"[{toggleKey}] HUD");
+                HudHintDock.Draw(HudHintSlot.Hud, $"[{toggleKey}] HUD");
                 return;
             }
 

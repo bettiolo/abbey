@@ -1,6 +1,7 @@
 using Abbey.Buildings;
 using Abbey.Decrees;
 using Abbey.Morale;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -45,7 +46,7 @@ namespace Abbey.Debugging
             }
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] pressures panel");
+                HudHintDock.Draw(HudHintSlot.Pressures, $"[{toggleKey}] pressures panel");
                 return;
             }
 

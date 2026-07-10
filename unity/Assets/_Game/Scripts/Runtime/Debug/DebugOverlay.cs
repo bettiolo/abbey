@@ -4,6 +4,7 @@ using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Session;
+using Abbey.UI;
 using Abbey.Villagers;
 using Abbey.World;
 using UnityEngine;
@@ -79,7 +80,7 @@ namespace Abbey.Debugging
         {
             if (!visible)
             {
-                GUI.Label(new Rect(8f, 74f, 220f, 22f), $"[{toggleKey}] debug overlay");
+                HudHintDock.Draw(HudHintSlot.DebugOverlay, $"[{toggleKey}] debug overlay");
                 return;
             }
 

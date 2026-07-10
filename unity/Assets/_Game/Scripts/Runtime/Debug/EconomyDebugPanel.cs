@@ -1,5 +1,6 @@
 using Abbey.Core;
 using Abbey.Economy;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -42,7 +43,7 @@ namespace Abbey.Debugging
             float x = Screen.width - width - 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(8f, 96f, 220f, 22f), $"[{toggleKey}] economy panel");
+                HudHintDock.Draw(HudHintSlot.Economy, $"[{toggleKey}] economy panel");
                 return;
             }
 

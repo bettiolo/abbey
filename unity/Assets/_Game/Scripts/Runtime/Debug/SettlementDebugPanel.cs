@@ -1,4 +1,5 @@
 using Abbey.Settlement;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -21,7 +22,7 @@ namespace Abbey.Debugging
         public KeyCode heatmapKey = KeyCode.K;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("Draw slot ground gizmos in the Scene view even when the panel is hidden.")]
         public bool drawGizmos = true;
@@ -48,7 +49,7 @@ namespace Abbey.Debugging
             float y = 804f; // below the season panel's stack on the right edge
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] settlement panel");
+                HudHintDock.Draw(HudHintSlot.Settlement, $"[{toggleKey}] settlement panel");
                 return;
             }
 

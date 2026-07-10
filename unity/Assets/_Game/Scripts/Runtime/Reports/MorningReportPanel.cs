@@ -1,4 +1,5 @@
 using Abbey.Core;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Reports
@@ -77,8 +78,8 @@ namespace Abbey.Reports
             {
                 if (_haveReport)
                 {
-                    GUI.Label(new Rect(8f, Screen.height - 30f, 320f, 22f),
-                        $"[{toggleKey}] morning report");
+                    HudHintDock.Draw(
+                        HudHintSlot.MorningReport, $"[{toggleKey}] morning report");
                 }
                 return;
             }

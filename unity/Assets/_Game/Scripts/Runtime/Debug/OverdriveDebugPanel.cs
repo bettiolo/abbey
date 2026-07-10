@@ -1,6 +1,7 @@
 using System;
 using Abbey.Decrees;
 using Abbey.Economy;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -61,7 +62,7 @@ namespace Abbey.Debugging
             float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] overdrive panel");
+                HudHintDock.Draw(HudHintSlot.Overdrive, $"[{toggleKey}] overdrive panel");
                 return;
             }
 

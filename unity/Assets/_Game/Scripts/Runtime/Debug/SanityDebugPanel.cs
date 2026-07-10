@@ -1,5 +1,6 @@
 using System.Text;
 using Abbey.Sanity;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -18,7 +19,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F9;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("Max villager rows to list.")]
         [Min(1)] public int maxRows = 10;
@@ -42,7 +43,7 @@ namespace Abbey.Debugging
             float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] sanity panel");
+                HudHintDock.Draw(HudHintSlot.Sanity, $"[{toggleKey}] sanity panel");
                 return;
             }
 

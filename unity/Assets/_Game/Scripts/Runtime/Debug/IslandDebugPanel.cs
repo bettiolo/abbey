@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Abbey.Island;
+using Abbey.UI;
 using Abbey.Villagers;
 using UnityEngine;
 
@@ -123,7 +124,7 @@ namespace Abbey.Debugging
             float y = Screen.height - 8f - (visible ? 320f : 22f);
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] island panel");
+                HudHintDock.Draw(HudHintSlot.Island, $"[{toggleKey}] island panel");
                 return;
             }
 

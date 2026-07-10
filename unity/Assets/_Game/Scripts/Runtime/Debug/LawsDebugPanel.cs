@@ -1,6 +1,7 @@
 using Abbey.Core;
 using Abbey.Decrees;
 using Abbey.Economy;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -91,7 +92,7 @@ namespace Abbey.Debugging
             float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] laws panel");
+                HudHintDock.Draw(HudHintSlot.Laws, $"[{toggleKey}] laws panel");
                 return;
             }
 

@@ -1,6 +1,7 @@
 using Abbey.Core;
 using Abbey.Light;
 using Abbey.World;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -20,7 +21,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F11;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         GUIStyle _labelStyle;
         GUIStyle _headerStyle;
@@ -40,7 +41,7 @@ namespace Abbey.Debugging
             float y = 576f; // below the economy panel's stack on the right edge
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] season panel");
+                HudHintDock.Draw(HudHintSlot.Season, $"[{toggleKey}] season panel");
                 return;
             }
 

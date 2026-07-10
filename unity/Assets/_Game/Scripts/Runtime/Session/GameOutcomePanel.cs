@@ -1,3 +1,4 @@
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Session
@@ -62,8 +63,7 @@ namespace Abbey.Session
             {
                 if (_haveOutcome)
                 {
-                    GUI.Label(new Rect(8f, Screen.height - 52f, 320f, 22f),
-                        $"[{toggleKey}] end screen");
+                    HudHintDock.Draw(HudHintSlot.Outcome, $"[{toggleKey}] end screen");
                 }
                 return;
             }

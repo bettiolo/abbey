@@ -1,6 +1,7 @@
 using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Economy;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -56,7 +57,7 @@ namespace Abbey.Debugging
             const float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(8f, 118f, 220f, 22f), $"[{toggleKey}] building panel");
+                HudHintDock.Draw(HudHintSlot.Buildings, $"[{toggleKey}] building panel");
                 return;
             }
 

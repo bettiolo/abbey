@@ -204,8 +204,7 @@ namespace Abbey.UI
         {
             if (!visible)
             {
-                GUI.Label(new Rect(Mathf.Max(8f, Screen.width - 120f), 8f, 112f, 22f),
-                    $"[{toggleKey}] minimap");
+                HudHintDock.Draw(HudHintSlot.Minimap, $"[{toggleKey}] minimap");
                 return;
             }
 

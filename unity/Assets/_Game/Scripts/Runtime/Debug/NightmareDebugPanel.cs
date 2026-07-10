@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Abbey.Core;
 using Abbey.Nightmares;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -64,8 +65,7 @@ namespace Abbey.Debugging
             float y = Screen.height - height - 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(8f, 140f, 220f, 22f),
-                    $"[{toggleKey}] nightmare panel");
+                HudHintDock.Draw(HudHintSlot.Nightmare, $"[{toggleKey}] nightmare panel");
                 return;
             }
 

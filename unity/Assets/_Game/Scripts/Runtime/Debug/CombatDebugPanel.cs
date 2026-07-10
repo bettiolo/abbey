@@ -4,6 +4,7 @@ using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Light;
 using Abbey.Nightmares;
+using Abbey.UI;
 using UnityEngine;
 
 namespace Abbey.Debugging
@@ -24,7 +25,7 @@ namespace Abbey.Debugging
         public KeyCode toggleKey = KeyCode.F6;
 
         [Tooltip("Start with the panel visible.")]
-        public bool visible = true;
+        public bool visible;
 
         [Tooltip("Max home rows to list.")]
         [Min(1)] public int maxRows = 12;
@@ -63,7 +64,7 @@ namespace Abbey.Debugging
             float y = 8f;
             if (!visible)
             {
-                GUI.Label(new Rect(x, y, width, 22f), $"[{toggleKey}] combat panel");
+                HudHintDock.Draw(HudHintSlot.Combat, $"[{toggleKey}] combat panel");
                 return;
             }
 
