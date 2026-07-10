@@ -10,6 +10,45 @@ namespace Abbey.Tests.PlayMode
     public sealed class SpriteActorPresentationTests
     {
         [UnityTest]
+        public IEnumerator EqualDepthDenseOrder_SurvivesACompleteLateUpdateFrame()
+        {
+            var created = new List<Object>();
+            try
+            {
+                Texture2D texture = Track(created, new Texture2D(2, 2));
+                Sprite sprite = Track(created, Sprite.Create(
+                    texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0f), 16f));
+                SpriteProjectionCatalog catalog = Track(
+                    created, ScriptableObject.CreateInstance<SpriteProjectionCatalog>());
+                catalog.entries.Add(new SpriteProjectionEntry { assetId = "actor", sprite = sprite });
+                GameObject cameraObject = Track(created, new GameObject("Camera"));
+                Camera camera = cameraObject.AddComponent<Camera>();
+                GameObject bootstrapObject = Track(created, new GameObject("Projection"));
+                SpriteProjectionBootstrap bootstrap =
+                    bootstrapObject.AddComponent<SpriteProjectionBootstrap>();
+                bootstrap.Configure(catalog, camera);
+                GameObject rootA = Track(created, new GameObject("A"));
+                GameObject rootB = Track(created, new GameObject("B"));
+                Assert.IsTrue(bootstrap.Register(rootB, "actor", stableId: "b"));
+                Assert.IsTrue(bootstrap.Register(rootA, "actor", stableId: "a"));
+
+                yield return null;
+
+                int orderA = SpriteProjectionFactory.GetSpriteRenderer(rootA).sortingOrder;
+                int orderB = SpriteProjectionFactory.GetSpriteRenderer(rootB).sortingOrder;
+                Assert.AreNotEqual(orderA, orderB,
+                    "visual LateUpdate must not overwrite the bootstrap's dense total order");
+            }
+            finally
+            {
+                for (int i = created.Count - 1; i >= 0; i--)
+                {
+                    if (created[i] != null) Object.Destroy(created[i]);
+                }
+            }
+        }
+
+        [UnityTest]
         public IEnumerator MovingRoot_SelectsDirectionalWalkFrames_WithoutWritingGameplayTransform()
         {
             var created = new List<Object>();

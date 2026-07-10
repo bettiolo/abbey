@@ -230,6 +230,13 @@ namespace Abbey.Rendering
             }
             targetWorldScale = Mathf.Max(0.01f, entry.visualScale);
             RefreshTransform();
+            if (layout == SpriteProjectionLayout.CameraFacing)
+            {
+                // Isolated factory callers get a depth fallback immediately. In a
+                // generated scene the bootstrap replaces this with its dense total order.
+                spriteRenderer.sortingOrder = Mathf.Clamp(
+                    Mathf.RoundToInt(SortKey), -32000, 32000);
+            }
         }
 
         void Awake()
@@ -352,9 +359,10 @@ namespace Abbey.Rendering
                 // The scene bootstrap assigns a dense, total order after comparing
                 // continuous projected depth, role offset, and deterministic identity.
                 // This local value is a safe fallback for isolated factory use in tests.
-                spriteRenderer.sortingOrder = layout == SpriteProjectionLayout.GroundTiled
-                    ? sortingOffset
-                    : Mathf.Clamp(Mathf.RoundToInt(SortKey), -32000, 32000);
+                if (layout == SpriteProjectionLayout.GroundTiled)
+                {
+                    spriteRenderer.sortingOrder = sortingOffset;
+                }
                 DayPhase phase = GameClock.Instance != null ? GameClock.Instance.Phase : DayPhase.Day;
                 spriteRenderer.color = participatesInPhaseTint ? style.TintFor(phase) : Color.white;
             }
