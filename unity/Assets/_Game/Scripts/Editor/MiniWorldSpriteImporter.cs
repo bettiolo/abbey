@@ -172,6 +172,29 @@ namespace Abbey.Editor
                     assetId = source.assetId,
                     role = source.roles != null && source.roles.Length > 0 ? source.roles[0] : string.Empty,
                     sprite = sprite,
+                    southSprite = ResolveOptionalSprite(
+                        source.HasDirectionalSpriteData ? source.directionalSprites.south : null,
+                        filesById, spriteCache),
+                    northSprite = ResolveOptionalSprite(
+                        source.HasDirectionalSpriteData ? source.directionalSprites.north : null,
+                        filesById, spriteCache),
+                    eastSprite = ResolveOptionalSprite(
+                        source.HasDirectionalSpriteData ? source.directionalSprites.east : null,
+                        filesById, spriteCache),
+                    westSprite = ResolveOptionalSprite(
+                        source.HasDirectionalSpriteData ? source.directionalSprites.west : null,
+                        filesById, spriteCache),
+                    southWalk = ResolveFrames(source.HasWalkAnimationData
+                        ? source.walkAnimation.directions.south : null, filesById, spriteCache),
+                    northWalk = ResolveFrames(source.HasWalkAnimationData
+                        ? source.walkAnimation.directions.north : null, filesById, spriteCache),
+                    eastWalk = ResolveFrames(source.HasWalkAnimationData
+                        ? source.walkAnimation.directions.east : null, filesById, spriteCache),
+                    westWalk = ResolveFrames(source.HasWalkAnimationData
+                        ? source.walkAnimation.directions.west : null, filesById, spriteCache),
+                    walkFrameSeconds = source.HasWalkAnimationData
+                        ? source.walkAnimation.frameSeconds
+                        : 0.2f,
                     layout = string.Equals(sourceFile.orientation, "xzTile", StringComparison.Ordinal)
                         ? SpriteProjectionLayout.GroundTiled
                         : SpriteProjectionLayout.CameraFacing,
@@ -187,6 +210,33 @@ namespace Abbey.Editor
             AssetDatabase.SaveAssetIfDirty(catalog);
         }
 
+        static Sprite ResolveOptionalSprite(
+            string spriteReference,
+            Dictionary<string, MiniWorldFile> filesById,
+            Dictionary<string, Sprite> spriteCache)
+        {
+            return string.IsNullOrEmpty(spriteReference)
+                ? null
+                : ResolveSprite(spriteReference, filesById, spriteCache);
+        }
+
+        static Sprite[] ResolveFrames(
+            string[] references,
+            Dictionary<string, MiniWorldFile> filesById,
+            Dictionary<string, Sprite> spriteCache)
+        {
+            if (references == null || references.Length == 0)
+            {
+                return Array.Empty<Sprite>();
+            }
+            var frames = new Sprite[references.Length];
+            for (int i = 0; i < references.Length; i++)
+            {
+                frames[i] = ResolveSprite(references[i], filesById, spriteCache);
+            }
+            return frames;
+        }
+
         public static string ToAssetPath(string repositoryPath)
         {
             const string unityPrefix = "unity/";
@@ -197,6 +247,36 @@ namespace Abbey.Editor
             return repositoryPath.StartsWith(unityPrefix, StringComparison.Ordinal)
                 ? repositoryPath.Substring(unityPrefix.Length)
                 : repositoryPath;
+        }
+
+        public static bool TryResolveCuratedAssetPath(
+            string repositoryPath,
+            out string assetPath,
+            out string absolutePath)
+        {
+            assetPath = ToAssetPath(repositoryPath);
+            absolutePath = string.Empty;
+            if (string.IsNullOrWhiteSpace(assetPath))
+            {
+                return false;
+            }
+
+            string projectRoot = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            string curatedRoot = Path.GetFullPath(Path.Combine(projectRoot, CuratedAssetRoot));
+            string candidate = Path.GetFullPath(Path.Combine(projectRoot, assetPath));
+            string rootWithSeparator = curatedRoot.TrimEnd(
+                Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) +
+                Path.DirectorySeparatorChar;
+            if (!candidate.StartsWith(rootWithSeparator, StringComparison.Ordinal) ||
+                !candidate.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            absolutePath = candidate;
+            assetPath = "Assets/" + Path.GetRelativePath(Application.dataPath, candidate)
+                .Replace(Path.DirectorySeparatorChar, '/');
+            return true;
         }
 
         static Sprite ResolveSprite(
@@ -336,6 +416,8 @@ namespace Abbey.Editor
         public string assetId;
         public string[] roles;
         public string defaultSprite;
+        public MiniWorldDirectionalSprites directionalSprites;
+        public MiniWorldWalkAnimation walkAnimation;
         public float visualScale;
         public float[] anchorOffset;
         public int roleSortOffset;
@@ -349,5 +431,46 @@ namespace Abbey.Editor
         public Vector2 AuthoredFootprint => authoredFootprint != null && authoredFootprint.Length == 2
             ? new Vector2(authoredFootprint[0], authoredFootprint[1])
             : Vector2.zero;
+
+        public bool HasDirectionalSpriteData => directionalSprites != null &&
+            (!string.IsNullOrEmpty(directionalSprites.south) ||
+             !string.IsNullOrEmpty(directionalSprites.north) ||
+             !string.IsNullOrEmpty(directionalSprites.east) ||
+             !string.IsNullOrEmpty(directionalSprites.west));
+
+        public bool HasWalkAnimationData => walkAnimation != null &&
+            walkAnimation.directions != null &&
+            (walkAnimation.frameSeconds > 0f ||
+             HasFrames(walkAnimation.directions.south) ||
+             HasFrames(walkAnimation.directions.north) ||
+             HasFrames(walkAnimation.directions.east) ||
+             HasFrames(walkAnimation.directions.west));
+
+        static bool HasFrames(string[] frames) => frames != null && frames.Length > 0;
+    }
+
+    [Serializable]
+    public sealed class MiniWorldDirectionalSprites
+    {
+        public string south;
+        public string north;
+        public string east;
+        public string west;
+    }
+
+    [Serializable]
+    public sealed class MiniWorldWalkAnimation
+    {
+        public float frameSeconds;
+        public MiniWorldDirectionalFrames directions;
+    }
+
+    [Serializable]
+    public sealed class MiniWorldDirectionalFrames
+    {
+        public string[] south;
+        public string[] north;
+        public string[] east;
+        public string[] west;
     }
 }

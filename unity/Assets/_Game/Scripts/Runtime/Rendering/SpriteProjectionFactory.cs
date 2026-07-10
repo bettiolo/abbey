@@ -78,8 +78,8 @@ namespace Abbey.Rendering
 
             visual.gameObject.SetActive(true);
             SpriteRoleTag tag = gameplayRoot.GetComponent<SpriteRoleTag>();
-            int stableSortKey = tag != null ? tag.StableSortKey : 0;
-            visual.Configure(gameplayRoot.transform, targetCamera, entry, style, stableSortKey);
+            int stableSortIndex = tag != null ? tag.DeterministicSortIndex : 0;
+            visual.Configure(gameplayRoot.transform, targetCamera, entry, style, stableSortIndex);
             return true;
         }
 
@@ -118,33 +118,79 @@ namespace Abbey.Rendering
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof(SpriteRenderer))]
-    sealed class SpriteProjectionVisual : MonoBehaviour
+    internal sealed class SpriteProjectionVisual : MonoBehaviour
     {
         [SerializeField] Transform gameplayRoot;
         [SerializeField] Camera targetCamera;
         [SerializeField] Vector3 anchorOffset;
         [SerializeField] int sortingOffset;
-        [SerializeField] int stableSortKey;
+        [SerializeField] int deterministicSortIndex;
         [SerializeField] bool participatesInPhaseTint = true;
         [SerializeField] SpriteProjectionLayout layout;
         [SerializeField] Vector2 localGroundSize = Vector2.one;
         [SerializeField] float localGroundHeight;
         [SerializeField] SpriteProjectionStyle style;
         [SerializeField, Min(0.01f)] float targetWorldScale = 1f;
+        [SerializeField] Sprite southSprite;
+        [SerializeField] Sprite northSprite;
+        [SerializeField] Sprite eastSprite;
+        [SerializeField] Sprite westSprite;
+        [SerializeField] Sprite[] southWalk;
+        [SerializeField] Sprite[] northWalk;
+        [SerializeField] Sprite[] eastWalk;
+        [SerializeField] Sprite[] westWalk;
+        [SerializeField, Min(0.01f)] float walkFrameSeconds = 0.2f;
+        [SerializeField] FacingDirection facing = FacingDirection.South;
+        Vector3 lastRootPosition;
+        float walkElapsed;
         SpriteRenderer spriteRenderer;
+
+        enum FacingDirection
+        {
+            South,
+            North,
+            East,
+            West
+        }
+
+        internal int DeterministicSortIndex => deterministicSortIndex;
+        internal bool IsCameraFacing => layout == SpriteProjectionLayout.CameraFacing;
+        internal float SortKey
+        {
+            get
+            {
+                float depth = targetCamera != null && gameplayRoot != null
+                    ? targetCamera.transform.InverseTransformPoint(gameplayRoot.position).z
+                    : gameplayRoot != null ? gameplayRoot.position.x + gameplayRoot.position.z : 0f;
+                float scale = style != null ? Mathf.Max(0.01f, style.depthSortingScale) : 1f;
+                return sortingOffset - depth * scale;
+            }
+        }
+
+        internal void SetSortingOrder(int order)
+        {
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            }
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sortingOrder = order;
+            }
+        }
 
         public void Configure(
             Transform gameplayRoot,
             Camera targetCamera,
             SpriteProjectionEntry entry,
             SpriteProjectionStyle projectionStyle,
-            int newStableSortKey)
+            int newDeterministicSortIndex)
         {
             this.gameplayRoot = gameplayRoot;
             this.targetCamera = targetCamera;
             anchorOffset = entry.anchorOffset;
             sortingOffset = entry.sortingOffset;
-            stableSortKey = newStableSortKey;
+            deterministicSortIndex = newDeterministicSortIndex;
             participatesInPhaseTint = entry.participatesInPhaseTint;
             layout = entry.layout;
             style = projectionStyle != null ? projectionStyle : SpriteProjectionStyle.LoadOrDefault();
@@ -153,6 +199,22 @@ namespace Abbey.Rendering
                 spriteRenderer = GetComponent<SpriteRenderer>();
             }
             spriteRenderer.sprite = entry.sprite;
+            southSprite = entry.southSprite;
+            northSprite = entry.northSprite;
+            eastSprite = entry.eastSprite;
+            westSprite = entry.westSprite;
+            southWalk = entry.southWalk;
+            northWalk = entry.northWalk;
+            eastWalk = entry.eastWalk;
+            westWalk = entry.westWalk;
+            walkFrameSeconds = Mathf.Max(0.01f, entry.walkFrameSeconds);
+            lastRootPosition = gameplayRoot.position;
+            walkElapsed = 0f;
+            if (entry.HasDirectionalSprites)
+            {
+                facing = FacingDirection.South;
+                spriteRenderer.sprite = southSprite;
+            }
             spriteRenderer.shadowCastingMode = ShadowCastingMode.Off;
             spriteRenderer.receiveShadows = false;
             if (layout == SpriteProjectionLayout.GroundTiled)
@@ -160,6 +222,7 @@ namespace Abbey.Rendering
                 ResolveLocalGroundBounds(out localGroundSize, out localGroundHeight);
                 spriteRenderer.drawMode = SpriteDrawMode.Tiled;
                 spriteRenderer.size = localGroundSize;
+                spriteRenderer.sortingOrder = sortingOffset;
             }
             else
             {
@@ -176,6 +239,10 @@ namespace Abbey.Rendering
             {
                 gameplayRoot = transform.parent;
             }
+            if (gameplayRoot != null)
+            {
+                lastRootPosition = gameplayRoot.position;
+            }
             if (style == null)
             {
                 style = SpriteProjectionStyle.LoadOrDefault();
@@ -184,7 +251,64 @@ namespace Abbey.Rendering
 
         void LateUpdate()
         {
+            RefreshActorSprite(Time.deltaTime);
             RefreshTransform();
+        }
+
+        void RefreshActorSprite(float deltaTime)
+        {
+            if (layout != SpriteProjectionLayout.CameraFacing || gameplayRoot == null ||
+                southSprite == null || northSprite == null || eastSprite == null || westSprite == null)
+            {
+                return;
+            }
+
+            Vector3 delta = gameplayRoot.position - lastRootPosition;
+            lastRootPosition = gameplayRoot.position;
+            delta.y = 0f;
+            if (delta.sqrMagnitude <= 0.00000001f)
+            {
+                walkElapsed = 0f;
+                spriteRenderer.sprite = IdleSprite(facing);
+                return;
+            }
+
+            facing = Mathf.Abs(delta.x) >= Mathf.Abs(delta.z)
+                ? delta.x >= 0f ? FacingDirection.East : FacingDirection.West
+                : delta.z >= 0f ? FacingDirection.North : FacingDirection.South;
+            walkElapsed += Mathf.Max(0f, deltaTime);
+            Sprite[] frames = WalkFrames(facing);
+            if (frames != null && frames.Length > 0)
+            {
+                int frame = Mathf.FloorToInt(walkElapsed / walkFrameSeconds) % frames.Length;
+                spriteRenderer.sprite = frames[frame] != null ? frames[frame] : IdleSprite(facing);
+            }
+            else
+            {
+                spriteRenderer.sprite = IdleSprite(facing);
+            }
+        }
+
+        Sprite IdleSprite(FacingDirection direction)
+        {
+            switch (direction)
+            {
+                case FacingDirection.North: return northSprite;
+                case FacingDirection.East: return eastSprite;
+                case FacingDirection.West: return westSprite;
+                default: return southSprite;
+            }
+        }
+
+        Sprite[] WalkFrames(FacingDirection direction)
+        {
+            switch (direction)
+            {
+                case FacingDirection.North: return northWalk;
+                case FacingDirection.East: return eastWalk;
+                case FacingDirection.West: return westWalk;
+                default: return southWalk;
+            }
         }
 
         void RefreshTransform()
@@ -225,12 +349,12 @@ namespace Abbey.Rendering
             }
             if (spriteRenderer != null && style != null && gameplayRoot != null)
             {
-                float depth = targetCamera != null
-                    ? targetCamera.transform.InverseTransformPoint(gameplayRoot.position).z
-                    : gameplayRoot.position.x + gameplayRoot.position.z;
-                int tie = (stableSortKey & int.MaxValue) % Mathf.Max(1, style.stableTieBreakRange);
-                spriteRenderer.sortingOrder = sortingOffset
-                    - Mathf.RoundToInt(depth * Mathf.Max(0.01f, style.depthSortingScale)) + tie;
+                // The scene bootstrap assigns a dense, total order after comparing
+                // continuous projected depth, role offset, and deterministic identity.
+                // This local value is a safe fallback for isolated factory use in tests.
+                spriteRenderer.sortingOrder = layout == SpriteProjectionLayout.GroundTiled
+                    ? sortingOffset
+                    : Mathf.Clamp(Mathf.RoundToInt(SortKey), -32000, 32000);
                 DayPhase phase = GameClock.Instance != null ? GameClock.Instance.Phase : DayPhase.Day;
                 spriteRenderer.color = participatesInPhaseTint ? style.TintFor(phase) : Color.white;
             }

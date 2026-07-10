@@ -7,8 +7,9 @@ namespace Abbey.Rendering
     [CreateAssetMenu(fileName = "SpriteProjectionStyle", menuName = "Abbey/Rendering/Sprite Projection Style")]
     public sealed class SpriteProjectionStyle : ScriptableObject
     {
+        public const string AssetPath = "Assets/_Game/Settings/Rendering/SpriteProjectionStyle.asset";
         [Min(0.01f)] public float depthSortingScale = 10f;
-        [Min(1)] public int stableTieBreakRange = 4;
+        [Min(64)] public int stableTieBreakRange = 4096;
         public Color dayTint = Color.white;
         public Color duskTint = new Color(0.9f, 0.72f, 0.64f, 1f);
         public Color nightTint = new Color(0.42f, 0.52f, 0.72f, 1f);

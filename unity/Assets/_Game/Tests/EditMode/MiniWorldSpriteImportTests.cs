@@ -92,6 +92,18 @@ namespace Abbey.Tests.EditMode
                 Assert.That(actual.anchorOffset, Is.EqualTo(expected.AnchorOffset));
                 Assert.That(actual.sortingOffset, Is.EqualTo(expected.roleSortOffset));
                 Assert.That(actual.authoredFootprint, Is.EqualTo(expected.AuthoredFootprint));
+                if (expected.HasWalkAnimationData)
+                {
+                    Assert.That(actual.HasDirectionalSprites, Is.True, expected.assetId);
+                    Assert.That(actual.southWalk, Has.Length.EqualTo(
+                        expected.walkAnimation.directions.south.Length), expected.assetId);
+                    Assert.That(actual.northWalk, Has.Length.EqualTo(
+                        expected.walkAnimation.directions.north.Length), expected.assetId);
+                    Assert.That(actual.eastWalk, Has.Length.EqualTo(
+                        expected.walkAnimation.directions.east.Length), expected.assetId);
+                    Assert.That(actual.westWalk, Has.Length.EqualTo(
+                        expected.walkAnimation.directions.west.Length), expected.assetId);
+                }
                 Assert.That(assetIds.Add(actual.assetId), Is.True, $"duplicate asset id {actual.assetId}");
                 Assert.That(assetRolePairs.Add(actual.assetId + "\n" + actual.role), Is.True,
                     $"duplicate asset/role pair {actual.assetId} / {actual.role}");
@@ -151,6 +163,27 @@ namespace Abbey.Tests.EditMode
             finally
             {
                 catalog.entries[0].visualScale = originalScale;
+            }
+        }
+
+        [Test]
+        public void Validation_RejectsCanonicalPathTraversalBeforeFileAccess()
+        {
+            MiniWorldManifest manifest = MiniWorldSpriteImporter.LoadManifest();
+            string original = manifest.files[0].abbeyPath;
+            try
+            {
+                manifest.files[0].abbeyPath =
+                    "unity/Assets/_Game/Art/Placeholders/MerchantShadeMiniWorld/../escape.png";
+                Assert.That(MiniWorldSpriteImporter.TryResolveCuratedAssetPath(
+                    manifest.files[0].abbeyPath, out _, out _), Is.False);
+                List<string> errors = MiniWorldProjectionValidator.CollectManifestErrors(manifest);
+                Assert.That(errors.Exists(error => error.Contains("outside the curated PNG root")),
+                    Is.True);
+            }
+            finally
+            {
+                manifest.files[0].abbeyPath = original;
             }
         }
 

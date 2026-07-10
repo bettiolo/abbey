@@ -473,7 +473,28 @@ namespace Abbey.EditorTools
             var projection = projectionGO.AddComponent<SpriteProjectionBootstrap>();
             var catalog = AssetDatabase.LoadAssetAtPath<SpriteProjectionCatalog>(
                 MiniWorldSpriteImporter.CatalogAssetPath);
-            projection.Configure(catalog, targetCamera);
+            var style = AssetDatabase.LoadAssetAtPath<SpriteProjectionStyle>(
+                SpriteProjectionStyle.AssetPath);
+            if (style == null)
+            {
+                style = ScriptableObject.CreateInstance<SpriteProjectionStyle>();
+                AssetDatabase.CreateAsset(style, SpriteProjectionStyle.AssetPath);
+            }
+            var projectionConfig = AssetDatabase.LoadAssetAtPath<SpriteProjectionConfig>(
+                SpriteProjectionConfig.AssetPath);
+            if (projectionConfig == null)
+            {
+                projectionConfig = ScriptableObject.CreateInstance<SpriteProjectionConfig>();
+                projectionConfig.style = style;
+                AssetDatabase.CreateAsset(projectionConfig, SpriteProjectionConfig.AssetPath);
+            }
+            else if (projectionConfig.style == null)
+            {
+                projectionConfig.style = style;
+                EditorUtility.SetDirty(projectionConfig);
+            }
+            AssetDatabase.SaveAssets();
+            projection.Configure(catalog, targetCamera, style, projectionConfig);
             projection.ApplyAllTagged();
             return projection;
         }
@@ -1240,15 +1261,24 @@ namespace Abbey.EditorTools
             }
 
             var obstacle = go.GetComponent<WorldObstacle>() ?? go.AddComponent<WorldObstacle>();
-            if (TryGetAuthoredObstacleFootprint(go, out var footprint))
+            bool hasLegacy = TryGetLegacyRendererBounds(go, out var legacyBounds);
+            if (hasLegacy && TryGetAuthoredObstacleFootprint(go, out var footprint))
             {
-                obstacle.Initialize(footprint);
+                var state = go.GetComponent<SpriteProjectionObstacleState>() ??
+                            go.AddComponent<SpriteProjectionObstacleState>();
+                state.Configure(obstacle, BoundsFootprint(legacyBounds), footprint);
+                var projection = UnityEngine.Object.FindFirstObjectByType<SpriteProjectionBootstrap>(
+                    FindObjectsInactive.Include);
+                state.Apply(projection == null || projection.ProjectionEnabled);
             }
-            else if (TryGetVisibleRendererBounds(go, out var bounds))
+            else if (hasLegacy)
             {
-                obstacle.Initialize(bounds);
+                obstacle.Initialize(legacyBounds);
             }
         }
+
+        static Rect BoundsFootprint(Bounds bounds) => new Rect(
+            bounds.min.x, bounds.min.z, bounds.size.x, bounds.size.z);
 
         static bool TryGetAuthoredObstacleFootprint(GameObject root, out Rect footprint)
         {
@@ -1804,6 +1834,35 @@ namespace Abbey.EditorTools
                 }
             }
 
+            return hasBounds;
+        }
+
+        static bool TryGetLegacyRendererBounds(GameObject root, out Bounds bounds)
+        {
+            bounds = new Bounds(Vector3.zero, Vector3.zero);
+            if (root == null)
+            {
+                return false;
+            }
+
+            bool hasBounds = false;
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+            {
+                if (renderer == null || renderer is SpriteRenderer ||
+                    IsCollisionVisual(renderer.gameObject))
+                {
+                    continue;
+                }
+                if (!hasBounds)
+                {
+                    bounds = renderer.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
+            }
             return hasBounds;
         }
 

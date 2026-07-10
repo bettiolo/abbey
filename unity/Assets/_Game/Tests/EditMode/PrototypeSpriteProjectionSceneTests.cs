@@ -39,6 +39,9 @@ namespace Abbey.Tests.EditMode
             Assert.AreEqual(1, bootstraps.Length);
             Assert.AreSame(projection, bootstraps[0]);
             Assert.IsTrue(projection.ProjectionEnabled);
+            Assert.IsNotNull(projection.Config);
+            Assert.IsTrue(projection.Config.projectionEnabled);
+            Assert.IsNotNull(projection.Config.style);
 
             var expectedTerrain = new Dictionary<string, string>
             {
@@ -127,13 +130,32 @@ namespace Abbey.Tests.EditMode
         [Test]
         public void MappedAbbeyWalls_UseAuthoredRotatedFootprints()
         {
-            Rect wallA = RequireRoot("AbbeyWall_A").GetComponent<WorldObstacle>().Footprint;
-            Rect wallB = RequireRoot("AbbeyWall_B").GetComponent<WorldObstacle>().Footprint;
+            GameObject wallARoot = RequireRoot("AbbeyWall_A");
+            GameObject wallBRoot = RequireRoot("AbbeyWall_B");
+            Rect wallA = wallARoot.GetComponent<WorldObstacle>().Footprint;
+            Rect wallB = wallBRoot.GetComponent<WorldObstacle>().Footprint;
 
             Assert.AreEqual(5f, wallA.width, 0.01f);
             Assert.AreEqual(1f, wallA.height, 0.01f);
             Assert.AreEqual(1f, wallB.width, 0.01f);
             Assert.AreEqual(5f, wallB.height, 0.01f);
+
+            var stateA = wallARoot.GetComponent<SpriteProjectionObstacleState>();
+            var stateB = wallBRoot.GetComponent<SpriteProjectionObstacleState>();
+            Assert.IsNotNull(stateA);
+            Assert.IsNotNull(stateB);
+            try
+            {
+                projection.SetProjectionEnabled(false);
+                Assert.AreEqual(stateA.LegacyFootprint, wallARoot.GetComponent<WorldObstacle>().Footprint);
+                Assert.AreEqual(stateB.LegacyFootprint, wallBRoot.GetComponent<WorldObstacle>().Footprint);
+            }
+            finally
+            {
+                projection.SetProjectionEnabled(true);
+            }
+            Assert.AreEqual(stateA.SpriteFootprint, wallARoot.GetComponent<WorldObstacle>().Footprint);
+            Assert.AreEqual(stateB.SpriteFootprint, wallBRoot.GetComponent<WorldObstacle>().Footprint);
         }
 
         static void AssertProjected(GameObject root)

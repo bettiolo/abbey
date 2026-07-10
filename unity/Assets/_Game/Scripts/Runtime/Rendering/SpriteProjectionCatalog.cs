@@ -22,6 +22,17 @@ namespace Abbey.Rendering
 
         public Sprite sprite;
 
+        [Header("Optional actor presentation")]
+        public Sprite southSprite;
+        public Sprite northSprite;
+        public Sprite eastSprite;
+        public Sprite westSprite;
+        public Sprite[] southWalk;
+        public Sprite[] northWalk;
+        public Sprite[] eastWalk;
+        public Sprite[] westWalk;
+        [Min(0.01f)] public float walkFrameSeconds = 0.2f;
+
         [Tooltip("Camera-facing for actors/scenery; tiled on the root's XZ footprint for terrain.")]
         public SpriteProjectionLayout layout;
 
@@ -34,6 +45,9 @@ namespace Abbey.Rendering
 
         [Tooltip("Optional authored XZ obstacle size; sprite bounds must never define gameplay collision.")]
         public Vector2 authoredFootprint;
+
+        public bool HasDirectionalSprites =>
+            southSprite != null && northSprite != null && eastSprite != null && westSprite != null;
     }
 
     /// <summary>

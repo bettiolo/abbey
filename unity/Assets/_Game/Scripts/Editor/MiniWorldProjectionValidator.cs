@@ -76,17 +76,18 @@ namespace Abbey.Editor
                 {
                     errors.Add($"Duplicate or empty fileId '{file.fileId}'.");
                 }
-                string assetPath = MiniWorldSpriteImporter.ToAssetPath(file.abbeyPath);
-                if (!assetPath.StartsWith(MiniWorldSpriteImporter.CuratedAssetRoot, StringComparison.Ordinal)
-                    || !assetPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                if (!MiniWorldSpriteImporter.TryResolveCuratedAssetPath(
+                        file.abbeyPath, out string assetPath, out string absolutePath))
                 {
                     errors.Add($"{label}: abbeyPath is outside the curated PNG root.");
+                    ValidateFileGeometry(file, spriteKeys, errors);
+                    continue;
                 }
                 if (!paths.Add(assetPath))
                 {
                     errors.Add($"Duplicate Abbey path '{assetPath}'.");
                 }
-                if (!File.Exists(Path.GetFullPath(assetPath)))
+                if (!File.Exists(absolutePath))
                 {
                     errors.Add($"{label}: PNG does not exist at {assetPath}.");
                 }
@@ -142,6 +143,7 @@ namespace Abbey.Editor
                 {
                     errors.Add($"{label}: wall/tower mappings require an authored footprint.");
                 }
+                ValidateAnimation(entry, spriteKeys, errors);
             }
             return errors;
         }
@@ -356,18 +358,151 @@ namespace Abbey.Editor
                 if (!assetRolePairs.Add(actual.assetId + "\n" + actual.role))
                     errors.Add($"Catalog duplicates asset/role pair '{actual.assetId}' / '{actual.role}'.");
                 spritesByKey.TryGetValue(expected.defaultSprite, out Sprite expectedSprite);
+                string expectedFileId = expected.defaultSprite.Split(':')[0];
+                MiniWorldFile expectedFile = null;
+                for (int fileIndex = 0; fileIndex < manifest.files.Length; fileIndex++)
+                {
+                    if (string.Equals(
+                            manifest.files[fileIndex].fileId, expectedFileId, StringComparison.Ordinal))
+                    {
+                        expectedFile = manifest.files[fileIndex];
+                        break;
+                    }
+                }
+                SpriteProjectionLayout expectedLayout = expectedFile != null && string.Equals(
+                    expectedFile.orientation, "xzTile", StringComparison.Ordinal)
+                    ? SpriteProjectionLayout.GroundTiled
+                    : SpriteProjectionLayout.CameraFacing;
                 if (!string.Equals(actual.assetId, expected.assetId, StringComparison.Ordinal)
                     || !string.Equals(actual.role, expected.roles[0], StringComparison.Ordinal)
                     || actual.sprite == null || actual.sprite != expectedSprite
+                    || actual.layout != expectedLayout
                     || !Mathf.Approximately(actual.visualScale, expected.visualScale)
                     || actual.anchorOffset != expected.AnchorOffset
                     || actual.sortingOffset != expected.roleSortOffset
                     || actual.participatesInPhaseTint != expected.phaseTint
-                    || actual.authoredFootprint != expected.AuthoredFootprint)
+                    || actual.authoredFootprint != expected.AuthoredFootprint
+                    || !AnimationMatches(expected, actual, spritesByKey))
                 {
                     errors.Add($"Catalog mapping drift at index {i} ({expected.assetId}).");
                 }
             }
+        }
+
+        static void ValidateAnimation(
+            MiniWorldEntry entry,
+            HashSet<string> spriteKeys,
+            List<string> errors)
+        {
+            if (!entry.HasDirectionalSpriteData && !entry.HasWalkAnimationData)
+            {
+                return;
+            }
+            string label = entry.assetId;
+            if (!entry.HasDirectionalSpriteData)
+            {
+                errors.Add($"{label}: walkAnimation requires directionalSprites.");
+                return;
+            }
+            ValidateSpriteReference(label, "south", entry.directionalSprites.south, spriteKeys, errors);
+            ValidateSpriteReference(label, "north", entry.directionalSprites.north, spriteKeys, errors);
+            ValidateSpriteReference(label, "east", entry.directionalSprites.east, spriteKeys, errors);
+            ValidateSpriteReference(label, "west", entry.directionalSprites.west, spriteKeys, errors);
+            if (!entry.HasWalkAnimationData)
+            {
+                return;
+            }
+            if (!(entry.walkAnimation.frameSeconds > 0f) ||
+                float.IsNaN(entry.walkAnimation.frameSeconds))
+            {
+                errors.Add($"{label}: walkAnimation.frameSeconds must be positive.");
+            }
+            MiniWorldDirectionalFrames frames = entry.walkAnimation.directions;
+            if (frames == null)
+            {
+                errors.Add($"{label}: walkAnimation.directions is missing.");
+                return;
+            }
+            ValidateFrames(label, "south", frames.south, spriteKeys, errors);
+            ValidateFrames(label, "north", frames.north, spriteKeys, errors);
+            ValidateFrames(label, "east", frames.east, spriteKeys, errors);
+            ValidateFrames(label, "west", frames.west, spriteKeys, errors);
+        }
+
+        static void ValidateSpriteReference(
+            string label, string direction, string reference,
+            HashSet<string> spriteKeys, List<string> errors)
+        {
+            if (string.IsNullOrWhiteSpace(reference) || !spriteKeys.Contains(reference))
+            {
+                errors.Add($"{label}: {direction} sprite '{reference}' is not a declared slice.");
+            }
+        }
+
+        static void ValidateFrames(
+            string label, string direction, string[] references,
+            HashSet<string> spriteKeys, List<string> errors)
+        {
+            if (references == null || references.Length == 0)
+            {
+                errors.Add($"{label}: {direction} walk frames are missing.");
+                return;
+            }
+            for (int i = 0; i < references.Length; i++)
+            {
+                ValidateSpriteReference(label, $"{direction} walk[{i}]", references[i], spriteKeys, errors);
+            }
+        }
+
+        static bool AnimationMatches(
+            MiniWorldEntry expected,
+            SpriteProjectionEntry actual,
+            Dictionary<string, Sprite> spritesByKey)
+        {
+            if (!expected.HasDirectionalSpriteData)
+            {
+                return actual.southSprite == null && actual.northSprite == null &&
+                       actual.eastSprite == null && actual.westSprite == null;
+            }
+            if (!ReferenceMatches(expected.directionalSprites.south, actual.southSprite, spritesByKey) ||
+                !ReferenceMatches(expected.directionalSprites.north, actual.northSprite, spritesByKey) ||
+                !ReferenceMatches(expected.directionalSprites.east, actual.eastSprite, spritesByKey) ||
+                !ReferenceMatches(expected.directionalSprites.west, actual.westSprite, spritesByKey))
+            {
+                return false;
+            }
+            if (!expected.HasWalkAnimationData)
+            {
+                return true;
+            }
+            return Mathf.Approximately(expected.walkAnimation.frameSeconds, actual.walkFrameSeconds) &&
+                   FrameArrayMatches(expected.walkAnimation.directions.south, actual.southWalk, spritesByKey) &&
+                   FrameArrayMatches(expected.walkAnimation.directions.north, actual.northWalk, spritesByKey) &&
+                   FrameArrayMatches(expected.walkAnimation.directions.east, actual.eastWalk, spritesByKey) &&
+                   FrameArrayMatches(expected.walkAnimation.directions.west, actual.westWalk, spritesByKey);
+        }
+
+        static bool ReferenceMatches(
+            string reference, Sprite actual, Dictionary<string, Sprite> spritesByKey)
+        {
+            return spritesByKey.TryGetValue(reference, out Sprite expected) && actual == expected;
+        }
+
+        static bool FrameArrayMatches(
+            string[] references, Sprite[] actual, Dictionary<string, Sprite> spritesByKey)
+        {
+            if (references == null || actual == null || references.Length != actual.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < references.Length; i++)
+            {
+                if (!ReferenceMatches(references[i], actual[i], spritesByKey))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         static bool RequiresAuthoredFootprint(MiniWorldEntry entry)

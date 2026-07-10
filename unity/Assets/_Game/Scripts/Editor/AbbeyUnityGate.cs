@@ -105,6 +105,7 @@ namespace Abbey.EditorTools
 
                 RunStep(report, "spriteProjectionValidation", () =>
                 {
+                    MiniWorldSpriteImporter.ImportAllAndRebuildCatalog();
                     MiniWorldManifest manifest = MiniWorldSpriteImporter.LoadManifest();
                     MiniWorldProjectionValidator.ThrowIfManifestInvalid(manifest);
                     MiniWorldProjectionValidator.ThrowIfProjectInvalid(manifest);

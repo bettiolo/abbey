@@ -9,10 +9,12 @@ namespace Abbey.Rendering
         [SerializeField] string assetId;
         [SerializeField] string role;
         [SerializeField] string stableId;
+        [SerializeField] int deterministicSortIndex;
 
         public string AssetId => assetId;
         public string Role => role;
         public string StableId => stableId;
+        public int DeterministicSortIndex => deterministicSortIndex;
 
         public int StableSortKey
         {
@@ -31,6 +33,11 @@ namespace Abbey.Rendering
             assetId = newAssetId;
             role = newRole;
             stableId = newStableId;
+        }
+
+        internal void SetDeterministicSortIndex(int index)
+        {
+            deterministicSortIndex = Mathf.Max(0, index);
         }
 
         static uint Append(uint hash, string value)
