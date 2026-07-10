@@ -165,11 +165,16 @@ namespace Abbey.Editor
             {
                 MiniWorldEntry source = manifest.entries[i];
                 Sprite sprite = ResolveSprite(source.defaultSprite, filesById, spriteCache);
+                string fileId = source.defaultSprite.Split(':')[0];
+                MiniWorldFile sourceFile = filesById[fileId];
                 catalog.entries.Add(new SpriteProjectionEntry
                 {
                     assetId = source.assetId,
                     role = source.roles != null && source.roles.Length > 0 ? source.roles[0] : string.Empty,
                     sprite = sprite,
+                    layout = string.Equals(sourceFile.orientation, "xzTile", StringComparison.Ordinal)
+                        ? SpriteProjectionLayout.GroundTiled
+                        : SpriteProjectionLayout.CameraFacing,
                     visualScale = source.visualScale,
                     anchorOffset = source.AnchorOffset,
                     sortingOffset = source.roleSortOffset,

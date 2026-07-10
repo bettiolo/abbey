@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace Abbey.Rendering
 {
+    public enum SpriteProjectionLayout
+    {
+        CameraFacing,
+        GroundTiled
+    }
+
     /// <summary>One manifest-generated mapping from an Abbey identity to a sprite visual.</summary>
     [Serializable]
     public sealed class SpriteProjectionEntry
@@ -15,6 +21,9 @@ namespace Abbey.Rendering
         public string role;
 
         public Sprite sprite;
+
+        [Tooltip("Camera-facing for actors/scenery; tiled on the root's XZ footprint for terrain.")]
+        public SpriteProjectionLayout layout;
 
         [Min(0.01f)] public float visualScale = 1f;
         public Vector3 anchorOffset;

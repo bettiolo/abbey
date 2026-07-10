@@ -125,6 +125,9 @@ namespace Abbey.Rendering
         [SerializeField] int sortingOffset;
         [SerializeField] int stableSortKey;
         [SerializeField] bool participatesInPhaseTint = true;
+        [SerializeField] SpriteProjectionLayout layout;
+        [SerializeField] Vector2 localGroundSize = Vector2.one;
+        [SerializeField] float localGroundHeight;
         [SerializeField] SpriteProjectionStyle style;
         [SerializeField, Min(0.01f)] float targetWorldScale = 1f;
         SpriteRenderer spriteRenderer;
@@ -142,12 +145,23 @@ namespace Abbey.Rendering
             sortingOffset = entry.sortingOffset;
             stableSortKey = newStableSortKey;
             participatesInPhaseTint = entry.participatesInPhaseTint;
+            layout = entry.layout;
             style = projectionStyle != null ? projectionStyle : SpriteProjectionStyle.LoadOrDefault();
             if (spriteRenderer == null)
             {
                 spriteRenderer = GetComponent<SpriteRenderer>();
             }
             spriteRenderer.sprite = entry.sprite;
+            if (layout == SpriteProjectionLayout.GroundTiled)
+            {
+                ResolveLocalGroundBounds(out localGroundSize, out localGroundHeight);
+                spriteRenderer.drawMode = SpriteDrawMode.Tiled;
+                spriteRenderer.size = localGroundSize;
+            }
+            else
+            {
+                spriteRenderer.drawMode = SpriteDrawMode.Simple;
+            }
             targetWorldScale = Mathf.Max(0.01f, entry.visualScale);
             RefreshTransform();
         }
@@ -172,6 +186,18 @@ namespace Abbey.Rendering
 
         void RefreshTransform()
         {
+            if (layout == SpriteProjectionLayout.GroundTiled)
+            {
+                transform.localPosition = new Vector3(
+                    anchorOffset.x,
+                    localGroundHeight + anchorOffset.y + 0.002f,
+                    anchorOffset.z);
+                transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                transform.localScale = Vector3.one;
+                RefreshRendererStyle();
+                return;
+            }
+
             if (gameplayRoot != null)
             {
                 transform.position = gameplayRoot.position + anchorOffset;
@@ -185,6 +211,11 @@ namespace Abbey.Rendering
                 transform.rotation = targetCamera.transform.rotation;
             }
             SetWorldScale();
+            RefreshRendererStyle();
+        }
+
+        void RefreshRendererStyle()
+        {
             if (spriteRenderer == null)
             {
                 spriteRenderer = GetComponent<SpriteRenderer>();
@@ -199,6 +230,56 @@ namespace Abbey.Rendering
                     - Mathf.RoundToInt(depth * Mathf.Max(0.01f, style.depthSortingScale)) + tie;
                 DayPhase phase = GameClock.Instance != null ? GameClock.Instance.Phase : DayPhase.Day;
                 spriteRenderer.color = participatesInPhaseTint ? style.TintFor(phase) : Color.white;
+            }
+        }
+
+        void ResolveLocalGroundBounds(out Vector2 size, out float height)
+        {
+            size = Vector2.one;
+            height = 0f;
+            if (gameplayRoot == null)
+            {
+                return;
+            }
+
+            MeshFilter[] filters = gameplayRoot.GetComponentsInChildren<MeshFilter>(true);
+            bool found = false;
+            Bounds localBounds = default;
+            for (int i = 0; i < filters.Length; i++)
+            {
+                MeshFilter filter = filters[i];
+                if (filter == null || filter.sharedMesh == null)
+                {
+                    continue;
+                }
+                Bounds meshBounds = filter.sharedMesh.bounds;
+                Vector3 min = meshBounds.min;
+                Vector3 max = meshBounds.max;
+                for (int corner = 0; corner < 8; corner++)
+                {
+                    Vector3 point = new Vector3(
+                        (corner & 1) == 0 ? min.x : max.x,
+                        (corner & 2) == 0 ? min.y : max.y,
+                        (corner & 4) == 0 ? min.z : max.z);
+                    Vector3 localPoint = gameplayRoot.InverseTransformPoint(
+                        filter.transform.TransformPoint(point));
+                    if (!found)
+                    {
+                        localBounds = new Bounds(localPoint, Vector3.zero);
+                        found = true;
+                    }
+                    else
+                    {
+                        localBounds.Encapsulate(localPoint);
+                    }
+                }
+            }
+            if (found)
+            {
+                size = new Vector2(
+                    Mathf.Max(0.01f, localBounds.size.x),
+                    Mathf.Max(0.01f, localBounds.size.z));
+                height = localBounds.max.y;
             }
         }
 

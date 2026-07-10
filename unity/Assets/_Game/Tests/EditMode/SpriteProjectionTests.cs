@@ -169,6 +169,39 @@ namespace Abbey.Tests.EditMode
                 SpriteProjectionFactory.GetSpriteRenderer(far).sortingOrder);
         }
 
+        [Test]
+        public void GroundLayout_TilesAcrossLocalXZFootprintWithoutChangingRootTransform()
+        {
+            GameObject root = Track(GameObject.CreatePrimitive(PrimitiveType.Plane));
+            root.transform.position = new Vector3(3f, 0.1f, -4f);
+            root.transform.rotation = Quaternion.Euler(0f, 27f, 0f);
+            root.transform.localScale = new Vector3(8f, 1f, 6f);
+            Texture2D texture = Track(new Texture2D(16, 16));
+            Sprite sprite = Track(Sprite.Create(
+                texture, new Rect(0f, 0f, 16f, 16f), new Vector2(0.5f, 0.5f), 16f));
+            var entry = new SpriteProjectionEntry
+            {
+                sprite = sprite,
+                layout = SpriteProjectionLayout.GroundTiled
+            };
+            Vector3 position = root.transform.position;
+            Quaternion rotation = root.transform.rotation;
+            Vector3 scale = root.transform.localScale;
+
+            Assert.IsTrue(SpriteProjectionFactory.Enable(root, entry, null));
+
+            SpriteRenderer renderer = SpriteProjectionFactory.GetSpriteRenderer(root);
+            Assert.AreEqual(SpriteDrawMode.Tiled, renderer.drawMode);
+            Assert.AreEqual(10f, renderer.size.x, 0.01f);
+            Assert.AreEqual(10f, renderer.size.y, 0.01f);
+            Assert.Less(Quaternion.Angle(
+                root.transform.rotation * Quaternion.Euler(90f, 0f, 0f),
+                renderer.transform.rotation), 0.01f);
+            Assert.AreEqual(position, root.transform.position);
+            Assert.AreEqual(rotation, root.transform.rotation);
+            Assert.AreEqual(scale, root.transform.localScale);
+        }
+
         T Track<T>(T value) where T : Object
         {
             _created.Add(value);
