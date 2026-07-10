@@ -78,7 +78,9 @@ Python tooling runs through `uv`. `./tools/check_all.sh` requires `uv`, uses
 - **Phase 2** — "The First White Night" vertical slice: merged to `main`
 - **Phase 3** — seasons, laws, moral consequence, and spring ship: merged to `main`
 - **Phase 4** — Abbey of Antlers, Stag covenant, Forest Debt, false bells, and campaign
-  carryover: implementation complete on `task/P4-EPIC`; human replayability gate pending
+  carryover: implementation merged to `main`; human replayability gate pending
+- **Rendering** — Universal Render Pipeline 17.5 is active; generated scene and proof
+  materials use shared URP Lit/Unlit creation paths
 - Roadmap and gate state: [docs/ROADMAP.md](docs/ROADMAP.md)
 
 > **Unity verification:** local macOS editor verification runs through MCP for Unity with

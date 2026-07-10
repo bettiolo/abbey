@@ -127,13 +127,13 @@ Test isolation: every `[SetUp]`/`[TearDown]` calls `EventBus.ResetAll()`,
 `GameEventLog.Clear()`, `DarknessEvaluator.Clear()`, `DuskRecallSystem.Clear()`,
 `MonsterController.ClearRegistry()` and destroys spawned objects.
 
-## Why the built-in render pipeline (for now)
+## Universal Render Pipeline
 
-The greybox prototype uses the **built-in RP**: zero pipeline configuration to keep
-CI green and iteration fast while the game is unlit primitives. URP (needed for the
-shader-driven desaturation of night/fear/winter/nightmare states) arrives at the
-Milestone 1 polish pass; gameplay code never touches pipeline-specific APIs, so the
-switch is contained to settings + materials.
+The project uses **URP 17.5** with committed pipeline, renderer, global settings, and
+default volume assets. `AbbeyMaterialFactory` owns transient Lit/Unlit material creation
+for generated scenes and proof props; gameplay code remains pipeline-agnostic. If a local
+checkout loses its rendering settings, run **Tools → Abbey → Configure Universal Render
+Pipeline** to recreate and activate them.
 
 ## Notes
 

@@ -6,6 +6,7 @@ using Abbey.CameraRig;
 using Abbey.Debugging;
 using Abbey.Hero;
 using Abbey.Map2;
+using Abbey.Rendering;
 using Abbey.Session;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -234,8 +235,7 @@ namespace Abbey.EditorTools
             if (renderer == null) return;
             if (!Materials.TryGetValue(key, out var material) || material == null)
             {
-                var shader = Shader.Find("Standard") ?? Shader.Find("Legacy Shaders/Diffuse");
-                material = new Material(shader) { name = $"Map2_{key}", color = color };
+                material = AbbeyMaterialFactory.CreateLit($"Map2_{key}", color);
                 Materials[key] = material;
             }
             renderer.sharedMaterial = material;

@@ -2,7 +2,8 @@
     "name": "Abbey.Editor",
     "rootNamespace": "Abbey",
     "references": [
-        "Abbey.Runtime"
+        "Abbey.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"

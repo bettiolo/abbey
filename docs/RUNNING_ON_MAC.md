@@ -95,8 +95,9 @@ and the code already uses the `FindFirstObjectByType`/`FindObjectsByType` era AP
 deprecated call sites). The project has since been re-pinned to **Unity 6.5
 (6000.5.2f1)** — the Unity 6.5 update/tech stream, not the LTS — in
 `ProjectVersion.txt`; install that exact version via Unity Hub (or let Hub
-open-and-upgrade the project). CI (GameCI) runs the pinned 6000.5.x editor. The render
-pipeline is still the built-in RP — URP remains a Milestone 1 decision.
+open-and-upgrade the project). The project uses **URP 17.5** with committed pipeline
+settings and shared URP material creation. MetalFX and STP remain disabled because the
+current low-poly orthographic scenes render at native resolution comfortably.
 
 ## Verifying a fresh checkout quickly
 

@@ -3,6 +3,7 @@ using Abbey.Buildings;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
+using Abbey.Rendering;
 using UnityEngine;
 
 namespace Abbey.Villagers
@@ -1174,20 +1175,8 @@ namespace Abbey.Villagers
                 return cached;
             }
 
-            var shader = Shader.Find("Standard") ?? Shader.Find("Legacy Shaders/Diffuse");
-            var material = new Material(shader)
-            {
-                name = $"Abbey_Carried_{ResourceTypes.Id(type)}",
-                color = CarriedColor(type)
-            };
-            if (material.HasProperty("_Glossiness"))
-            {
-                material.SetFloat("_Glossiness", 0.08f);
-            }
-            if (material.HasProperty("_Metallic"))
-            {
-                material.SetFloat("_Metallic", 0f);
-            }
+            var material = AbbeyMaterialFactory.CreateLit(
+                $"Abbey_Carried_{ResourceTypes.Id(type)}", CarriedColor(type), smoothness: 0.08f);
             CarriedPropMaterials[type] = material;
             return material;
         }

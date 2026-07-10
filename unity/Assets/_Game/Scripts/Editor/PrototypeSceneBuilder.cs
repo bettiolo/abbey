@@ -12,6 +12,7 @@ using Abbey.Hero;
 using Abbey.Light;
 using Abbey.Nightmares;
 using Abbey.Reports;
+using Abbey.Rendering;
 using Abbey.Sanity;
 using Abbey.Session;
 using Abbey.Settlement;
@@ -1002,7 +1003,7 @@ namespace Abbey.EditorTools
                     {
                         texture = source != null ? source.mainTexture : null;
                     }
-                    var replacement = BuiltInMaterial(
+                    var replacement = SceneMaterial(
                         key,
                         PaletteColor(assetId, materialName, renderer.name),
                         texture,
@@ -1032,11 +1033,11 @@ namespace Abbey.EditorTools
             {
                 return;
             }
-            renderer.sharedMaterial = BuiltInMaterial(
+            renderer.sharedMaterial = SceneMaterial(
                 key, color, PlaceholderAlbedoForKey(key), PlaceholderTextureScaleForKey(key));
         }
 
-        static Material BuiltInMaterial(
+        static Material SceneMaterial(
             string key, Color color, Texture texture, Vector2 textureScale)
         {
             string textureKey = texture != null ? texture.name : "solid";
@@ -1047,25 +1048,8 @@ namespace Abbey.EditorTools
                 return cached;
             }
 
-            var shader = Shader.Find("Standard") ?? Shader.Find("Legacy Shaders/Diffuse");
-            var material = new Material(shader)
-            {
-                name = $"Abbey_{key}",
-                color = texture != null ? Color.white : color,
-                mainTexture = texture,
-            };
-            if (texture != null)
-            {
-                material.mainTextureScale = textureScale;
-            }
-            if (material.HasProperty("_Glossiness"))
-            {
-                material.SetFloat("_Glossiness", 0.12f);
-            }
-            if (material.HasProperty("_Metallic"))
-            {
-                material.SetFloat("_Metallic", 0f);
-            }
+            var material = AbbeyMaterialFactory.CreateLit(
+                $"Abbey_{key}", color, texture, textureScale);
             MaterialCache[cacheKey] = material;
             return material;
         }

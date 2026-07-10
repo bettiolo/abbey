@@ -5,6 +5,7 @@ using Abbey.CameraRig;
 using Abbey.Core;
 using Abbey.Map2;
 using Abbey.Nightmares;
+using Abbey.Rendering;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -51,14 +52,8 @@ namespace Abbey.EditorTools
                 falseLight.name = "FalseLightProof";
                 falseLight.transform.position = guidance.LastFalseLightTarget + Vector3.up * 1.2f;
                 falseLight.transform.localScale = Vector3.one * 1.4f;
-                var material = new Material(Shader.Find("Standard"));
                 var cold = new Color(0.35f, 0.55f, 1f);
-                material.color = cold;
-                if (material.HasProperty("_EmissionColor"))
-                {
-                    material.EnableKeyword("_EMISSION");
-                    material.SetColor("_EmissionColor", cold * 2.5f);
-                }
+                var material = AbbeyMaterialFactory.CreateUnlit("Abbey_FalseLightProof", cold);
                 falseLight.GetComponent<Renderer>().sharedMaterial = material;
                 var point = falseLight.AddComponent<UnityEngine.Light>();
                 point.type = LightType.Point;
@@ -68,6 +63,12 @@ namespace Abbey.EditorTools
             }
 
             ScreenshotCapture.ApplyLightingForPhase(DayPhase.Night);
+            RenderSettings.ambientLight = new Color(0.16f, 0.20f, 0.28f);
+            var proofSun = GameObject.Find("Sun")?.GetComponent<UnityEngine.Light>();
+            if (proofSun != null)
+            {
+                proofSun.intensity = 0.5f;
+            }
             ScreenshotCapture.CaptureCameraTo(rig.TargetCamera, OutputDir, ShotNames[1]);
 
             if (File.Exists(Path.GetFullPath(Path.Combine(Application.dataPath, "..", Map2SceneBuilder.ScenePath))))

@@ -180,10 +180,10 @@ Acceptance:
 4. Add Item 4 once the gate command exists.
 5. Defer Item 5 unless the user asks for UI work or Unity verification is available.
 
-## Do not implement now
+## Current guardrails
 
-- Do not switch the project to URP yet. The repo explicitly keeps built-in RP for greybox
-  speed until the playable-night gate passes.
+- URP 17.5 is now the committed render pipeline. Keep gameplay logic pipeline-agnostic
+  and route generated transient materials through `AbbeyMaterialFactory`.
 - Do not add Netcode, Entities, Cinemachine, VFX Graph, ProBuilder, Addressables, or the
   new Input System just because Unity 6.5 updated them.
 - Do not change the asset pipeline to use AI asset generation directly. The repo requires

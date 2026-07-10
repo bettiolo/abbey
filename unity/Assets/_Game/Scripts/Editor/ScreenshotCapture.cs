@@ -6,6 +6,7 @@ using Abbey.Nightmares;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Abbey.EditorTools
 {
@@ -271,6 +272,8 @@ namespace Abbey.EditorTools
         {
             var sunGO = GameObject.Find("Sun");
             var sun = sunGO != null ? sunGO.GetComponent<UnityEngine.Light>() : null;
+            RenderSettings.ambientMode = AmbientMode.Flat;
+            RenderSettings.ambientIntensity = 1f;
 
             switch (phase)
             {
