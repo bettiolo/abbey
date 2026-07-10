@@ -253,11 +253,19 @@ namespace Abbey.EditorTools
                     new Vector3(1.6f, 0.82f, 1.5f));
             }
 
+            // Authored three-tree copses leave readable meadow lanes and avoid the
+            // visual-only hill meshes. Individual trees used to sit directly on the
+            // rises, which made trunks float or disappear into rock.
             Vector3[] meadowTrees =
             {
-                new Vector3(-17f, 0f, -10f), new Vector3(-20f, 0f, 7f),
-                new Vector3(16f, 0f, -11f), new Vector3(21f, 0f, 8f),
-                new Vector3(-14f, 0f, 16f), new Vector3(19f, 0f, 19f)
+                new Vector3(-10f, 0f, -23f), new Vector3(-6f, 0f, -25f),
+                new Vector3(-13f, 0f, -26f),
+                new Vector3(23f, 0f, -22f), new Vector3(27f, 0f, -19f),
+                new Vector3(28f, 0f, -24f),
+                new Vector3(-29f, 0f, 3f), new Vector3(-31f, 0f, 8f),
+                new Vector3(-27f, 0f, 11f),
+                new Vector3(29f, 0f, -2f), new Vector3(31f, 0f, 2f),
+                new Vector3(29f, 0f, 7f)
             };
             for (int i = 0; i < meadowTrees.Length; i++)
             {
@@ -265,6 +273,8 @@ namespace Abbey.EditorTools
                 var tree = InstantiateGenerated(treeId, meadowTrees[i], $"MeadowTree_{i:D2}",
                     PrimitiveType.Cylinder, new Vector3(0.5f, 3f, 0.5f), 3f);
                 tree.transform.rotation = Quaternion.Euler(0f, 19f + i * 67f, 0f);
+                float variation = 0.9f + (i * 37 % 23) / 100f;
+                tree.transform.localScale *= variation;
             }
 
             Vector3[] meadowRocks =
@@ -643,12 +653,18 @@ namespace Abbey.EditorTools
             float hillTop = 0.5f;
 
             var towerPos = AbbeyHillCenter + new Vector3(0f, hillTop, 0f);
-            InstantiateGenerated("bell_tower_ruined", towerPos, "BellTower",
+            var tower = InstantiateGenerated("bell_tower_ruined", towerPos, "BellTower",
                 PrimitiveType.Cube, new Vector3(3f, 6f, 3f), 3f);
-            InstantiateGenerated("abbey_wall_broken", towerPos + new Vector3(-4f, 0f, 1f),
-                "AbbeyWall_A", PrimitiveType.Cube, new Vector3(4f, 1.5f, 0.5f), 0.75f);
-            InstantiateGenerated("abbey_wall_broken", towerPos + new Vector3(1f, 0f, -4f),
-                "AbbeyWall_B", PrimitiveType.Cube, new Vector3(0.5f, 1.5f, 4f), 0.75f);
+            AddWorldObstacleFromVisibleBounds(tower);
+            var wallA = InstantiateGenerated("abbey_wall_broken",
+                towerPos + new Vector3(-4f, 0f, 1f), "AbbeyWall_A",
+                PrimitiveType.Cube, new Vector3(4f, 1.5f, 0.5f), 0.75f);
+            AddWorldObstacleFromVisibleBounds(wallA);
+            var wallB = InstantiateGenerated("abbey_wall_broken",
+                towerPos + new Vector3(1f, 0f, -4f), "AbbeyWall_B",
+                PrimitiveType.Cube, new Vector3(0.5f, 1.5f, 4f), 0.75f);
+            wallB.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+            AddWorldObstacleFromVisibleBounds(wallB);
 
             // Sacred abbey flame: win/loss anchor and the hound's home light.
             var flameGO = new GameObject("AbbeyFlame");
@@ -674,21 +690,21 @@ namespace Abbey.EditorTools
         static void BuildForestEdgeAndStream()
         {
             PlaceSceneryAsset("ForestCluster_A", "forest_cluster_01",
-                ForestEdgeCenter + new Vector3(-7f, 0f, 7f), Quaternion.Euler(0f, 28f, 0f),
+                ForestEdgeCenter + new Vector3(1f, 0f, -13f), Quaternion.Euler(0f, 28f, 0f),
                 new Vector3(1.25f, 1f, 1.25f));
             PlaceSceneryAsset("ForestCluster_B", "forest_cluster_02",
-                ForestEdgeCenter + new Vector3(6f, 0f, 9f), Quaternion.Euler(0f, 205f, 0f),
+                ForestEdgeCenter + new Vector3(10f, 0f, 14f), Quaternion.Euler(0f, 205f, 0f),
                 new Vector3(1.4f, 1.1f, 1.4f));
 
+            // Keep trunks on the forest perimeter, not through the production
+            // clearing. This ring frames the buildings while leaving obvious roads.
             Vector3[] treeOffsets =
             {
-                new Vector3(-12f, 0f, -7f), new Vector3(-11f, 0f, 1f),
-                new Vector3(-10f, 0f, 9f), new Vector3(-5f, 0f, 12f),
-                new Vector3(1f, 0f, 13f), new Vector3(8f, 0f, 11f),
-                new Vector3(12f, 0f, 6f), new Vector3(13f, 0f, -1f),
-                new Vector3(9f, 0f, -8f), new Vector3(2f, 0f, -11f),
-                new Vector3(-5f, 0f, -10f), new Vector3(-7f, 0f, 5f),
-                new Vector3(7f, 0f, 3f), new Vector3(4f, 0f, -5f)
+                new Vector3(-15f, 0f, -1f), new Vector3(-14f, 0f, 3f),
+                new Vector3(-1f, 0f, -12f), new Vector3(5f, 0f, -12f),
+                new Vector3(11f, 0f, -9f), new Vector3(14f, 0f, -4f),
+                new Vector3(15f, 0f, 2f), new Vector3(14f, 0f, 8f),
+                new Vector3(10f, 0f, 13f), new Vector3(5f, 0f, 15f)
             };
             for (int i = 0; i < treeOffsets.Length; i++)
             {
@@ -697,6 +713,8 @@ namespace Abbey.EditorTools
                     $"ForestTree_{i}", PrimitiveType.Cylinder,
                     new Vector3(0.5f, 3f, 0.5f), 3f);
                 tree.transform.rotation = Quaternion.Euler(0f, i * 53f % 360f, 0f);
+                float variation = 0.88f + (i * 29 % 27) / 100f;
+                tree.transform.localScale *= variation;
             }
             InstantiateGenerated("rock_cluster_01", ForestEdgeCenter + new Vector3(6f, 0f, -3f),
                 "RockCluster_A", PrimitiveType.Sphere, new Vector3(1.5f, 1f, 1.5f), 0.4f);
@@ -750,8 +768,15 @@ namespace Abbey.EditorTools
 
         static void CreateVillager(string name, Vector3 groundPos, int seed)
         {
-            // villager_lowpoly GLB when imported, else a small capsule.
-            var go = InstantiateGenerated("villager_lowpoly", groundPos, name,
+            // Deterministic civilian variety from the curated CC0 Kenney set;
+            // InstantiateGenerated still supplies a capsule if an import is missing.
+            string[] settlerAssets =
+            {
+                "settler_female_b", "settler_male_a", "settler_female_d",
+                "settler_male_b", "settler_female_f", "settler_male_d"
+            };
+            string settlerAsset = settlerAssets[Mathf.Abs(seed) % settlerAssets.Length];
+            var go = InstantiateGenerated(settlerAsset, groundPos, name,
                 PrimitiveType.Capsule, new Vector3(0.6f, 0.9f, 0.6f), 0.9f);
             var agent = go.AddComponent<VillagerAgent>();
             agent.seed = seed;
@@ -1167,6 +1192,17 @@ namespace Abbey.EditorTools
             return go;
         }
 
+        static void AddWorldObstacleFromVisibleBounds(GameObject go)
+        {
+            if (go == null || !TryGetVisibleRendererBounds(go, out var bounds))
+            {
+                return;
+            }
+
+            var obstacle = go.GetComponent<WorldObstacle>() ?? go.AddComponent<WorldObstacle>();
+            obstacle.Initialize(bounds);
+        }
+
         public static void NormalizeImportedMaterials(GameObject root, string assetId)
         {
             foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
@@ -1402,6 +1438,12 @@ namespace Abbey.EditorTools
 
         static Color PaletteColor(string assetId, string materialName, string rendererName)
         {
+            if (assetId.StartsWith("settler_", StringComparison.Ordinal))
+            {
+                // Preserve Kenney's authored clothing/skin atlas without a palette tint.
+                return Color.white;
+            }
+
             string text = $"{assetId} {materialName} {rendererName}".ToLowerInvariant();
 
             if (text.Contains("water") || text.Contains("map_stream"))
@@ -1551,6 +1593,32 @@ namespace Abbey.EditorTools
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_warrior_lodge.glb";
                 case "watchtower_t1":
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_watchtower.glb";
+                case "forester_hut_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forester_lumbermill.glb";
+                case "herbalist_hut_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_herbalist_house.glb";
+                case "orchard_plot_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_orchard_plot.glb";
+                case "hunter_blind_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_hunter_blind.glb";
+                case "stag_garden_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_stag_garden.glb";
+                case "grove_shrine_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_grove_shrine.glb";
+                case "root_bridge_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_root_bridge.glb";
+                case "forest_watchpost_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_watchtower.glb";
+                case "abbey_cloister_repair":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_cloister_arch.glb";
+                case "settler_female_b":
+                case "settler_female_d":
+                case "settler_female_f":
+                case "settler_male_a":
+                case "settler_male_b":
+                case "settler_male_d":
+                    return $"{GenericPlaceholderAssetFolder}/KenneyMiniCharacters/" +
+                           $"abbey_placeholder_{assetId}.glb";
                 default:
                     return null;
             }
@@ -1668,6 +1736,9 @@ namespace Abbey.EditorTools
                 case "lantern_post_t1":
                 case "abbey_wall_broken":
                 case "stream_bridge":
+                case "root_bridge_t1":
+                case "grove_shrine_t1":
+                case "abbey_cloister_repair":
                     return false;
                 default:
                     return true;
@@ -1715,6 +1786,31 @@ namespace Abbey.EditorTools
                     return new Vector3(4.4f, 2.8f, 4.2f);
                 case "watchtower_t1":
                     return new Vector3(2.8f, 4.6f, 2.8f);
+                case "forester_hut_t1":
+                    return new Vector3(4.2f, 2.7f, 3.8f);
+                case "herbalist_hut_t1":
+                    return new Vector3(2.8f, 2.1f, 2.8f);
+                case "orchard_plot_t1":
+                    return new Vector3(3.8f, 1.05f, 3.8f);
+                case "hunter_blind_t1":
+                    return new Vector3(3.2f, 2.15f, 2.8f);
+                case "stag_garden_t1":
+                    return new Vector3(3.8f, 1.8f, 3.8f);
+                case "grove_shrine_t1":
+                    return new Vector3(2.8f, 2.8f, 1.25f);
+                case "root_bridge_t1":
+                    return new Vector3(4.2f, 1.7f, 2.3f);
+                case "forest_watchpost_t1":
+                    return new Vector3(2.5f, 4.2f, 2.5f);
+                case "abbey_cloister_repair":
+                    return new Vector3(4.1f, 2.7f, 1.15f);
+                case "settler_female_b":
+                case "settler_female_d":
+                case "settler_female_f":
+                case "settler_male_a":
+                case "settler_male_b":
+                case "settler_male_d":
+                    return new Vector3(0.95f, 1.65f, 0.95f);
                 default:
                     return Vector3.zero;
             }

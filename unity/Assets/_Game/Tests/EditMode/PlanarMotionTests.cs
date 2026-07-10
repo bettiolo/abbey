@@ -44,6 +44,11 @@ namespace Abbey.Tests.EditMode
             {
                 Object.DestroyImmediate(site.gameObject);
             }
+            foreach (var obstacle in Object.FindObjectsByType<WorldObstacle>(
+                         FindObjectsInactive.Include))
+            {
+                Object.DestroyImmediate(obstacle.gameObject);
+            }
             Object.DestroyImmediate(_catalog);
             ClearStatics();
         }
@@ -92,6 +97,32 @@ namespace Abbey.Tests.EditMode
         }
 
         [Test]
+        public void MoveAroundBuildings_BlocksDirectInputFromEnteringAuthoredWall()
+        {
+            CreateObstacle(new Rect(-0.5f, -2f, 1f, 4f));
+
+            var from = new Vector3(-1f, 0f, 0f);
+            var next = PlanarMotion.MoveAroundBuildings(
+                from, new Vector3(0.8f, 0f, 0f), 0.2f);
+
+            Assert.IsFalse(PlanarMotion.IsInsideBuildingFootprint(next, 0.2f));
+            Assert.Less(next.x, -0.69f);
+        }
+
+        [Test]
+        public void StepAroundBuildings_DetoursAroundAuthoredWall()
+        {
+            CreateObstacle(new Rect(-0.5f, -2f, 1f, 4f));
+
+            var next = PlanarMotion.StepAroundBuildings(
+                new Vector3(-2f, 0f, 0f), new Vector3(2f, 0f, 0f),
+                2f, 1f, 0.1f, 0.2f, out _);
+
+            Assert.IsFalse(PlanarMotion.IsInsideBuildingFootprint(next, 0.2f));
+            Assert.Greater(Mathf.Abs(next.z), 0.01f);
+        }
+
+        [Test]
         public void StepAroundBuildings_TargetInsideCompletedFootprintArrivesAtOutsideEdge()
         {
             CreateBuilding(Vector3.zero);
@@ -128,10 +159,17 @@ namespace Abbey.Tests.EditMode
             building.Initialize(_catalog.Find("hut"));
         }
 
+        static void CreateObstacle(Rect footprint)
+        {
+            var go = new GameObject("Test Wall");
+            go.AddComponent<WorldObstacle>().Initialize(footprint);
+        }
+
         static void ClearStatics()
         {
             Building.ClearRegistry();
             ConstructionSite.ClearRegistry();
+            WorldObstacle.ClearRegistry();
             BuildingPlacer.Clear();
             BuildingCatalog.ClearCache();
             ResourceLedger.Clear();

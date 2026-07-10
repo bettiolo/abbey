@@ -126,9 +126,9 @@ namespace Abbey.Core
         /// <summary>
         /// Steps toward a target while treating active building and construction
         /// footprints as occupied ground. When a straight step would cross an
-        /// occupied rect, it steers toward the cheaper outside corner instead of
-        /// walking through the structure. Deterministic and still single-step; no
-        /// NavMesh dependency.
+        /// occupied rect, including authored abbey-wall obstacles, it steers toward
+        /// the cheaper outside corner instead of walking through the structure.
+        /// Deterministic and still single-step; no NavMesh dependency.
         /// </summary>
         public static Vector3 StepAroundBuildings(
             Vector3 position, Vector3 target, float speed, float dt,
@@ -170,7 +170,7 @@ namespace Abbey.Core
             return AvoidBuildingFootprints(position, target, target, obstaclePadding);
         }
 
-        /// <summary>True when a world point is inside any expanded active footprint.</summary>
+        /// <summary>True when a world point is inside any expanded movement footprint.</summary>
         public static bool IsInsideBuildingFootprint(Vector3 position, float obstaclePadding)
         {
             return TryGetContainingFootprint(position, obstaclePadding, out _);
@@ -350,6 +350,28 @@ namespace Abbey.Core
                 }
             }
 
+            var obstacles = WorldObstacle.Active;
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                var obstacle = obstacles[i];
+                if (obstacle == null)
+                {
+                    continue;
+                }
+                Rect rect = Expanded(obstacle.Footprint, padding);
+                if (!BlocksMove(rect, from, to))
+                {
+                    continue;
+                }
+                float dist = DistanceToRectCenter(from, rect);
+                if (dist < bestDistance)
+                {
+                    bestDistance = dist;
+                    footprint = rect;
+                    found = true;
+                }
+            }
+
             var sites = ConstructionSite.Active;
             for (int i = 0; i < sites.Count; i++)
             {
@@ -390,6 +412,22 @@ namespace Abbey.Core
                     continue;
                 }
                 Rect rect = Expanded(building.Footprint, padding);
+                if (ContainsXZ(rect, position))
+                {
+                    footprint = rect;
+                    return true;
+                }
+            }
+
+            var obstacles = WorldObstacle.Active;
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                var obstacle = obstacles[i];
+                if (obstacle == null)
+                {
+                    continue;
+                }
+                Rect rect = Expanded(obstacle.Footprint, padding);
                 if (ContainsXZ(rect, position))
                 {
                     footprint = rect;
