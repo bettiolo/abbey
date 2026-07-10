@@ -1194,8 +1194,8 @@ tasks:
     branch: codex/sprite-projection
     validation: >
       Technical candidate passed the local Unity 6000.5.2f1 MCP gate at runtime commit
-      63bda64: both scenes, deterministic sprite import/catalog validation, EditMode
-      415/415, PlayMode 70/70, console errors 0, and six inspected screenshots. The
+      79cc45b: both scenes, deterministic sprite import/catalog validation, EditMode
+      418/418, PlayMode 71/71, console errors 0, and six inspected screenshots. The
       Merchant Shade pack has 23 explicitly unresolved roles, so the no-mixed-fallback
       acceptance criterion and human art gate are not yet satisfied.
 

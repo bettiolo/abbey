@@ -1,6 +1,6 @@
 # P2D reversible sprite-projection candidate
 
-Validated locally on 2026-07-10 at runtime commit `63bda64` with Unity `6000.5.2f1`.
+Validated locally on 2026-07-10 at runtime commit `79cc45b` with Unity `6000.5.2f1`.
 
 ## Implemented candidate
 
@@ -13,8 +13,11 @@ Validated locally on 2026-07-10 at runtime commit `63bda64` with Unity `6000.5.2
 - Added a reversible presentation child that never changes gameplay-root transforms,
   collision, movement, jobs, combat, or tick order. Disabling projection restores every
   legacy renderer's previous enabled state.
-- Added camera-facing actors/buildings/props, stable projected-depth ordering, authored wall
-  footprints, phase tint, runtime-spawn registration, and XZ-tiled terrain patches.
+- Added four-direction walk animation, camera-facing actors/buildings/props, dense stable
+  projected-depth ordering, reversible authored wall footprints, phase tint, runtime-spawn
+  registration, and XZ-tiled terrain patches.
+- Committed a data-owned projection switch and style asset; disabling the switch before
+  regenerating a map restores legacy renderers and legacy obstacle footprints.
 - Integrated both generated maps while preserving scene names and all existing gameplay
   components.
 
@@ -22,8 +25,8 @@ Validated locally on 2026-07-10 at runtime commit `63bda64` with Unity `6000.5.2
 
 - Unity MCP gate: passed; Prototype01 and Map2Prototype built.
 - Sprite manifest/import/catalog validation: passed.
-- EditMode: 415/415 passed.
-- PlayMode: 70/70 passed.
+- EditMode: 418/418 passed.
+- PlayMode: 71/71 passed.
 - Unity console errors: 0.
 - Canonical images inspected: `day_camp`, `dusk_recall`, `night_attack`, `morning_after`,
   `map2_grove_day`, and `map2_false_bell_night`.
