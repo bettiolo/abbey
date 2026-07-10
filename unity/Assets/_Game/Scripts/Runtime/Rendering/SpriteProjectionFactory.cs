@@ -1,5 +1,6 @@
 using Abbey.Core;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Abbey.Rendering
 {
@@ -152,6 +153,8 @@ namespace Abbey.Rendering
                 spriteRenderer = GetComponent<SpriteRenderer>();
             }
             spriteRenderer.sprite = entry.sprite;
+            spriteRenderer.shadowCastingMode = ShadowCastingMode.Off;
+            spriteRenderer.receiveShadows = false;
             if (layout == SpriteProjectionLayout.GroundTiled)
             {
                 ResolveLocalGroundBounds(out localGroundSize, out localGroundHeight);

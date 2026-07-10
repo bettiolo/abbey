@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Abbey.Core;
 using Abbey.Economy;
 using Abbey.Light;
+using Abbey.Rendering;
 using Abbey.Sanity;
 using Abbey.Villagers;
 using UnityEngine;
@@ -324,6 +325,11 @@ namespace Abbey.Decrees
                 light.radius = Mathf.Max(0f, def.carrierLightRadius);
                 light.strength = Mathf.Clamp01(def.carrierLightStrength);
                 light.fuelSeconds = -1f;
+                SpriteProjectionBootstrap.RegisterGlobal(
+                    go,
+                    "villager_lowpoly",
+                    "actor.villager",
+                    $"candle-carrier:{action.Id}:{i}");
                 action.CandleLights.Add(light);
             }
         }

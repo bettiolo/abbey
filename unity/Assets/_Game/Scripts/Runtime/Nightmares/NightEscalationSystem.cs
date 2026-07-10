@@ -2,6 +2,7 @@ using System;
 using Abbey.Combat;
 using Abbey.Core;
 using Abbey.Light;
+using Abbey.Rendering;
 using Abbey.Villagers;
 using Abbey.World;
 using UnityEngine;
@@ -304,6 +305,8 @@ namespace Abbey.Nightmares
             go.transform.position = objective.Location;
             _marker = go.AddComponent<DarkObjectiveMarker>();
             _marker.Configure(objective, this, Combat);
+            SpriteProjectionBootstrap.RegisterGlobal(
+                go, "night_objective", "dynamic.nightObjective", $"objective:{objective.KindId}");
             GameEventLog.Append("dark_objective",
                 $"spawn kind={objective.KindId} pos=({objective.Location.x:F1},{objective.Location.z:F1})");
             return _marker;
