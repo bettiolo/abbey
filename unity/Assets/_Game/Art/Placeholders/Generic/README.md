@@ -38,3 +38,16 @@ Source pages:
 | `abbey_placeholder_forest_pine.fbx` | `forest_tree_01` | Kenney Nature Kit | `tree_pineDefaultA.fbx` | CC0 |
 | `abbey_placeholder_forest_oak.fbx` | `forest_tree_02` | Kenney Nature Kit | `tree_oak.fbx` | CC0 |
 | `abbey_placeholder_rock_cluster.fbx` | `rock_cluster_01` | Kenney Nature Kit | `rock_largeA.fbx` | CC0 |
+| `abbey_placeholder_terrain_hill.glb` | `terrain_hill` | KayKit Medieval Builder Pack | `Models/objects/gltf/detail_hill.gltf.glb` | CC0 |
+| `abbey_placeholder_forest_cluster_a.glb` | `forest_cluster_01` | KayKit Medieval Builder Pack | `Models/objects/gltf/detail_forestA.gltf.glb` | CC0 |
+| `abbey_placeholder_forest_cluster_b.glb` | `forest_cluster_02` | KayKit Medieval Builder Pack | `Models/objects/gltf/detail_forestB.gltf.glb` | CC0 |
+| `abbey_placeholder_stream_bridge.glb` | `stream_bridge` | KayKit Medieval Builder Pack | `Models/objects/gltf/bridge.gltf.glb` | CC0 |
+| `abbey_placeholder_well.glb` | `well_t1` | KayKit Medieval Builder Pack | `Models/objects/gltf/well.gltf.glb` | CC0 |
+| `abbey_placeholder_warrior_lodge.glb` | `warrior_lodge_t1` | KayKit Medieval Builder Pack | `Models/objects/gltf/barracks.gltf.glb` | CC0 |
+| `abbey_placeholder_watchtower.glb` | `watchtower_t1` | KayKit Medieval Builder Pack | `Models/objects/gltf/watchtower.gltf.glb` | CC0 |
+| `abbey_placeholder_terrain_mountain.glb` | `terrain_mountain` | KayKit Medieval Builder Pack | `Models/objects/gltf/mountain.gltf.glb` | CC0 |
+
+The eight KayKit terrain/camp files added on 2026-07-10 have SHA-256 hashes,
+in the same table order, beginning `e985f028`, `3ac0d487`, `61c82ce0`,
+`fe8b1fc3`, `52660b34`, `d24534c1`, `cb4620b5`, and `a027d4d8`. The exact
+source binaries remain in the ignored cache.

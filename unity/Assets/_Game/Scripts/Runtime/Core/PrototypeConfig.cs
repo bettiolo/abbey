@@ -35,9 +35,10 @@ namespace Abbey.Core
         [Min(0f)] public float fuelConsumptionPerSecond = 1f;
 
         [Header("Bellkeeper")]
-        [Min(0f)] public float bellkeeperMoveSpeed = 4f;
+        [Tooltip("Responsive base travel speed across the 90-unit prototype island.")]
+        [Min(0f)] public float bellkeeperMoveSpeed = 7.5f;
         [Tooltip("Direct-input run multiplier while holding Shift with WASD/arrow movement.")]
-        [Min(1f)] public float bellkeeperSprintMultiplier = 1.65f;
+        [Min(1f)] public float bellkeeperSprintMultiplier = 1.8f;
         [Min(0f)] public float bellkeeperMaxHealth = 100f;
         [Min(0f)] public float bellkeeperMaxStamina = 100f;
         [Min(0f)] public float bellkeeperStaminaRegenPerSecond = 4f;

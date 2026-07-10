@@ -25,7 +25,8 @@ namespace Abbey.Rendering
             Color color,
             Texture texture = null,
             Vector2? textureScale = null,
-            float smoothness = 0.12f)
+            float smoothness = 0.12f,
+            Texture normalMap = null)
         {
             var shader = FindLitShader();
             if (shader == null)
@@ -34,8 +35,11 @@ namespace Abbey.Rendering
             }
 
             var material = new Material(shader) { name = name };
-            SetBaseColor(material, texture != null ? Color.white : color);
+            SetBaseColor(material, texture != null
+                ? Color.Lerp(Color.white, color, 0.28f)
+                : color);
             SetBaseTexture(material, texture, textureScale ?? Vector2.one);
+            SetNormalTexture(material, normalMap, textureScale ?? Vector2.one);
 
             if (material.HasProperty("_Smoothness"))
             {
@@ -92,6 +96,22 @@ namespace Abbey.Rendering
                 material.SetTexture("_MainTex", texture);
                 material.SetTextureScale("_MainTex", scale);
             }
+        }
+
+        static void SetNormalTexture(Material material, Texture normalMap, Vector2 scale)
+        {
+            if (normalMap == null || !material.HasProperty("_BumpMap"))
+            {
+                return;
+            }
+
+            material.SetTexture("_BumpMap", normalMap);
+            material.SetTextureScale("_BumpMap", scale);
+            if (material.HasProperty("_BumpScale"))
+            {
+                material.SetFloat("_BumpScale", 1f);
+            }
+            material.EnableKeyword("_NORMALMAP");
         }
     }
 }

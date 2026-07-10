@@ -59,10 +59,10 @@ namespace Abbey.EditorTools
         public const string MaterialPlaceholderAssetFolder =
             "Assets/_Game/Art/Placeholders/Materials";
 
-        static readonly Color MeadowColor = new Color(0.34f, 0.55f, 0.22f);
-        static readonly Color ForestFloorColor = new Color(0.18f, 0.34f, 0.2f);
+        static readonly Color MeadowColor = new Color(0.25f, 0.42f, 0.18f);
+        static readonly Color ForestFloorColor = new Color(0.14f, 0.27f, 0.16f);
         static readonly Color BeachColor = new Color(0.75f, 0.62f, 0.4f);
-        static readonly Color DirtColor = new Color(0.5f, 0.32f, 0.18f);
+        static readonly Color DirtColor = new Color(0.38f, 0.24f, 0.12f);
         static readonly Color StoneColor = new Color(0.48f, 0.49f, 0.45f);
         static readonly Color OldStoneColor = new Color(0.56f, 0.55f, 0.48f);
         static readonly Color DarkWoodColor = new Color(0.18f, 0.1f, 0.05f);
@@ -71,7 +71,7 @@ namespace Abbey.EditorTools
         static readonly Color CanvasColor = new Color(0.75f, 0.62f, 0.44f);
         static readonly Color BoneColor = new Color(0.72f, 0.66f, 0.5f);
         static readonly Color SacredGoldColor = new Color(1f, 0.68f, 0.18f);
-        static readonly Color WaterColor = new Color(0.25f, 0.45f, 0.7f);
+        static readonly Color WaterColor = new Color(0.12f, 0.32f, 0.42f);
         static readonly Color HoundColor = new Color(0.04f, 0.035f, 0.03f);
 
         static readonly Dictionary<string, Material> MaterialCache =
@@ -147,35 +147,137 @@ namespace Abbey.EditorTools
 
         static void BuildGroundAndSun()
         {
-            // Coastal meadow map base, 100x100 units.
+            // Coastal meadow map base, 90x90 units. The authored relief sits at the
+            // perimeter so the reliable central movement plane no longer reads as
+            // an endless flat lawn.
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Ground";
-            ground.transform.localScale = new Vector3(10f, 1f, 10f);
+            ground.transform.localScale = new Vector3(8.5f, 1f, 8.5f);
             AssignRendererMaterial(ground.GetComponent<Renderer>(), "map_meadow", MeadowColor);
 
             CreateFlatMapPatch("Beach", BeachCenter + new Vector3(0f, 0.012f, 0f),
-                new Vector3(2.7f, 1f, 2.7f), BeachColor);
+                new Vector3(2.9f, 1f, 2.9f), BeachColor);
             CreateFlatMapPatch("ForestFloor", ForestEdgeCenter + new Vector3(0f, 0.014f, 0f),
-                new Vector3(3.2f, 1f, 2.4f), ForestFloorColor);
+                new Vector3(3.8f, 1f, 2.8f), ForestFloorColor);
 
             PlaceTerrainAsset("CampPlaza", "paving_patch", CampCenter + new Vector3(0f, 0.035f, 0f),
-                Quaternion.identity, new Vector3(7f, 1f, 7f));
+                Quaternion.identity, new Vector3(5.8f, 1f, 5.8f));
             PlaceTerrainAsset("AbbeyPlaza", "paving_patch", AbbeyHillCenter + new Vector3(0f, 0.54f, 0f),
-                Quaternion.identity, new Vector3(5f, 1f, 5f));
-            PlaceTerrainAsset("Road_Beach_Camp", "dirt_road_segment", new Vector3(-15f, 0.04f, -15f),
-                Quaternion.Euler(0f, 45f, 0f), new Vector3(3f, 1f, 42f));
-            PlaceTerrainAsset("Road_Camp_Abbey", "dirt_road_segment", new Vector3(14f, 0.04f, 14f),
-                Quaternion.Euler(0f, 45f, 0f), new Vector3(3f, 1f, 38f));
-            PlaceTerrainAsset("Road_Camp_Forest", "dirt_road_segment", new Vector3(-14f, 0.04f, 14f),
-                Quaternion.Euler(0f, -45f, 0f), new Vector3(3f, 1f, 38f));
+                Quaternion.identity, new Vector3(4.2f, 1f, 4.2f));
+            PlaceRoad("Road_Beach_Camp", BeachCenter,
+                new Vector3(-21f, 0f, -21f), new Vector3(-11f, 0f, -8f),
+                new Vector3(-4f, 0f, -4f));
+            PlaceRoad("Road_Camp_Abbey", new Vector3(4f, 0f, 4f),
+                new Vector3(7f, 0f, 9f), new Vector3(17f, 0f, 18f), AbbeyHillCenter);
+            PlaceRoad("Road_Camp_Forest", new Vector3(-4f, 0f, 4f),
+                new Vector3(-6f, 0f, 8f), new Vector3(-17f, 0f, 17f), ForestEdgeCenter);
             PlaceTerrainAsset("FieldPlot", "field_plot_t1", new Vector3(-7f, 0.04f, 7f),
                 Quaternion.Euler(0f, 18f, 0f), new Vector3(1.8f, 1f, 1.8f));
+
+            BuildTerrainRelief();
 
             // Fixed sun matching the camera-relative light rule in ART_BIBLE.md.
             var sunGO = new GameObject("Sun");
             var sun = sunGO.AddComponent<UnityEngine.Light>();
             sun.type = LightType.Directional;
+            sun.color = new Color(1f, 0.92f, 0.82f);
+            sun.intensity = 1.05f;
+            sun.shadows = LightShadows.Soft;
+            sun.shadowStrength = 0.82f;
             sunGO.transform.rotation = Quaternion.Euler(50f, IsoCameraController.Yaw - 30f, 0f);
+            RenderSettings.sun = sun;
+            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
+            RenderSettings.ambientSkyColor = new Color(0.48f, 0.58f, 0.66f);
+            RenderSettings.ambientEquatorColor = new Color(0.33f, 0.39f, 0.34f);
+            RenderSettings.ambientGroundColor = new Color(0.12f, 0.14f, 0.12f);
+            RenderSettings.reflectionIntensity = 0.55f;
+            RenderSettings.fog = true;
+            RenderSettings.fogMode = FogMode.Linear;
+            RenderSettings.fogColor = new Color(0.48f, 0.56f, 0.58f);
+            RenderSettings.fogStartDistance = 50f;
+            RenderSettings.fogEndDistance = 90f;
+        }
+
+        static void BuildTerrainRelief()
+        {
+            Vector3[] positions =
+            {
+                new Vector3(-41f, 0f, -10f), new Vector3(-39f, 0f, 18f),
+                new Vector3(-33f, 0f, 40f), new Vector3(-8f, 0f, 42f),
+                new Vector3(17f, 0f, 41f), new Vector3(40f, 0f, 23f),
+                new Vector3(42f, 0f, -5f), new Vector3(35f, 0f, -33f),
+                new Vector3(10f, 0f, -42f), new Vector3(-18f, 0f, -41f),
+                new Vector3(-39f, 0f, -31f)
+            };
+            float[] yaws = { 12f, 76f, 138f, 22f, 91f, 154f, 205f, 248f, 312f, 18f, 103f };
+            Vector3[] scales =
+            {
+                new Vector3(2.4f, 1f, 2f), new Vector3(2.1f, 1.25f, 2.4f),
+                new Vector3(2.5f, 1.15f, 2.2f), new Vector3(2.2f, 0.9f, 1.8f),
+                new Vector3(2.6f, 1.2f, 2f), new Vector3(2.3f, 1.3f, 2.4f),
+                new Vector3(2.5f, 1.05f, 1.9f), new Vector3(2.2f, 1.25f, 2.5f),
+                new Vector3(2.8f, 1f, 2.1f), new Vector3(2.4f, 1.15f, 2.3f),
+                new Vector3(2.1f, 0.95f, 2.5f)
+            };
+
+            for (int i = 0; i < positions.Length; i++)
+            {
+                PlaceSceneryAsset($"PerimeterHill_{i:D2}", "terrain_hill", positions[i],
+                    Quaternion.Euler(0f, yaws[i], 0f), scales[i]);
+            }
+
+            Vector3[] mountainPositions =
+            {
+                new Vector3(-38f, 0f, -20f), new Vector3(-35f, 0f, 36f),
+                new Vector3(3f, 0f, 40f), new Vector3(38f, 0f, 25f),
+                new Vector3(38f, 0f, -25f), new Vector3(7f, 0f, -40f),
+                new Vector3(-30f, 0f, -38f)
+            };
+            for (int i = 0; i < mountainPositions.Length; i++)
+            {
+                PlaceSceneryAsset($"CoastalRidge_{i:D2}", "terrain_mountain",
+                    mountainPositions[i], Quaternion.Euler(0f, 17f + i * 49f, 0f),
+                    new Vector3(1.35f + (i % 2) * 0.2f, 1f, 1.35f));
+            }
+
+            Vector3[] midgroundHills =
+            {
+                new Vector3(-16f, 0f, -13f), new Vector3(15f, 0f, -14f),
+                new Vector3(-19f, 0f, 1f), new Vector3(19f, 0f, 3f),
+                new Vector3(-17f, 0f, 13f), new Vector3(19f, 0f, 15f)
+            };
+            for (int i = 0; i < midgroundHills.Length; i++)
+            {
+                PlaceSceneryAsset($"MeadowRise_{i:D2}", "terrain_hill", midgroundHills[i],
+                    Quaternion.Euler(0f, 31f + i * 61f, 0f),
+                    new Vector3(1.6f, 0.82f, 1.5f));
+            }
+
+            Vector3[] meadowTrees =
+            {
+                new Vector3(-17f, 0f, -10f), new Vector3(-20f, 0f, 7f),
+                new Vector3(16f, 0f, -11f), new Vector3(21f, 0f, 8f),
+                new Vector3(-14f, 0f, 16f), new Vector3(19f, 0f, 19f)
+            };
+            for (int i = 0; i < meadowTrees.Length; i++)
+            {
+                string treeId = i % 2 == 0 ? "forest_tree_01" : "forest_tree_02";
+                var tree = InstantiateGenerated(treeId, meadowTrees[i], $"MeadowTree_{i:D2}",
+                    PrimitiveType.Cylinder, new Vector3(0.5f, 3f, 0.5f), 3f);
+                tree.transform.rotation = Quaternion.Euler(0f, 19f + i * 67f, 0f);
+            }
+
+            Vector3[] meadowRocks =
+            {
+                new Vector3(-12f, 0f, -13f), new Vector3(13f, 0f, -15f),
+                new Vector3(18f, 0f, 5f), new Vector3(-18f, 0f, 11f)
+            };
+            for (int i = 0; i < meadowRocks.Length; i++)
+            {
+                InstantiateGenerated("rock_cluster_01", meadowRocks[i],
+                    $"MeadowRock_{i:D2}", PrimitiveType.Sphere,
+                    new Vector3(1.5f, 1f, 1.5f), 0.4f);
+            }
         }
 
         static NightmareDirector BuildSimulationCore(PrototypeConfig config)
@@ -370,6 +472,11 @@ namespace Abbey.EditorTools
             TagPrototypeBuilding(storage, "storage_pile_t1");
             storage.AddComponent<StoragePile>();
 
+            // The everyday water source now has a coherent off-the-shelf CC0 model,
+            // matching the threat source registered near this side of camp.
+            InstantiateGenerated("well_t1", new Vector3(5f, 0f, 4.5f), "CampWell",
+                PrimitiveType.Cylinder, new Vector3(1.8f, 1.4f, 1.8f), 0.7f);
+
             // Shelters are destructible homes (P3-05): they carry a Building bound to
             // the shelter_t1 catalog entry so HomeDefenseSystem can wake, flare and
             // (if overwhelmed) raze them. Occupants are assigned at play-start by the
@@ -513,11 +620,25 @@ namespace Abbey.EditorTools
 
         static LightSource BuildAbbeyHill(PrototypeConfig config)
         {
-            // Low greybox hill so the abbey reads as "up".
+            // Low reliable plateau, surrounded by irregular CC0 hill forms so the
+            // abbey reads as elevated without asking planar gameplay agents to walk
+            // a visual-only slope.
+            Vector3[] slopeOffsets =
+            {
+                new Vector3(-4.2f, 0f, -2.2f), new Vector3(3.8f, 0f, -2.8f),
+                new Vector3(-3.7f, 0f, 3.2f), new Vector3(3.5f, 0f, 3.8f)
+            };
+            for (int i = 0; i < slopeOffsets.Length; i++)
+            {
+                PlaceSceneryAsset($"AbbeySlope_{i:D2}", "terrain_hill",
+                    AbbeyHillCenter + slopeOffsets[i], Quaternion.Euler(0f, i * 87f, 0f),
+                    new Vector3(1.75f, 0.18f, 1.55f));
+            }
+
             var hill = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             hill.name = "AbbeyHill";
             hill.transform.position = AbbeyHillCenter + new Vector3(0f, 0.25f, 0f);
-            hill.transform.localScale = new Vector3(12f, 0.25f, 12f);
+            hill.transform.localScale = new Vector3(9f, 0.25f, 9f);
             AssignRendererMaterial(hill.GetComponent<Renderer>(), "map_abbey_hill", StoneColor);
             float hillTop = 0.5f;
 
@@ -552,25 +673,47 @@ namespace Abbey.EditorTools
 
         static void BuildForestEdgeAndStream()
         {
-            for (int i = 0; i < 5; i++)
+            PlaceSceneryAsset("ForestCluster_A", "forest_cluster_01",
+                ForestEdgeCenter + new Vector3(-7f, 0f, 7f), Quaternion.Euler(0f, 28f, 0f),
+                new Vector3(1.25f, 1f, 1.25f));
+            PlaceSceneryAsset("ForestCluster_B", "forest_cluster_02",
+                ForestEdgeCenter + new Vector3(6f, 0f, 9f), Quaternion.Euler(0f, 205f, 0f),
+                new Vector3(1.4f, 1.1f, 1.4f));
+
+            Vector3[] treeOffsets =
             {
-                var offset = new Vector3((i % 3) * 4f - 4f, 0f, (i / 3) * 5f);
+                new Vector3(-12f, 0f, -7f), new Vector3(-11f, 0f, 1f),
+                new Vector3(-10f, 0f, 9f), new Vector3(-5f, 0f, 12f),
+                new Vector3(1f, 0f, 13f), new Vector3(8f, 0f, 11f),
+                new Vector3(12f, 0f, 6f), new Vector3(13f, 0f, -1f),
+                new Vector3(9f, 0f, -8f), new Vector3(2f, 0f, -11f),
+                new Vector3(-5f, 0f, -10f), new Vector3(-7f, 0f, 5f),
+                new Vector3(7f, 0f, 3f), new Vector3(4f, 0f, -5f)
+            };
+            for (int i = 0; i < treeOffsets.Length; i++)
+            {
                 var treeAsset = i % 2 == 0 ? "forest_tree_01" : "forest_tree_02";
-                InstantiateGenerated(treeAsset, ForestEdgeCenter + offset,
+                var tree = InstantiateGenerated(treeAsset, ForestEdgeCenter + treeOffsets[i],
                     $"ForestTree_{i}", PrimitiveType.Cylinder,
                     new Vector3(0.5f, 3f, 0.5f), 3f);
+                tree.transform.rotation = Quaternion.Euler(0f, i * 53f % 360f, 0f);
             }
             InstantiateGenerated("rock_cluster_01", ForestEdgeCenter + new Vector3(6f, 0f, -3f),
-                "RockCluster", PrimitiveType.Sphere, new Vector3(1.5f, 1f, 1.5f), 0.4f);
+                "RockCluster_A", PrimitiveType.Sphere, new Vector3(1.5f, 1f, 1.5f), 0.4f);
+            InstantiateGenerated("rock_cluster_01", ForestEdgeCenter + new Vector3(-9f, 0f, -4f),
+                "RockCluster_B", PrimitiveType.Sphere, new Vector3(1.5f, 1f, 1.5f), 0.4f);
+            InstantiateGenerated("rock_cluster_01", new Vector3(-8f, 0f, 21f),
+                "StreamRockCluster", PrimitiveType.Sphere, new Vector3(1.5f, 1f, 1.5f), 0.4f);
 
-            // Stream: a flat blue strip running along the forest edge toward the sea.
-            var stream = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            stream.name = "Stream";
-            stream.transform.position = new Vector3(-15f, 0.02f, 18f);
-            stream.transform.localScale = new Vector3(45f, 0.05f, 2.5f);
-            stream.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
-            var renderer = stream.GetComponent<Renderer>();
-            AssignRendererMaterial(renderer, "map_stream", WaterColor);
+            // A narrow, bent channel replaces the old bright rectangular strip.
+            // Brown banks soften each joint and the bridge marks the road crossing.
+            PlaceStream(new Vector3(-41f, 0f, -10f), new Vector3(-33f, 0f, -1f),
+                new Vector3(-26f, 0f, 9f), new Vector3(-17f, 0f, 17f),
+                new Vector3(-8f, 0f, 22f), new Vector3(3f, 0f, 27f));
+
+            PlaceSceneryAsset("ForestRoadBridge", "stream_bridge",
+                new Vector3(-17.2f, 0.05f, 17.2f), Quaternion.Euler(0f, -135f, 0f),
+                Vector3.one);
         }
 
         static void BuildVillagers()
@@ -974,6 +1117,56 @@ namespace Abbey.EditorTools
             go.transform.localScale = scale;
         }
 
+        static void PlaceRoad(string namePrefix, params Vector3[] points)
+        {
+            for (int i = 0; i + 1 < points.Length; i++)
+            {
+                Vector3 delta = points[i + 1] - points[i];
+                float length = new Vector2(delta.x, delta.z).magnitude;
+                float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
+                Vector3 midpoint = (points[i] + points[i + 1]) * 0.5f + Vector3.up * 0.04f;
+                PlaceTerrainAsset($"{namePrefix}_{i:D2}", "dirt_road_segment", midpoint,
+                    Quaternion.Euler(0f, yaw, 0f), new Vector3(1.55f, 1f, length + 0.5f));
+            }
+        }
+
+        static void PlaceStream(params Vector3[] points)
+        {
+            for (int i = 0; i + 1 < points.Length; i++)
+            {
+                Vector3 delta = points[i + 1] - points[i];
+                float length = new Vector2(delta.x, delta.z).magnitude;
+                float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
+                Vector3 midpoint = (points[i] + points[i + 1]) * 0.5f;
+
+                var bank = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                bank.name = $"StreamBank_{i:D2}";
+                bank.transform.position = midpoint + Vector3.up * 0.012f;
+                bank.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                bank.transform.localScale = new Vector3(2.7f, 0.025f, length + 0.65f);
+                AssignRendererMaterial(bank.GetComponent<Renderer>(), "map_riverbank", DirtColor);
+                UnityEngine.Object.DestroyImmediate(bank.GetComponent<Collider>());
+
+                var water = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                water.name = $"StreamWater_{i:D2}";
+                water.transform.position = midpoint + Vector3.up * 0.034f;
+                water.transform.rotation = Quaternion.Euler(0f, yaw, 0f);
+                water.transform.localScale = new Vector3(1.55f, 0.035f, length + 0.7f);
+                AssignRendererMaterial(water.GetComponent<Renderer>(), "map_stream", WaterColor);
+                UnityEngine.Object.DestroyImmediate(water.GetComponent<Collider>());
+            }
+        }
+
+        static GameObject PlaceSceneryAsset(
+            string name, string assetId, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            var go = InstantiateGenerated(assetId, position, name,
+                PrimitiveType.Sphere, new Vector3(2f, 1f, 2f), 0.5f);
+            go.transform.rotation = rotation;
+            go.transform.localScale = Vector3.Scale(go.transform.localScale, scale);
+            return go;
+        }
+
         public static void NormalizeImportedMaterials(GameObject root, string assetId)
         {
             foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
@@ -1024,7 +1217,8 @@ namespace Abbey.EditorTools
 
         static bool UsesSolidImportedMaterial(string assetId)
         {
-            return assetId == "bellkeeper_lowpoly" || assetId == "villager_lowpoly";
+            return assetId == "bellkeeper_lowpoly" || assetId == "villager_lowpoly" ||
+                   assetId == "dirt_road_segment";
         }
 
         static void AssignRendererMaterial(Renderer renderer, string key, Color color)
@@ -1041,7 +1235,10 @@ namespace Abbey.EditorTools
             string key, Color color, Texture texture, Vector2 textureScale)
         {
             string textureKey = texture != null ? texture.name : "solid";
-            string cacheKey = $"{key}_{textureKey}_{textureScale.x:0.###}x" +
+            Texture normalMap = PlaceholderNormalForKey(key);
+            string normalKey = normalMap != null ? normalMap.name : "flat";
+            float smoothness = PlaceholderSmoothnessForKey(key);
+            string cacheKey = $"{key}_{textureKey}_{normalKey}_{textureScale.x:0.###}x" +
                               $"{textureScale.y:0.###}_{ColorUtility.ToHtmlStringRGBA(color)}";
             if (MaterialCache.TryGetValue(cacheKey, out var cached) && cached != null)
             {
@@ -1049,7 +1246,7 @@ namespace Abbey.EditorTools
             }
 
             var material = AbbeyMaterialFactory.CreateLit(
-                $"Abbey_{key}", color, texture, textureScale);
+                $"Abbey_{key}", color, texture, textureScale, smoothness, normalMap);
             MaterialCache[cacheKey] = material;
             return material;
         }
@@ -1072,6 +1269,40 @@ namespace Abbey.EditorTools
             }
         }
 
+        static Texture2D PlaceholderNormalForKey(string key)
+        {
+            switch (PlaceholderSurfaceForKey(key))
+            {
+                case "grass":
+                    return LoadPlaceholderTexture("abbey_placeholder_ground_grass_normal_gl.jpg");
+                case "sand":
+                    return LoadPlaceholderTexture("abbey_placeholder_beach_sand_normal_gl.jpg");
+                case "stone":
+                    return LoadPlaceholderTexture("abbey_placeholder_abbey_stone_normal_gl.jpg");
+                case "wood":
+                    return LoadPlaceholderTexture("abbey_placeholder_weathered_wood_normal_gl.jpg");
+                default:
+                    return null;
+            }
+        }
+
+        static float PlaceholderSmoothnessForKey(string key)
+        {
+            string lower = key.ToLowerInvariant();
+            if (lower.Contains("water") || lower.Contains("map_stream"))
+            {
+                return 0.72f;
+            }
+            switch (PlaceholderSurfaceForKey(key))
+            {
+                case "grass": return 0.05f;
+                case "sand": return 0.07f;
+                case "stone": return 0.16f;
+                case "wood": return 0.11f;
+                default: return 0.1f;
+            }
+        }
+
         static Vector2 PlaceholderTextureScaleForKey(string key)
         {
             string lower = key.ToLowerInvariant();
@@ -1090,6 +1321,14 @@ namespace Abbey.EditorTools
             if (lower.Contains("map_abbey_hill"))
             {
                 return new Vector2(5f, 5f);
+            }
+            if (lower.Contains("terrain_hill"))
+            {
+                return new Vector2(3f, 3f);
+            }
+            if (lower.Contains("forest_cluster"))
+            {
+                return new Vector2(2f, 2f);
             }
             if (lower.Contains("paving") || lower.Contains("plaza"))
             {
@@ -1115,7 +1354,7 @@ namespace Abbey.EditorTools
         {
             string text = key.ToLowerInvariant();
 
-            if (text.Contains("water") || text.Contains("stream") ||
+            if (text.Contains("water") || text.Contains("map_stream") ||
                 text.Contains("flame") || text.Contains("lantern") ||
                 text.Contains("gold") || text.Contains("hound") ||
                 text.Contains("bellkeeper") || text.Contains("villager") ||
@@ -1132,9 +1371,21 @@ namespace Abbey.EditorTools
             {
                 return "sand";
             }
+            if (text.Contains("terrain_hill") && text.Contains("brown"))
+            {
+                return null;
+            }
+            if (text.Contains("wood") || text.Contains("bark") ||
+                text.Contains("brown") || text.Contains("beige") ||
+                text.Contains("barrel") || text.Contains("crate") ||
+                text.Contains("hull") || text.Contains("plank") ||
+                text.Contains("shelter") || text.Contains("storage"))
+            {
+                return "wood";
+            }
             if (text.Contains("map_meadow") || text.Contains("map_forestfloor") ||
                 text.Contains("foliage") || text.Contains("leaf") ||
-                text.Contains("grass") || text.Contains("tree") ||
+                text.Contains("green") || text.Contains("grass") || text.Contains("tree") ||
                 text.Contains("field"))
             {
                 return "grass";
@@ -1146,14 +1397,6 @@ namespace Abbey.EditorTools
             {
                 return "stone";
             }
-            if (text.Contains("wood") || text.Contains("bark") ||
-                text.Contains("barrel") || text.Contains("crate") ||
-                text.Contains("hull") || text.Contains("plank") ||
-                text.Contains("shelter") || text.Contains("storage"))
-            {
-                return "wood";
-            }
-
             return null;
         }
 
@@ -1161,16 +1404,12 @@ namespace Abbey.EditorTools
         {
             string text = $"{assetId} {materialName} {rendererName}".ToLowerInvariant();
 
-            if (text.Contains("water") || text.Contains("stream"))
+            if (text.Contains("water") || text.Contains("map_stream"))
             {
                 return WaterColor;
             }
-            if (text.Contains("foliage") || text.Contains("leaf") || text.Contains("grass") ||
-                text.Contains("tree") || text.Contains("field"))
-            {
-                return MeadowColor;
-            }
-            if (text.Contains("dirt") || text.Contains("path") || text.Contains("soil"))
+            if (text.Contains("dirt") || text.Contains("path") || text.Contains("soil") ||
+                text.Contains("riverbank"))
             {
                 return DirtColor;
             }
@@ -1178,15 +1417,25 @@ namespace Abbey.EditorTools
             {
                 return RoofColor;
             }
+            if (text.Contains("terrain_hill") && text.Contains("brown"))
+            {
+                return DirtColor;
+            }
+            if (text.Contains("wood") || text.Contains("bark") || text.Contains("brown") ||
+                text.Contains("beige") || text.Contains("barrel") || text.Contains("crate") ||
+                text.Contains("hull") || text.Contains("plank"))
+            {
+                return text.Contains("dark") || text.Contains("bark") ? DarkWoodColor : WarmWoodColor;
+            }
+            if (text.Contains("foliage") || text.Contains("leaf") || text.Contains("green") ||
+                text.Contains("grass") || text.Contains("tree") || text.Contains("field"))
+            {
+                return MeadowColor;
+            }
             if (text.Contains("stone") || text.Contains("ash") || text.Contains("wall") ||
                 text.Contains("rock") || text.Contains("paving") || text.Contains("plaza"))
             {
                 return text.Contains("old") ? OldStoneColor : StoneColor;
-            }
-            if (text.Contains("wood") || text.Contains("bark") || text.Contains("barrel") ||
-                text.Contains("crate") || text.Contains("hull") || text.Contains("plank"))
-            {
-                return text.Contains("dark") || text.Contains("bark") ? DarkWoodColor : WarmWoodColor;
             }
             if (text.Contains("canvas") || text.Contains("cloth") || text.Contains("sail") ||
                 text.Contains("thatch") || text.Contains("plaster"))
@@ -1286,6 +1535,22 @@ namespace Abbey.EditorTools
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_oak.fbx";
                 case "rock_cluster_01":
                     return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_rock_cluster.fbx";
+                case "terrain_hill":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_terrain_hill.glb";
+                case "terrain_mountain":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_terrain_mountain.glb";
+                case "forest_cluster_01":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_cluster_a.glb";
+                case "forest_cluster_02":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_forest_cluster_b.glb";
+                case "stream_bridge":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_stream_bridge.glb";
+                case "well_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_well.glb";
+                case "warrior_lodge_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_warrior_lodge.glb";
+                case "watchtower_t1":
+                    return $"{GenericPlaceholderAssetFolder}/abbey_placeholder_watchtower.glb";
                 default:
                     return null;
             }
@@ -1402,6 +1667,7 @@ namespace Abbey.EditorTools
                 case "shipwreck_hull":
                 case "lantern_post_t1":
                 case "abbey_wall_broken":
+                case "stream_bridge":
                     return false;
                 default:
                     return true;
@@ -1434,6 +1700,21 @@ namespace Abbey.EditorTools
                     return new Vector3(1.9f, 3.7f, 1.9f);
                 case "rock_cluster_01":
                     return new Vector3(1.8f, 0.55f, 1.8f);
+                case "terrain_hill":
+                    return new Vector3(5f, 2.8f, 5f);
+                case "terrain_mountain":
+                    return new Vector3(8f, 5.2f, 8f);
+                case "forest_cluster_01":
+                case "forest_cluster_02":
+                    return new Vector3(8f, 3f, 7f);
+                case "stream_bridge":
+                    return new Vector3(5.2f, 1f, 2.8f);
+                case "well_t1":
+                    return new Vector3(2f, 1.45f, 2f);
+                case "warrior_lodge_t1":
+                    return new Vector3(4.4f, 2.8f, 4.2f);
+                case "watchtower_t1":
+                    return new Vector3(2.8f, 4.6f, 2.8f);
                 default:
                     return Vector3.zero;
             }

@@ -1,5 +1,6 @@
 using Abbey.Rendering;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -45,6 +46,44 @@ namespace Abbey.Tests.EditMode
             finally
             {
                 Object.DestroyImmediate(material);
+            }
+        }
+
+        [Test]
+        public void MaterialFactoryWiresImportedNormalMaps()
+        {
+            var normal = new Texture2D(2, 2);
+            var material = AbbeyMaterialFactory.CreateLit(
+                "normal-test", Color.white, normalMap: normal);
+            try
+            {
+                Assert.AreSame(normal, material.GetTexture("_BumpMap"));
+                Assert.IsTrue(material.IsKeywordEnabled("_NORMALMAP"));
+            }
+            finally
+            {
+                Object.DestroyImmediate(material);
+                Object.DestroyImmediate(normal);
+            }
+        }
+
+        [Test]
+        public void PlaceholderNormalMapsUseNormalTextureImportMode()
+        {
+            string[] paths =
+            {
+                "Assets/_Game/Art/Placeholders/Materials/abbey_placeholder_ground_grass_normal_gl.jpg",
+                "Assets/_Game/Art/Placeholders/Materials/abbey_placeholder_beach_sand_normal_gl.jpg",
+                "Assets/_Game/Art/Placeholders/Materials/abbey_placeholder_abbey_stone_normal_gl.jpg",
+                "Assets/_Game/Art/Placeholders/Materials/abbey_placeholder_weathered_wood_normal_gl.jpg"
+            };
+
+            foreach (string path in paths)
+            {
+                var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                Assert.IsNotNull(importer, path);
+                Assert.AreEqual(TextureImporterType.NormalMap, importer.textureType, path);
+                Assert.IsFalse(importer.sRGBTexture, path);
             }
         }
     }

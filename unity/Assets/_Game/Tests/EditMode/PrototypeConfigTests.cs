@@ -90,5 +90,20 @@ namespace Abbey.Tests.EditMode
             var c = PrototypeConfig.LoadOrDefault();
             Assert.Greater(c.bellRadius, c.campfireRadius);
         }
+
+        [Test]
+        public void BellkeeperDefaults_AreResponsiveAcrossPrototypeMap()
+        {
+            var config = ScriptableObject.CreateInstance<PrototypeConfig>();
+            try
+            {
+                Assert.AreEqual(7.5f, config.bellkeeperMoveSpeed);
+                Assert.AreEqual(1.8f, config.bellkeeperSprintMultiplier);
+            }
+            finally
+            {
+                Object.DestroyImmediate(config);
+            }
+        }
     }
 }

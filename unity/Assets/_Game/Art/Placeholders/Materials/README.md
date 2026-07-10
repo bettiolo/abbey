@@ -34,17 +34,18 @@ The selected archives were `https://ambientCG.com/get?file=Grass005_1K-JPG.zip` 
 
 ## Runtime Use
 
-The prototype scene builder currently uses the albedo maps for:
+The prototype scene builder uses the albedo and OpenGL normal maps for:
 
 - meadow and forest ground;
 - beach sand;
 - abbey hill, stone, rock, paving, and wall materials;
 - generic wood, barrel, crate, hull, plank, shelter, and storage materials.
 
-Normal and roughness maps are committed beside the albedo maps because they are part of
-the selected placeholder material sets and are useful for the next material pass. They
-are not wired yet; do that through stable Unity import settings or material assets, not
-by mutating importer metadata inside the scene builder.
+`UrpProjectConfigurator` reproducibly imports the normal maps as linear normal textures
+and the roughness maps as linear data. URP Lit materials receive the matching normal map
+and a surface-appropriate smoothness scalar. The original roughness maps remain committed
+for a future packed-mask pass; they are deliberately not connected directly because URP
+Lit expects smoothness in a packed alpha channel rather than a standalone roughness map.
 
 ## Not Picked Yet
 
